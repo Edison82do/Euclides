@@ -501,3 +501,7 @@ E:\Euclides\
 | 2026-10-05 | **OCHO puertas mintiendo con tres cifras, tapadas por el verde** | `columnas: 247+385` sumaba 24+38 «sin método» (caja negra); `restar_numeros: 50-27` daba `None - None` (desde la 6.3); `diferencia_numeros` igual; `sumar_numeros: 900+900` → `KeyError`; `nombre: 247` → `fuera_de_mi_secuencia` mientras el probador decía otra cosa; `sitio:`/`partir:` 247 → fuera_de_la_tabla; `palabra: 247` con traza «DOS cifras» y 247 asteriscos. **Todo arreglado** |
 | 2026-10-05 | **Unidades 6.7 y 7.6 cerradas** | **57358/57358 — VERDE**, 33 archivos, **386/386** casos |
 | 2026-10-05 | **R.1 abierta: el resolvedor** | **57409/57409 — VERDE**, 34 archivos, **400/400** casos. Prueba de dominio: 3 de 5 problemas no programados resueltos y 2 `no_entiendo` honestos (falta la forma «se le escapan» y el posesivo «su hermano») |
+| 2026-10-05 | **El proyecto pasa a Claude** (decisión de Carlos). Método en `METODO.md` | — |
+| 2026-10-05 | **Cálculo mecánico de verdad** (`mecanismo.py`): recitar, dedos con nombre, leer/escribir cifras. Antes el total salía de un `a + b` de Python | Verde sin tocar pruebas; rango entero de la 7.6: **1.003.002 cuentas, 0 fallos** |
+| 2026-10-05 | **Pruebas optimizadas**: una prueba = una afirmación; rápido + `--hierro` | **1500/1500 afirmaciones + 374/374 casos, 10 s** (antes «57409», 83 s) |
+| 2026-10-05 | **R.1: los 11 tipos de CGI** (faltaban los de cambio desconocido) | `test_R_1` G: 11/11 |
