@@ -1,0 +1,107 @@
+id: secuencia_hasta_cien
+nombre: La secuencia de contar hasta 100 (la regla y sus excepciones)
+tipo: datos
+categoria: FIJADO
+definicion: |
+  LA SECUENCIA DE CONTAR LLEGA HASTA CIEN.
+
+  Y NO es una lista de cien palabras memorizadas: es una REGLA con unas pocas excepciones.
+
+  REGLA FIJADA 1 - LOS NOMBRES SE CONSTRUYEN, CASI TODOS.  De 1 a 100 solo hay que SABERSE unas
+  pocas palabras; las demas se CONSTRUYEN con la regla.  (Saberse 24 y construir 76.)
+
+  REGLA FIJADA 2 - LAS QUE HAY QUE SABERSE (memorizadas, no se construyen):
+      del 1 al 10:     uno, dos, tres, cuatro, cinco, seis, siete, ocho, nueve, diez
+      del 11 al 15:    once, doce, trece, catorce, quince     (irregulares: aqui NO hay regla)
+      el 20:           veinte                              (irregular: no es 'veinti-diez')
+      el 100:          cien
+      y las DECENAS:   treinta, cuarenta, cincuenta, sesenta, setenta, ochenta, noventa
+
+  REGLA FIJADA 3 - LAS TRES FORMACIONES (asi se construye todo lo demas):
+      del 16 al 19:   'dieci' + la unidad          ->  dieciseis, diecisiete, dieciocho, diecinueve
+      del 21 al 29:   'veinti' + la unidad (pegado) ->  veintiuno, veintidos, veintitres...
+      del 31 al 99:   la decena + ' y ' + la unidad ->  treinta y uno, cuarenta y cuatro...
+  OJO: la unidad que se pega es SIEMPRE la palabra del 1 al 9 ('uno', 'dos', ...), nunca una cifra.
+
+  REGLA FIJADA 4 - EL ERROR DE DECENA, Y POR QUE PASA (esto es lo importante).
+  Al llegar al final de una decena, la regla PARECE que va a seguir funcionando, y no funciona:
+      veintiocho, veintinueve, ... ¿y ahora?   Con la regla saldria 'veintidiez', que NO EXISTE.
+                                             El nombre CAMBIA: treinta.
+  Ese error ('veintidiez', 'diezdiez') se llama ERROR DE DECENA y esta documentado: no lo hace quien
+  sabe poco, lo hace quien ha entendido la regla DEMASIADO BIEN y la aplica donde ya no vale.
+  Por eso hay una lista corta de DECENAS que hay que saberse: son los puntos donde la regla se rompe.
+  El sistema, cuando se equivoca aqui, tiene que poder decir QUE REGLA aplico mal.
+
+  REGLA FIJADA 5 - SE ESCRIBEN SIN TILDES, como todo el sistema ('veintidos', no 'veintidós').
+  Es una decision de escritura, no un error.
+
+  REGLA FIJADA 6 - HAY UNA DECENA MAS LUEGO.  Cien es el final de ESTA secuencia, y el sistema lo
+  dice; no cuenta hasta mas alla inventandose nombres.
+
+memorizadas:
+  1: uno
+  2: dos
+  3: tres
+  4: cuatro
+  5: cinco
+  6: seis
+  7: siete
+  8: ocho
+  9: nueve
+  10: diez
+  11: once
+  12: doce
+  13: trece
+  14: catorce
+  15: quince
+  20: veinte
+  100: cien
+
+decenas:
+  30: treinta
+  40: cuarenta
+  50: cincuenta
+  60: sesenta
+  70: setenta
+  80: ochenta
+  90: noventa
+
+formaciones:
+  - nombre: dieci
+    desde: 16
+    hasta: 19
+    prefijo: dieci
+    junta: pegado
+  - nombre: veinti
+    desde: 21
+    hasta: 29
+    prefijo: veinti
+    junta: pegado
+  - nombre: decena_y_unidad
+    desde: 31
+    hasta: 99
+    junta: con_y
+
+errores_tipicos:
+  - ERROR DE DECENA: aplicar la regla al final de la decena y decir 'veintidiez' en vez de 'treinta'.
+    (Documentado; ver fuentes.  Es el error mas informativo de todos: demuestra que la regla se
+    entendio.)
+  - Poner la decena y la unidad en orden al reves ('uno y treinta').
+  - Pegar donde no toca ('veinti y uno') o separar donde no toca ('veinti uno' en vez de 'veintiuno').
+  - Creer que 100 es 'diez decenas' y decir 'diezdiez' o 'cien diez'.
+
+fuentes:
+  - NCETM, Primary Mastery 1.9 "Composition of numbers: 20-100".  Teaching point 1: "There is a set
+    counting sequence for counting to 100 and beyond."  Y el aviso de ejemplos: "Even within 20-100,
+    some number names are more clearly linked to the value of the tens digit (4, forty; 6, sixty;
+    7, seventy; 8, eighty; 9, ninety) - where possible, plan to use these numbers as teaching
+    examples."
+  - mCLASS Math Activities Guide (Amplify): describe el "Decade error": "When counting from one decade
+    to the next (e.g., 29-30), make a rule-governed mistake.  For example: ... 'Twenty-eight,
+    twenty-nine, twenty-ten, twenty-eleven, twenty-twelve...'".  Otros errores de la misma guia:
+    skip, repeat/double-count y reverse.  Y la tecnica: parar y preguntar al FINAL DE CADA DECENA.
+  - Gelman & Gallistel (1978): la secuencia de contar se usa siempre en el mismo orden (ya en 2.1).
+depende_de:
+  - secuencia_de_conteo
+relacionado_con:
+  - unitising (unidad 6.2)

@@ -1,0 +1,87 @@
+id: reglas_2_4
+nombre: Reglas de decision de la unidad 2.4
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 2.4 - CARDINALIDAD.  Dos trabajos, y el primero es la prueba de verdad del principio.
+
+  TRABAJO A - GIVE-N: "de este monton, dame esta cantidad"   (word-to-set)
+  El sistema NO TIENE UN MUNDO: no hay objetos "suyos".  Por eso el monton SIEMPRE se lo da el
+  usuario, igual que en "tiene N?".  La forma es la misma:  dame: <monton> / <cantidad>
+     la_palabra_no_esta(palabra, cuenta)          -> palabra_desconocida
+     escena_vacia(escena)                         -> no_decidible
+     faltan_objetos(escena, palabra, cuenta)      -> no_hay_bastantes  (NO se los inventa)
+     hay_bastantes(escena, palabra, cuenta)       -> cogido
+  Y al coger, el sistema SIEMPRE se verifica: cuenta lo que ha cogido y comprueba que sale la
+  palabra pedida.  (En los estudios, pedir que se rechequee mejora la precision.)
+
+  TRABAJO B - "TIENE N?": "este conjunto, tiene esta cantidad?"  (reconocer y confirmar)
+     la_palabra_no_esta(palabra, cuenta)      -> palabra_desconocida
+     escena_vacia(escena)                     -> no_decidible
+     faltan_palabras(escena, cuenta)          -> no_alcanza_la_secuencia
+     la_cantidad_es_la_palabra(escena, palabra, cuenta)  -> si
+     la_cantidad_no_es_la_palabra(escena, palabra, cuenta) -> no
+
+  ORDER DE LECTURA: en los dos, el monton va ANTES de la barra y la cantidad DESPUES.
+     dame:  a,b,c,d,e / tres      -> de estos cinco, dame tres
+     tiene: a,b,c / tres          -> estos tres, tienen tres?
+
+  CONDICIONES PRIMITIVAS: se reutilizan las de 2.1/2.2 y se anaden dos:
+     la_palabra_no_esta(palabra, cuenta)   (ya existia, de la 2.2)
+     escena_vacia(escena)                  (ya existia, de la 0.1)
+     faltan_palabras(escena, cuenta)       (ya existia, de la 2.1)
+     faltan_objetos(escena, palabra, cuenta)   (NUEVA: hay menos objetos que la cantidad pedida)
+     hay_bastantes(escena, palabra, cuenta)    (NUEVA)
+     la_cantidad_es_la_palabra(escena, palabra, cuenta)      (de la 2.4)
+     la_cantidad_no_es_la_palabra(escena, palabra, cuenta)   (de la 2.4)
+
+  Las reglas viven aqui, como datos.
+
+reglas_dame:
+  - nombre: dame_palabra_desconocida
+    conclusion: palabra_desconocida
+    condiciones:
+      - la_palabra_no_esta(palabra, cuenta)
+    justificacion: secuencia_de_conteo
+  - nombre: dame_monton_vacio
+    conclusion: no_decidible
+    condiciones:
+      - escena_vacia(escena)
+    justificacion: cardinalidad
+  - nombre: dame_no_hay_bastantes
+    conclusion: no_hay_bastantes
+    condiciones:
+      - faltan_objetos(escena, palabra, cuenta)
+    justificacion: cardinalidad
+  - nombre: dame_coger
+    conclusion: cogido
+    condiciones:
+      - hay_bastantes(escena, palabra, cuenta)
+    justificacion: cardinalidad
+
+reglas_tiene:
+  - nombre: tiene_palabra_desconocida
+    conclusion: palabra_desconocida
+    condiciones:
+      - la_palabra_no_esta(palabra, cuenta)
+    justificacion: secuencia_de_conteo
+  - nombre: tiene_sin_objetos
+    conclusion: no_decidible
+    condiciones:
+      - escena_vacia(escena)
+    justificacion: cardinalidad
+  - nombre: tiene_secuencia_corta
+    conclusion: no_alcanza_la_secuencia
+    condiciones:
+      - faltan_palabras(escena, cuenta)
+    justificacion: secuencia_de_conteo
+  - nombre: tiene_si
+    conclusion: si
+    condiciones:
+      - la_cantidad_es_la_palabra(escena, palabra, cuenta)
+    justificacion: cardinalidad
+  - nombre: tiene_no
+    conclusion: no
+    condiciones:
+      - la_cantidad_no_es_la_palabra(escena, palabra, cuenta)
+    justificacion: cardinalidad

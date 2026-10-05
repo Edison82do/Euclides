@@ -1,0 +1,47 @@
+id: reglas_2_6
+nombre: Reglas de decision de la unidad 2.6
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 2.6 - ABSTRACCION.  "Estas dos colecciones, tienen la misma cantidad?" - aunque sean cosas
+  completamente distintas.
+
+     alguna_esta_vacia(escena, cuenta)     -> no_decidible
+     alguna_pasa_de_diez(escena, cuenta)   -> no_alcanza_la_secuencia
+     misma_cantidad(escena, cuenta)        -> si
+     distinta_cantidad(escena, cuenta)     -> no
+
+  La segunda coleccion viaja dentro de 'cuenta' (clave 'otra').
+
+  Y se dice LO QUE SON las dos colecciones, para que se vea que la cantidad no depende de eso.
+
+  CONDICIONES PRIMITIVAS: se reutiliza escena_vacia; se anaden cuatro nuevas.
+     escena_vacia(escena)                (de la 0.1)
+     alguna_esta_vacia(escena, cuenta)   (NUEVA)
+     alguna_pasa_de_diez(escena, cuenta) (NUEVA)
+     misma_cantidad(escena, cuenta)      (NUEVA)
+     distinta_cantidad(escena, cuenta)   (NUEVA)
+
+  Las reglas viven aqui, como datos.
+
+reglas_misma_cantidad:
+  - nombre: mc_alguna_vacia
+    conclusion: no_decidible
+    condiciones:
+      - alguna_esta_vacia(escena, cuenta)
+    justificacion: abstraccion
+  - nombre: mc_alguna_pasa_de_diez
+    conclusion: no_alcanza_la_secuencia
+    condiciones:
+      - alguna_pasa_de_diez(escena, cuenta)
+    justificacion: secuencia_de_conteo
+  - nombre: mc_si
+    conclusion: si
+    condiciones:
+      - misma_cantidad(escena, cuenta)
+    justificacion: abstraccion
+  - nombre: mc_no
+    conclusion: no
+    condiciones:
+      - distinta_cantidad(escena, cuenta)
+    justificacion: abstraccion

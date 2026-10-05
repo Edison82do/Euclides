@@ -1,0 +1,84 @@
+id: reglas_3_1
+nombre: Reglas de decision de la unidad 3.1
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 3.1 - LOS SIMBOLOS (las cifras).  Tres trabajos: los dos sentidos de la tabla, y el puente
+  desde la cantidad.
+
+  TRABAJO A - PALABRA A CIFRA:  "cual es la cifra de esta palabra?"
+  OJO AL ORDEN: primero se mira SI HAY SIMBOLO, porque la tabla incluye "cero", que NO esta en la
+  secuencia de conteo (la secuencia empieza en "uno").  Orden:
+     hay_simbolo(palabra, cuenta)          -> cifra   (cubre "cero" y del "uno" al "nueve")
+     la_palabra_no_esta(palabra, cuenta)   -> palabra_desconocida   (ej: "manzana")
+     no_hay_simbolo(palabra, cuenta)       -> sin_cifra   (ej: "diez" es palabra conocida, pero su
+                                               cifra son DOS simbolos: no es de esta unidad)
+
+  TRABAJO B - CIFRA A PALABRA:  "que palabra es esta cifra?"
+     la_cifra_no_esta(palabra, cuenta)     -> cifra_desconocida
+     la_cifra_esta(palabra, cuenta)        -> palabra
+
+  TRABAJO C - CANTIDAD A CIFRA:  "de esta coleccion, cual es su cifra?"  (el puente completo)
+     escena_vacia(escena)                        -> no_decidible
+     no_hay_cifra_para_la_cantidad(escena, cuenta) -> no_alcanza_las_cifras
+     hay_cifra_para_la_cantidad(escena, cuenta)  -> cifra
+
+  El argumento 'palabra' de las condiciones lleva LO QUE LE DEN: una palabra en A, una cifra en B.
+
+  CONDICIONES PRIMITIVAS: cuatro de la 0.1/2.1 y seis nuevas.
+     escena_vacia(escena)                    (de la 0.1)
+     la_palabra_no_esta(palabra, cuenta)     (de la 2.2)
+     la_cifra_no_esta(palabra, cuenta)       (NUEVA)
+     la_cifra_esta(palabra, cuenta)          (NUEVA)
+     hay_simbolo(palabra, cuenta)            (NUEVA)
+     no_hay_simbolo(palabra, cuenta)         (NUEVA)
+     hay_cifra_para_la_cantidad(escena, cuenta)      (NUEVA)
+     no_hay_cifra_para_la_cantidad(escena, cuenta)   (NUEVA)
+
+  Las reglas viven aqui, como datos.
+
+reglas_cifra:
+  - nombre: cifra_hay
+    conclusion: cifra
+    condiciones:
+      - hay_simbolo(palabra, cuenta)
+    justificacion: simbolos
+  - nombre: cifra_de_palabra_desconocida
+    conclusion: palabra_desconocida
+    condiciones:
+      - la_palabra_no_esta(palabra, cuenta)
+    justificacion: secuencia_de_conteo
+  - nombre: cifra_sin_simbolo
+    conclusion: sin_cifra
+    condiciones:
+      - no_hay_simbolo(palabra, cuenta)
+    justificacion: simbolos
+
+reglas_palabra:
+  - nombre: palabra_de_cifra_desconocida
+    conclusion: cifra_desconocida
+    condiciones:
+      - la_cifra_no_esta(palabra, cuenta)
+    justificacion: simbolos
+  - nombre: palabra_hay
+    conclusion: palabra
+    condiciones:
+      - la_cifra_esta(palabra, cuenta)
+    justificacion: simbolos
+
+reglas_cifra_de:
+  - nombre: cd_sin_objetos
+    conclusion: cifra
+    condiciones:
+      - escena_vacia(escena)
+    justificacion: el_cero
+  - nombre: cd_sin_cifra
+    conclusion: no_alcanza_las_cifras
+    condiciones:
+      - no_hay_cifra_para_la_cantidad(escena, cuenta)
+    justificacion: simbolos
+  - nombre: cd_hay
+    conclusion: cifra
+    condiciones:
+      - hay_cifra_para_la_cantidad(escena, cuenta)
+    justificacion: simbolos

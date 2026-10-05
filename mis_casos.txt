@@ -1,0 +1,527 @@
+# MIS CASOS DE PRUEBA  -  Euclides
+#
+# Cada linea:    pregunta | lo que espero | comentario
+#
+# ---------------------------------------------------------------------------
+# UNIDAD 0.1  ->  cosas separadas por comas.  Repetir un nombre = la MISMA cosa.
+#     objeto / uno    una sola entidad
+#     varios          dos o mas entidades distintas
+#
+#     OJO: 0.1 NO decide grupos. Solo dice si hay una cosa o varias.
+#
+# UNIDAD 0.2 "forman grupo?"  ->  objetos con atributos, separados por ';' o por comas de fuera
+#     grupo:color           forman grupo y comparten el color
+#     grupo:color,forma     comparten las dos cosas
+#     sin_atributo_comun    son varios objetos, pero no comparten nada
+#     una_sola_entidad      solo hay una cosa: la pregunta de grupo no aplica
+#
+# UNIDAD 0.2 "dame el grupo de..."  ->  criterio, luego ':' y la escena
+#     tiene:a,c             el grupo son esos
+#     no_hay_grupo          ninguno cumple el criterio
+#
+# En cualquier caso:  no_decidible  -> el sistema dice que no sabe (y hace bien).
+# Y '?' en el segundo hueco -> no comprobar nada, solo ver que responde.
+#
+# Los '#' son comentarios.  Guarda el archivo y el probador lo recarga solo.
+# ---------------------------------------------------------------------------
+
+
+# ===== UNIDAD 0.1 =====
+silla                              | objeto     | un objeto suelto
+silla,mesa                         | varios     | dos objetos distintos
+silla,silla                        | objeto     | la misma silla senalada dos veces
+libro,lapiz,vaso                   | varios     | tres objetos distintos
+
+# ===== UNIDAD 0.2  -  forman grupo? =====
+caja_A(color=rojo,forma=cubo); caja_B(color=rojo,forma=esfera)   | grupo:color        | los dos rojos
+caja_A(color=rojo,forma=cubo); caja_B(color=azul,forma=cubo)     | grupo:forma        | los dos cubos
+caja_A(color=rojo,forma=cubo); caja_B(color=azul,forma=esfera)   | sin_atributo_comun | son varios, pero no comparten nada
+caja_A(color=rojo,forma=cubo); caja_B(color=rojo,forma=cubo)     | grupo:color,forma  | iguales en todo
+casa(color=blanco); carro(color=negro)                           | sin_atributo_comun | el caso que destapo Carlos
+carro(color=negro); carro(color=blanco)                          | sin_atributo_comun | dos colores distintos: son DOS objetos (carro#1 y carro#2)
+
+# ===== UNIDAD 0.2  -  dame el grupo de... =====
+color=rojo: a(color=rojo,forma=cubo); b(color=azul,forma=cubo); c(color=rojo,forma=esfera) | tiene:a,c    | los rojos, sin tocar los demas
+forma=cubo: a(color=rojo,forma=cubo); b(color=azul,forma=esfera)                          | tiene:a      | el unico cubo
+color=verde: a(color=rojo); b(color=azul)                                                 | no_hay_grupo | nadie es verde
+
+
+# ===== UNIDAD 0.3  -  pertenece =====
+#     pertenece <criterio>: <objetos>     ->   id:pertenece / id:no_pertenece / id:no_decidible
+pertenece color=rojo: taza(color=rojo)                                  | taza:pertenece      | la taza roja si va en los rojos
+pertenece color=rojo: plato(color=azul)                                 | plato:no_pertenece  | el plato azul no
+pertenece color=rojo: vaso(forma=cubo)                                  | vaso:no_decidible   | no se sabe su color: NO es lo mismo que no pertenecer
+pertenece color=rojo: taza(color=rojo); plato(color=azul); vaso(forma=cubo) | taza:pertenece,plato:no_pertenece,vaso:no_decidible | los tres casos juntos
+pertenece color=verde: triangulo(color=verde,forma=triangulo)           | triangulo:pertenece | el mismo objeto en el grupo de los verdes
+pertenece forma=triangulo: triangulo(color=verde,forma=triangulo)       | triangulo:pertenece | y tambien en el de los triangulos
+pertenece color=negro: carro(color=negro); carro(color=blanco)          | carro#1:pertenece,carro#2:no_pertenece | dos colores distintos = dos objetos, cada uno con su veredicto
+pertenece color=negro: carro(color=negro); carro(color=negro)           | carro:pertenece     | repetido SIN nada que lo distinga: es un solo objeto
+
+# ===== UNIDAD 1.0  -  subitizar =====
+#     subitizar: <figura>    figura = 3 filas separadas por '/', x = elemento, . = hueco
+#     respuesta: reconocido:<etiqueta>  o  no_reconocido
+subitizar: .../.x./...          | reconocido:uno    | un punto
+subitizar: x.x/.../x.x          | reconocido:cuatro | cuatro en las esquinas, como un dado
+subitizar: xx./xx./...          | reconocido:cuatro | la misma cantidad, otra disposicion: sigue siendo cuatro
+subitizar: x.x/x.x/x.x          | reconocido:seis   | seis, como un dado
+subitizar: x../xx./x.x          | no_reconocido     | 4 elementos desordenados: NO lo reconoce... y NO lo cuenta
+subitizar: xxx/xxx/xxx          | no_reconocido     | nueve: no se ve de un vistazo
+
+# ===== UNIDAD 2.1  -  contar y revisar =====
+#     contar: <coleccion>            -> emparejado / no_alcanza_la_secuencia
+#     revisar: <coleccion> / <palabras> -> correcta / palabra_repetida / orden_saltado /
+#                                          faltan_objetos_sin_contar / palabra_desconocida / palabras_de_mas
+contar: silla_1, silla_2, silla_3          | emparejado   | les pone uno, dos y tres
+contar: silla_1, silla_1, silla_1          | emparejado   | el mismo nombre tres veces = UN objeto = una palabra
+contar: casa(color=blanco), casa, perro, casa(forma=cuadrado), carro | emparejado | LA PRUEBA DE CARLOS: es UNA casa (los datos se suman) + perro + carro = tres palabras, no cinco
+contar: casa(color=blanco), casa(color=rojo), carro | emparejado | dos casas: el color las distingue (casa#1 y casa#2) -> tres palabras
+contar: a,b,c,d,e,f,g,h,i,j,k              | emparejado   | MEJORA 6.1: once objetos YA se emparejan
+contar: z1,z2,z3,z4,z5,z6,z7,z8,z9,z10,z11,z12,z13,z14,z15,z16,z17,z18,z19,z20,z21,z22,z23,z24,z25,z26,z27,z28,z29,z30,z31,z32,z33,z34,z35,z36,z37,z38,z39,z40,z41,z42,z43,z44,z45,z46,z47,z48,z49,z50,z51,z52,z53,z54,z55,z56,z57,z58,z59,z60,z61,z62,z63,z64,z65,z66,z67,z68,z69,z70,z71,z72,z73,z74,z75,z76,z77,z78,z79,z80,z81,z82,z83,z84,z85,z86,z87,z88,z89,z90,z91,z92,z93,z94,z95,z96,z97,z98,z99,z100,z101,z102,z103,z104,z105,z106,z107,z108,z109,z110,z111,z112,z113,z114,z115,z116,z117,z118,z119,z120,z121,z122,z123,z124,z125,z126,z127,z128,z129,z130,z131,z132,z133,z134,z135,z136,z137,z138,z139,z140,z141,z142,z143,z144,z145,z146,z147,z148,z149,z150,z151,z152,z153,z154,z155,z156,z157,z158,z159,z160,z161,z162,z163,z164,z165,z166,z167,z168,z169,z170,z171,z172,z173,z174,z175,z176,z177,z178,z179,z180,z181,z182,z183,z184,z185,z186,z187,z188,z189,z190,z191,z192,z193,z194,z195,z196,z197,z198,z199,z200,z201,z202,z203,z204,z205,z206,z207,z208,z209,z210,z211,z212,z213,z214,z215,z216,z217,z218,z219,z220,z221,z222,z223,z224,z225,z226,z227,z228,z229,z230,z231,z232,z233,z234,z235,z236,z237,z238,z239,z240,z241,z242,z243,z244,z245,z246,z247,z248,z249,z250,z251,z252,z253,z254,z255,z256,z257,z258,z259,z260,z261,z262,z263,z264,z265,z266,z267,z268,z269,z270,z271,z272,z273,z274,z275,z276,z277,z278,z279,z280,z281,z282,z283,z284,z285,z286,z287,z288,z289,z290,z291,z292,z293,z294,z295,z296,z297,z298,z299,z300,z301,z302,z303,z304,z305,z306,z307,z308,z309,z310,z311,z312,z313,z314,z315,z316,z317,z318,z319,z320,z321,z322,z323,z324,z325,z326,z327,z328,z329,z330,z331,z332,z333,z334,z335,z336,z337,z338,z339,z340,z341,z342,z343,z344,z345,z346,z347,z348,z349,z350,z351,z352,z353,z354,z355,z356,z357,z358,z359,z360,z361,z362,z363,z364,z365,z366,z367,z368,z369,z370,z371,z372,z373,z374,z375,z376,z377,z378,z379,z380,z381,z382,z383,z384,z385,z386,z387,z388,z389,z390,z391,z392,z393,z394,z395,z396,z397,z398,z399,z400,z401,z402,z403,z404,z405,z406,z407,z408,z409,z410,z411,z412,z413,z414,z415,z416,z417,z418,z419,z420,z421,z422,z423,z424,z425,z426,z427,z428,z429,z430,z431,z432,z433,z434,z435,z436,z437,z438,z439,z440,z441,z442,z443,z444,z445,z446,z447,z448,z449,z450,z451,z452,z453,z454,z455,z456,z457,z458,z459,z460,z461,z462,z463,z464,z465,z466,z467,z468,z469,z470,z471,z472,z473,z474,z475,z476,z477,z478,z479,z480,z481,z482,z483,z484,z485,z486,z487,z488,z489,z490,z491,z492,z493,z494,z495,z496,z497,z498,z499,z500,z501,z502,z503,z504,z505,z506,z507,z508,z509,z510,z511,z512,z513,z514,z515,z516,z517,z518,z519,z520,z521,z522,z523,z524,z525,z526,z527,z528,z529,z530,z531,z532,z533,z534,z535,z536,z537,z538,z539,z540,z541,z542,z543,z544,z545,z546,z547,z548,z549,z550,z551,z552,z553,z554,z555,z556,z557,z558,z559,z560,z561,z562,z563,z564,z565,z566,z567,z568,z569,z570,z571,z572,z573,z574,z575,z576,z577,z578,z579,z580,z581,z582,z583,z584,z585,z586,z587,z588,z589,z590,z591,z592,z593,z594,z595,z596,z597,z598,z599,z600,z601,z602,z603,z604,z605,z606,z607,z608,z609,z610,z611,z612,z613,z614,z615,z616,z617,z618,z619,z620,z621,z622,z623,z624,z625,z626,z627,z628,z629,z630,z631,z632,z633,z634,z635,z636,z637,z638,z639,z640,z641,z642,z643,z644,z645,z646,z647,z648,z649,z650,z651,z652,z653,z654,z655,z656,z657,z658,z659,z660,z661,z662,z663,z664,z665,z666,z667,z668,z669,z670,z671,z672,z673,z674,z675,z676,z677,z678,z679,z680,z681,z682,z683,z684,z685,z686,z687,z688,z689,z690,z691,z692,z693,z694,z695,z696,z697,z698,z699,z700,z701,z702,z703,z704,z705,z706,z707,z708,z709,z710,z711,z712,z713,z714,z715,z716,z717,z718,z719,z720,z721,z722,z723,z724,z725,z726,z727,z728,z729,z730,z731,z732,z733,z734,z735,z736,z737,z738,z739,z740,z741,z742,z743,z744,z745,z746,z747,z748,z749,z750,z751,z752,z753,z754,z755,z756,z757,z758,z759,z760,z761,z762,z763,z764,z765,z766,z767,z768,z769,z770,z771,z772,z773,z774,z775,z776,z777,z778,z779,z780,z781,z782,z783,z784,z785,z786,z787,z788,z789,z790,z791,z792,z793,z794,z795,z796,z797,z798,z799,z800,z801,z802,z803,z804,z805,z806,z807,z808,z809,z810,z811,z812,z813,z814,z815,z816,z817,z818,z819,z820,z821,z822,z823,z824,z825,z826,z827,z828,z829,z830,z831,z832,z833,z834,z835,z836,z837,z838,z839,z840,z841,z842,z843,z844,z845,z846,z847,z848,z849,z850,z851,z852,z853,z854,z855,z856,z857,z858,z859,z860,z861,z862,z863,z864,z865,z866,z867,z868,z869,z870,z871,z872,z873,z874,z875,z876,z877,z878,z879,z880,z881,z882,z883,z884,z885,z886,z887,z888,z889,z890,z891,z892,z893,z894,z895,z896,z897,z898,z899,z900,z901,z902,z903,z904,z905,z906,z907,z908,z909,z910,z911,z912,z913,z914,z915,z916,z917,z918,z919,z920,z921,z922,z923,z924,z925,z926,z927,z928,z929,z930,z931,z932,z933,z934,z935,z936,z937,z938,z939,z940,z941,z942,z943,z944,z945,z946,z947,z948,z949,z950,z951,z952,z953,z954,z955,z956,z957,z958,z959,z960,z961,z962,z963,z964,z965,z966,z967,z968,z969,z970,z971,z972,z973,z974,z975,z976,z977,z978,z979,z980,z981,z982,z983,z984,z985,z986,z987,z988,z989,z990,z991,z992,z993,z994,z995,z996,z997,z998,z999,z1000,z1001 | no_alcanza_la_secuencia | mas de MIL: el techo subio en la 6.7
+revisar: a,b,c / uno,dos,tres              | correcta     | bien contado
+revisar: a,b,c / uno,uno,tres              | palabra_repetida | la misma palabra a dos objetos (el error mas comun)
+revisar: a,b,c / uno,tres,cuatro           | orden_saltado | se salto el dos
+revisar: a,b,c / uno,dos                   | faltan_objetos_sin_contar | el tercero se quedo sin contar
+revisar: a,b / uno,once                    | orden_saltado | MEJORA 6.1: 'once' ya existe, pero SALTA el orden
+revisar: a,b / uno,manzana                 | palabra_desconocida | esta si que no existe
+
+# ===== UNIDAD 2.2  -  la lista: que va antes y despues =====
+#     siguiente: <palabra> | anterior: <palabra> | recitar: <palabra> | revisar_secuencia: <palabras>
+siguiente: tres                            | cuatro      | sin empezar por uno
+siguiente: siete                           | ocho        | al nino se le pregunta por el siete, no por el uno
+siguiente: diez                            | sin_numero  | OBSOLETO hasta la 3.3: en la lista de CONTAR no hay siguiente; en la de NUMEROS, 'diez' no tiene sitio
+siguiente: once                            | sin_numero   | MEJORA 6.1: 'once' esta en CONTAR, pero no es un NUMERO
+anterior: nueve                            | ocho        | tambien sabe ir hacia atras
+anterior: uno                              | cero        | OBSOLETO hasta la 3.3: ahora el uno tiene un numero antes (el cero)
+recitar: novecientos noventa y ocho  | recitado:novecientos noventa y ocho,novecientos noventa y nueve,mil | (6.7) los ultimos: ya no acaba en cien
+recitar: novecientos noventa  | recitado:novecientos noventa,novecientos noventa y uno,novecientos noventa y dos,novecientos noventa y tres,novecientos noventa y cuatro,novecientos noventa y cinco,novecientos noventa y seis,novecientos noventa y siete,novecientos noventa y ocho,novecientos noventa y nueve,mil | (6.7) la ultima decena entera acaba en mil
+recitar: novecientos noventa y ocho  | recitado:novecientos noventa y ocho,novecientos noventa y nueve,mil | (6.7) los ultimos: ya no acaba en cien
+revisar_secuencia: uno,dos,tres            | correcta    | bien dicha
+revisar_secuencia: uno,dos,cuatro          | orden_saltado | se salto el tres
+revisar_secuencia: uno,tres,dos            | orden_saltado | los cambio de orden
+revisar_secuencia: uno,dos,once            | orden_saltado | MEJORA 6.1: existe, pero salta del dos al once
+revisar_secuencia: uno,dos,manzana         | palabra_desconocida | esta si que no existe
+
+# ===== UNIDAD 2.3  -  cuantos hay =====
+#     cuantos: <coleccion>   -> la cantidad (la ultima palabra del recuento) / no_alcanza_la_secuencia
+cuantos: cosa                              | uno         | un solo objeto
+cuantos: silla_1, silla_2, silla_3         | tres        | cuenta y da la cantidad
+cuantos: a,b,c,d,e                         | cinco       | cinco objetos distintos
+cuantos: a,b,c,d,e,f,g,h,i,j               | diez        | el maximo que conoce
+cuantos: casa(color=blanco), casa, perro, casa(forma=cuadrado), carro | tres | LA PRUEBA DE CARLOS: la casa repetida es UNA casa
+cuantos: a,a,a,a,a                         | uno         | el mismo nombre cinco veces = UN objeto
+cuantos: a,b,c,d,e,f,g,h,i,j,k             | once         | MEJORA 6.1: once objetos se cuentan
+
+# ===== UNIDAD 2.4  -  cardinalidad: dame N / tiene N? =====
+#     dame: <monton> / <palabra>       -> cumplido / no_hay_bastantes / palabra_desconocida
+#     tiene: <coleccion> / <palabra>   -> si / no / no_alcanza_la_secuencia / palabra_desconocida
+#     (el MONTON lo das TU: el sistema no tiene objetos propios, no se inventa de donde coger)
+dame: a,b,c,d,e / tres                     | cumplido    | de cinco coge tres, y deja dos
+dame: a,b,c / uno                          | cumplido    | coge uno y deja dos
+dame: a,b,c / tres                         | cumplido    | justo los que hay
+dame: a,b / tres                           | no_hay_bastantes | solo hay dos: NO se inventa el tercero
+dame: a,b,c,d / diez                       | no_hay_bastantes | de cuatro no puede dar diez
+dame: a,b,c / once                         | no_hay_bastantes | MEJORA 6.1: la palabra ya vale; el problema son los objetos
+dame: tres                                 | no_entendido | sin monton: no tengo de donde coger
+tiene: a,b,c / tres                        | si          | cuenta y confirma
+tiene: a,b,c / cinco                       | no          | no tiene cinco: tiene tres
+tiene: cosa / uno                          | si          | un solo objeto
+tiene: casa(color=blanco), casa, perro, casa(forma=cuadrado), carro / tres | si | la casa repetida es UNA casa
+tiene: casa(color=blanco), casa, perro, casa(forma=cuadrado), carro / cinco | no | no tiene cinco
+tiene: a,b,c,d,e,f,g,h,i,j,k / cinco        | no           | MEJORA 6.1: once objetos no tienen cinco, tienen once
+tiene: a,b,c / once                        | no           | MEJORA 6.1: la palabra ya vale; pero tres objetos no tienen once
+
+# ===== UNIDAD 2.5  -  el orden de los objetos no importa =====
+#     orden: <coleccion>              -> coinciden / no_alcanza_la_secuencia
+#     conteo: <recorrido> / <palabras> -> valido / objeto_repetido / palabra_repetida /
+#                                         orden_saltado / faltan_objetos_sin_contar / palabras_de_mas
+orden: a,b,c                               | coinciden   | cuenta al derecho y al reves: sale lo mismo
+orden: cosa                                | coinciden   | un solo objeto
+conteo: a,b,c / uno,dos,tres               | valido      | recorrido normal
+conteo: c,a,b / uno,dos,tres               | valido      | PSEUDOERROR: empezo por el tercero, y esta bien
+conteo: e,d,c,b,a / uno,dos,tres,cuatro,cinco | valido   | todo al reves, y sigue siendo valido
+conteo: a,b,b,c / uno,dos,tres,cuatro      | objeto_repetido | COMPENSACION: conto b dos veces: NO vale
+conteo: a,b,c / uno,dos,dos                | palabra_repetida | la misma palabra dos veces
+conteo: a,b,c / uno,tres,cuatro            | orden_saltado | se salto el dos
+
+# ===== UNIDAD 2.6  -  abstraccion: se puede contar cualquier cosa =====
+#     misma_cantidad: <coleccion> / <coleccion>  -> si / no / no_decidible / no_alcanza_la_secuencia
+#     OJO: "silla,silla" es UNA silla. Para tres sillas hay que dar nombres distintos.
+misma_cantidad: silla_1,silla_2,silla_3 / sonido_1,sonido_2,sonido_3 | si | cosas distintas, misma cantidad
+misma_cantidad: casa(color=rojo),perro / idea,salto     | si | un objeto con atributos y una idea: se cuentan igual
+misma_cantidad: a_1,a_2 / b_1,b_2,b_3      | no          | dos contra tres
+misma_cantidad: silla,silla,silla / b_1,b_2,b_3 | no     | TRAMPA: "silla,silla,silla" es UNA silla
+misma_cantidad: amor,tiempo,silencio / x_1,x_2,x_3 | si  | cosas abstractas y sin atributos: tambien se cuentan
+misma_cantidad: a_1,a_2 /                   | no_decidible | una coleccion vacia
+
+# ===== UNIDAD 3.1  -  los simbolos (las cifras 1..9) =====
+#     cifra: <palabra>    -> la cifra (palabra -> cifra)  | sin_cifra / palabra_desconocida
+#     palabra: <cifra>    -> la palabra (cifra -> palabra) | cifra_desconocida
+#     cifra_de: <coleccion> -> la cifra de su cantidad     | no_alcanza_las_cifras / no_decidible
+cifra: uno                                 | 1           | la cifra de "uno"
+cifra: tres                                | 3           | la cifra de "tres"
+cifra: nueve                               | 9           | la cifra de "nueve"
+cifra: diez                                | 10          | MEJORA 6.3: ya lee cifras de 2 digitos (antes: sin_cifra, "su cifra son DOS simbolos")
+cifra: manzana                             | palabra_desconocida | no es una palabra de la lista
+palabra: 3                                 | tres        | de la cifra a la palabra
+palabra: 9                                 | nueve       | ...
+palabra: 0                                 | cero        | el 0 es la cifra del cero (antes de la unidad 3.2 no estaba)
+palabra: 10                                | diez        | MEJORA 6.3: ya lee cifras de 2 digitos (antes: cifra_desconocida)
+cifra_de: cosa                             | 1           | una cosa -> 1
+cifra_de: a,b,c                            | 3           | tres objetos -> 3
+cifra_de: a,b,c,d,e,f,g,h,i                | 9           | nueve -> 9
+cifra_de: a,b,c,d,e,f,g,h,i,j              | 10          | MEJORA 6.3: la cifra de una cantidad ya vale hasta cien
+cifra_de: casa(color=blanco), casa, perro, casa(forma=cuadrado), carro | 3 | la casa repetida es UNA casa -> 3
+
+# ===== UNIDAD 3.2  -  el cero (ninguno) =====
+#     La cantidad de un conjunto VACIO es cero, y su cifra 0.  OJO: cero NO es "no se sabe".
+cuantos:                                   | cero        | no hay ningun objeto: la cantidad es cero
+cuantos: cosa                              | uno         | con un objeto NO es cero, es uno
+cifra_de:                                  | 0           | la cifra de una coleccion vacia es 0
+cifra_de: cosa                             | 1           | y con un objeto es 1
+cifra: cero                                | 0           | la cifra de "cero"
+palabra: 0                                 | cero        | y al reves
+palabra: 10                                | diez        | MEJORA 6.3: ya lee cifras de 2 digitos
+cifra: diez                                | 10          | MEJORA 6.3: ya lee cifras de 2 digitos
+
+# ===== UNIDAD 3.3  -  la secuencia de numeros (y las DOS listas) =====
+#     Hay DOS listas: la de CONTAR (uno..diez, para contar cosas) y la de los NUMEROS (cero..nueve).
+#     Ademas: siguiente: y anterior: van sobre la de NUMEROS.  Y recitar: sobre la de CONTAR.
+listas                                     | ?            | ensena las dos listas y en que se diferencian
+anterior: uno                              | cero         | ESTE ERA EL FALLO: antes decia 'no hay nada'
+siguiente: cero                            | uno          | el cero si esta en los numeros
+anterior: cero                             | no_lo_se      | el cero es el PRIMERO de los numeros
+siguiente: nueve                           | no_lo_se      | el nueve es el ULTIMO de los numeros
+siguiente: diez                            | sin_numero    | 'diez' esta en la de contar, no en la de numeros
+anterior: diez                             | sin_numero    | lo mismo, por el otro lado
+recitar: cero                              | palabra_desconocida | recitar es la lista de CONTAR: empieza en uno
+siguiente: once                            | sin_numero   | 'once' esta en contar, pero no es un NUMERO
+
+# ===== UNIDAD 3.4  -  EL PUENTE (cantidad, palabra, cifra) =====
+#     Lo mismo dicho de TRES maneras, y SEIS caminos entre ellas.  El nuevo: cifra -> cantidad.
+#     Y hay DOS caminos para saber cuantos hay: CONTAR (largo) o DE UN VISTAZO (corto).
+caminos                                    | los_caminos  | los seis caminos entre las tres representaciones
+puente: a,b,c                              | 3            | la coleccion de las tres maneras (ensena el recuento)
+puente: silla_1,silla_2                    | 2            | cantidad 'dos', palabra 'dos', cifra '2'
+puente:                                    | 0            | vacia: cero / cero / 0
+puente: a,b,c,d,e,f,g,h,i,j                | diez         | TRAMPA: hay palabra, pero NO hay cifra (el 10 son dos simbolos)
+dame: a,b,c,d,e / 3                        | cumplido     | camino 4 (cifra -> cantidad): el que se aprende aqui
+dame: a,b / 3                              | no_hay_bastantes | TRAMPA: no se inventa los que faltan
+dame: a,b,c,d / 0                          | cero_no_se_coge  | TRAMPA: dar es coger, y el vacio no se coge
+subitizar: x.x/.../x.x                     | reconocido:cuatro | camino CORTO: de un vistazo, SIN contar
+subitizar: x../xx./x.x                     | no_reconocido | no lo reconoce y NO cuenta a escondidas
+
+# ===== UNIDAD 4.1  -  COMPARAR CANTIDADES =====
+#     Se dice con PALABRAS: mas / menos / tantos_como.  La respuesta habla de la PRIMERA coleccion.
+#     Los simbolos >, <, = NO van aqui: van entre CIFRAS y son la 4.2.  OJO: el tamano NO cuenta.
+comparar: a,b,c / d,e                      | mas          | la PRIMERA tiene mas (3 contra 2)
+comparar: a,b / c,d,e                      | menos        | la primera tiene menos (2 contra 3)
+comparar: a,b / c,d                        | tantos_como  | las dos tienen lo mismo
+comparar: g1(tamano=grande), g2(tamano=grande) / p1(tamano=pequeno), p2(tamano=pequeno), p3(tamano=pequeno) | menos | TRAMPA: dos grandes NO son mas que tres pequenas
+comparar: /                                | tantos_como  | TRAMPA: dos colecciones vacias son cero y cero
+comparar: / a                              | menos        | vacia contra una cosa (el cero se compara)
+comparar: a,b,c                            | no_entendido | TRAMPA: comparar son DOS colecciones
+comparar: casa(color=rojo), casa(forma=cuadrado), carro / x,y | tantos_como | la casa repetida es UNA (0.1)
+
+# ===== UNIDAD 4.2  -  COMPARAR NUMEROS (cifras) =====
+#     La respuesta es el SIMBOLO: > (mayor que), < (menor que), = (igual a).  Van SOLO entre cifras.
+#     De donde sale: en la secuencia de numeros, el que viene DESPUES es el mayor (unidad 3.3).
+comparar_cifras: 3 / 2                     | >            | tres es MAYOR que dos
+comparar_cifras: 2 / 3                     | <            | dos es MENOR que tres
+comparar_cifras: 4 / 4                     | =            | igual a
+comparar_cifras: 0 / 1                     | <            | el cero tambien se compara (3.2)
+comparar_cifras: 9 / 7                     | >            | con numeros grandes
+comparar_cifras: 10 / 2                    | >           | MEJORA 6.3: ya compara cifras de 2 digitos
+comparar_cifras: 3 / tres                  | =            | MEJORA 5.3: son EL MISMO numero (cifra y palabra)
+comparar_cifras: 3                         | no_entendido | TRAMPA: comparar son DOS numeros
+
+# ===== UNIDAD 5.1  -  COMPONER Y DESCOMPONER (las partes y el todo) =====
+#     El cimiento de la suma y la resta.  Sin signos todavia: se dice con palabras.
+descomponer: a,b,c,d,e                     | 0+5,1+4,2+3 | las maneras de partir CINCO (como el NCETM)
+descomponer: a,b,c,d                       | 0+4,1+3,2+2 | cuatro
+descomponer: a                             | 0+1          | uno solo se parte de una manera
+descomponer: a,b                           | 0+2,1+1      | dos
+descomponer:                               | el_cero_no_se_parte | TRAMPA: de cero no hay nada que partir
+descomponer: a,b,c,d,e,f,g,h,i,j           | 0+diez,1+9,2+8,3+7,4+6,5+5 | diez: seis maneras (y su cifra no la tengo)
+componer: a,b / c,d,e                      | cinco        | dos y tres son cinco
+componer: a,b,c / d,e                      | cinco        | tres y dos son cinco (el orden no importa)
+componer: / a,b,c,d                        | cuatro       | el cero tambien es una parte
+componer: a,b,c,d,e,f / g,h,i,j            | diez         | seis y cuatro son diez (justo el limite)
+componer: a,b,c,d,e,f / g,h,i,j,k          | once         | MEJORA 6.1: SEIS Y CINCO ya SI son once
+componer: a,b,c                            | no_entendido | TRAMPA: componer son DOS partes
+
+# ===== UNIDAD 5.2  -  LA SUMA (el signo + y el signo =) =====
+#     El = es EQUIVALENCIA ("son lo mismo"), NO "pon el resultado".  Terminos: sumandos y suma.
+#     Y hay DOS estructuras: sumar = AGREGACION (juntar dos montones) y anadir = AUMENTACION (crece).
+sumar: a,b,c / d,e                         | 3 + 2 = 5    | agregacion: juntar dos montones que ya estan
+anadir: a,b,c / d,e                        | 3 + 2 = 5    | aumentacion: el monton crece (mismo numero, otra historia)
+sumar: a,b / c,d,e                         | 2 + 3 = 5    | el orden que le das se respeta
+sumar: / a,b,c,d                           | 0 + 4 = 4    | con una parte vacia
+sumar: a,b,c,d,e,f / g,h,i,j               | 6 + 4 = diez | justo el limite (y la cifra del 10 no la tengo)
+sumar: a,b,c,d,e,f / g,h,i,j,k             | 6 + 5 = once | MEJORA 6.1: pasaba de diez y ya no importa
+anadir: a,b,c,d,e / f,g,h,i,j,k            | 5 + 6 = once | MEJORA 6.1: lo mismo al anadir
+sumar: w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20,w21,w22,w23,w24,w25,w26,w27,w28,w29,w30,w31,w32,w33,w34,w35,w36,w37,w38,w39,w40,w41,w42,w43,w44,w45,w46,w47,w48,w49,w50,w51,w52,w53,w54,w55,w56,w57,w58,w59,w60,w61,w62,w63,w64,w65,w66,w67,w68,w69,w70,w71,w72,w73,w74,w75,w76,w77,w78,w79,w80,w81,w82,w83,w84,w85,w86,w87,w88,w89,w90,w91,w92,w93,w94,w95,w96,w97,w98,w99,w100,w101,w102,w103,w104,w105,w106,w107,w108,w109,w110,w111,w112,w113,w114,w115,w116,w117,w118,w119,w120,w121,w122,w123,w124,w125,w126,w127,w128,w129,w130,w131,w132,w133,w134,w135,w136,w137,w138,w139,w140,w141,w142,w143,w144,w145,w146,w147,w148,w149,w150,w151,w152,w153,w154,w155,w156,w157,w158,w159,w160,w161,w162,w163,w164,w165,w166,w167,w168,w169,w170,w171,w172,w173,w174,w175,w176,w177,w178,w179,w180,w181,w182,w183,w184,w185,w186,w187,w188,w189,w190,w191,w192,w193,w194,w195,w196,w197,w198,w199,w200,w201,w202,w203,w204,w205,w206,w207,w208,w209,w210,w211,w212,w213,w214,w215,w216,w217,w218,w219,w220,w221,w222,w223,w224,w225,w226,w227,w228,w229,w230,w231,w232,w233,w234,w235,w236,w237,w238,w239,w240,w241,w242,w243,w244,w245,w246,w247,w248,w249,w250,w251,w252,w253,w254,w255,w256,w257,w258,w259,w260,w261,w262,w263,w264,w265,w266,w267,w268,w269,w270,w271,w272,w273,w274,w275,w276,w277,w278,w279,w280,w281,w282,w283,w284,w285,w286,w287,w288,w289,w290,w291,w292,w293,w294,w295,w296,w297,w298,w299,w300,w301,w302,w303,w304,w305,w306,w307,w308,w309,w310,w311,w312,w313,w314,w315,w316,w317,w318,w319,w320,w321,w322,w323,w324,w325,w326,w327,w328,w329,w330,w331,w332,w333,w334,w335,w336,w337,w338,w339,w340,w341,w342,w343,w344,w345,w346,w347,w348,w349,w350,w351,w352,w353,w354,w355,w356,w357,w358,w359,w360,w361,w362,w363,w364,w365,w366,w367,w368,w369,w370,w371,w372,w373,w374,w375,w376,w377,w378,w379,w380,w381,w382,w383,w384,w385,w386,w387,w388,w389,w390,w391,w392,w393,w394,w395,w396,w397,w398,w399,w400,w401,w402,w403,w404,w405,w406,w407,w408,w409,w410,w411,w412,w413,w414,w415,w416,w417,w418,w419,w420,w421,w422,w423,w424,w425,w426,w427,w428,w429,w430,w431,w432,w433,w434,w435,w436,w437,w438,w439,w440,w441,w442,w443,w444,w445,w446,w447,w448,w449,w450,w451,w452,w453,w454,w455,w456,w457,w458,w459,w460,w461,w462,w463,w464,w465,w466,w467,w468,w469,w470,w471,w472,w473,w474,w475,w476,w477,w478,w479,w480,w481,w482,w483,w484,w485,w486,w487,w488,w489,w490,w491,w492,w493,w494,w495,w496,w497,w498,w499,w500,w501,w502,w503,w504,w505,w506,w507,w508,w509,w510,w511,w512,w513,w514,w515,w516,w517,w518,w519,w520,w521,w522,w523,w524,w525,w526,w527,w528,w529,w530,w531,w532,w533,w534,w535,w536,w537,w538,w539,w540,w541,w542,w543,w544,w545,w546,w547,w548,w549,w550,w551,w552,w553,w554,w555,w556,w557,w558,w559,w560,w561,w562,w563,w564,w565,w566,w567,w568,w569,w570,w571,w572,w573,w574,w575,w576,w577,w578,w579,w580,w581,w582,w583,w584,w585,w586,w587,w588,w589,w590,w591,w592,w593,w594,w595,w596,w597,w598,w599,w600,w601,w602,w603,w604,w605,w606,w607,w608,w609,w610,w611,w612,w613,w614,w615,w616,w617,w618,w619,w620,w621,w622,w623,w624,w625,w626,w627,w628,w629,w630,w631,w632,w633,w634,w635,w636,w637,w638,w639,w640,w641,w642,w643,w644,w645,w646,w647,w648,w649,w650,w651,w652,w653,w654,w655,w656,w657,w658,w659,w660,w661,w662,w663,w664,w665,w666,w667,w668,w669,w670,w671,w672,w673,w674,w675,w676,w677,w678,w679,w680,w681,w682,w683,w684,w685,w686,w687,w688,w689,w690,w691,w692,w693,w694,w695,w696,w697,w698,w699,w700,w701,w702,w703,w704,w705,w706,w707,w708,w709,w710,w711,w712,w713,w714,w715,w716,w717,w718,w719,w720,w721,w722,w723,w724,w725,w726,w727,w728,w729,w730,w731,w732,w733,w734,w735,w736,w737,w738,w739,w740,w741,w742,w743,w744,w745,w746,w747,w748,w749,w750,w751,w752,w753,w754,w755,w756,w757,w758,w759,w760,w761,w762,w763,w764,w765,w766,w767,w768,w769,w770,w771,w772,w773,w774,w775,w776,w777,w778,w779,w780,w781,w782,w783,w784,w785,w786,w787,w788,w789,w790,w791,w792,w793,w794,w795,w796,w797,w798,w799,w800,w801,w802,w803,w804,w805,w806,w807,w808,w809,w810,w811,w812,w813,w814,w815,w816,w817,w818,w819,w820,w821,w822,w823,w824,w825,w826,w827,w828,w829,w830,w831,w832,w833,w834,w835,w836,w837,w838,w839,w840,w841,w842,w843,w844,w845,w846,w847,w848,w849,w850,w851,w852,w853,w854,w855,w856,w857,w858,w859,w860,w861,w862,w863,w864,w865,w866,w867,w868,w869,w870,w871,w872,w873,w874,w875,w876,w877,w878,w879,w880,w881,w882,w883,w884,w885,w886,w887,w888,w889,w890,w891,w892,w893,w894,w895,w896,w897,w898,w899,w900,w901,w902,w903,w904,w905,w906,w907,w908,w909,w910,w911,w912,w913,w914,w915,w916,w917,w918,w919,w920,w921,w922,w923,w924,w925,w926,w927,w928,w929,w930,w931,w932,w933,w934,w935,w936,w937,w938,w939,w940,w941,w942,w943,w944,w945,w946,w947,w948,w949,w950,w951,w952,w953,w954,w955,w956,w957,w958,w959,w960,w961,w962,w963,w964,w965,w966,w967,w968,w969,w970,w971,w972,w973,w974,w975,w976,w977,w978,w979,w980,w981,w982,w983,w984,w985,w986,w987,w988,w989,w990,w991,w992,w993,w994,w995,w996,w997,w998,w999,w1000,w1001 / a,b | no_alcanza | mas de MIL: el techo subio en la 6.7
+sumar: a,b,c                               | no_entendido | TRAMPA: sumar son DOS cantidades
+anadir: a,b,c                              | no_entendido | TRAMPA: anadir son DOS cantidades
+
+# ===== UNIDAD 5.3  -  LAS TRES ENTRADAS (cantidad, cifra, palabra) =====
+#     cantidad -> a, b, c    |    cifra -> 3    |    palabra -> tres
+#     UN OBJETO NO SE PUEDE LLAMAR COMO UN NUMERO.  Y un numero se dice con cifra o con palabra.
+siguiente: 3                               | cuatro       | un NUMERO se dice con cifra o con palabra
+anterior: 3                                | dos          | lo mismo, hacia atras
+comparar_numeros: dos / 3                  | <            | comparar numeros: palabra y cifra mezcladas
+comparar_numeros: 3 / dos                  | >            | y al reves
+comparar_cifras: 3 / tres                  | =            | son EL MISMO numero (mejora de la 5.3)
+sumar_numeros: 3 + 2                       | 3 + 2 = 5    | sumar NUMEROS, sin objetos
+sumar_numeros: dos + tres                  | 2 + 3 = 5    | con palabras tambien
+sumar_numeros: 3 + dos                     | 3 + 2 = 5    | mezclando
+sumar_numeros: 0 + 4                       | 0 + 4 = 4    | el cero vale
+sumar_numeros: 5 + 5                       | 5 + 5 = diez | la cifra del diez no la tengo
+sumar_numeros: 7 + 5                       | 7 + 5 = doce | MEJORA 7.1: pasa de diez y ya no importa
+sumar_numeros: 9 + 9                       | 9 + 9 = dieciocho | MEJORA 7.1: el techo viejo era diez
+sumar_numeros: novecientos + novecientos  | no_alcanza | MEJORA 6.7: el techo es MIL
+sumar_numeros: noventa + noventa           | 90 + 90 = 180 | (6.7) YA se puede: el techo es mil
+sumar_numeros: manzana + 2                 | no_es_un_numero | TRAMPA: 'manzana' no es un numero
+descomponer_numero: 5                      | 0+5,1+4,2+3 | partir un NUMERO (no una coleccion)
+descomponer_numero: 0                      | el_cero_no_se_parte | TRAMPA: el cero no se parte
+sumar: 3 / 2                               | grupo_equivocado | TRAMPA GRAVE ARREGLADA: '3' no es un objeto
+cuantos: 3                                 | grupo_equivocado | lo mismo en las ordenes de cantidad
+descomponer: 5                             | grupo_equivocado | y aqui (antes daba '1 maneras', falso)
+sumar: dos / tres                          | grupo_equivocado | tambien con palabras de numero
+cuantos: 47                                | grupo_equivocado | ARREGLO 4-oct: una CIFRA de 2 digitos es un NUMERO, no un objeto (antes daba 'uno', FALSO)
+cuantos: 100                               | grupo_equivocado | lo mismo: el sistema aun no lee cifras de 2+ digitos (unidad 6.3)
+contar: 47                                 | grupo_equivocado | y en contar tambien (antes decia 'emparejado')
+dame: 47 / uno                             | grupo_equivocado | y aqui (antes decia 'cogido')
+cuantos: silla_1, silla_2                  | dos              | OJO: 'silla_1' NO es todo digitos: sigue siendo un OBJETO
+cuantos: 3                                 | grupo_equivocado | las de un digito ya lo decian desde la 5.3
+
+# ===== UNIDAD 5.4  -  LA RESTA (QUITAR) =====
+#     quitar es hacer el monton MAS PEQUENO.  Primero habia, luego se van, ahora quedan.
+#     Y OJO: quitar NO es partir.  Aqui, los que se van SE VAN.
+quitar: a,b,c,d,e / dos                   | 5 - 2 = 3        | RESTA: primero 5, luego se van 2, ahora quedan 3
+quitar: a,b,c,d,e / 2                     | 5 - 2 = 3        | la cifra vale igual que la palabra
+quitar: a,b,c,d,e,f,g / tres              | 7 - 3 = 4        | otra
+quitar: a,b,c / cero                      | 3 - 0 = 3        | quitar cero no quita nada
+quitar: a,b,c / tres                      | 3 - 3 = 0        | quitar todo deja CERO (y eso es una cantidad)
+quitar: a,b,c,d,e,f,g,h,i,j / dos          | diez - 2 = 8     | el diez no tiene cifra: sale su palabra
+quitar: a,b / tres                        | no_hay_bastantes | ¡NO SE PUEDE QUITAR MAS DE LO QUE HAY!
+quitar: a,b / 3                           | no_hay_bastantes | lo mismo con cifra
+quitar: o1,o2,o3,o4,o5,o6,o7,o8,o9,o10,o11,o12 / dos | doce - 2 = diez | MEJORA 6.1: doce ya se cuenta
+quitar: q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13,q14,q15,q16,q17,q18,q19,q20,q21,q22,q23,q24,q25,q26,q27,q28,q29,q30,q31,q32,q33,q34,q35,q36,q37,q38,q39,q40,q41,q42,q43,q44,q45,q46,q47,q48,q49,q50,q51,q52,q53,q54,q55,q56,q57,q58,q59,q60,q61,q62,q63,q64,q65,q66,q67,q68,q69,q70,q71,q72,q73,q74,q75,q76,q77,q78,q79,q80,q81,q82,q83,q84,q85,q86,q87,q88,q89,q90,q91,q92,q93,q94,q95,q96,q97,q98,q99,q100,q101,q102,q103,q104,q105,q106,q107,q108,q109,q110,q111,q112,q113,q114,q115,q116,q117,q118,q119,q120,q121,q122,q123,q124,q125,q126,q127,q128,q129,q130,q131,q132,q133,q134,q135,q136,q137,q138,q139,q140,q141,q142,q143,q144,q145,q146,q147,q148,q149,q150,q151,q152,q153,q154,q155,q156,q157,q158,q159,q160,q161,q162,q163,q164,q165,q166,q167,q168,q169,q170,q171,q172,q173,q174,q175,q176,q177,q178,q179,q180,q181,q182,q183,q184,q185,q186,q187,q188,q189,q190,q191,q192,q193,q194,q195,q196,q197,q198,q199,q200,q201,q202,q203,q204,q205,q206,q207,q208,q209,q210,q211,q212,q213,q214,q215,q216,q217,q218,q219,q220,q221,q222,q223,q224,q225,q226,q227,q228,q229,q230,q231,q232,q233,q234,q235,q236,q237,q238,q239,q240,q241,q242,q243,q244,q245,q246,q247,q248,q249,q250,q251,q252,q253,q254,q255,q256,q257,q258,q259,q260,q261,q262,q263,q264,q265,q266,q267,q268,q269,q270,q271,q272,q273,q274,q275,q276,q277,q278,q279,q280,q281,q282,q283,q284,q285,q286,q287,q288,q289,q290,q291,q292,q293,q294,q295,q296,q297,q298,q299,q300,q301,q302,q303,q304,q305,q306,q307,q308,q309,q310,q311,q312,q313,q314,q315,q316,q317,q318,q319,q320,q321,q322,q323,q324,q325,q326,q327,q328,q329,q330,q331,q332,q333,q334,q335,q336,q337,q338,q339,q340,q341,q342,q343,q344,q345,q346,q347,q348,q349,q350,q351,q352,q353,q354,q355,q356,q357,q358,q359,q360,q361,q362,q363,q364,q365,q366,q367,q368,q369,q370,q371,q372,q373,q374,q375,q376,q377,q378,q379,q380,q381,q382,q383,q384,q385,q386,q387,q388,q389,q390,q391,q392,q393,q394,q395,q396,q397,q398,q399,q400,q401,q402,q403,q404,q405,q406,q407,q408,q409,q410,q411,q412,q413,q414,q415,q416,q417,q418,q419,q420,q421,q422,q423,q424,q425,q426,q427,q428,q429,q430,q431,q432,q433,q434,q435,q436,q437,q438,q439,q440,q441,q442,q443,q444,q445,q446,q447,q448,q449,q450,q451,q452,q453,q454,q455,q456,q457,q458,q459,q460,q461,q462,q463,q464,q465,q466,q467,q468,q469,q470,q471,q472,q473,q474,q475,q476,q477,q478,q479,q480,q481,q482,q483,q484,q485,q486,q487,q488,q489,q490,q491,q492,q493,q494,q495,q496,q497,q498,q499,q500,q501,q502,q503,q504,q505,q506,q507,q508,q509,q510,q511,q512,q513,q514,q515,q516,q517,q518,q519,q520,q521,q522,q523,q524,q525,q526,q527,q528,q529,q530,q531,q532,q533,q534,q535,q536,q537,q538,q539,q540,q541,q542,q543,q544,q545,q546,q547,q548,q549,q550,q551,q552,q553,q554,q555,q556,q557,q558,q559,q560,q561,q562,q563,q564,q565,q566,q567,q568,q569,q570,q571,q572,q573,q574,q575,q576,q577,q578,q579,q580,q581,q582,q583,q584,q585,q586,q587,q588,q589,q590,q591,q592,q593,q594,q595,q596,q597,q598,q599,q600,q601,q602,q603,q604,q605,q606,q607,q608,q609,q610,q611,q612,q613,q614,q615,q616,q617,q618,q619,q620,q621,q622,q623,q624,q625,q626,q627,q628,q629,q630,q631,q632,q633,q634,q635,q636,q637,q638,q639,q640,q641,q642,q643,q644,q645,q646,q647,q648,q649,q650,q651,q652,q653,q654,q655,q656,q657,q658,q659,q660,q661,q662,q663,q664,q665,q666,q667,q668,q669,q670,q671,q672,q673,q674,q675,q676,q677,q678,q679,q680,q681,q682,q683,q684,q685,q686,q687,q688,q689,q690,q691,q692,q693,q694,q695,q696,q697,q698,q699,q700,q701,q702,q703,q704,q705,q706,q707,q708,q709,q710,q711,q712,q713,q714,q715,q716,q717,q718,q719,q720,q721,q722,q723,q724,q725,q726,q727,q728,q729,q730,q731,q732,q733,q734,q735,q736,q737,q738,q739,q740,q741,q742,q743,q744,q745,q746,q747,q748,q749,q750,q751,q752,q753,q754,q755,q756,q757,q758,q759,q760,q761,q762,q763,q764,q765,q766,q767,q768,q769,q770,q771,q772,q773,q774,q775,q776,q777,q778,q779,q780,q781,q782,q783,q784,q785,q786,q787,q788,q789,q790,q791,q792,q793,q794,q795,q796,q797,q798,q799,q800,q801,q802,q803,q804,q805,q806,q807,q808,q809,q810,q811,q812,q813,q814,q815,q816,q817,q818,q819,q820,q821,q822,q823,q824,q825,q826,q827,q828,q829,q830,q831,q832,q833,q834,q835,q836,q837,q838,q839,q840,q841,q842,q843,q844,q845,q846,q847,q848,q849,q850,q851,q852,q853,q854,q855,q856,q857,q858,q859,q860,q861,q862,q863,q864,q865,q866,q867,q868,q869,q870,q871,q872,q873,q874,q875,q876,q877,q878,q879,q880,q881,q882,q883,q884,q885,q886,q887,q888,q889,q890,q891,q892,q893,q894,q895,q896,q897,q898,q899,q900,q901,q902,q903,q904,q905,q906,q907,q908,q909,q910,q911,q912,q913,q914,q915,q916,q917,q918,q919,q920,q921,q922,q923,q924,q925,q926,q927,q928,q929,q930,q931,q932,q933,q934,q935,q936,q937,q938,q939,q940,q941,q942,q943,q944,q945,q946,q947,q948,q949,q950,q951,q952,q953,q954,q955,q956,q957,q958,q959,q960,q961,q962,q963,q964,q965,q966,q967,q968,q969,q970,q971,q972,q973,q974,q975,q976,q977,q978,q979,q980,q981,q982,q983,q984,q985,q986,q987,q988,q989,q990,q991,q992,q993,q994,q995,q996,q997,q998,q999,q1000,q1001 / dos | no_alcanza | mas de MIL: el techo subio en la 6.7
+quitar: a,b,c / manzana                   | no_es_un_numero  | 'manzana' no es un numero
+quitar: a,b,c,d / cuatro                  | 4 - 4 = 0        | quitar TODO
+restar_numeros: 5 - 2                     | 5 - 2 = 3        | restar NUMEROS, sin objetos
+restar_numeros: nueve - tres              | 9 - 3 = 6        | las palabras valen
+restar_numeros: 2 - 5                     | no_hay_bastantes | la resta seria NEGATIVA, y eso no esta aqui
+restar_numeros: 7 - 7                     | 7 - 7 = 0        |
+restar_numeros: 5 - manzana               | no_es_un_numero  | un objeto no es un numero
+
+# ===== UNIDAD 5.5  -  LA DIFERENCIA (el HUECO entre dos) =====
+#     ¡AQUI NO SE QUITA NADA!  Los dos montones siguen enteros: nadie se va.
+#     Se empareja uno con uno, y los que se quedan SIN PAREJA son el hueco.
+diferencia: a,b,c,d,e / a,b,c              | dos          | el hueco entre 5 y 3 es 2 (cuantos mas / cuantos menos)
+diferencia: a,b,c / a,b,c,d,e              | dos          | al reves da LO MISMO: la diferencia es una
+diferencia: a,b,c / a,b,c                  | cero         | son iguales: el hueco es CERO (y el cero es una cantidad)
+diferencia: a,b,c / a,b,c,d,e,f            | tres         | 3 contra 6: el hueco es 3
+diferencia: a,b,c,d,e / a,b,c,d,e,f,g,h,i,j | cinco       | el hueco entre 5 y 10
+diferencia: / a,b                          | dos          | nada contra dos
+diferencia: o1,o2,o3,o4,o5,o6,o7,o8,o9,o10,o11,o12 / a,b | diez | MEJORA 6.1: doce ya se cuenta
+diferencia_numeros: 5 / 3                  | dos          | la diferencia entre NUMEROS, sin objetos
+diferencia_numeros: 3 / 5                  | dos          | al reves, el mismo numero
+diferencia_numeros: 4 / 4                  | cero         | iguales: hueco cero
+diferencia_numeros: nueve / cuatro         | cinco        | las palabras valen
+diferencia_numeros: 5 / manzana            | no_es_un_numero | un objeto no es un numero
+quitar: a,b,c,d,e,f,g,h,i,j / diez         | diez - diez = 0 | ARREGLO 5.5: 'diez' SI vale como cantidad (antes no)
+
+
+# ===== UNIDAD 6.1  -  LA SECUENCIA HASTA 100 (la regla y las excepciones) =====
+#     Los nombres NO estan memorizados: se CONSTRUYEN con la regla.
+#     Solo hay que saberse 24 (1-10, 11-15, 20, 100 y las decenas); los otros 76 salen de la regla.
+nombre: 47                                 | cuarenta y siete | 40+7: la decena 'cuarenta' + ' y ' + la unidad 'siete'
+nombre: 16                                 | dieciseis    | 'dieci' + 'seis', TODO PEGADO (del 16 al 19)
+nombre: 22                                 | veintidos    | 'veinti' + 'dos', todo pegado (del 21 al 29)
+nombre: 30                                 | treinta      | una DECENA: hay que sabersela, no sale de la regla
+nombre: 15                                 | quince       | irregular: del 11 al 15 hay que saberselos
+nombre: 100                                | cien         | el final de la secuencia
+nombre: 101   | ciento uno | (6.7) el techo subio a mil: 101 YA se lee
+nombre: 1001  | fuera_de_mi_secuencia | (6.7) mas alla de mil no me lo invento
+numero: cuarenta y siete                   | 47           | la vuelta: del nombre al numero
+numero: veintidos                          | 22           |
+numero: cien                               | 100          |
+numero: pepito                             | no_lo_se     | ese nombre no existe
+decenas                                    | las_decenas  | la lista de decenas y el ERROR DE DECENA explicado
+siguiente: veintinueve                     | sin_numero   | 'veintinueve' es cantidad, no numero
+recitar: novecientos noventa  | recitado:novecientos noventa,novecientos noventa y uno,novecientos noventa y dos,novecientos noventa y tres,novecientos noventa y cuatro,novecientos noventa y cinco,novecientos noventa y seis,novecientos noventa y siete,novecientos noventa y ocho,novecientos noventa y nueve,mil | (6.7) la ultima decena entera acaba en mil
+
+# ===== UNIDAD 7.1  -  EL METODO DE LOS DEDOS (el mecanismo de sumar) =====
+#     Se ANOTA el primero, se cogen los dedos del SEGUNDO, y se CUENTA DESDE EL PRIMERO.
+#     El ultimo numero dicho es el total.  Los dedos cuentan los PASOS, no el resultado.
+dedos: 8 + 5                               | ocho + cinco = trece | la pizarra 8, 5 dedos, y 9 10 11 12 13
+dedos: 9 + 9                               | nueve + nueve = dieciocho | el total NO tiene que caber en los dedos
+dedos: 5 + 0                               | cinco + cero = cinco | no se levanta ningun dedo: el total es el primero
+dedos: 0 + 3                               | cero + tres = tres | se cuenta desde el CERO
+dedos: 1 + 1                               | uno + uno = dos | el mas pequeno
+dedos: ocho + diez                         | ocho + diez = dieciocho | diez dedos caben justo
+dedos: ocho + doce                         | no_caben_en_los_dedos | al SEGUNDO no le pueden pasar de 10
+dedos: novecientos noventa y cinco + nueve  | no_alcanza | (6.7) el techo es MIL
+dedos: noventa y cinco + nueve  | noventa y cinco + nueve = ciento cuatro | (6.7) YA se puede
+dedos: ocho + manzana                      | no_es_un_numero | 'manzana' no es un numero
+dedos: cuarenta y siete + tres             | cuarenta y siete + tres = cincuenta | el PRIMERO puede ser grande
+dedos: 47 + 3                              | cuarenta y siete + tres = cincuenta | MEJORA 6.3: YA lee cifras de 2 digitos
+
+# ===== UNIDAD 7.3  -  SUMAR POR COLUMNAS (unidad con unidad, decena con decena, el llevarse) =====
+#     CADA SITIO CON SU SITIO.  Y lo que pasa de nueve en las unidades es UNA DECENA que se lleva.
+# ===== LO QUE NO SE ESCRIBE PORQUE EL SISTEMA NO LO HA ENSENADO =====
+#     1) La suma de dentro de una columna lleva SU METODO (no se sabe de memoria):
+#        'columnas: 47 + 15' dice 'se anota el siete y se cuentan 5 dedos hacia adelante'.
+#     2) Sumar TRES numeros se hace EN DOS PASOS (solo tiene el metodo de sumar dos):
+#        '4 + 1 = 5' y luego '5 + 1 = 6'.  NUNCA '4 + 1 + 1 = 6' de golpe.
+#     3) NO se escribe '6 x 10': el sistema NO SABE MULTIPLICAR todavia (unidad 5.6).
+#        Se dice '6 decenas son 60', que es lo que si sabe (unidad 6.5).
+#     (Lo cazo Carlos leyendo la salida de 'columnas: 47 + 15'.)
+columnas: 47 + 15                          | 47 + 15 = 62 | 7+5=12: anoto 2 y ME LLEVO 1; y 4+1+1=6
+columnas: 32 + 15                          | 32 + 15 = 47 | ARREGLADO 4-oct: antes daba 'None + None' (roto)
+columnas: 28 + 15                          | 28 + 15 = 43 | 8+5=13: anoto 3 y me llevo 1
+columnas: 9 + 9                            | 9 + 9 = 18 | lo mas que se puede llevar: 18 es UNA decena y ocho
+columnas: 5 + 3                            | 5 + 3 = 8 | SIN llevarse: 5+3=8 no pasa de nueve
+columnas: 60 + 40                          | 60 + 40 = 100 | justo el cien
+columnas: 100 + 0                          | 100 + 0 = 100 |
+columnas: 0 + 0                            | 0 + 0 = 0 |
+columnas: 600 + 500  | no_alcanza | (6.7) 1100 pasa de mil: el techo subio
+columnas: 60 + 50    | 60 + 50 = 110 | (6.7) YA se puede: el techo es mil
+columnas: 900 + 200  | no_alcanza | (6.7) 1100 pasa de mil: el techo subio
+columnas: 9 + 99    | 9 + 99 = 108 | (6.7) YA se puede: el techo es mil
+columnas: manzana + 3                      | no_es_un_numero |
+sumar_numeros: 32 + 15                     | 32 + 15 = 47 | AHORA usa las COLUMNAS (antes decia necesito_las_columnas)
+sumar_numeros: treinta y dos + quince      | 32 + 15 = 47 | y con palabras tambien
+sumar_numeros: 90 + 5                      | 90 + 5 = 95 | 90 es de dos cifras: por columnas
+derivar: 32 + 15                           | necesito_las_columnas | derivar tambien es de UNA cifra
+dedos: 32 + 15                             | no_caben_en_los_dedos | al SEGUNDO (15) no le pueden pasar de diez
+sumar_numeros: 3 + 2                       | 3 + 2 = 5    | y las de UNA cifra siguen igual
+sumar_numeros: 9 + 9                       | 9 + 9 = dieciocho | y las que cruzan el diez, tambien
+# Y si ademas pasa de cien, manda el TECHO (que va primero)
+sumar_numeros: novecientos + novecientos  | no_alcanza | MEJORA 6.7: el techo es MIL
+sumar_numeros: noventa + noventa           | 90 + 90 = 180 | (6.7) YA se puede: el techo es mil
+
+# ===== UNIDAD 6.5  -  PARTIR EN DECENAS Y UNIDADES (cuanto vale cada cifra) =====
+#     La PRIMERA cifra son DECENAS y la ultima son UNIDADES.  Y cada cifra vale POR SU SITIO.
+partir: 47                                 | 4 decenas + 7 unidades = 47 | y OJO: el 4 vale 40, NO 4
+partir: cuarenta y siete                   | 4 decenas + 7 unidades = 47 | lo mismo con palabras
+partir: 7                                  | 0 decenas + 7 unidades = 7 | una cifra sola: cero decenas (y no se dice)
+partir: 10                                 | 1 decenas + 0 unidades = 10 | una decena exacta
+partir: 100                                | 10 decenas + 0 unidades = 100 | diez decenas justas
+partir: 0                                  | 0 decenas + 0 unidades = 0 |
+partir: 101                                | fuera_de_la_tabla | mi tabla llega al cien
+partir: manzana                            | no_es_un_numero | eso no es un numero
+juntar_decenas: 4 / 7                      | cuarenta y siete -> 47 | la vuelta
+juntar_decenas: 0 / 7                      | siete -> 7 | cero decenas
+juntar_decenas: 10 / 0                     | cien -> 100 |
+juntar_decenas: 2 / 5                      | veinticinco -> 25 |
+juntar_decenas: 3 / 12                     | cuarenta y dos -> 42 | ¡NO se dice 'treinta y doce'! (error de NZ Maths)
+juntar_decenas: 11 / 0                     | fuera_de_la_tabla | once decenas pasa de cien
+# OJO: partir NO es descomponer.  'descomponer_numero: 5' da 0+5,1+4,2+3 (las partes que SUMAN);
+#      'partir: 47' da las DECENAS y las UNIDADES (el valor de cada cifra).  Son cosas distintas.
+
+# ===== UNIDAD 6.3  -  LA TABLA DE 100 (leer cifras de dos digitos) =====
+#     El sistema YA LEE cifras de dos digitos.  Fila = DECENAS, columna = UNIDADES.
+#     OJO: esto ARREGLA las cuatro puertas que antes decian que no sabia leerlas.
+palabra: 47                                | cuarenta y siete | YA lee cifras de 2 digitos (antes decia cifra_desconocida)
+palabra: 100                               | cien        | el final de la tabla
+palabra: 10                                | diez        | MEJORA 6.3 (antes: cifra_desconocida)
+cifra: cuarenta y siete                    | 47          | la vuelta
+cifra: cien                                | 100         |
+cifra: diez                                | 10          | MEJORA 6.3 (antes: sin_cifra)
+sitio: 47                                  | 4 decenas y 7 unidades | fila 4 (cuarenta), columna 7 (siete)
+sitio: cuarenta y siete                    | 4 decenas y 7 unidades | lo mismo con palabras
+sitio: 10                                  | 1 decenas y 0 unidades | OJO: el 10 esta al FINAL de la fila 0 (columna 10)
+sitio: 100                                 | 10 decenas y 0 unidades | diez decenas justas: fila 9, columna 10
+sitio: 0                                   | cero decenas y cero unidades | el CERO no esta en la tabla (empieza en el uno)
+sitio: 101                                 | fuera_de_la_tabla | mi tabla llega al cien, y lo digo
+sitio: manzana                             | no_es_un_numero | eso no es un numero
+tabla                                      | la_tabla_de_100 | la tabla entera, fila a fila
+# Y LA COHERENCIA (lo que pidio Carlos): el MISMO numero por TODAS las puertas
+dedos: 47 + 3                              | cuarenta y siete + tres = cincuenta | MEJORA 6.3: ya lee la cifra (antes: no_es_un_numero)
+cifra_de: a,b,c,d,e,f,g,h,i,j              | 10          | MEJORA 6.3: la cifra de una cantidad ya vale hasta cien
+comparar_cifras: 47 / 3                    | >           | MEJORA 6.3: ya compara cifras de 2 digitos
+comparar_numeros: 47 / 3                   | >           | y por la puerta de numeros, lo mismo
+comparar_cifras: 10 / 2                    | >           | MEJORA 6.3 (antes: cifra_desconocida)
+sumar_numeros: novecientos + novecientos  | no_alcanza | MEJORA 6.7: el techo es MIL
+sumar_numeros: noventa + noventa           | 90 + 90 = 180 | (6.7) YA se puede: el techo es mil
+# Y lo que NO cambio (los limites estan bien puestos)
+derivar: 47 + 3                            | necesito_las_columnas | derivar sigue siendo de UNA cifra (unidad 7.2)
+siguiente: 47                              | sin_numero  | la lista de NUMEROS sigue siendo 0..9 (unidad 3.3)
+
+# ===== UNIDAD 6.2  -  AGRUPAR DE DIEZ EN DIEZ (el diez como UNA cosa) =====
+#     Los objetos se cogen DE DIEZ EN DIEZ: cada monton de diez es UNA DECENA, una cosa nueva.
+#     Eso es el 'unitising' (NCETM) y es lo que hace posible el VALOR POSICIONAL.
+agrupar: a,b,c,d,e,f,g,h,i,j,k,l,m           | una decena y tres | trece -> UNA decena y TRES unidades
+agrupar: a,b,c,d,e,f,g,h,i,j                 | una decena        | diez justo: una decena y nada suelto
+agrupar: a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t | dos decenas   | veinte: DOS decenas
+agrupar: a,b,c,d,e,f,g,h,i,j,k               | una decena y uno  | once
+agrupar: a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z | dos decenas y seis | veintiseis
+agrupar: a,b,c,d,e,f,g,h,i                   | no_hay_decena    | nueve: no llega a diez, no hay monton que hacer
+agrupar: a                                   | no_hay_decena    | uno: ni de lejos
+agrupar:                                     | cero             | TRAMPA: el vacio es CERO, no 'no hay decena' (unidad 3.2)
+agrupar: a,b,c                               | no_hay_decena    | tres sueltos
+agrupar: silla_1,silla_2,silla_3,silla_4,silla_5,silla_6,silla_7,silla_8,silla_9,silla_10,taza | una decena y uno | once cosas (sillas + taza)
+# 100 objetos = diez decenas (se escribe uno a uno, no hay rangos)
+agrupar: q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13,q14,q15,q16,q17,q18,q19,q20,q21,q22,q23,q24,q25,q26,q27,q28,q29,q30,q31,q32,q33,q34,q35,q36,q37,q38,q39,q40,q41,q42,q43,q44,q45,q46,q47,q48,q49,q50,q51,q52,q53,q54,q55,q56,q57,q58,q59,q60,q61,q62,q63,q64,q65,q66,q67,q68,q69,q70,q71,q72,q73,q74,q75,q76,q77,q78,q79,q80,q81,q82,q83,q84,q85,q86,q87,q88,q89,q90,q91,q92,q93,q94,q95,q96,q97,q98,q99,q100 | diez decenas | cien: DIEZ decenas
+agrupar: q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13,q14,q15,q16,q17,q18,q19,q20,q21,q22,q23,q24,q25,q26,q27,q28,q29,q30,q31,q32,q33,q34,q35,q36,q37,q38,q39,q40,q41,q42,q43,q44,q45,q46,q47,q48,q49,q50,q51,q52,q53,q54,q55,q56,q57,q58,q59,q60,q61,q62,q63,q64,q65,q66,q67,q68,q69,q70,q71,q72,q73,q74,q75,q76,q77,q78,q79,q80,q81,q82,q83,q84,q85,q86,q87,q88,q89,q90,q91,q92,q93,q94,q95,q96,q97,q98,q99,q100,q101,q102,q103,q104,q105,q106,q107,q108,q109,q110,q111,q112,q113,q114,q115,q116,q117,q118,q119,q120,q121,q122,q123,q124,q125,q126,q127,q128,q129,q130,q131,q132,q133,q134,q135,q136,q137,q138,q139,q140,q141,q142,q143,q144,q145,q146,q147,q148,q149,q150,q151,q152,q153,q154,q155,q156,q157,q158,q159,q160,q161,q162,q163,q164,q165,q166,q167,q168,q169,q170,q171,q172,q173,q174,q175,q176,q177,q178,q179,q180,q181,q182,q183,q184,q185,q186,q187,q188,q189,q190,q191,q192,q193,q194,q195,q196,q197,q198,q199,q200,q201,q202,q203,q204,q205,q206,q207,q208,q209,q210,q211,q212,q213,q214,q215,q216,q217,q218,q219,q220,q221,q222,q223,q224,q225,q226,q227,q228,q229,q230,q231,q232,q233,q234,q235,q236,q237,q238,q239,q240,q241,q242,q243,q244,q245,q246,q247,q248,q249,q250,q251,q252,q253,q254,q255,q256,q257,q258,q259,q260,q261,q262,q263,q264,q265,q266,q267,q268,q269,q270,q271,q272,q273,q274,q275,q276,q277,q278,q279,q280,q281,q282,q283,q284,q285,q286,q287,q288,q289,q290,q291,q292,q293,q294,q295,q296,q297,q298,q299,q300,q301,q302,q303,q304,q305,q306,q307,q308,q309,q310,q311,q312,q313,q314,q315,q316,q317,q318,q319,q320,q321,q322,q323,q324,q325,q326,q327,q328,q329,q330,q331,q332,q333,q334,q335,q336,q337,q338,q339,q340,q341,q342,q343,q344,q345,q346,q347,q348,q349,q350,q351,q352,q353,q354,q355,q356,q357,q358,q359,q360,q361,q362,q363,q364,q365,q366,q367,q368,q369,q370,q371,q372,q373,q374,q375,q376,q377,q378,q379,q380,q381,q382,q383,q384,q385,q386,q387,q388,q389,q390,q391,q392,q393,q394,q395,q396,q397,q398,q399,q400,q401,q402,q403,q404,q405,q406,q407,q408,q409,q410,q411,q412,q413,q414,q415,q416,q417,q418,q419,q420,q421,q422,q423,q424,q425,q426,q427,q428,q429,q430,q431,q432,q433,q434,q435,q436,q437,q438,q439,q440,q441,q442,q443,q444,q445,q446,q447,q448,q449,q450,q451,q452,q453,q454,q455,q456,q457,q458,q459,q460,q461,q462,q463,q464,q465,q466,q467,q468,q469,q470,q471,q472,q473,q474,q475,q476,q477,q478,q479,q480,q481,q482,q483,q484,q485,q486,q487,q488,q489,q490,q491,q492,q493,q494,q495,q496,q497,q498,q499,q500,q501,q502,q503,q504,q505,q506,q507,q508,q509,q510,q511,q512,q513,q514,q515,q516,q517,q518,q519,q520,q521,q522,q523,q524,q525,q526,q527,q528,q529,q530,q531,q532,q533,q534,q535,q536,q537,q538,q539,q540,q541,q542,q543,q544,q545,q546,q547,q548,q549,q550,q551,q552,q553,q554,q555,q556,q557,q558,q559,q560,q561,q562,q563,q564,q565,q566,q567,q568,q569,q570,q571,q572,q573,q574,q575,q576,q577,q578,q579,q580,q581,q582,q583,q584,q585,q586,q587,q588,q589,q590,q591,q592,q593,q594,q595,q596,q597,q598,q599,q600,q601,q602,q603,q604,q605,q606,q607,q608,q609,q610,q611,q612,q613,q614,q615,q616,q617,q618,q619,q620,q621,q622,q623,q624,q625,q626,q627,q628,q629,q630,q631,q632,q633,q634,q635,q636,q637,q638,q639,q640,q641,q642,q643,q644,q645,q646,q647,q648,q649,q650,q651,q652,q653,q654,q655,q656,q657,q658,q659,q660,q661,q662,q663,q664,q665,q666,q667,q668,q669,q670,q671,q672,q673,q674,q675,q676,q677,q678,q679,q680,q681,q682,q683,q684,q685,q686,q687,q688,q689,q690,q691,q692,q693,q694,q695,q696,q697,q698,q699,q700,q701,q702,q703,q704,q705,q706,q707,q708,q709,q710,q711,q712,q713,q714,q715,q716,q717,q718,q719,q720,q721,q722,q723,q724,q725,q726,q727,q728,q729,q730,q731,q732,q733,q734,q735,q736,q737,q738,q739,q740,q741,q742,q743,q744,q745,q746,q747,q748,q749,q750,q751,q752,q753,q754,q755,q756,q757,q758,q759,q760,q761,q762,q763,q764,q765,q766,q767,q768,q769,q770,q771,q772,q773,q774,q775,q776,q777,q778,q779,q780,q781,q782,q783,q784,q785,q786,q787,q788,q789,q790,q791,q792,q793,q794,q795,q796,q797,q798,q799,q800,q801,q802,q803,q804,q805,q806,q807,q808,q809,q810,q811,q812,q813,q814,q815,q816,q817,q818,q819,q820,q821,q822,q823,q824,q825,q826,q827,q828,q829,q830,q831,q832,q833,q834,q835,q836,q837,q838,q839,q840,q841,q842,q843,q844,q845,q846,q847,q848,q849,q850,q851,q852,q853,q854,q855,q856,q857,q858,q859,q860,q861,q862,q863,q864,q865,q866,q867,q868,q869,q870,q871,q872,q873,q874,q875,q876,q877,q878,q879,q880,q881,q882,q883,q884,q885,q886,q887,q888,q889,q890,q891,q892,q893,q894,q895,q896,q897,q898,q899,q900,q901,q902,q903,q904,q905,q906,q907,q908,q909,q910,q911,q912,q913,q914,q915,q916,q917,q918,q919,q920,q921,q922,q923,q924,q925,q926,q927,q928,q929,q930,q931,q932,q933,q934,q935,q936,q937,q938,q939,q940,q941,q942,q943,q944,q945,q946,q947,q948,q949,q950,q951,q952,q953,q954,q955,q956,q957,q958,q959,q960,q961,q962,q963,q964,q965,q966,q967,q968,q969,q970,q971,q972,q973,q974,q975,q976,q977,q978,q979,q980,q981,q982,q983,q984,q985,q986,q987,q988,q989,q990,q991,q992,q993,q994,q995,q996,q997,q998,q999,q1000,q1001  | no_alcanza | (6.7) mas de MIL: el techo subio
+
+# ===== UNIDAD 7.2  -  DERIVAR (hacer diez) - la OTRA via para sumar =====
+#     ESTO NO ES CONTAR: es TRANSFORMAR la cuenta en dos cuentas faciles, y una ya se sabe.
+#     Al primero le faltan unos para diez; se PARTE el segundo en esos y el resto; se hace diez
+#     y se suma lo que sobra.  Y EL SISTEMA PRUEBA LAS DOS VIAS: la de los dedos y esta.
+derivar: 7 + 5                             | siete + cinco = doce | al 7 le faltan 3: 7+3=10 y 10+2=12
+derivar: 8 + 4                             | ocho + cuatro = doce | 8+2=10 y 10+2=12
+derivar: 8 + 9                             | ocho + nueve = diecisiete | el que casi NADIE tiene memorizado (Number Sense Maths)
+derivar: 9 + 9                             | nueve + nueve = dieciocho | 9+1=10 y 10+8=18
+derivar: 6 + 7                             | seis + siete = trece | 6+4=10 y 10+3=13
+derivar: siete + cinco                     | siete + cinco = doce | con palabras tambien
+derivar: 7 + cinco                         | siete + cinco = doce | mezclando
+derivar: 4 + 5                             | no_hace_falta | no cruza el diez: se sabe directamente
+derivar: 3 + 7                             | no_hace_falta | da diez justo: tampoco hay nada que cruzar
+derivar: cuarenta y siete + tres           | necesito_las_columnas | mi 'hacer diez' es para UNA cifra
+derivar: doce + tres                       | necesito_las_columnas | con dos cifras hay que ir por COLUMNAS (unidad 7.3)
+derivar: ocho + manzana                    | no_es_un_numero | 'manzana' no es un numero
+
+# ===== PRUEBA TU AQUI (quita el '#' y cambia lo que quieras) =====
+#
+# casa(color=azul), carro            | no_decidible | son dos objetos; del color del carro no sabemos nada
+# casa(color=blanco); casa(forma=cuadrada) | una_sola_entidad | la misma casa: sus datos se suman
+# casa(color=blanco); casa(color=rojo)     | sin_atributo_comun | dos colores distintos: son DOS objetos, no una casa rara
+# carro,carro                        | un_objeto    | repetido sin atributos: nada lo distingue, es el mismo
+# caja(colorrojo)                    | no_entendido | mal escrito: se dice "no entiendo"
+# manzana(color=rojo,forma=redonda); pelota(color=rojo,forma=redonda)  | grupo:color,forma | iguales en las dos cosas
+# manzana(color=rojo,forma=redonda); coche(color=azul,forma=caja)      | sin_atributo_comun | nada en comun
+# caja_A(color=rojo); caja_B(color=rojo); caja_C(forma=cubo)           | no_decidible       | a C no le sabemos el color
+# color=rojo: a(color=rojo); b(tono=rojo)                              | no_decidible       | cuidado: tono no es color
+# taza(color=rojo)                                                     | una_sola_entidad   | un solo objeto no es un grupo
+# caballo,caballo,caballo                                              | objeto            | tres veces el mismo caballo
+
+# ===== UNIDAD 7.4 - LA RESTA CON LOS DEDOS (la nota 3 de Carlos) =====
+#     ES AL REVES QUE LA SUMA: se toma EL PRIMERO con los dedos y se van BAJANDO los del segundo.
+#     Los dedos que quedan son el resultado.  Y se verifica por la vuelta (la suma deshace la resta).
+dedos: 9 - 4                                | nueve - cuatro = cinco | se levantan 9, se bajan 4 (9,8,7,6,5), quedan 5
+dedos: cinco - dos                          | cinco - dos = tres | lo mismo con palabras
+dedos: 10 - 7                               | diez - siete = tres | empieza en el PRIMERO (no en el segundo)
+dedos: 9 - 9                                | nueve - nueve = cero | quitar todo deja CERO (no vacio)
+dedos: 9 - 0                                | nueve - cero = nueve | no se baja ningun dedo
+dedos: 4 - 9                                | no_hay_bastantes | no se pueden bajar mas dedos de los que hay
+dedos: 47 - 3                               | cuarenta y siete - tres = cuarenta y cuatro | el PRIMERO si puede pasar de diez: los dedos son la VENTANA de los ultimos diez
+dedos: 45 - 12                              | no_caben_en_los_dedos | lo que tiene que caber es EL SEGUNDO
+dedos: silla_1 - cuatro                     | no_es_un_numero | un objeto no es un numero
+dedos: 8 + 5                                | ocho + cinco = trece | OJO: con '+' sigue siendo la SUMA (7.1)
+
+# ===== UNIDAD 7.5 - RESTAR POR COLUMNAS (y el intercambio de una decena) =====
+#     Si las unidades de arriba NO LLEGAN, NO se da la vuelta a la resta: se CAMBIA una decena por
+#     diez unidades (72 = 6 dec y 12 u).  No es un prestamo: no se devuelve nada.  Y al cambiarla,
+#     la columna de las decenas BAJA de 7 a 6 (si se olvida, sale diez de mas).
+columnas: 72 - 45                           | 72 - 45 = 27 | con intercambio: 72 = 6 dec y 12 u; 12-5=7 y 6-4=2
+columnas: 58 - 27                           | 58 - 27 = 31 | SIN intercambio: 8-7=1 y 5-2=3
+columnas: 40 - 18                           | 40 - 18 = 22 | con intercambio, y deja 2 decenas
+columnas: 43 - 17                           | 43 - 17 = 26 | NO 34 (dar la vuelta) ni 36 (olvidar bajar la decena)
+columnas: 52 - 27                           | 52 - 27 = 25 | el ejemplo de manual
+columnas: 45 - 72                           | no_hay_bastantes | no hay resta negativa (5.4)
+columnas: 150 - 40                          | no_alcanza | es un numero, pero se sale de la tabla
+columnas: silla_1 - cuatro                  | no_es_un_numero | un objeto no es un numero
+columnas: 47 + 15                           | 47 + 15 = 62 | OJO: con '+' sigue siendo la SUMA (7.3)

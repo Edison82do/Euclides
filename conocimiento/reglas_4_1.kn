@@ -1,0 +1,52 @@
+id: reglas_4_1
+nombre: Reglas de decision de la unidad 4.1
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 4.1 - COMPARAR CANTIDADES.  Se dice con PALABRAS: mas, menos, tantos_como.
+
+  OJO: esto compara COLECCIONES (cosas), no NUMEROS.  Los simbolos >, <, = van entre cifras y son
+  la unidad 4.2.
+
+  El sistema decide EMPAREJANDO (correspondencia uno a uno, sin contar) y luego VERIFICA CONTANDO.
+  Las dos cosas tienen que decir lo mismo.
+
+  TRABAJO A - COMPARAR:  "comparar: <coleccion> / <coleccion>"
+     cuenta_no_alcanza(escena, cuenta)     -> no_alcanza   (alguna pasa de diez: no le llegan)
+     las_dos_iguales(escena, cuenta)       -> tantos_como
+     la_primera_tiene_mas(escena, cuenta)  -> mas
+     la_primera_tiene_menos(escena, cuenta)-> menos
+
+  La respuesta habla de la PRIMERA coleccion: 'mas' = la primera tiene mas QUE la segunda.
+
+  CONDICIONES PRIMITIVAS DISPONIBLES (version 4.1):
+     cuenta_no_alcanza(escena, cuenta)      (NUEVA: alguna de las dos pasa de diez)
+     las_dos_iguales(escena, cuenta)        (NUEVA: misma cantidad, y vale con 0 y 0)
+     la_primera_tiene_mas(escena, cuenta)   (NUEVA)
+     la_primera_tiene_menos(escena, cuenta) (NUEVA)
+
+  La segunda coleccion viaja en cuenta["otra"] (igual que en la 2.6).
+
+  Las reglas viven aqui, como datos.
+
+reglas_comparar:
+  - nombre: comparar_no_alcanza
+    conclusion: no_alcanza
+    condiciones:
+      - cuenta_no_alcanza(escena, cuenta)
+    justificacion: comparacion
+  - nombre: comparar_tantos_como
+    conclusion: tantos_como
+    condiciones:
+      - las_dos_iguales(escena, cuenta)
+    justificacion: comparacion
+  - nombre: comparar_mas
+    conclusion: mas
+    condiciones:
+      - la_primera_tiene_mas(escena, cuenta)
+    justificacion: comparacion
+  - nombre: comparar_menos
+    conclusion: menos
+    condiciones:
+      - la_primera_tiene_menos(escena, cuenta)
+    justificacion: comparacion

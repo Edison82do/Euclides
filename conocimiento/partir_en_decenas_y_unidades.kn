@@ -1,0 +1,61 @@
+id: partir_en_decenas_y_unidades
+nombre: Partir en decenas y unidades (cuanto vale cada cifra)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  PARTIR UN NUMERO EN DECENAS Y UNIDADES ES DECIR CUANTO VALE CADA CIFRA.
+
+      47  =  4 decenas  +  7 unidades
+          =  40        +  7            (porque 4 decenas SON cuarenta)
+
+  Y juntarlo es lo mismo al reves: 4 decenas y 7 unidades son 47.  Se escribe 4 x 10 + 7 = 47.
+
+  REGLA FIJADA 1 - CADA CIFRA VALE POR SU SITIO, NO POR LO QUE ES.
+  NZ Maths: "en el numero 73, la posicion del 7 esta en la columna de las decenas, lo que significa
+  que representa 7 unidades de diez (70)".  El 7 del 73 vale SETENTA; el 7 del 7 vale SIETE.  La
+  misma cifra, dos valores distintos: lo decide el sitio.
+
+  REGLA FIJADA 2 - POR ESO NO SE PUEDE SUMAR LAS CIFRAS SIN MAS.  El error tipico que documenta Oak:
+  "los ninos pueden transponer los digitos... suman las decenas como unidades y viceversa".  En 47,
+  el 4 NO vale cuatro: vale CUARENTA.  Sumar 4 + 7 = 11 y decir que 47 es once es el error.
+
+  REGLA FIJADA 3 - LA PRIMERA CIFRA SON DECENAS Y LA ULTIMA SON UNIDADES (BBC Bitesize).  Vale para
+  todos los numeros hasta cien: 17 son 1 decena y 7 unidades; 90 son 9 decenas y 0 unidades.
+
+  REGLA FIJADA 4 - LOS NUMEROS DE UNA CIFRA TIENEN CERO DECENAS.  7 = 0 decenas y 7 unidades.  Y el
+  cero de las decenas NO se dice: se dice "siete", no "cero decenas y siete".  Y 10 = 1 decena y 0
+  unidades: se dice "diez", no "diez y cero".
+
+  REGLA FIJADA 5 - ESTO ES EL REQUISITO DE LAS COLUMNAS.  Oak lo dice claro: hay que poder partir
+  en decenas y unidades ANTES de sumar numeros de dos cifras.  Porque sumar por columnas es
+  justamente juntar las decenas con las decenas y las unidades con las unidades (unidad 7.3).
+
+  REGLA FIJADA 6 - UN NUMERO SE PUEDE RENOMBRAR, PERO LOS NOMBRES RAROS NO VALEN.
+  NZ Maths: 42 puede verse como 4 decenas y 2 unidades, o 3 decenas y 12 unidades, o 2 decenas y 22
+  unidades: la MISMA cantidad.  Pero "3 decenas y 12 unidades" NO se dice "treinta y doce": se dice
+  cuarenta y dos.  Los nombres raros ("sesenta y quince", "cincuenta y veinticinco") son el error de
+  decena otra vez, ahora al reves.  Esta unidad da la particion NORMAL (la que se dice); el
+  renombrado es ya cosa de las columnas (7.3).
+
+errores_tipicos:
+  - Sumar las cifras como si valieran lo mismo: 47 -> 4 + 7 = 11.  (Oak: "transponer los digitos".)
+  - Leer el todo al reves: 47 como 4 unidades y 7 decenas (setenta y cuatro).
+  - Decir el nombre de una particion renombrada: "treinta y doce" en vez de cuarenta y dos.
+  - Poner el cero de las decenas: decir "cero decenas y siete" en vez de "siete".
+fuentes:
+  - BBC Bitesize, "Partitioning into tens and ones": "Numbers up to 100 can be partitioned into tens
+    and ones.  The first digit is the tens and the last digit is the ones"; y el diagrama parte-todo.
+    https://www.bbc.co.uk/bitesize/articles/zncq4xs
+  - Oak National Academy, "Add two-digit numbers without crossing the tens boundary" (Year 2):
+    "Partition - To split a whole up into parts"; el error tipico ("children may transpose digits
+    in the numbers, so add tens as ones and vice versa"); "ensure that the numbers are partitioned
+    into tens and ones, so their place value is clear"; y "ensure that children can confidently
+    partition two-digit numbers into tens and ones BEFORE accessing the content of this lesson".
+  - NZ Maths, "Place value with two-digit numbers": "the position of the 7 is in the tens column
+    which means that it represents 7 units of ten (70)"; el renombrado flexible ("42 can be viewed
+    as 4 tens and 2 ones, or 3 tens and 12 ones"); "it is vital that students understand that when
+    ten ones are created they form a unit of ten"; y los apodos graciosos ("'Sixty-fifteen'").
+  - Decision de Carlos (4 oct 2026): la 6.5 va despues de la 6.3 y antes de las columnas (7.3).
+depende_de:
+  - la_tabla_de_cien
+  - agrupar_en_decenas

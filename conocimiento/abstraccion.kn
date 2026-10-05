@@ -1,0 +1,60 @@
+id: abstraccion
+nombre: Abstraccion (se puede contar cualquier cosa)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  SE PUEDE CONTAR CUALQUIER COSA.  No solo cosas que se tocan: tambien sonidos, saltos, veces que
+  pasa algo, ideas.  La cantidad NO depende de QUE SEAN las cosas contadas.
+
+  REGLA FIJADA 1: el sistema no mira el TIPO.  Le da igual que la coleccion sea de sillas, de
+  sonidos o mezclada.  Si son entidades distinguibles, se cuentan igual.
+
+  REGLA FIJADA 2 (la consecuencia, y es la prueba de esta unidad): dos colecciones de cosas
+  COMPLETAMENTE DISTINTAS pueden tener LA MISMA cantidad.  Tres sillas y tres sonidos: tres y tres.
+  La cantidad es una propiedad abstracta: se ha quedado SOLO con el "cuantas", tirando el "que son".
+  (Esto es lo que NO ocurre con otras propiedades: "tres cosas rojas" si depende del color, y si
+  cambias el color se pierde.  La cantidad es lo unico que sobrevive al cambio de tipo.)
+
+  REGLA FIJADA 3: por eso NO hace falta que las cosas sean iguales entre si para contarlas.
+  Una coleccion mezclada (silla, perro, idea) tiene cantidad, aunque no comparta NINGUN atributo.
+  (Esto enlaza con la unidad 0.2: puede ser "sin_atributo_comun" y aun asi contarse y tener
+  cantidad.  Contar no necesita un grupo; necesita entidades distinguibles.)
+
+  REGLA FIJADA 4 (lo que NO se puede): si no son entidades distintas, no hay nada que contar.
+  Contar el mismo objeto dos veces no da dos (eso ya lo dice la 0.1).
+
+  OJO - se dice donde llega el sistema: cuenta hasta "diez".  Mas alla, no se inventa la cantidad.
+
+errores_tipicos:
+  - Creer que solo se cuentan "cosas" y no sonidos, saltos o veces que ocurre algo.
+  - Creer que para contar hay que tener cosas iguales, o del mismo tipo.
+  - Creer que la cantidad depende de que son las cosas.
+  - Contar el mismo objeto dos veces y creer que son dos.
+fuentes:
+  - Gelman & Gallistel (1978): el principio de ABSTRACCION - se puede contar cualquier coleccion
+    de entidades, sean las que sean.
+  - ERIC ED308018 ("The abstraction of counting", estudios con ninos de 2-3 anos): 24 ninos
+    contaron OBJETOS, ACCIONES y SONIDOS.  Contaron mejor los objetos, pero LA MAYORIA tambien
+    contaba acciones y sonidos -> "a very young age, children begin to develop an abstract mental
+    representation of the counting routine".
+  - Lago, Escudero & Dopico (2021, Front. Psychol., PMC8202410): la distincion entre las reglas
+    logicas del conteo (Gelman & Gallistel) y las convencionales.
+depende_de:
+  - cardinalidad
+  - orden_irrelevante
+relacionado_con:
+  - grupo_por_atributo
+  - subitizing
+propiedades:
+  - La cantidad no depende de que sean las cosas.
+  - No hace falta que compartan atributos para tener cantidad.
+  - Dos colecciones de cosas distintas pueden tener la misma cantidad.
+representaciones:
+  concreta: |
+    Contar palmadas, o saltos, o cosas: la misma retahila vale para todo.
+  numerica: |
+    Todavia no aplica.
+  formal: |
+    cuantos(C) no depende de la naturaleza de los elementos de C
+  general: |
+    Vale para cualquier coleccion de entidades distinguibles.

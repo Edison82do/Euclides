@@ -1,0 +1,33 @@
+id: obj_individual
+nombre: Objeto individual
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  Un OBJETO INDIVIDUAL es una entidad que existe separada de las demas: se puede
+  senalar, y al senalarla se senala una sola entidad, no varias.
+  Fijado por nosotros como punto de partida (no se demuestra). Coincide con la nocion
+  de "material concreto" de la secuencia de ensenanza de las matematicas, que empieza
+  siempre por objetos sueltos y manipulables.
+depende_de: []
+relacionado_con:
+  - identidad_de_referencias
+  - pluralidad
+propiedades:
+  - Una entidad separada se puede aislar de las demas sin romperla.
+  - Se puede senalar una y solo una vez por entidad.
+  - Dos senalamientos apuntan al mismo objeto o a objetos distintos; no hay una tercera opcion.
+representaciones:
+  concreta: |
+    Una pieza suelta sobre la mesa, una silla en la habitacion, una manzana en el cesto.
+  numerica: |
+    Todavia no aplica: en esta unidad no hay numeros ni cifras.
+  formal: |
+    x   (un simbolo que nombra una entidad)
+  general: |
+    Cualquier cosa que se pueda aislar de las demas y senalar como una sola.
+errores_tipicos:
+  - Tratar como dos objetos lo que son dos referencias al MISMO objeto (contar dos veces lo mismo).
+  - Tratar como un solo objeto dos objetos distintos que comparten nombre (dos sillas).
+fuentes:
+  - Montessori, secuencia de matematicas: concreto -> pictorico -> abstracto (montessoripro.org).
+  - Bruner, modos enactivo/iconico/simbolico; recogido por el metodo de Singapur (CPA).

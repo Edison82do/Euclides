@@ -1,0 +1,83 @@
+id: la_diferencia
+nombre: La diferencia (la tercera estructura de la resta)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  LA DIFERENCIA ES EL HUECO ENTRE DOS CANTIDADES.
+
+      Hay 5 y hay 3.  El hueco entre 5 y 3 es 2.
+      Eso se escribe:   5 - 3 = 2
+
+  REGLA FIJADA 1 - ESTA ES LA TERCERA Y ULTIMA ESTRUCTURA DE LA RESTA (NCETM, Primary Mastery
+  1.12: "Introduce children to subtraction as difference, the third and final subtraction
+  structure").  Las tres son:
+      REDUCIR (quitar)   -> unidad 5.4    "de 5 se van 3: quedan 2"
+      PARTIR             -> unidad 5.1    "5 se parte en 3 y 2"
+      COMPARAR (diferencia) -> ESTA       "entre 5 y 3 hay un hueco de 2"
+  Las tres se escriben con el MISMO signo -, y las tres pueden dar 5 - 3 = 2.  Pero son tres
+  HISTORIAS distintas, y por eso hay que saber cual es cual.
+  (Y por eso se aprenden una detras de otra, no a la vez.)
+
+  REGLA FIJADA 2 - AQUI NO HAY 'TODO'.  En quitar y en partir hay un todo (el monton); en la
+  diferencia NO: hay DOS cantidades y un HUECO entre ellas.  NCETM: "While both the partitioning
+  and reduction structures are concerned with the 'whole', this is not relevant in the difference
+  structure."
+
+  REGLA FIJADA 3 - NO SE QUITA NADA.  Los dos montones siguen enteros.  Nadie se va.  Solo se
+  mira el hueco.  Si el sistema dijera "quedan dos", estaria contando la historia equivocada.
+
+  REGLA FIJADA 4 - SE HALLA EMPAREJANDO (unidad 2.1).  Se pone un objeto con un objeto; los que
+  se quedan SIN pareja son justamente el hueco.  Por eso la diferencia no necesita contar: se ve.
+
+  REGLA FIJADA 5 - EL MISMO NUMERO RESPONDE A LAS DOS PREGUNTAS.
+      "cuantos mas tiene A?"   -> 2
+      "cuantos menos tiene B?" -> 2        (¡el mismo!)
+  Por eso la diferencia es UNA, y se dice desde los dos lados.
+
+  REGLA FIJADA 6 - SE ESCRIBE DE DOS MANERAS (NCETM).  Con 5 y 3:
+      5 - 3 = ?          (restar)
+      y tambien
+      3 + ? = 5          (contar hacia adelante, desde el pequeno hasta el grande)
+  Las dos valen, y dan lo mismo.  ('Contar hacia adelante' es contar los que sobran al emparejar.)
+
+  REGLA FIJADA 7 - SI SON IGUALES, LA DIFERENCIA ES CERO.  Dos montones de lo mismo tienen hueco
+  cero: 'tantos como'.  Y el cero es una cantidad (unidad 3.2), no un 'no se'.
+
+  REGLA FIJADA 8 - LA VUELTA VERIFICA.  Si la diferencia entre 5 y 3 es 2, entonces la diferencia
+  sumada al pequeno da el grande: 3 + 2 = 5.  Es la suma (unidad 5.2), y es la comprobacion.
+
+errores_tipicos:
+  - CREER QUE 'MAS' ES SUMAR.  NCETM: "In the question, 'How many more?', children may focus on the
+    word 'more', believing they need to do an addition calculation instead of finding the
+    difference."  La palabra engana; la estructura decide.
+  - Creer que se quita algo (no se quita: los dos montones siguen enteros).
+  - Sumar los dos valores (NCETM: "adding together the values in the calculation").
+  - Confundir 'cuantos mas' con 'cuantos son en total'.
+  - Solucionar solo restando: contar hacia adelante suele ser mas facil (NCETM: "they may choose to
+    'count on', rather than subtract").
+fuentes:
+  - NCETM, "PRIMARY MASTERY 1.12 - Subtraction as difference": es "the third and FINAL subtraction
+    structure".  Teaching point 1: la diferencia compara la cantidad de un conjunto con la de otro.
+    Teaching point 2: la diferencia es una de las estructuras de la resta.  Teaching point 3: los
+    numeros consecutivos tienen diferencia 1; los pares (o impares) consecutivos, diferencia 2.
+  - NCETM, "Additive Reasoning": "The 'difference' structure involves the comparison of two values:
+    the difference being the 'gap' between the two values.  While both the partitioning and
+    reduction structures are concerned with the 'whole', this is not relevant in the difference
+    structure."  Y: "it could be written as either: 12 + ? = 15 or 15 - 12 = ?"; "they may choose to
+    'count on', rather than subtract".
+  - Selter, Prediger, Nührenbörger & Hußmann (2012), Educational Studies in Mathematics, "Taking
+    away and determining the difference": distingue los dos modelos (ta = taking away, resto;
+    dd = determining the difference, diferencia).  "Using subtraction solely as taking away is too
+    one-sided" (Freudenthal 1983; Usiskin 2008).
+  - Math Coach's Corner (2012), "How Many More? Comparison Subtraction": "Comparison subtraction is
+    really tricky for kids.  Part of that is a lack of exposure.  We typically teach subtraction as
+    take away...  But we need to move beyond that."
+  - St Michael's (Leics), "Progression in Bar Modelling": 6 - 2 = 4 se lee de las dos maneras:
+    "The difference between six and two is four" y "There are four more marshmallows than
+    lollipops".
+depende_de:
+  - la_resta
+  - comparacion
+relacionado_con:
+  - el_cero
+  - cardinalidad

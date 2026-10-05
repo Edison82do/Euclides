@@ -1,0 +1,47 @@
+id: reglas_3_4
+nombre: Reglas de decision de la unidad 3.4
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 3.4 - EL PUENTE: cantidad, palabra y cifra, en los dos sentidos.
+
+  Los seis caminos ya estan todos.  El que faltaba era CIFRA -> CANTIDAD, y se escribe igual que
+  el "dame" de la 2.4, poniendo la cifra en vez de la palabra:
+        dame: a,b,c,d,e / 3      <- de la cifra 3 a los objetos
+
+  TRABAJO A - EL PUENTE DE UNA COLECCION:  "dime esta coleccion de las tres maneras"
+     escena_vacia(escena)                  -> vacia      (y es CERO, unidad 3.2)
+     faltan_palabras(escena, cuenta)       -> no_alcanza (mas objetos que palabras conocidas)
+     hay_palabras_suficientes(escena, cuenta) -> puente
+     todo lo demas, por el conteo, y el sistema ENSENA el recuento.
+
+  TRABAJO B - LOS CAMINOS:  "que caminos hay entre las tres representaciones?"
+     (siempre)                             -> los_caminos
+
+  TRABAJO C - EL CAMINO CORTO (subitizing, unidad 1.0), ahora CONECTADO:
+     Cuando reconoce un patron de un vistazo, ademas de la palabra da SU CIFRA, y dice que NO ha
+     contado.  Cuando no lo reconoce, lo dice y NO cuenta a escondidas.
+
+  CONDICIONES PRIMITIVAS DISPONIBLES (version 3.4):
+     escena_vacia(escena)
+     faltan_palabras(escena, cuenta)
+     hay_palabras_suficientes(escena, cuenta)
+
+  Las reglas viven aqui, como datos.
+
+reglas_puente:
+  - nombre: puente_vacia
+    conclusion: vacia
+    condiciones:
+      - escena_vacia(escena)
+    justificacion: el_cero
+  - nombre: puente_no_alcanza
+    conclusion: no_alcanza
+    condiciones:
+      - faltan_palabras(escena, cuenta)
+    justificacion: puente
+  - nombre: puente_hay
+    conclusion: puente
+    condiciones:
+      - hay_palabras_suficientes(escena, cuenta)
+    justificacion: puente

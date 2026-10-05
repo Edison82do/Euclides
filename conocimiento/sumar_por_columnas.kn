@@ -1,0 +1,60 @@
+id: sumar_por_columnas
+nombre: Sumar por columnas (unidad con unidad, decena con decena, y el llevarse)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  SUMAR POR COLUMNAS ES SUMAR CADA SITIO CON SU SITIO: las UNIDADES con las unidades, y las
+  DECENAS con las decenas.  Y cuando las unidades pasan de nueve, lo que sobra es UNA DECENA que
+  se suma a la columna de las decenas: eso es LLEVARSE.
+
+     47          SE PARTE CADA NUMERO:      47 = 4 decenas y 7 unidades
+   + 15                                     15 = 1 decena  y 5 unidades
+   ----
+     62          UNIDADES:  7 + 5 = 12   ->  pasa de nueve: se anota el 2 y se LLEVA 1 decena
+                 DECENAS:   4 + 1 + 1(la que se lleva) = 6
+                 RESULTADO: 62
+
+  REGLA FIJADA 1 - CADA SITIO CON SU SITIO, Y NUNCA SE MEZCLAN.
+  Las unidades se suman con las unidades y las decenas con las decenas.  Lo dice Oak: es el error
+  de "transponer los digitos" (unidad 6.5): sumar 4 + 7 en el 47 seria tomar una decena por una
+  unidad.  Cada columna es de lo suyo.
+
+  REGLA FIJADA 2 - EL LLEVARSE NO ES UN TRUCO: ES RE-AGRUPAR.
+  Cuando las unidades dan 12, eso NO son "doce unidades sueltas": son UNA DECENA Y DOS UNIDADES
+  (lo que se aprendio en la 6.2: diez unidades hacen una decena).  Se anota el 2 en las unidades
+  y la decena entera se sube a la columna de las decenas y se suma con lo de alli.  La fuente lo
+  dice asi: "cuando la columna de las unidades se desborda mas alla de nueve, haces un diez y lo
+  deslizas a la columna de las decenas".
+
+  REGLA FIJADA 3 - LO QUE SE LLEVA SOLO PUEDE SER 1.  Sumar dos unidades no pasa de dieciocho
+  (9 + 9), y dieciocho son UNA decena y ocho unidades.  Nunca pueden salir dos decenas de la
+  columna de las unidades: por eso se lleva 1, no 2.  (Lo dice Carlos: "la decena que se lleva
+  (1)".)
+
+  REGLA FIJADA 4 - SE EMPIEZA POR LAS UNIDADES, Y POR ESO.  Si empezara por las decenas tendria
+  que volver atras cuando apareciera lo que se lleva.  Se empieza por la columna de la derecha.
+
+  REGLA FIJADA 5 - Y ESTO ES LA NOTA 7 DE CARLOS, PALABRA POR PALABRA: "sumar unidad con unidad,
+  luego decena con decena, y si pasa de 9 se anota la unidad y la decena que se lleva (1) se suma
+  con lo siguiente".
+
+  REGLA FIJADA 6 - ES REVERSIBLE CON LA RESTA.  La resta por columnas es lo mismo al reves:
+  cuando las unidades de arriba son menos que las de abajo, se pide UNA decena prestada a la
+  columna de las decenas (72 = 6 decenas y 12 unidades).  Es el mismo mecanismo (unidad 7.4).
+fuentes:
+  - Oak National Academy, "Add two-digit numbers without crossing the tens boundary" y "Addition by
+    bridging through 10": partir en decenas y unidades primero, y sumar cada sitio con el suyo.
+    https://www.thenational.academy/teachers/programmes/maths-primary-ks2/units/review-strategies-for-adding-and-subtracting-across-10/lessons/addition-by-bridging-through-10
+  - chalkbee, "Two-digit addition with regrouping": "when you add two numbers and the ones column
+    overflows past nine, you make a ten and slide it over to the tens column".
+  - yassersouri, "Two-Digit Addition With Regrouping": "7 ones + 8 ones = 15 ones.  Write 5 ones.
+    Carry 1 ten.  Then 2 tens + 1 carried ten = 3 tens."
+  - NZ Maths, "Place value with two-digit numbers": el renombrado ("42 can be viewed as 4 tens and
+    2 ones, or 3 tens and 12 ones"); y que es "vital que entiendan que cuando se crean diez
+    unidades forman una unidad de diez".
+  - Decision de Carlos (4 oct 2026), nota 7: "sumar unidad con unidad, luego decena con decena, y si
+    pasa de 9 se anota la unidad y la decena que se lleva (1) se suma con lo siguiente".
+depende_de:
+  - partir_en_decenas_y_unidades
+  - agrupar_en_decenas
+  - la_suma

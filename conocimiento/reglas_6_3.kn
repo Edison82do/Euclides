@@ -1,0 +1,34 @@
+id: reglas_6_3
+nombre: Reglas de decision de la unidad 6.3 (la tabla de 100)
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 6.3 - LA TABLA DE 100: el sitio de cada numero (decenas = fila, unidades = columna).
+
+  "sitio: 47"   ->  el 47 esta en la fila 4 (cuarenta) y la columna 7 (siete): 4 decenas y 7 unidades.
+
+  LA ENTRADA es UN NUMERO, dicho con cifra (47) o con palabra (cuarenta y siete).
+
+  CONDICIONES:
+     el_numero_solo_no_existe(escena, cuenta) -> no_es_un_numero
+     fuera_de_la_tabla(escena, cuenta)      -> fuera_de_la_tabla   (mas de cien)
+     siempre(escena, cuenta)                -> se_puede
+
+  Las reglas viven aqui, como datos.
+
+reglas_sitio:
+  - nombre: st_no_es_un_numero
+    conclusion: no_es_un_numero
+    condiciones:
+      - el_numero_solo_no_existe(escena, cuenta)
+    justificacion: la_tabla_de_cien
+  - nombre: st_fuera_de_la_tabla
+    conclusion: fuera_de_la_tabla
+    condiciones:
+      - fuera_de_la_tabla(escena, cuenta)
+    justificacion: la_tabla_de_cien
+  - nombre: st_se_puede
+    conclusion: se_puede
+    condiciones:
+      - siempre(escena, cuenta)
+    justificacion: la_tabla_de_cien

@@ -1,0 +1,59 @@
+id: la_resta_con_los_dedos
+nombre: La resta con los dedos (tomar el primero, ir bajando el segundo)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  LA RESTA CON LOS DEDOS ES COMO LA SUMA, PERO AL REVES.
+
+     9 - 4
+
+     SE TOMAN con los dedos tantos como el PRIMERO (nueve).
+     SE VAN BAJANDO tantos como el SEGUNDO (cuatro), uno a uno.
+     LOS DEDOS QUE QUEDAN son el resultado (cinco).
+
+  REGLA FIJADA 1 - SE TOMA EL PRIMERO, NO EL SEGUNDO.  Al contrario que en la suma (donde se toman
+  los dedos del SEGUNDO y se cuenta hacia adelante desde el primero), en la resta se levanta el
+  PRIMERO y se van BAJANDO los del segundo.  Y lo que queda levantado es el resultado.
+  (Es la nota de Carlos, 4 oct 2026.)
+
+  REGLA FIJADA 2 - ES CONTAR HACIA ATRAS.  Cada dedo que se baja es un paso hacia atras: nueve,
+  ocho, siete, seis, cinco.  La suma cuenta hacia adelante; la resta, hacia atras.
+
+  REGLA FIJADA 3 - LOS DEDOS QUE QUEDAN SON "LO QUE QUEDA DESPUES DE QUE SE VAYAN".
+  Eso es exactamente lo que dice la unidad 5.4 (quitar): primero habia nueve, se van cuatro, ahora
+  quedan cinco.  La resta con los dedos es EL MECANISMO de aquello que la 5.4 solo describia.
+
+  REGLA FIJADA 4 - NO SE PUEDEN BAJAR MAS DEDOS DE LOS QUE HAY.  Si el segundo es mayor que el
+  primero, no se puede: es el mismo `no_hay_bastantes` de la 5.4.  No existe el resultado negativo.
+
+  REGLA FIJADA 5 - EL PRIMERO **SI PUEDE** PASAR DE DIEZ.  Es lo que cazo Carlos (4 oct 2026, por la
+  tarde): los diez dedos NO representan el numero entero, representan LA VENTANA DE LOS ULTIMOS DIEZ
+  NUMEROS, y el ULTIMO de ellos es el minuendo.  Para 12 - 5 los dedos van DEL 3 AL 12; se bajan 5 y
+  quedan 7.  Y asi CABE 45 - 7 (dedos del 36 al 45; se bajan 7; quedan 38).
+  LO QUE TIENE QUE CABER EN LOS DEDOS ES EL SEGUNDO (el que se baja).  El primero solo marca DONDE
+  ACABA la ventana.
+  Y asi queda IGUAL QUE LA SUMA: en la 7.1 tambien se anota el primero y el total no tiene que caber
+  ("los dedos cuentan los PASOS").  La version anterior de esta regla exigia que el primero no
+  pasara de diez, y CONTRADECIA a la 7.1: era un fallo.
+
+  REGLA FIJADA 6 - SE VERIFICA POR LA VUELTA (la suma deshace la resta).  Si 9 - 4 = 5, entonces
+  5 + 4 tienen que ser 9.  Y esa suma la hace con su propio mecanismo (unidad 7.1).  La resta no se
+  cree a si misma: la comprueba la suma.
+
+  REGLA FIJADA 7 - Y ES LO QUE HACE FALTA PARA LA RESTA POR COLUMNAS (unidad 7.5).  Cuando las
+  unidades de abajo son mas que las de arriba se CAMBIA una decena por diez unidades
+  (`72 = 6 decenas y 12 unidades`), y luego cada columna se resta con ESTE mecanismo: 12 - 5 se hace
+  con los dedos del 3 al 12.
+fuentes:
+  - Nota de Carlos (4 oct 2026): "con los dedos se toma el primer numero con los dedos, se le van
+    descontando el segundo numero y los dedos que quedan es el resultado de la resta".
+  - NCETM, "Addition and subtraction: bridging 10": la resta se hace "subtracting through ten" o
+    "subtracting from ten"; y la resta como lo inverso de la suma.
+  - White Rose Education (via la investigacion de la unidad 5.4): "la reduccion se ensena
+    generalmente primero".
+  - Achieve the Core, "Progressions for the Common Core": la resta dentro de 100 con y sin
+    descomponer se ensenan seguidas, y el error tipico de la resta por columnas es restar siempre
+    el digito pequeno del grande.
+depende_de:
+  - el_metodo_de_los_dedos
+  - la_resta

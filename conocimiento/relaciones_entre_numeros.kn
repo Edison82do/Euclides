@@ -1,0 +1,65 @@
+id: relaciones_entre_numeros
+nombre: Relaciones entre numeros (mayor, menor, igual)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  DOS NUMEROS ESCRITOS (cifras) se pueden relacionar: uno puede ser MAYOR que el otro, MENOR, o los
+  dos IGUALES.
+
+     3  >  2        tres es MAYOR que dos
+     2  <  3        dos es MENOR que tres
+     3  =  3        tres es IGUAL a tres
+
+  REGLA FIJADA 1 - DE DONDE SALE QUE UNO SEA MAYOR.  No sale del dibujo de la cifra (una cifra no es
+  mas grande que otra por su forma).  Sale del ORDEN: EN LA SECUENCIA DE NUMEROS, EL QUE VIENE
+  DESPUES ES EL MAYOR.  El 'tres' viene despues del 'dos', asi que el tres es mayor.
+  Ese es el dato escrito que lo respalda: la secuencia de numeros (unidad 3.3).
+
+  REGLA FIJADA 2 - Y CUADRA CON LAS CANTIDADES.  Que el tres sea mayor que el dos NO es una regla
+  suelta de las cifras: es lo mismo que decir que TRES COSAS SON MAS QUE DOS COSAS (unidad 4.1).
+  La cifra y la cantidad dicen lo mismo; si no cuadraran, algo estaria mal.
+
+  REGLA FIJADA 3 - LOS SIMBOLOS.  > significa MAYOR QUE, < significa MENOR QUE, = significa IGUAL A.
+  La boca ABIERTA mira siempre al numero MAYOR (el que tiene mas).  Esto es lo que mas se confunde:
+  > y < son iguales vistos al reves, asi que hay que fijarse en hacia donde abre la boca.
+
+  REGLA FIJADA 4 - LOS SIMBOLOS VAN SOLO ENTRE CIFRAS.  Es un dato de la ensenanza (National
+  Academy): la comparacion de CANTIDADES se dice con PALABRAS (mas, menos, tantos como, unidad 4.1);
+  el SIMBOLO llega con los NUMEROS ESCRITOS.  Por eso 'comparar:' no lleva simbolo y
+  'comparar_cifras:' si.
+
+  REGLA FIJADA 5 - MAYOR/MENOR, PERO NO 'MAS' PARA NUMEROS.  Se distingue el vocabulario (Illustrative
+  Mathematics): de GRUPOS DE COSAS se dice que hay MAS o MENOS; de NUMEROS se dice que uno es MAYOR o
+  MENOR que otro.  No es lo mismo decir "aqui hay mas" que "cinco es mayor que tres".
+
+  REGLA FIJADA 6 - SIN CIFRA NO HAY COMPARACION DE CIFRAS.  Si alguna de las dos no es una cifra que
+  conozco (del 0 al 9), el sistema lo dice; no la convierte a escondidas.
+
+errores_tipicos:
+  - Confundir > con < (son iguales vistos al reves): hay que mirar hacia donde ABRE la boca.
+  - Creer que la cifra mayor es la que tiene el dibujo mas grande (la forma no dice nada).
+  - Usar simbolos entre cantidades ("a,b,c > d,e"): el simbolo va entre CIFRAS.
+  - Decir 'hay mas' de dos numeros (a los numeros se les dice mayor/menor).
+  - Comparar cifras sin saber el orden de la secuencia (saber contar no basta: hay que saber que el
+    orden DENOTA magnitud; Sarnecka & Carey 2008 y Davidson et al. 2012 encontraron ninos que
+    contaban bien y no lo entendian).
+fuentes:
+  - Illustrative Mathematics (Kendall Hunt), Kindergarten Course Guide: para comparar numeros
+    escritos, una de las vias es "usar el conocimiento de la secuencia de contar: que los numeros
+    que vienen DESPUES en la secuencia son MAYORES".  Y el vocabulario: 'less' se usa con NUMERALES
+    y 'fewer' con GRUPOS DE OBJETOS.
+  - Siegler & Robinson (1982): el conocimiento de la magnitud relativa de los numeros de una cifra
+    llega unos DOS ANOS despues de saber contar hasta diez.
+  - Sarnecka & Carey (2008) y Davidson, Eng & Barner (2012): muchos ninos saben contar (y mapear
+    palabras a cantidades) y NO entienden que el orden de la secuencia denota relaciones de
+    magnitud (el 28% y el 20% en sus estudios).  Saber contar NO garantiza esta unidad.
+  - National Academy (KS1): los simbolos de igualdad y desigualdad (=, >, <) se usan SOLO entre
+    cifras.
+  - Gelman & Gallistel (1978): el principio de orden estable.
+depende_de:
+  - secuencia_de_numeros
+  - simbolos
+  - comparacion
+relacionado_con:
+  - puente
+  - cardinalidad

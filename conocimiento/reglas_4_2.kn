@@ -1,0 +1,55 @@
+id: reglas_4_2
+nombre: Reglas de decision de la unidad 4.2
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 4.2 - COMPARAR NUMEROS (cifras).  La respuesta es el SIMBOLO: >, < o =.
+
+  Aqui SI van los simbolos: van entre CIFRAS (unidad 4.2).  Las cantidades se dicen con palabras
+  (unidad 4.1): mas, menos, tantos_como.
+
+  LA REGLA DE FONDO: en la secuencia de numeros (unidad 3.3), EL QUE VIENE DESPUES ES EL MAYOR.
+  Y eso cuadra con las cantidades (unidad 4.1): si 3 > 2, es porque tres cosas son mas que dos.
+
+  TRABAJO A - COMPARAR DOS CIFRAS:  "comparar_cifras: 3 / 2"
+     cifra_no_conocida(palabra, cuenta)     -> cifra_desconocida
+     cifras_iguales(palabra, cuenta)        -> iguales
+     cifra_mayor(palabra, cuenta)           -> mayor
+     cifra_menor(palabra, cuenta)           -> menor
+
+  OJO: los argumentos de una condicion van NOMBRADOS y solo pueden ser escena, criterio, patron,
+  cuenta o palabra.  La primera cifra viaja en 'palabra' y la segunda en cuenta["otra_cifra"].
+
+  La respuesta 'mayor' se escribe con el simbolo >, 'menor' con <, 'iguales' con =.
+
+  CONDICIONES PRIMITIVAS DISPONIBLES (version 4.2):
+     cifra_no_conocida(escena, cuenta)   (NUEVA: alguna no es una cifra del 0 al 9)
+     cifras_iguales(escena, cuenta)      (NUEVA)
+     cifra_mayor(escena, cuenta)         (NUEVA: la primera viene despues en la secuencia)
+     cifra_menor(escena, cuenta)         (NUEVA)
+
+  La primera cifra viaja en 'escena' (como texto) y la segunda en cuenta["otra_cifra"].
+
+  Las reglas viven aqui, como datos.
+
+reglas_comparar_cifras:
+  - nombre: cc_cifra_desconocida
+    conclusion: cifra_desconocida
+    condiciones:
+      - cifra_no_conocida(palabra, cuenta)
+    justificacion: relaciones_entre_numeros
+  - nombre: cc_iguales
+    conclusion: iguales
+    condiciones:
+      - cifras_iguales(palabra, cuenta)
+    justificacion: relaciones_entre_numeros
+  - nombre: cc_mayor
+    conclusion: mayor
+    condiciones:
+      - cifra_mayor(palabra, cuenta)
+    justificacion: relaciones_entre_numeros
+  - nombre: cc_menor
+    conclusion: menor
+    condiciones:
+      - cifra_menor(palabra, cuenta)
+    justificacion: relaciones_entre_numeros

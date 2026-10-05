@@ -1,0 +1,36 @@
+id: reglas_2_3
+nombre: Reglas de decision de la unidad 2.3
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 2.3 - CUANTOS HAY.  "Cuenta esta coleccion y dime cuantos hay."
+
+     escena_vacia(escena)              -> no_decidible   (no hay nada que contar)
+     faltan_palabras(escena, cuenta)   -> no_alcanza_la_secuencia  (no se inventa la cantidad)
+     (si no)                           -> hay_cantidad
+
+  Y la cantidad es LA ULTIMA PALABRA del emparejamiento.
+
+  CONDICIONES PRIMITIVAS: las MISMAS que ya usa la 2.1.  No se reimplementa nada:
+     escena_vacia(escena)
+     faltan_palabras(escena, cuenta)
+     hay_palabras_suficientes(escena, cuenta)
+
+  Las reglas viven aqui, como datos.
+
+reglas_cuantos:
+  - nombre: cuantos_sin_objetos
+    conclusion: cero
+    condiciones:
+      - escena_vacia(escena)
+    justificacion: el_cero
+  - nombre: cuantos_secuencia_corta
+    conclusion: no_alcanza_la_secuencia
+    condiciones:
+      - faltan_palabras(escena, cuenta)
+    justificacion: secuencia_de_conteo
+  - nombre: cuantos_hay
+    conclusion: hay_cantidad
+    condiciones:
+      - hay_palabras_suficientes(escena, cuenta)
+    justificacion: cuantos_hay

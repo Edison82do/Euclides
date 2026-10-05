@@ -1,0 +1,58 @@
+id: las_tres_entradas
+nombre: Las tres entradas (cantidad, cifra, palabra) y sus grupos
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  LO QUE SE ESCRIBE EN EL SISTEMA PERTENECE A UNO DE TRES GRUPOS, Y NO SE MEZCLAN:
+
+     CANTIDAD  ->  nombres de OBJETOS.   a, b, c, casa, silla_1, carro
+     CIFRA     ->  un simbolo de un numero.   0, 1, 2, ... 9
+     PALABRA   ->  la palabra de un numero.   cero, uno, dos, ... nueve
+
+  REGLA FIJADA 1 - CADA ORDEN PIDE SU GRUPO.  Hay ordenes que manejan CANTIDADES (juntar cosas,
+  contarlas, partirlas) y ordenes que manejan NUMEROS (que va antes, cuanto es, cual es mayor).
+  Cada orden declara cual de los tres grupos espera.  Y si recibe otro, lo DICE.
+
+  REGLA FIJADA 2 - UN OBJETO NO SE PUEDE LLAMAR COMO UN NUMERO.  '3' ya significa el numero tres,
+  y 'dos' ya significa el numero dos.  Asi que no valen como nombre de objeto: si se usaran, no se
+  sabria de que se esta hablando.  Quien quiera tres sillas que las llame silla_1, silla_2, silla_3.
+  ESTO ES UNA REGLA, no un aviso: el sistema no adivina la intencion, y no hay adivinanza posible
+  porque los grupos estan separados.
+
+  REGLA FIJADA 3 - POR QUE.  Antes de esto paso algo malo (cazado por Carlos): al escribir
+  'sumar: 3 / 2' el sistema tomaba '3' y '2' por DOS OBJETOS y contestaba '1 + 1 = 2' con toda
+  seguridad.  Una respuesta CREIBLE Y FALSA, sin avisar.  Es peor que un error, porque engana.
+  Separar los grupos lo hace IMPOSIBLE: '3' no puede ser un objeto.
+
+  REGLA FIJADA 4 - LOS NUMEROS SE DICEN DE DOS MANERAS (unidad 3.4).  Una cifra y una palabra son
+  EL MISMO NUMERO: '3' y 'tres' son lo mismo.  Asi que las ordenes de NUMEROS aceptan LAS DOS
+  (por la cifra o por la palabra), y el sistema traduce solo, SIN inventarse nada: la traduccion
+  esta escrita en la tabla de simbolos.
+
+  REGLA FIJADA 5 - LAS ORDENES DE NUMEROS.  Aceptan palabra o cifra:
+     que va antes / despues        (siguiente, anterior)
+     recitar / revisar un recitado
+     comparar dos numeros          (cual es mayor)
+     la cifra de una palabra / la palabra de una cifra / la cifra de una cantidad
+     y operar con numeros          (sumar numeros, partir un numero)
+
+  REGLA FIJADA 6 - LAS ORDENES DE CANTIDADES.  Manejan OBJETOS y no aceptan numeros:
+     contar, revisar un conteo, cuantos hay, dame, tiene, orden, mismo recorrido,
+     comparar dos colecciones, partir una coleccion, juntar partes, sumar colecciones, anadir.
+
+errores_tipicos:
+  - Usar un numero donde van objetos ('sumar: 3 / 2'): antes daba una respuesta falsa; ahora lo dice.
+  - Usar un objeto donde va un numero ('siguiente: casa'): el sistema lo dice.
+  - Creer que una cifra y su palabra son numeros distintos (son el mismo numero).
+fuentes:
+  - Regla del proyecto (la mas importante): el sistema NO adivina el lenguaje; si no entiende algo,
+    LO DICE.  Una respuesta creible y falsa es el peor fallo posible.
+  - Idea de Carlos (2026-10-03): "podemos dividir todo en tres grupos: cantidad, cifra, palabra;
+    habrian mas comandos pero mas claridad."
+  - Benoit, Lehalle & Jouen (2013) y la unidad 3.4: la cifra y la palabra son dos maneras de decir
+    el mismo numero, y la traduccion entre ellas es lo ultimo que se aprende.
+depende_de:
+  - puente
+  - simbolos
+relacionado_con:
+  - secuencia_de_numeros

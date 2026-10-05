@@ -1,0 +1,74 @@
+id: agrupar_en_decenas
+nombre: Agrupar de diez en diez (el diez como UNA cosa)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  AGRUPAR DE DIEZ EN DIEZ ES DEJAR DE CONTAR DE UNO EN UNO.
+
+  Hasta ahora, contar era: un objeto, una palabra (uno, dos, tres...).  Para cien objetos eso son
+  CIEN palabras.  Pero hay una manera mas corta: coger los objetos DE DIEZ EN DIEZ y llamar a cada
+  monton de diez UNA DECENA.  Entonces:
+
+       13 objetos  =  UN MONTON DE DIEZ  y  3 SUELTOS
+                   =  UNA DECENA  y  3 UNIDADES
+
+  Y al monton de diez se le cuenta como SI FUERA UNA SOLA COSA: uno, dos, tres montones...  Eso es
+  lo que NCETM llama UNITISING: "tratar grupos que contienen, o representan, el mismo numero de
+  cosas como 'unidades' o 'unos'".
+
+  REGLA FIJADA 1 - UNA DECENA ES DIEZ UNIDADES, Y ES UNA COSA NUEVA.
+  La decena no es "diez objetos": es UN objeto nuevo que VALE diez.  Diez y uno son el mismo
+  monton visto de dos maneras.  Ese salto -ver diez objetos y decir "uno"- es EL PASO.
+
+  REGLA FIJADA 2 - EL VALOR POSICIONAL ES ESTO.  NCETM: ser capaz de unitizar "es fundamental
+  para entender el valor posicional".  Y Oak: "un objeto puede representar varios otros objetos".
+  Sin esta unidad, la DECENA es una palabra; con ella, es un monton que se puede coger con la mano.
+
+  REGLA FIJADA 3 - POR QUE VA ANTES QUE MULTIPLICAR Y DIVIDIR.  NCETM: el unitising "forma un hilo
+  de comprension a lo largo del desarrollo posterior de la multiplicacion y la division" y
+  "permite a los ninos pasar del pensamiento aditivo al multiplicativo".  Y Oak: "el foco aqui es
+  el unitising... que es la base de la multiplicacion y la division".  Un monton de diez cogido tres
+  veces son tres decenas, que es lo mismo que 3 x 10 (unidad 5.6).
+
+  REGLA FIJADA 4 - SE CUENTAN PRIMERO LAS DECENAS.  Oak: "presenta las decenas y las unidades en
+  disposiciones no estandar, para que los ninos practiquen CONTAR SIEMPRE PRIMERO LAS DECENAS".
+  El sistema lo hace asi y lo dice.
+
+  REGLA FIJADA 5 - EL ORDEN DE LOS OBJETOS NO CAMBIA EL RESULTADO (es la unidad 2.5 aplicada aqui).
+  Oak: "el orden en que se colocan las decenas y las unidades no afecta al valor del numero".
+  El sistema lo COMPRUEBA: agrupa la coleccion al derecho y al reves, y tiene que salir lo mismo.
+
+  REGLA FIJADA 6 - HACEN FALTA DIEZ PARA HACER UNA DECENA.  Con menos de diez objetos NO hay decena:
+  se dice, no se inventa media decena.
+
+errores_tipicos:
+  - SEGUIR CONTANDO DE DIEZ EN DIEZ CUANDO YA SE LLEGA A LAS UNIDADES.  Es el error literal que
+    documenta Oak: "los ninos pueden seguir contando de diez en diez cuando llegan a las unidades,
+    p.ej. contar 2 decenas y 3 unidades completamente de diez en diez".  El sistema lo ensena
+    aparte: las decenas se cuentan de diez en diez, las unidades DE UNO EN UNO.
+  - No reconocer un monton de diez como UNA sola cosa (contar los diez objetos uno a uno).
+  - Creer que la disposicion (como estan colocados) cambia el valor.  No cambia (regla 5).
+  - Querer partir la decena: "diez objetos" y "una decena" son LO MISMO, no dos cosas distintas.
+fuentes:
+  - NCETM, "What is unitising, and why is it important?" (06/11/2019): el termino "unitising" y la
+    definicion ("treating groups that contain, or represent, the same numbers of things as 'units'
+    or 'ones'"); "fundamental in understanding place value"; "allows children to move from additive
+    to multiplicative thinking"; y la secuencia por cursos (Y1: dinero; Y2: contar de 2 en 2/5/10;
+    Y4: "understanding the unitising of 2-digit numbers into 10s and 1s is used to introduce the
+    short division algorithm").
+  - NCETM, "PRIMARY MASTERY 2.01 - Counting, unitising and coins": "Explore the concept of unitising
+    by counting in units of two, five or ten".
+  - Oak National Academy, "Count a large group of objects by counting tens and ones" (Year 2):
+    los puntos clave ("One item can be used to represent several other items. This is called
+    unitising."; "The order in which tens and ones are arranged does not affect the value"); el
+    error tipico (contar las unidades de diez en diez); "the focus here is unitising (where one
+    object represents ten ones that cannot physically be separated) which forms the basis for
+    multiplication and division"; y "practise always counting tens first".
+  - IL Classroom, "Making Groups of 10": "a conceptual challenge students may encounter is
+    accepting that 10 ones, or items, can be represented as one unit of ten... a bundle of ten
+    ones is called 'a ten'".
+  - Decision de Carlos (4 oct 2026): quedarnos en el 100, y el orden 6.2 -> 6.3 -> 6.5 -> 7.3.
+depende_de:
+  - secuencia_hasta_cien
+relacionado_con:
+  - el_metodo_de_los_dedos

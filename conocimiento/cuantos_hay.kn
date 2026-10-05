@@ -1,0 +1,66 @@
+id: cuantos_hay
+nombre: Cuantos hay (la respuesta es la ultima palabra del recuento)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  Contar una coleccion y DECIR CUANTOS HAY.  La respuesta es LA ULTIMA PALABRA del recuento.
+
+  REGLA FIJADA 1: se cuenta la coleccion (unidad 2.1: una palabra por objeto, en orden) y la
+  respuesta a "cuantos hay?" es la ULTIMA palabra que se dijo.
+
+  REGLA FIJADA 2 - HONESTIDAD, y es importante que quede escrita:
+  esto es la REGLA DE LA ULTIMA PALABRA, no el principio de cardinalidad.  En la investigacion
+  se llaman cosas distintas a proposito (Fuson 1988; Frye et al. 1989):
+     - REGLA DE LA ULTIMA PALABRA (esto, unidad 2.3): "la respuesta a 'cuantos hay?' es la ultima
+       palabra del recuento".  Es un PROCEDIMIENTO.  Se puede aplicar bien sin entender nada.
+     - PRINCIPIO DE CARDINALIDAD (unidad 2.4): "esa ultima palabra ES la cantidad del conjunto".
+       Es el PRINCIPIO, y llega despues.
+  Datos que obligan a separarlas: de 188 ninos de 4 anos y medio, 42 (un 22,3%) acertaban
+  diciendo la ultima palabra Y FALLABAN la correspondencia uno a uno al contar.  Es decir: se
+  puede acertar aqui sin entender lo de abajo.  Por eso esta unidad NO dice "entiendo que hay
+  tres": dice "la ultima palabra del recuento ha sido tres".
+
+  REGLA FIJADA 3: NO se cuenta dos veces.  En los estudios, cuando se pregunta "cuantos hay?"
+  muchos ninos VUELVEN A CONTAR.  El sistema no: ya ha contado, y da la respuesta.
+
+  REGLA FIJADA 4: si la coleccion es mas grande que la lista del sistema, NO se inventa la
+  cantidad: dice que no llega (reutiliza lo de la 2.1).
+
+errores_tipicos:
+  - Volver a contar al preguntar "cuantos hay?".
+  - Responder con una palabra que NO es la ultima del recuento.
+  - No contar (agarrar un punado) y decir una cantidad cualquiera: en los estudios son los
+    "grabbers", frente a los "counters".
+  - Creer que acertar aqui demuestra que entiende la cardinalidad (no lo demuestra: ver regla 2).
+  - Olvidar que la cuenta tiene que estar bien hecha: si el 1-a-1 falla, la ultima palabra no
+    vale nada.
+fuentes:
+  - Gelman & Gallistel (1978): el principio de cardinalidad - la palabra aplicada al ULTIMO
+    objeto representa el numero de objetos del conjunto.
+  - Fuson (1988), Frye et al. (1989): la "last-word rule" (regla de la ultima palabra) se aprende
+    ANTES y es superficial; se distingue del principio de cardinalidad.
+  - Sarnecka & Carey (2008), "How Counting Represents Number": la tarea "how-many" sobreestima el
+    conocimiento, porque se puede acertar con la regla superficial.  La tarea fiable es Give-N.
+  - "The 'How many?' task inadequately assesses the understanding of the cardinality principle":
+    188 ninos de 4;6; un 22,3% acerto por regla de ultima palabra fallando el 1-a-1.
+  - "Acquisition of the counting principles during the subset-knower stages": el 1-a-1 y el orden
+    estable se incumplen menos que la cardinalidad; y la cardinalidad va progresando por etapas.
+depende_de:
+  - correspondencia
+  - orden_estable
+  - secuencia_de_conteo
+relacionado_con:
+  - subitizing
+propiedades:
+  - La respuesta es la ultima palabra del recuento, y solo si el recuento se ha hecho bien.
+  - No se cuenta dos veces.
+  - Si no llegan las palabras, no hay respuesta.
+representaciones:
+  concreta: |
+    Contar las cosas tocandolas y decir la ultima palabra: "uno, dos, tres: tres".
+  numerica: |
+    Todavia no aplica: la cantidad va EN PALABRAS.  Las cifras son la unidad 3.1.
+  formal: |
+    cuantos(coleccion) = ultima(emparejar(coleccion))
+  general: |
+    Vale para cualquier coleccion, no solo para las pequenas.

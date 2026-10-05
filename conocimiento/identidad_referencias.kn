@@ -1,0 +1,57 @@
+id: identidad_de_referencias
+nombre: Identidad de referencias
+tipo: regla
+categoria: FIJADO
+definicion: |
+  Una REFERENCIA es una mencion de una entidad dentro de una escena.
+  El IDENTIFICADOR de una referencia nombra la entidad mencionada.
+
+  REGLA FIJADA 1: dos referencias con el MISMO identificador son la MISMA entidad;
+  dos referencias con identificadores distintos son entidades DISTINTAS.
+  Esta regla se fija porque el sistema no adivina: si dos menciones son el mismo
+  objeto o no, tiene que estar declarado, no deducido del parecido de los nombres.
+
+  REGLA FIJADA 2 (FUSION - razonada por Carlos el 2026-10-03): si la misma entidad aparece
+  descrita varias veces y las descripciones NO se contradicen, sus datos SE SUMAN y sigue
+  siendo UNA SOLA entidad.  Ejemplo: casa(color=blanco) + casa(forma=cuadrada) es una casa
+  blanca y cuadrada: un objeto descrito dos veces, se sabe mas de el, no menos.
+
+  REGLA FIJADA 3 (DISTINCION - corregida el 2026-10-03 con las pruebas de Carlos): si el MISMO
+  identificador aparece con DOS VALORES DISTINTOS para el MISMO atributo
+  (carro(color=negro) y carro(color=blanco)), eso PRUEBA que son entidades DISTINTAS: una
+  misma cosa no puede ser negra y blanca a la vez.  El atributo las distingue.  El sistema las
+  separa y las numera (carro#1, carro#2).
+  Antes de esta correccion el sistema decia "no se puede decidir"; era un error: no hay nada
+  que decidir, son dos objetos.
+
+  POR QUE la regla 2 es necesaria: si dos menciones del mismo identificador contaran SIEMPRE
+  como dos objetos, "casa, casa" seria un grupo y se romperia la unidad 0.1.  Asi que:
+    - sin nada que las distinga, son UNA entidad (el nombre manda);
+    - con un atributo de dos valores distintos, son DOS entidades (el atributo las distingue).
+depende_de: []
+relacionado_con:
+  - obj_individual
+propiedades:
+  - La identidad no se deduce del nombre visible: se declara con el identificador.
+  - El nombre visible puede repetirse entre entidades distintas (dos sillas).
+  - Las menciones repetidas del mismo identificador se unen (fusion) si no se contradicen.
+  - Un atributo con DOS valores distintos para el mismo nombre PRUEBA que son objetos distintos:
+    se separan y se numeran (carro#1, carro#2).
+representaciones:
+  concreta: |
+    Apuntar dos veces a la misma silla con el dedo: es un objeto.
+  numerica: |
+    Todavia no aplica.
+  formal: |
+    mismo(a, b)  <=>  id(a) == id(b)
+  general: |
+    Vale para cualquier entidad de cualquier clase, tangible o no.
+errores_tipicos:
+  - Deducir la identidad del parecido de los nombres en vez de usar el identificador.
+  - Creer que la misma entidad descrita dos veces sin contradecirse son dos objetos
+    (casa blanca + casa cuadrada es UNA casa, no dos).
+  - (Error ya corregido) Creer que un atributo con dos valores distintos se resuelve con un
+    "no se puede decidir": no hay nada que decidir, son DOS objetos distintos.
+fuentes:
+  - Gelman & Gallistel (1978), principio de uno-a-uno: un nombre de numero y solo uno por objeto
+    contado; para que eso tenga sentido, antes tiene que estar claro que es "un objeto".

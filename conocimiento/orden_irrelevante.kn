@@ -1,0 +1,69 @@
+id: orden_irrelevante
+nombre: El orden de los objetos no importa (pero el de las palabras si)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  Se puede empezar a contar por CUALQUIER objeto, y en CUALQUIER direccion: la cantidad sale la
+  misma.  La cantidad es una propiedad DEL CONJUNTO, no del recorrido que se haga por el.
+
+  REGLA FIJADA 1 (la distincion que trae esta unidad): hay DOS clases de reglas al contar.
+     REGLAS LOGICAS - OBLIGATORIAS.  Si se rompen, el resultado NO vale:
+        - correspondencia uno a uno (una palabra por objeto),
+        - orden estable de las PALABRAS (uno, dos, tres... siempre en ese orden),
+        - cardinalidad (la ultima palabra es la cantidad).
+     REGLAS CONVENCIONALES - OPCIONALES.  Son costumbres, no verdades: por donde se empieza,
+        en que direccion se cuenta, si se va en fila, si se toca cada objeto.
+        Romper una de estas NO cambia el resultado.
+  (Fuente: Lago, Escudero & Dopico, 2021, Front. Psychol., que las llama "logical rules" frente a
+  "conventional rules", apoyandose en Gelman & Gallistel 1978.)
+
+  REGLA FIJADA 2: por eso esta unidad NO cambia nada de lo anterior.  Contar al reves (los objetos
+  al reves) es valido: lo que no puede ir al reves son las PALABRAS.
+
+  REGLA FIJADA 3 (los "pseudoerrores" y las "compensaciones", Gelman & Meck 1986):
+     - PSEUDOERROR: un conteo que rompe una regla CONVENCIONAL pero respeta las logicas
+       (p.ej. contar los seis primeros de un color y luego los otros seis, intercalados).
+       Es VALIDO aunque parezca raro.  La cantidad es la misma.
+     - COMPENSACION: un conteo que rompe una regla LOGICA (se salta uno y cuenta otro dos veces,
+       o dos veces el mismo), de forma que el TOTAL cuadra.  NO es valido: el 1-a-1 esta roto, y
+       si el 1-a-1 se rompe, la ultima palabra NO representa la cantidad.
+  Por eso el sistema ya sabe distinguirlos: la compensacion la caza la unidad 2.1 (palabra_repetida
+  / faltan_objetos_sin_contar), y el pseudoerror lo acepta esta.
+
+  REGLA FIJADA 4: en esta unidad, contando en dos ordenes distintos, la ultima palabra tiene que
+  ser LA MISMA.  Si no lo fuera, el sistema lo diria: no daria por bueno algo que no cuadra.
+
+errores_tipicos:
+  - Creer que hay que empezar siempre por el mismo sitio (por la izquierda, por el primero).
+  - Rechazar un conteo valido solo porque empieza por otro objeto.
+  - Aceptar una compensacion: si se salto uno y conto otro dos veces, la ultima palabra no vale.
+  - Confundir el orden de los OBJETOS (libre) con el de las PALABRAS (fijo).
+fuentes:
+  - Gelman & Gallistel (1978): los principios del "como contar"; la irrelevancia del orden.
+  - Gelman & Meck (1983, 1986): los ninos juzgan conteos raros; aceptan los que solo rompen
+    reglas convencionales ("pseudoerrors") y rechazan los que rompen las logicas
+    ("compensation errors").  Un nino debe tener una idea de "conteo correcto" para poder juzgar
+    un conteo ajeno.
+  - Lago, Escudero & Dopico (2021), Front. Psychol. 12:593509 (PMC8202410): distingue REGLAS
+    LOGICAS (obligatorias: 1-a-1, orden estable, cardinalidad) de REGLAS CONVENCIONALES
+    (opcionales: costumbres sociales).  Y sobre reconceptualizar los errores de conteo: los ninos
+    pasan de ignorar los errores a reconocer que tienen consecuencias logicas.
+depende_de:
+  - cardinalidad
+  - correspondencia
+  - orden_estable
+relacionado_con:
+  - cuantos_hay
+propiedades:
+  - La cantidad no cambia al cambiar el orden de los objetos.
+  - Las palabras SI van siempre en el mismo orden.
+  - Romper una regla convencional es valido; romper una logica no.
+representaciones:
+  concreta: |
+    Contar las cosas de izquierda a derecha, o de derecha a izquierda: el resultado es el mismo.
+  numerica: |
+    Todavia no aplica.
+  formal: |
+    cuantos(reordenar(C)) = cuantos(C)
+  general: |
+    Vale para cualquier coleccion y cualquier orden, no solo para el inverso.

@@ -1,0 +1,54 @@
+id: reglas_5_4
+nombre: Reglas de decision de la unidad 5.4
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 5.4 - LA RESTA COMO QUITAR (reduccion).
+
+  "quitar: <monton> / <cuantos>"  ->  de este monton se van tantos; cuantos quedan?
+  Tanto vale <cuantos> en palabra (dos) como en cifra (2): es un NUMERO (unidad 5.3).
+
+  LA CONDICION DE APLICACION es la clave de la resta: NO SE PUEDE QUITAR MAS DE LO QUE HAY.
+
+  TRABAJO A - QUITAR (de una coleccion):  "quitar: a,b,c,d,e / dos"
+     pedido_no_es_numero(escena, cuenta) -> no_es_un_numero
+     no_hay_bastantes(escena, cuenta)           -> no_hay_bastantes
+     siempre(escena, cuenta)                    -> quedan
+
+  TRABAJO B - RESTAR DOS NUMEROS:  "restar_numeros: 5 - 2"   (sin objetos; unidad 5.3)
+     La misma condicion: no_hay_bastantes si el sustraendo es mayor que el minuendo.
+
+  LA VERIFICACION (en las dos): sumando lo que queda y lo que se fue tiene que volver a salir el
+  minuendo (unidad 5.2).  Si no cuadrara, el sistema lo diria.
+
+  CONDICIONES PRIMITIVAS DISPONIBLES (version 5.4):
+     pedido_no_es_numero(escena, cuenta)  (NUEVA)
+     quiere_quitar_de_mas(escena, cuenta)       (NUEVA: se pide quitar mas de lo que hay)
+     no_alcanza_a_contar(escena, cuenta)        (NUEVA: no hay palabra para mas de diez)
+     siempre(escena, cuenta)
+
+  La cantidad pedida viaja en cuenta["pedido"].
+
+  Las reglas viven aqui, como datos.
+
+reglas_quitar:
+  - nombre: qt_no_es_un_numero
+    conclusion: no_es_un_numero
+    condiciones:
+      - pedido_no_es_numero(escena, cuenta)
+    justificacion: la_resta
+  - nombre: qt_no_hay_bastantes
+    conclusion: no_hay_bastantes
+    condiciones:
+      - quiere_quitar_de_mas(escena, cuenta)
+    justificacion: la_resta
+  - nombre: qt_no_alcanza
+    conclusion: no_alcanza
+    condiciones:
+      - no_alcanza_a_contar(escena, cuenta)
+    justificacion: la_resta
+  - nombre: qt_quedan
+    conclusion: quedan
+    condiciones:
+      - siempre(escena, cuenta)
+    justificacion: la_resta

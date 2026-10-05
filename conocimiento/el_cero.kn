@@ -1,0 +1,61 @@
+id: el_cero
+nombre: El cero (ninguno)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  El CERO es la cantidad de un conjunto que NO TIENE NINGUN elemento.  Ni uno: ninguno.
+  Su palabra es "cero" y su cifra es 0.
+
+  REGLA FIJADA 1 (esto es lo que cambia de verdad en esta unidad):
+  ANTES, cuando una coleccion estaba vacia, el sistema decia "no_decidible": no tenia forma de
+  responder.  AHORA responde CERO.  No es que antes se equivocara: es que le faltaba el cero.
+  Aprender el cero ha AMPLIADO lo que sabe, sin romper nada de lo anterior.
+  (Eso es lo que significa que el conocimiento sea acumulativo.)
+
+  REGLA FIJADA 2 (el cero EN UN CONTEXTO, y esto hay que respetarlo):
+  el cero solo tiene sentido si hay una pregunta de cantidad.  "Cuantos hay en esta coleccion?"
+  cuando la coleccion esta vacia -> cero.  El CONTEXTO es la pregunta: sin pregunta no hay cero
+  que dar.  Por eso esta unidad NO dice "el cero es la nada" a secas: dice "la cantidad de un
+  conjunto vacio es cero".
+
+  REGLA FIJADA 3 (LA TRAMPA, y es la importante):
+  CERO NO ES "NO SE SABE".  Son tres cosas distintas y no se pueden confundir:
+     - cero         -> SI se sabe: no hay ninguno.  Es UNA CANTIDAD.
+     - no_decidible -> NO se sabe (falta un dato, o no hay contexto).
+     - no_alcanza   -> se sabe que hay alguno, pero no le llegan las palabras/cifras.
+  Decir "cero" cuando no se sabe es inventarse una respuesta.
+
+  REGLA FIJADA 4 (donde NO llega esta unidad):
+  este es el cero CARDINAL (ninguno).  El cero POSICIONAL - el 0 que se pone para marcar un sitio
+  vacio, como en 10 o en 20 - es OTRA cosa, y es del Sistema Decimal (unidad posterior).
+  Si le piden eso, lo dira.
+
+errores_tipicos:
+  - Confundir "cero" con "no se sabe", o con "no hay respuesta".
+  - Creer que el cero es "nada" y por tanto no es una cantidad.
+  - Confundir el cero cardinal (ninguno) con el cero posicional (el 0 de 10).
+  - Contar un conjunto vacio y dar una palabra cualquiera en vez de cero.
+fuentes:
+  - "Nothing to it: Precursors to a zero concept in preschoolers" (Cognitive Development, 2013):
+    ninos y adultos muestran EFECTOS DE DISTANCIA con conjuntos vacios, y el vacio se representa en
+    el MISMO continuo numerico que los conjuntos con elementos -> los ninos representan el vacio
+    NUMERICAMENTE antes de entender el cero simbolico.
+  - Krajcsi et al. (2021), citado en "Informal Assessment of Preschool Children's Concepts of Zero"
+    (Early Childhood Education Journal, 2024): los ninos pueden manejar conjuntos vacios al mismo
+    tiempo que los numeros positivos, y las dificultades del cero son LINGUISTICAS mas que
+    conceptuales.  (Vision que contrasta con la clasica, heredada de Piaget, de que el nino ve el
+    numero como propiedad de los objetos y por eso el vacio no puede ser un numero.)
+  - "Zero - an Uncommon Number" (ERIC EJ1338830): el concepto de cero es mas abstracto y no se
+    adquiere antes que el uno; llega despues de conocer algunas palabras numericas (1 a 4).
+  - Stanford DREME ("Exploring the Number Zero", 2023): los ninos reconocen el simbolo 0 antes de
+    saber que significa; y mas tarde les cuesta entender que tiene VALOR DE POSICION y sitio en la
+    recta numerica -> de ahi la separacion entre cero cardinal y cero posicional.
+depende_de:
+  - cardinalidad
+  - simbolos
+relacionado_con:
+  - cuantos_hay
+propiedades:
+  - La cantidad de un conjunto vacio es cero.
+  - Cero es una cantidad, no una falta de respuesta.
+  - El cero cardinal (ninguno) y el posicional (0 de 10) son cosas distintas.

@@ -1,0 +1,85 @@
+id: el_metodo_de_los_dedos
+nombre: El metodo de los dedos (sumar contando hacia adelante)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  PARA SUMAR DOS NUMEROS, MECANICAMENTE, CON LOS DEDOS.  Este es el metodo que el sistema usa
+  (decision de Carlos: mecanico HASTA NUEVO AVISO).
+
+  REGLA FIJADA 1 - LOS DEDOS SON DIEZ, Y ESE DIEZ ES EL MISMO QUE LA DECENA.
+  No es un truco: es el primer modelo del diez.  Un diez que se puede VER y CONTAR, antes de ser
+  una palabra o una cifra.  Y el diez es la base de todo lo que viene despues (la decena, el
+  acarreo, el sistema decimal).  Por eso se enseña hasta diez primero.
+
+  REGLA FIJADA 2 - EL METODO TIENE CUATRO PASOS:
+     1. SE ANOTA EL PRIMERO.  El primer numero no se cuenta: se GUARDA.  (Esto es la memoria de
+        trabajo; en el sistema es 'la pizarra'.)
+     2. SE COGEN CON LOS DEDOS tantos como el SEGUNDO numero.  Si el segundo es 5, se levantan
+        5 dedos.
+     3. SE CUENTA HACIA ADELANTE DESDE EL PRIMERO, un paso por cada dedo que se va bajando.
+        OJO: se empieza a contar DESDE EL PRIMERO, no desde el uno.
+     4. CUANDO SE ACABA EL ULTIMO DEDO, EL ULTIMO NUMERO DICHO ES EL TOTAL.
+
+  REGLA FIJADA 3 - EL TOTAL ES DONDE SE PARA, NO 'CUANDO SE ACABAN LOS DEDOS' EN EL SENTIDO DE
+  LOS DIEZ.  Con 8 + 5 se levantan CINCO dedos (no diez) y se para al decir 13.  Y 13 NO CABE en
+  los dedos, y no importa: los dedos cuentan los PASOS, no el resultado.
+  Esto hay que decirlo claro, porque es la confusion mas facil de cometer.
+
+  REGLA FIJADA 4 - CONTAR DESDE EL PRIMERO ES LO QUE HACE QUE ESTO SEA SUMAR.
+  Hay dos maneras de contar y NO son lo mismo:
+     CONTAR HACIA ADELANTE (este metodo): desde el 8, cinco pasos -> 9, 10, 11, 12, 13.  5 pasos.
+     CONTAR TODO: desde el 1, hasta el 13.                                              13 pasos.
+  El resultado es el mismo, pero el trabajo no: 5 pasos frente a 13.  Contar todo es lo primitivo
+  (lo que hace un niño que aun no sabe sumar).  Y cuanto mas grandes son los numeros, mas se nota.
+  El sistema tiene que decir CUANTOS PASOS ahorra, porque eso es lo que enseña por que el metodo
+  es el bueno.
+
+  REGLA FIJADA 5 - CONDICION DE APLICACION: EL SEGUNDO NO PUEDE PASAR DE DIEZ.
+  Con mas de diez no hay dedos que levantar.  Entonces el sistema lo DICE (no lo hace mal).
+  (El PRIMERO puede ser mas grande, porque no se coge con los dedos: se anota.)
+
+  REGLA FIJADA 6 - LA PIZARRA (ALGO DONDE ANOTAR), Y POR QUE HACE FALTA.
+  El primer numero hay que AGUANTARLO mientras se cuenta.  Eso es memoria de trabajo, y es
+  justamente lo que cuesta (EEF: "It requires the child to hold one number in their head and
+  count on. This is challenging... as it relies heavily on the child's working memory").
+  El sistema tiene una pizarra, y LA ENSEÑA en cada paso (cuanto llevaba, que dedo va, por donde
+  va el recuento).  Si la pizarra no se viera, esto seria una CAJA NEGRA, y la regla 13 del
+  metodo lo prohibe.
+
+  REGLA FIJADA 7 - ES MECANICO, Y SE PUEDE COMPROBAR.  Todo lo que sale se rastrea a los cuatro
+  pasos, y ademas SE VERIFICA: al total se le quita el segundo y tiene que volver a salir el
+  primero (la resta, unidad 5.4).  Y coincide con la suma de la unidad 5.2/5.3: son la misma
+  verdad por otro camino.
+
+  REGLA FIJADA 8 - LAS OTRAS VIAS, PARA SABER QUE EXISTEN (nota de Carlos).  Para sumar hay tres
+  caminos: MECANICO (este), DE MEMORIA (saberse algunas sumas) y CALCULADORA.  El sistema usa el
+  mecanico hasta nuevo aviso.  Y hay una cuarta via que no es ninguna de las tres: DERIVAR (usar
+  lo que ya se sabe: 7+5 = 7+3+2 = 10+2 = 12, con la unidad 5.1).  Esa es otra decision, aparte.
+
+errores_tipicos:
+  - CONTAR TODO desde el uno en vez de seguir desde el primero.  Es el error que separa contar de
+    sumar, y es el mas comun.
+  - Creer que el resultado tiene que caber en los dedos (no: los dedos cuentan los pasos).
+  - Levantar diez dedos siempre en vez de tantos como el segundo numero.
+  - Empezar a contar desde el segundo numero en vez de desde el primero.
+  - Perder de vista el primero por no tener donde anotarlo (por eso la pizarra).
+fuentes:
+  - Education Endowment Foundation (EEF), "How to support children to 'count on'": "'Counting on'
+    is a more efficient method than 'counting all'.  But it's also a more complex one.  It requires
+    the child to hold one number 'in their head' and count on.  This is challenging to do at first,
+    as it relies heavily on the child's working memory."
+  - Thompson, I. (Strathprints), "Counting All, Counting On, Counting Up, Counting Down: The Role of
+    Counting in Learning to Add and Subtract": los cuatro modos de contar en la suma y la resta, y
+    como se pasa de 'contar todo' a 'contar hacia adelante'.
+  - Rhodes University (SANC), "What is a Ten Frame and why is it a useful tool": "A ten frame is a
+    simple graphic tool that allows people to 'see' numbers.  ... A strong sense of 'ten' is a
+    prerequisite for place-value understanding and mental calculations."
+  - Math Learning Center, "Models in Bridges": los marcos de diez ayudan a ver las cantidades en
+    relacion con los numeros de referencia 5 y 10, y son la base de las sumas y restas hasta 10.
+  - Decision de Carlos (4 oct 2026): el sistema debe hacerlo MECANICAMENTE hasta nuevo aviso.
+depende_de:
+  - la_suma
+  - secuencia_de_conteo
+relacionado_con:
+  - la_resta
+  - cardinalidad

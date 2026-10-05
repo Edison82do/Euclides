@@ -1,0 +1,101 @@
+id: reglas_2_5
+nombre: Reglas de decision de la unidad 2.5
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 2.5 - EL ORDEN NO IMPORTA.  Dos trabajos.
+
+  TRABAJO A - ORDEN: "cuenta esta coleccion de dos maneras y dime si sale lo mismo."
+     escena_vacia(escena)              -> no_decidible
+     faltan_palabras(escena, cuenta)   -> no_alcanza_la_secuencia
+     (si no)                           -> coinciden
+  Y "coinciden" se DEJA VER: el motor hace los dos emparejamientos (el orden dado y el inverso) y
+  compara la ultima palabra de cada uno.  No se limita a decir que si: ENSENA los dos recuentos.
+
+  TRABAJO B - CONTEO: "este RECORRIDO de conteo, esta bien hecho?"  (la tarea de Gelman & Meck)
+  Se le da el orden en que se recorrieron los objetos y las palabras que se dijeron.
+     escena_vacia(escena)                        -> no_decidible
+     hay_repetido_en_el_recorrido(escena)        -> objeto_repetido   (LA COMPENSACION: se
+                                                    cuenta dos veces el mismo; regla LOGICA rota)
+     hay_palabra_repetida(cuenta)                -> palabra_repetida
+     hay_palabra_desconocida(cuenta)             -> palabra_desconocida
+     menos_palabras_que_objetos(escena, cuenta)  -> faltan_objetos_sin_contar
+     mas_palabras_que_objetos(escena, cuenta)    -> palabras_de_mas
+     no_es_el_principio(cuenta)                  -> orden_saltado
+     es_el_principio(cuenta)                     -> valido   (EL PSEUDOERROR: el orden de los
+                                                    objetos es libre, y eso NO es un error)
+  OJO: aqui NO se pasa por entidades_reales.  Si un objeto se repite en el recorrido, esa
+  repeticion ES el error que hay que cazar, no algo que se fusione.
+
+  CONDICIONES PRIMITIVAS: casi todas se REUTILIZAN de la 2.1.  Solo hay una nueva.
+     escena_vacia(escena)                       (de la 0.1)
+     faltan_palabras(escena, cuenta)            (de la 2.1)
+     hay_palabras_suficientes(escena, cuenta)   (de la 2.1)
+     hay_palabra_repetida(cuenta)               (de la 2.1)
+     hay_palabra_desconocida(cuenta)            (de la 2.1)
+     menos_palabras_que_objetos(escena, cuenta) (de la 2.1)
+     mas_palabras_que_objetos(escena, cuenta)   (de la 2.1)
+     no_es_el_principio(cuenta)                 (de la 2.1)
+     es_el_principio(cuenta)                    (de la 2.1)
+     hay_repetido_en_el_recorrido(escena)       (NUEVA)
+
+  Las reglas viven aqui, como datos.
+
+reglas_orden:
+  - nombre: orden_sin_objetos
+    conclusion: no_decidible
+    condiciones:
+      - escena_vacia(escena)
+    justificacion: orden_irrelevante
+  - nombre: orden_secuencia_corta
+    conclusion: no_alcanza_la_secuencia
+    condiciones:
+      - faltan_palabras(escena, cuenta)
+    justificacion: secuencia_de_conteo
+  - nombre: orden_coinciden
+    conclusion: coinciden
+    condiciones:
+      - hay_palabras_suficientes(escena, cuenta)
+    justificacion: orden_irrelevante
+
+reglas_conteo:
+  - nombre: conteo_sin_objetos
+    conclusion: no_decidible
+    condiciones:
+      - escena_vacia(escena)
+    justificacion: orden_irrelevante
+  - nombre: conteo_objeto_repetido
+    conclusion: objeto_repetido
+    condiciones:
+      - hay_repetido_en_el_recorrido(escena)
+    justificacion: correspondencia
+  - nombre: conteo_palabra_repetida
+    conclusion: palabra_repetida
+    condiciones:
+      - hay_palabra_repetida(cuenta)
+    justificacion: correspondencia
+  - nombre: conteo_palabra_desconocida
+    conclusion: palabra_desconocida
+    condiciones:
+      - hay_palabra_desconocida(cuenta)
+    justificacion: secuencia_de_conteo
+  - nombre: conteo_pocas_palabras
+    conclusion: faltan_objetos_sin_contar
+    condiciones:
+      - menos_palabras_que_objetos(escena, cuenta)
+    justificacion: correspondencia
+  - nombre: conteo_muchas_palabras
+    conclusion: palabras_de_mas
+    condiciones:
+      - mas_palabras_que_objetos(escena, cuenta)
+    justificacion: correspondencia
+  - nombre: conteo_orden_saltado
+    conclusion: orden_saltado
+    condiciones:
+      - no_es_el_principio(cuenta)
+    justificacion: orden_estable
+  - nombre: conteo_valido
+    conclusion: valido
+    condiciones:
+      - es_el_principio(cuenta)
+    justificacion: orden_irrelevante

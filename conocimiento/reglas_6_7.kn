@@ -1,0 +1,33 @@
+id: reglas_6_7
+nombre: Reglas de decision de la unidad 6.7 (la centena)
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 6.7 - LA CENTENA: diez decenas son una centena, y la escalera sigue.
+
+  "centena"        -> la escalera entera (unidad, decena, centena, unidad de mil).
+  "sitio: 247"     -> 2 centenas, 4 decenas y 7 unidades.
+  "palabra: 247"   -> doscientos cuarenta y siete.
+  "cifra: doscientos cuarenta y siete"  -> 247.
+
+  CONDICIONES (el orden importa):
+     entrada_no_es_un_numero(escena, cuenta)  -> no_es_un_numero
+     numero_pasa_de_mil(escena, cuenta)       -> no_alcanza
+     siempre(escena, cuenta)                  -> se_puede
+
+reglas_centena:
+  - nombre: ce_no_es_un_numero
+    conclusion: no_es_un_numero
+    condiciones:
+      - entrada_no_es_un_numero(escena, cuenta)
+    justificacion: la_centena
+  - nombre: ce_no_alcanza
+    conclusion: no_alcanza
+    condiciones:
+      - numero_pasa_de_mil(escena, cuenta)
+    justificacion: la_centena
+  - nombre: ce_se_puede
+    conclusion: se_puede
+    condiciones:
+      - siempre(escena, cuenta)
+    justificacion: la_centena

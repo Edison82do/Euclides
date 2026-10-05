@@ -1,0 +1,31 @@
+id: reglas_1_0
+nombre: Reglas de decision de la unidad 1.0
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 1.0 - SUBITIZING.  La pregunta es:
+      "esta figura, cuantos elementos tiene?  (de un vistazo, sin contar)"
+
+  Reglas, en orden:
+     el_patron_esta_declarado(patron)     -> reconocido   (y su etiqueta, p.ej. "cuatro")
+     (si no)                              -> no_reconocido
+
+  OJO: "no_reconocido" NO es un fallo.  Es la respuesta honesta: el sistema NO cuenta, asi
+  que un grupo que no reconoce de un vistazo se queda sin etiqueta.  Contar es la unidad 2.3.
+
+  CONDICIONES PRIMITIVAS DISPONIBLES EN EL MOTOR (version 1.0):
+    el_patron_esta_declarado(patron)  -> cierto si la figura coincide con un patron de la tabla
+
+  Las reglas viven aqui, como datos.
+
+reglas:
+  - nombre: subitizar_patron_conocido
+    conclusion: reconocido
+    condiciones:
+      - el_patron_esta_declarado(patron)
+    justificacion: subitizing
+  - nombre: subitizar_patron_desconocido
+    conclusion: no_reconocido
+    condiciones:
+      - el_patron_no_esta_declarado(patron)
+    justificacion: subitizing

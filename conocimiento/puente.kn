@@ -1,0 +1,79 @@
+id: puente
+nombre: El puente (cantidad, palabra, cifra)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  LO MISMO SE PUEDE DECIR DE TRES MANERAS:
+
+     CANTIDAD  ->  unos objetos:            * * *
+     PALABRA   ->  como se dice al contar:  tres
+     CIFRA     ->  como se escribe:         3
+
+  Y no son la misma cosa.  La CANTIDAD son los objetos; la PALABRA es un sonido (o sus letras); la
+  CIFRA es una marca escrita.  Las tres hablan de lo mismo, y por eso se puede ir de una a otra.
+
+  REGLA FIJADA 1 - LOS SEIS CAMINOS.  Con tres representaciones hay SEIS caminos (tres pares, cada
+  uno en los dos sentidos):
+
+     1. cantidad -> palabra     ya se sabia (unidad 2.3, 'cuantos')
+     2. palabra  -> cantidad    ya se sabia (unidad 2.4, 'dame')
+     3. cantidad -> cifra       ya se sabia (unidad 3.1, 'cifra_de')
+     4. cifra    -> cantidad    SE APRENDE AQUI (unidad 3.4): dame: <monton> / 3
+     5. palabra  -> cifra       ya se sabia (unidad 3.1, 'cifra')
+     6. cifra    -> palabra     ya se sabia (unidad 3.1, 'palabra')
+
+  Y ESTE ES EL ORDEN EN QUE SE APRENDEN.  No es invento nuestro: Benoit, Lehalle y Jouen (2013,
+  Cognition) encontraron que los ninos primero emparejan PALABRAS con conjuntos, despues CIFRAS con
+  conjuntos, y POR ULTIMO palabras con cifras.  La unidad 3.1 dejo el camino dificil (palabra<->cifra)
+  para el final, a proposito.
+
+  REGLA FIJADA 2 - EL CONTE0 ES EL PUENTE.  Lo que une las tres representaciones es CONTAR.  Un estudio
+  de 2025 (PMC12204520) encontro que recordarle a un nino que cuente MEJORA su capacidad de traducir
+  entre representaciones, y cambia el orden en que las aprende.  Por eso todo camino de esta unidad
+  pasa por el conteo y ENSENA el recuento.
+
+  REGLA FIJADA 3 - DOS CAMINOS, Y NO SON IGUALES.  Hay dos maneras de saber cuantos hay:
+
+     EL CAMINO LARGO   -> CONTAR: una palabra por objeto, en orden.  (unidades 2.1 a 2.5)
+                          Vale para cualquier cantidad hasta diez.
+     EL CAMINO CORTO   -> DE UN VISTAZO (subitizing, unidad 1.0): reconocer el grupo sin contar.
+                          Solo vale para grupos PEQUENOS (hasta cuatro o cinco), y solo si la
+                          disposicion es reconocible.
+
+  El estudio de 2025 encontro que los numeros PEQUENOS y los GRANDES no se aprenden igual, lo que
+  apunta a DOS SISTEMAS de representacion.  Este es el sitio del subitizing (que hasta ahora estaba
+  aislado): es el camino corto, el de los numeros pequenos.
+
+  REGLA FIJADA 4 - EL SISTEMA DICE POR QUE CAMINO HA IDO.  Y no los mezcla: si va por el camino corto
+  NO cuenta, y si va por el largo NO adivina.
+
+  REGLA FIJADA 5 - EL CAMINO CORTO NO SUSTITUYE AL LARGO.  Reconocer de un vistazo sirve hasta donde
+  llega el ojo.  Para todo lo demas se cuenta.  Cuando no reconoce, lo DICE: no cuenta a escondidas.
+
+  REGLA FIJADA 6 - EL PUENTE NO SIEMPRE TIENE LAS TRES.  Se puede CONTAR hasta diez, pero las CIFRAS
+  solo llegan hasta nueve: el diez son DOS simbolos (1 y 0).  Asi que el puente de diez objetos tiene
+  cantidad y palabra, pero NO cifra.  El sistema da las que tiene y DICE cual le falta; no se inventa
+  la tercera.  (El cero si tiene cifra: es 0.)
+
+errores_tipicos:
+  - Creer que la cifra y la cantidad son lo mismo (la cifra es una MARCA; la cantidad son las cosas).
+  - Decir una cantidad sin haberla contado ni reconocido (inventarse el numero).
+  - Usar el camino corto (de un vistazo) para cantidades grandes.
+  - Contar a escondidas cuando se dice "de un vistazo" (seria enganar a quien mira).
+fuentes:
+  - Benoit, Lehalle & Jouen (2013, Cognition), "Young children's mapping between arrays, number
+    words, and digits": el orden es palabra<->conjunto, despues cifra<->conjunto, y POR ULTIMO
+    palabra<->cifra.  Con numeros pequenos (1-3) antes que con grandes (4-6).
+  - "The development of numerical mapping in preschool children" (2025, PMC12204520): no hay
+    diferencias fiables entre las DIRECCIONES del mapeo, pero los numeros pequenos y grandes siguen
+    ordenes distintos (dos sistemas); y recordar al nino que cuente MEJORA el mapeo.
+  - Clements (1999), "Subitizing: What Is It? Why Teach It?" (NCTM): el subitizing es una habilidad
+    fundamental en el desarrollo del sentido del numero (citando a Baroody, 1987).
+  - Gelman & Gallistel (1978): los principios del conteo.
+depende_de:
+  - cardinalidad
+  - simbolos
+  - subitizing
+relacionado_con:
+  - el_cero
+  - secuencia_de_numeros

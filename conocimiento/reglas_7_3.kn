@@ -1,0 +1,36 @@
+id: reglas_7_3
+nombre: Reglas de decision de la unidad 7.3 (sumar por columnas)
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 7.3 - SUMAR POR COLUMNAS: unidad con unidad, decena con decena, y el llevarse.
+
+  "columnas: 47 + 15"   ->  47 + 15 = 62  (7+5=12: anoto 2 y me llevo 1; 4+1+1=6)
+
+  LAS DOS ENTRADAS son NUMEROS, de una o dos cifras (cifra o palabra).
+
+  CONDICIONES:
+     entrada_no_es_numero(escena, cuenta)  -> no_es_un_numero
+     total_pasa_de_cien(escena, cuenta)    -> no_alcanza      (mi tabla llega al cien)
+     siempre(escena, cuenta)               -> se_puede
+
+  EL ORDEN: primero que sean numeros, luego el techo.
+
+  Las reglas viven aqui, como datos.
+
+reglas_columnas:
+  - nombre: co_no_es_un_numero
+    conclusion: no_es_un_numero
+    condiciones:
+      - entrada_no_es_numero(escena, cuenta)
+    justificacion: sumar_por_columnas
+  - nombre: co_no_alcanza
+    conclusion: no_alcanza
+    condiciones:
+      - total_pasa_de_cien(escena, cuenta)
+    justificacion: sumar_por_columnas
+  - nombre: co_se_puede
+    conclusion: se_puede
+    condiciones:
+      - siempre(escena, cuenta)
+    justificacion: sumar_por_columnas

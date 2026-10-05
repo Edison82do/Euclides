@@ -1,0 +1,81 @@
+id: derivar
+nombre: Derivar (hacer diez) - la otra via para sumar
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  DERIVAR ES USAR LO QUE YA SABES PARA NO TENER QUE CONTAR.
+
+     7 + 5   ->   ¿cuanto le falta al 7 para llegar a diez?  3
+              ->   parto el 5 en 3 y 2     (5 = 3 + 2)
+              ->   7 + 3 = 10              (he HECHO DIEZ)
+              ->   10 + 2 = 12
+     7 + 5 = 12
+
+  REGLA FIJADA 1 - NO SE CUENTA.  Esta es la diferencia con los dedos.  Aqui no hay pasos que dar:
+  se TRANSFORMA la cuenta en dos cuentas mas faciles.  Y una de ellas (llegar a diez) ya se sabe.
+
+  REGLA FIJADA 2 - LAS TRES PIEZAS QUE HACEN FALTA, Y LAS TRES YA ESTAN EN EL SISTEMA:
+      a) SABER CUANTO FALTA PARA DIEZ      -> las parejas que hacen diez (unidad 6.1)
+      b) PARTIR UN NUMERO EN DOS           -> partir, unidad 5.1 / 5.3
+      c) SUMAR A DIEZ                      -> sumar, unidad 5.2
+  No hace falta nada nuevo: DERIVAR es COMBINAR lo que ya se sabe.  Por eso se aprende despues.
+
+  REGLA FIJADA 3 - SE LLAMA 'HACER DIEZ' (NCETM, Primary Mastery 1.11, "bridging 10"): "We can add
+  two numbers which bridge the tens boundary by using a 'make ten' strategy."  Y NCETM lo explica
+  igual que aqui: "transformar una suma de dos sumandos (p.ej. 7 + 5) en una suma de tres sumandos
+  (p.ej. 7 + 3 + 2) partiendo uno de los sumandos".
+
+  REGLA FIJADA 4 - SOLO HACE FALTA CUANDO SE CRUZA EL DIEZ.  Si los dos numeros ya suman diez o
+  menos (4 + 5), no hay nada que cruzar y se sabe directamente.  Derivar es para cuando la suma
+  PASA de diez (7 + 5, 8 + 4, 9 + 9).
+
+  REGLA FIJADA 5 - LA CONDICION DE APLICACION: LOS DOS DEBEN SER DE UNA CIFRA.
+  Para partir y completar diez hacen falta numeros del 0 al 9.  Con numeros de dos cifras hay que ir
+  por COLUMNAS (unidad siguiente, 7.3), y el sistema lo DICE en vez de hacerlo mal.
+
+  REGLA FIJADA 6 - LAS DOS VIAS TIENEN QUE DAR LO MISMO, Y EL SISTEMA LO COMPRUEBA.
+  Los dedos (7.1) y derivar (7.2) son dos maneras de sumar lo mismo.  Una cuenta, dos caminos.
+  Si alguna vez no coincidieran, el sistema lo diria en vez de elegir una.
+
+  REGLA FIJADA 7 - POR QUE DERIVAR ES MEJOR QUE CONTAR (esto esta medido, no es una opinion).
+  Number Sense Maths, "Achieving fluency in addition and subtraction facts":
+    - "Counting on approaches are not only less efficient, they are associated with LOWER
+      ATTAINMENT in maths as well.  Research by Tall and Gray found... higher attainers tend to use
+      known facts or DERIVED FACT STRATEGIES, and lower attainers are much more likely to use
+      counting based approaches."
+    - "Most facts which didn't bridge 10 were memorised... For facts which bridge 10 the picture is
+      more complex, and many of the facts which bridge 10 were quickly DERIVED using strategies."
+    - "8 + 9 is an example of a fact that actually very few people (either adults or children) have
+      memorised.  Of the many hundreds of teachers I have asked, only about 5% report 'just knowing'
+      that 8 + 9 = 17.  Most fluent people solve this through very quickly applying a strategy."
+  Y sobre ENSEÑARLO: "Thornton (1978) showed that TEACHING STRATEGIES is more effective in securing
+  fluency in addition and subtraction facts than taking a rote memorisation approach."
+
+errores_tipicos:
+  - Partir el numero equivocado, o partirlo mal (que las dos partes no sumen el original).
+  - Completar diez con el numero equivocado: al 7 le faltan 3, no 2.
+  - Olvidarse de sumar lo que sobra al diez (quedarse en 10).
+  - Usarlo cuando NO cruza el diez (4 + 5): ahi no hay nada que hacer.
+  - Intentarlo con numeros de dos cifras, que necesitan las columnas (unidad 7.3).
+fuentes:
+  - NCETM, "PRIMARY MASTERY 1.11 - Addition and subtraction: bridging 10".  Teaching point 5: "We can
+    add two numbers which bridge the tens boundary by using a 'make ten' strategy."  Y: "Introduce
+    the idea that we can transform a sum of two addends (e.g. 7 + 5) into a sum of three addends
+    (e.g. 7 + 3 + 2) by partitioning one of the addends."
+  - Number Sense Maths, "Achieving fluency in addition and subtraction facts": la progresion de los
+    hechos (el "bridging" es el paso 10 de 11), la cita de Thornton (1978) sobre enseñar estrategias,
+    y la de Tall y Gray sobre rendimiento alto y hechos DERIVADOS.  "Before the children are ready
+    to learn bridging as a strategy, they need to be able to PARTITION ALL SINGLE DIGIT NUMBERS.
+    Adding 8 + 5 by bridging through 10 requires children to partition 5 into 2 and 3."
+  - BBC Bitesize, "Add by making 10": el metodo paso a paso: "Work out what you need to add to your
+    first number to make ten.  Take this from your second number.  What do you have left?  Add what
+    is left to 10.  That's your answer!"
+  - Oak National Academy, "Addition by bridging through 10": "Once pupils understand how to bridge
+    ten, they can apply the same strategy to bridging twenty, thirty and other tens numbers."
+  - Decision de Carlos (4 oct 2026): "admite todo lo que sirva, los dedos y derivar; que pruebe las
+    dos".
+depende_de:
+  - la_suma
+  - componer_descomponer
+relacionado_con:
+  - el_metodo_de_los_dedos

@@ -1,0 +1,43 @@
+id: reglas_7_1
+nombre: Reglas de decision de la unidad 7.1 (el metodo de los dedos)
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 7.1 - EL METODO DE LOS DEDOS: sumar contando hacia adelante.
+
+  "dedos: 8 + 5"   -> como se suma mecanico, paso a paso, con la pizarra a la vista.
+
+  LAS DOS ENTRADAS son NUMEROS, y se pueden decir con cifra o con palabra (unidad 5.3).
+  El PRIMERO se anota; el SEGUNDO se coge con los dedos.
+
+  CONDICIONES:
+     no_alcanza(escena, cuenta)          -> no_alcanza  (el total se pasa de la secuencia de contar)
+     no_es_un_numero(escena, cuenta)     -> no_es_un_numero
+     no_caben_en_los_dedos(escena, cuenta) -> no_caben_en_los_dedos  (el segundo pasa de diez)
+     siempre(escena, cuenta)             -> se_puede
+
+  Las reglas viven aqui, como datos.
+
+dedos: 10
+
+reglas_dedos:
+  - nombre: ded_no_es_un_numero
+    conclusion: no_es_un_numero
+    condiciones:
+      - entrada_no_es_numero(escena, cuenta)
+    justificacion: el_metodo_de_los_dedos
+  - nombre: ded_no_caben_en_los_dedos
+    conclusion: no_caben_en_los_dedos
+    condiciones:
+      - segundo_pasa_de_diez(escena, cuenta)
+    justificacion: el_metodo_de_los_dedos
+  - nombre: ded_no_alcanza
+    conclusion: no_alcanza
+    condiciones:
+      - total_pasa_de_cien(escena, cuenta)
+    justificacion: el_metodo_de_los_dedos
+  - nombre: ded_se_puede
+    conclusion: se_puede
+    condiciones:
+      - siempre(escena, cuenta)
+    justificacion: el_metodo_de_los_dedos

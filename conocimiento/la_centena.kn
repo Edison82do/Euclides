@@ -1,0 +1,102 @@
+id: la_centena
+nombre: La centena (diez decenas son una centena, y la escalera sigue)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  LA ESCALERA NO SE PARA EN DIEZ.  Es lo que pide la nota 6 de Carlos:
+  "unidad, decena, centena, unidad de mil...".
+
+  REGLA FIJADA 1 - LA ESCALERA VA DE DIEZ EN DIEZ, Y SIEMPRE IGUAL:
+      10 UNIDADES  hacen  1 DECENA
+      10 DECENAS   hacen  1 CENTENA
+      10 CENTENAS  hacen  1 UNIDAD DE MIL
+  Es el MISMO movimiento repetido: cuando juntas DIEZ de una cosa, tienes UNA de la siguiente.
+  (Es lo que Oak dice: "there are 10 tens in 100".  Y el error tipico documentado es justamente
+  no verlo: "pupils do not identify that ten tens are equal to 100".)
+
+  REGLA FIJADA 2 - LA CENTENA ES UNA COSA ENTERA, no cien cosas sueltas.  Es el mismo "unitising"
+  de la 6.2 (el diez como UNA cosa), un escalon mas arriba: cien unidades se pueden coger como
+  UNA centena, y entonces se cuentan de cien en cien.  (Es lo que hace posible contar hasta mil.)
+
+  REGLA FIJADA 3 - UN NUMERO DE TRES CIFRAS SON CENTENAS, DECENAS Y UNIDADES, y la POSICION dice
+  el valor de cada cifra:
+      247  ->  2 centenas, 4 decenas y 7 unidades
+      El 2 no vale 2: vale DOSCIENTOS (200).
+      El 4 no vale 4: vale CUARENTA (40).
+      El 7 vale siete (7).
+  (Oak: "the position of the digit tells you its place value".  Y NZ Maths: en 73, el 7 representa
+  7 unidades de diez, o sea 70.)
+
+  REGLA FIJADA 4 - EL CERO TIENE DOS USOS (esto lo documenta NZ Maths, y es importante):
+      (1) como CANTIDAD: "ninguno".  6 + 0 = 6.
+      (2) como MARCADOR DE POSICION: ocupa un sitio para que se lean bien las demas cifras.
+          En 704, el cero dice que NO hay decenas.  Y en 500, ocupa las decenas y las unidades.
+  Y EL ERROR TIPICO (documentado): creer que "204 no tiene decenas".
+  NO: en 204 hay **20 decenas** (200 de las dos centenas, y 0 sueltas).
+  El cero dice que no hay decenas SUELTAS, no que no haya decenas.
+
+  REGLA FIJADA 5 - LOS NOMBRES DE TRES CIFRAS SE CONSTRUYEN, como los de dos (unidad 6.1).
+  Solo hay que SABERSE las palabras de los cientos; el resto se construye como antes:
+      247 = doscientos + cuarenta y siete
+  Y OJO CON DOS COSAS:
+      - 100 solo es "cien".  Pero de 101 a 199 es "ciento ...":  ciento uno, ciento cincuenta.
+        De 200 en adelante ya no: doscientos, trescientos...  Y 200 solo es "doscientos" a secas.
+      - TRES cientos son IRREGULARES (no se construyen pegando "-cientos" a la palabra de la cifra):
+        quinientos (no "cincocientos"), setecientos (no "sietecientos"), novecientos (no
+        "nuevecientos").
+  (Y se escriben SIN TILDES, como todo el sistema: "veintidos", "doscientos".)
+
+  REGLA FIJADA 6 - Y "NO SE ANADE UN CERO".  Un error tipico documentado (Oak): decir que 120 es
+  "12 con un cero detras".  En este sistema eso NO se dice: se dice que **12 decenas son 120**
+  (que es lo que si sabe: juntar decenas, unidad 6.5).  Es la misma regla de siempre: nada de
+  notacion de un nivel que no se ha ensenado.
+
+  REGLA FIJADA 7 - SUBIR EL TECHO NO ES INVENTAR.  La secuencia ahora llega hasta MIL, y se
+  construye con la MISMA regla: cien, ciento uno... novecientos noventa y nueve, mil.
+  Y el sistema lo dice cuando algo se sale: "no_alcanza".
+
+errores_tipicos:
+  - No ver que DIEZ DECENAS son UNA CENTENA (Oak: el error tipico de este paso).
+  - Creer que 204 no tiene decenas.  Si tiene: 20.
+  - Decir "12 con un cero detras" en vez de "12 decenas son 120" (Oak).
+  - Los tres cientos irregulares mal dichos: "cincocientos", "sietecientos", "nuevecientos".
+  - Decir "ciento" para 100 solo, o "cien" delante de algo ("cien veinte" en vez de "ciento veinte").
+fuentes:
+  - Oak National Academy, "Composition of 100 in 10s and 1s": "there are 10 tens in 100"; el error
+    tipico es no ver que diez decenas son cien.
+  - Oak National Academy, "Represent a 3-digit number up to 1,000 in different ways": la posicion
+    dice el valor; error tipico con los ceros intercalados (307, 680).
+  - Oak National Academy, "Represent 3-digit multiples of 10": NO decir "anade un cero"; 12 decenas
+    son 120.
+  - NZ Maths, "Building on two-digit place value": "ten tens form one hundred"; el cero como
+    marcador de posicion; el error de creer que 204 no tiene decenas (tiene 20); y ver 720 como
+    6 centenas y 12 decenas para restar.
+  - AET Mathematics Calculation Policy: "Exchanging -- swapping a '100' for ten '10s'".
+  - Nota 6 de Carlos (3 oct 2026): "unidad, decena, centena, unidad de mil...".
+
+cientos:
+  1: ciento
+  2: doscientos
+  3: trescientos
+  4: cuatrocientos
+  5: quinientos
+  6: seiscientos
+  7: setecientos
+  8: ochocientos
+  9: novecientos
+
+cientos_solos:
+  1: cien
+  2: doscientos
+  3: trescientos
+  4: cuatrocientos
+  5: quinientos
+  6: seiscientos
+  7: setecientos
+  8: ochocientos
+  9: novecientos
+
+irregulares:
+  - quinientos
+  - setecientos
+  - novecientos

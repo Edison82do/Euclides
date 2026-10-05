@@ -1,0 +1,48 @@
+id: reglas_7_4
+nombre: Reglas de decision de la unidad 7.4 (la resta con los dedos)
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 7.4 - LA RESTA CON LOS DEDOS: se toma el primero, se van bajando los del segundo, y los
+  que quedan son el resultado.
+
+  "dedos: 9 - 4"   ->  se levantan 9, se bajan 4, quedan 5.
+
+  LAS DOS ENTRADAS son NUMEROS de UNA CIFRA (0..9), dichos con cifra o con palabra.
+
+  condiciones (el orden importa):
+     entrada_no_es_numero(escena, cuenta)       -> no_es_un_numero
+     segundo_pasa_de_diez(escena, cuenta) -> no_caben_en_los_dedos
+     quiere_quitar_de_mas(escena, cuenta)       -> no_hay_bastantes
+     siempre(escena, cuenta)                    -> se_puede
+
+  OJO (lo cazo Carlos, 4 oct): lo que tiene que caber en los dedos es EL SEGUNDO (el que se baja),
+  NO el primero.  Los diez dedos son la VENTANA DE LOS ULTIMOS DIEZ numeros, y el ultimo es el
+  minuendo: para 12 - 5 van del 3 al 12; y por eso 45 - 7 tambien cabe (del 36 al 45).
+  El primero puede ser tan grande como quiera: solo marca DONDE ACABA la ventana.
+  La version anterior exigia que el primero no pasara de diez, y eso era mal: contradecia a la 7.1,
+  donde el primer numero se anota y el total NO tiene que caber en los dedos.
+
+  Las reglas viven aqui, como datos.
+
+reglas_resta_dedos:
+  - nombre: rd_no_es_un_numero
+    conclusion: no_es_un_numero
+    condiciones:
+      - entrada_no_es_numero(escena, cuenta)
+    justificacion: la_resta_con_los_dedos
+  - nombre: rd_no_caben
+    conclusion: no_caben_en_los_dedos
+    condiciones:
+      - segundo_pasa_de_diez(escena, cuenta)
+    justificacion: la_resta_con_los_dedos
+  - nombre: rd_no_hay_bastantes
+    conclusion: no_hay_bastantes
+    condiciones:
+      - quiere_quitar_de_mas(escena, cuenta)
+    justificacion: la_resta_con_los_dedos
+  - nombre: rd_se_puede
+    conclusion: se_puede
+    condiciones:
+      - siempre(escena, cuenta)
+    justificacion: la_resta_con_los_dedos

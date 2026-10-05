@@ -1,0 +1,42 @@
+id: reglas_7_5
+nombre: Reglas de decision de la unidad 7.5 (restar por columnas)
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 7.5 - RESTAR POR COLUMNAS: columna a columna, y si las unidades de arriba no llegan, se
+  CAMBIA una decena por diez unidades (el intercambio).
+
+  "columnas: 72 - 45"   ->  unidades: 2-5 no llega -> 72 = 6 dec y 12 u -> 12-5=7 -> 6-4=2 -> 27.
+
+  CONDICIONES (el orden importa):
+     entrada_no_es_numero(escena, cuenta)    -> no_es_un_numero
+     quiere_quitar_de_mas(escena, cuenta)       -> no_hay_bastantes
+     pasa_de_cien(escena, cuenta)               -> no_alcanza
+     siempre(escena, cuenta)                    -> se_puede
+
+reglas_columnas_resta:
+  - nombre: rc_no_alcanza
+    conclusion: no_alcanza
+    condiciones:
+      - pasa_de_cien(escena, cuenta)
+    justificacion: restar_por_columnas
+  - nombre: rc_no_es_un_numero
+    conclusion: no_es_un_numero
+    condiciones:
+      - entrada_no_es_numero(escena, cuenta)
+    justificacion: restar_por_columnas
+  - nombre: rc_no_hay_bastantes
+    conclusion: no_hay_bastantes
+    condiciones:
+      - quiere_quitar_de_mas(escena, cuenta)
+    justificacion: restar_por_columnas
+  - nombre: rc_no_alcanza
+    conclusion: no_alcanza
+    condiciones:
+      - pasa_de_cien(escena, cuenta)
+    justificacion: restar_por_columnas
+  - nombre: rc_se_puede
+    conclusion: se_puede
+    condiciones:
+      - siempre(escena, cuenta)
+    justificacion: restar_por_columnas

@@ -1,0 +1,81 @@
+id: restar_por_columnas
+nombre: Restar por columnas (y el intercambio de una decena)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  RESTAR DOS NUMEROS SE HACE POR COLUMNAS, igual que sumarlos (unidad 7.3) -- pero al reves.
+
+     72 - 45
+
+     SE PONE UNO DEBAJO DEL OTRO y se restan las COLUMNAS, empezando por la derecha:
+
+          72
+        - 45
+        ----
+
+  REGLA FIJADA 1 - SE RESTA COLUMNA A COLUMNA, igual que se suma.  Unidades con unidades y decenas
+  con decenas.  Y SE EMPIEZA POR LA DERECHA (las unidades), igual que en la suma.
+
+  REGLA FIJADA 2 - SI LAS UNIDADES DE ARRIBA NO LLEGAN, NO SE DA LA VUELTA A LA RESTA.
+  Aqui esta EL ERROR MAS COMUN de toda la resta, y es el que hay que matar:
+  en 72 - 45 hay 2 unidades arriba y 5 abajo.  Un nino (y un sistema) puede pensar "5 - 2 = 3" y
+  seguir tan contento.  ESO ES FALSO.  El numero de arriba es LO QUE HAY; si no llega, no se
+  cambia el orden: SE PIDE.
+
+  REGLA FIJADA 3 - Y LO QUE SE PIDE **NO ES UN PRESTAMO**.  Se CAMBIA, y no se devuelve nada.
+  Es EL INTERCAMBIO: UNA DECENA SE CAMBIA POR DIEZ UNIDADES.
+      72 = 7 decenas y 2 unidades
+      se coge UNA de las 7 decenas, y se cambia por diez unidades:
+      72 = 6 decenas y 12 unidades      <- Y SIGUE SIENDO 72 (60 + 12 = 72)
+  Por eso NO se dice "me llevo una" ni "pido prestada una": se dice que **se cambia una decena por
+  diez unidades**.  Y no se devuelve, porque nada se presta.
+  (Fuente: la palabra "borrow" es enganosa -- implica devolver algo que nunca se devuelve.  Lo que
+  pasa de verdad es un intercambio: "one ten for ten ones".)
+
+  REGLA FIJADA 4 - ES EL LLEVARSE DE LA 7.3, AL REVES.  En la suma, diez unidades se juntaban en
+  una decena que SUBIA.  Aqui, una decena se abre en diez unidades que BAJAN.  Es la misma moneda
+  cambiada en el otro sentido.
+
+  REGLA FIJADA 5 - AHORA SI SE RESTA LA COLUMNA: 12 - 5 = 7.  Y esa resta NO se hace de memoria: se
+  hace con EL MECANISMO de la unidad 7.4 (los dedos, hacia atras).  Si el numero de arriba no cabe
+  en los dedos (12 no cabe), se ANOTA en la pizarra y se bajan los dedos del segundo -- exactamente
+  como en la suma (unidad 7.1).
+
+  REGLA FIJADA 6 - OJO AL BAJAR LA DECENA: la columna de las decenas pasa de 7 a 6.  Si se olvida,
+  la respuesta sale DIEZ de mas.  (Error tipico documentado.)
+
+  REGLA FIJADA 7 - SI LAS UNIDADES DE ARRIBA SI LLEGAN, no hay intercambio y se resta directo.
+  58 - 27: 8 - 7 = 1 y 5 - 2 = 3 -> 31.  Las dos formas (con y sin intercambio) se aprenden
+  SEGUIDAS, porque son la misma cosa salvo un paso.
+
+  REGLA FIJADA 8 - SE VERIFICA POR LA VUELTA (la suma deshace la resta).  Si 72 - 45 = 27, entonces
+  27 + 45 tienen que ser 72.  Y esa suma se hace con las COLUMNAS de la 7.3.  La resta no se cree a
+  si misma.
+
+  REGLA FIJADA 9 - LOS CEROS, AL FINAL.  Restar con un cero arriba (como 90 - 47, o 100 - 45) obliga
+  a encadenar DOS intercambios (una centena por diez decenas, y una de esas decenas por diez
+  unidades).  Eso es otra unidad, y no se mezcla aqui.
+
+errores_tipicos:
+  - EL MAS COMUN: dar la vuelta a la resta cuando las unidades de arriba no llegan (5 - 2 = 3 en
+    vez de cambiando).  Es el "restar el digito pequeno del grande".
+  - Hacer el intercambio pero OLVIDAR bajar la decena (sale diez de mas).
+  - Bajar la decena y AUN ASI dar la vuelta a la resta.
+  - Decir "me llevo una" o "pido prestada": no es un prestamo, es un cambio, y no se devuelve.
+fuentes:
+  - Oak National Academy: "cuando la columna de las unidades se desborda mas alla de nueve, haces un
+    diez y lo deslizas a la columna de las decenas" (la suma, 7.3) -- y al reves, para restar.
+  - ESSENTIALmaths / Widford Lodge, "Written calculation progression": la secuencia es suma ->
+    resta, y dentro de cada una, SIN reagrupar y luego CON reagrupar; y se ensenan seguidas.
+  - Achieve the Core, "Progressions for the Common Core": "all necessary decomposing is done first,
+    then the subtractions are carried out"; y el error tipico "restar el digito pequeno del
+    grande" (82 - 45 = 43).
+  - Monster Math / OneLearning (guias de reagrupamiento): "'Borrow' is doing you no favours…
+    borrowing implies you'll give it back, and nothing is ever given back here"; y los tres errores
+    tipicos: el "smaller-from-larger bug" (34 en 43-17), olvidar bajar la decena (36), y bajar la
+    decena pero dar la vuelta a la resta (24).
+  - NCETM, "Algorithms: column subtraction".
+depende_de:
+  - la_resta_con_los_dedos
+  - sumar_por_columnas
+  - partir_en_decenas_y_unidades

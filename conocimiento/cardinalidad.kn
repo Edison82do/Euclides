@@ -1,0 +1,88 @@
+id: cardinalidad
+nombre: Cardinalidad (la ultima palabra ES la cantidad del conjunto)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  El PRINCIPIO: la ultima palabra que se dice al contar un conjunto ES la cantidad de ese conjunto.
+  No es un truco para responder, es lo que significa esa palabra.
+
+  DIFERENCIA CON LA UNIDAD 2.3 (esto es el corazon de la unidad):
+     2.3 = REGLA DE LA ULTIMA PALABRA: "si me preguntan cuantos hay, digo la ultima que dije".
+           Es un PROCEDIMIENTO.  Se puede aplicar bien sin entender nada.
+     2.4 = PRINCIPIO DE CARDINALIDAD: "esa palabra ES la cantidad del conjunto".
+           Es lo que la hace significar algo.
+  La investigacion lo demuestra: de 188 ninos de 4 anos y medio, 42 (22,3%) acertaban la pregunta
+  "cuantos hay?" Y FALLABAN el 1-a-1 al contar.  Aplicar la regla no es tener el principio.
+
+  COMO SE PRUEBA (y esto lo manda la investigacion): con la tarea GIVE-N.  No basta con
+  reconocer una cantidad: hay que SABER PRODUCIR un conjunto con la cantidad que le piden.
+  ("Dame tres.")  Al reves: reconocer numero -> conjunto (word-to-set) es MAS DIFICIL que
+  conjunto -> numero (set-to-word, la 2.3), y por eso es la que distingue.
+
+  REGLA FIJADA 1: al producir un conjunto hay que CONTARLO y comprobar que sale lo pedido.  En los
+  estudios, pedir al nino que rechequee ("Recount") MEJORA los resultados: por eso el sistema
+  siempre se verifica a si mismo.
+
+  REGLA FIJADA 1-bis (EL AGUJERO QUE CAZO CARLOS, y como se cerro):
+  el sistema NO TIENE UN MUNDO.  No hay objetos "suyos" que sacar de ningun sitio.  La primera
+  version de esta unidad, con "dame: tres" a secas, se FABRICABA los objetos (cosa_uno, cosa_dos...):
+  eso viola la regla del proyecto de que toda respuesta se rastree a un dato escrito.  Los objetos
+  se los estaba inventando el sistema.
+  ARREGLO: el MONTON lo da siempre quien pregunta.  El sistema no crea objetos: ELIGE de los que le
+  dan.  La forma es la misma que la de "tiene N?":
+      dame: <monton> / <cantidad>     -> de estos, dame esta cantidad
+  Y si no le dan monton, lo dice: no se inventa de donde coger.
+
+  REGLA FIJADA 1-ter: si en el monton hay MENOS objetos que la cantidad pedida, NO hay respuesta.
+  El sistema no rellena el hueco inventandose los que faltan: dice que no hay bastantes.
+
+  REGLA FIJADA 2: el sistema es un "COUNTER", no un "GRABBER".  En los estudios de Give-N hay ninos
+  que agarran un punado y dicen una cantidad cualquiera (grabbers) y ninos que cuentan de verdad
+  (counters).  Nuestro sistema cuenta siempre, y si no le llegan las palabras lo dice.
+
+  REGLA FIJADA 3: NO se acepta una cuenta mal hecha.  Se ha visto que ninos que ya tienen el
+  principio aceptan que un conjunto tiene "dieciseis" si alguien conto dos veces cada uno de los
+  ocho objetos.  Nuestro sistema NO: si el 1-a-1 esta roto, la cantidad no vale.
+
+  REGLA FIJADA 4: cuando se tiene el principio, sale gratis para CUALQUIER cantidad dentro del
+  rango que se sepa contar: no hay que aprenderse una por una.  Hacia los tres anos y medio los
+  ninos dan el salto ("CP-knowers"); antes van sabiendo "uno", "dos", "tres"... una a una
+  ("1-knower", "2-knower"...).  Nuestro sistema tiene el principio desde el principio, y por eso
+  `dame:` funciona con cualquier palabra de su lista.
+
+errores_tipicos:
+  - Agarrar un punado sin contar (los "grabbers") y decir una cantidad cualquiera.
+  - Dar la cantidad pedida pero SIN verificarla.
+  - No producir el conjunto: solo repetir la palabra.
+  - Aceptar una cuenta que viola el 1-a-1 (la palabra repetida no vale como cantidad).
+  - Creer que tener la regla de la ultima palabra (2.3) ya es tener el principio (esto es la 2.4).
+fuentes:
+  - Gelman & Gallistel (1978): el principio de cardinalidad.
+  - Wynn (1990, 1992): la tarea Give-N; distingue "grabbers" de "counters"; los niveles
+    ("1-knower", "2-knower"... hasta "CP-knower").
+  - Sarnecka & Carey (2008): la cardinalidad y el sucesor van juntos; solo los CP-knowers generan
+    cualquier conjunto dentro de su rango.
+  - Cheung et al. (2020): ninos con el principio ACEPTAN que un conjunto tiene 16 si alguien conto
+    dos veces cada uno de los 8 objetos -> de ahi la regla fijada 3.
+  - Krajcsi (2021): pedir que se rechequee ("Recount") mejora la precision en Give-N -> regla
+    fijada 1.
+  - "The 'How many?' task inadequately assesses the understanding of the cardinality principle":
+    el 22,3% que acierta con la regla superficial.
+depende_de:
+  - cuantos_hay
+  - correspondencia
+  - orden_estable
+relacionado_con:
+  - pertenencia
+propiedades:
+  - La cantidad de un conjunto es la ultima palabra del recuento, y no cambia si se cuenta otra vez.
+  - Un conjunto de N objetos y la palabra N son dos caras de lo mismo.
+representaciones:
+  concreta: |
+    "Dame tres": poner tres cosas, contarlas, y comprobar que dicen "tres".
+  numerica: |
+    Todavia no aplica: la cantidad va EN PALABRAS.  Las cifras son la unidad 3.1.
+  formal: |
+    dame(n) = un conjunto C tal que cuantos(C) = n
+  general: |
+    Vale para cualquier palabra de la lista, no para una en concreto.

@@ -1,0 +1,64 @@
+id: reglas_5_2
+nombre: Reglas de decision de la unidad 5.2
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 5.2 - LA SUMA.
+
+  Las dos estructuras usan el MISMO material (dos montones que da quien pregunta: el sistema no
+  inventa objetos), pero cuentan HISTORIAS distintas:
+     sumar:  AGREGACION  - juntar dos montones que ya estan ahi.
+     anadir: AUMENTACION - a un monton se le anaden mas (el monton crece: primero, luego, ahora).
+
+  Las dos dan el mismo numero, y el sistema DICE la historia de cada una.
+
+  TRABAJO A - SUMAR (agregacion):  "sumar: a,b,c / d,e"
+     sumar_pasa_de_diez(escena, cuenta)  -> no_alcanza
+     siempre(escena, cuenta)             -> suma
+
+  TRABAJO B - ANADIR (aumentacion):  "anadir: a,b,c / d,e"
+     sumar_pasa_de_diez(escena, cuenta)  -> no_alcanza
+     siempre(escena, cuenta)             -> aumento
+
+  LA VERIFICACION (en las dos): partiendo la SUMA (unidad 5.1) tiene que aparecer la pareja de los
+  sumandos.  Si no apareciera, el sistema no elegiria: lo diria.
+
+  CONDICIONES PRIMITIVAS DISPONIBLES (version 5.2):
+     juntar_pasa_de_diez(escena, cuenta)
+     siempre(escena, cuenta)
+
+  Las reglas viven aqui, como datos.
+
+reglas_sumar:
+  - nombre: su_no_alcanza
+    conclusion: no_alcanza
+    condiciones:
+      - juntar_pasa_de_diez(escena, cuenta)
+    justificacion: la_suma
+  - nombre: su_necesito_las_columnas
+    conclusion: necesito_las_columnas
+    condiciones:
+      - alguna_pasa_de_una_decena(escena, cuenta)
+    justificacion: la_suma
+  - nombre: su_sumar
+    conclusion: suma
+    condiciones:
+      - siempre(escena, cuenta)
+    justificacion: la_suma
+
+reglas_anadir:
+  - nombre: an_no_alcanza
+    conclusion: no_alcanza
+    condiciones:
+      - juntar_pasa_de_diez(escena, cuenta)
+    justificacion: la_suma
+  - nombre: an_necesito_las_columnas
+    conclusion: necesito_las_columnas
+    condiciones:
+      - alguna_pasa_de_una_decena(escena, cuenta)
+    justificacion: la_suma
+  - nombre: an_anadir
+    conclusion: aumento
+    condiciones:
+      - siempre(escena, cuenta)
+    justificacion: la_suma

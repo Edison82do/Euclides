@@ -1,0 +1,105 @@
+id: reglas_2_2
+nombre: Reglas de decision de la unidad 2.2
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 2.2 - ORDEN ESTABLE.  Cuatro trabajos:
+
+  TRABAJO A - SIGUIENTE: "que va despues de esta palabra de la lista?"
+     la_palabra_no_esta(palabra, cuenta)   -> palabra_desconocida
+     es_la_ultima(palabra, cuenta)         -> no_lo_se   (llego al final de lo que se)
+     hay_siguiente(palabra, cuenta)        -> hay_siguiente
+
+  TRABAJO B - ANTERIOR: "que va antes de esta palabra de la lista?"
+     la_palabra_no_esta(palabra, cuenta)   -> palabra_desconocida
+     es_la_primera(palabra, cuenta)        -> no_lo_se   (antes de "uno" no hay nada)
+     hay_anterior(palabra, cuenta)         -> hay_anterior
+
+  TRABAJO C - RECITAR DESDE UNA PALABRA: la lista desde ahi hasta donde se sabe.
+     la_palabra_no_esta(palabra, cuenta)   -> palabra_desconocida
+     (si no)                               -> recitado
+     Se dice SIEMPRE hasta donde llega, y si llega al final se avisa: no se inventa la siguiente.
+
+  TRABAJO D - REVISAR UNA RECITACION: se le da una lista dicha por otro y dice si esta bien.
+     hay_palabra_desconocida(cuenta)       -> palabra_desconocida
+     no_es_el_principio(cuenta)            -> orden_saltado
+     es_el_principio(cuenta)               -> correcta
+
+  OJO: las dos primitivas del trabajo D son LAS MISMAS que ya usa la unidad 2.1.  No se
+  reimplementan: se reutilizan tal cual.  (Es la leccion del fallo de la 2.1.)
+
+  CONDICIONES PRIMITIVAS DISPONIBLES EN EL MOTOR (version 2.2):
+    la_palabra_no_esta(palabra, cuenta)
+    la_palabra_esta(palabra, cuenta)
+    es_la_ultima(palabra, cuenta)
+    hay_siguiente(palabra, cuenta)
+    es_la_primera(palabra, cuenta)
+    hay_anterior(palabra, cuenta)
+    hay_palabra_desconocida(cuenta)
+    no_es_el_principio(cuenta)
+    es_el_principio(cuenta)
+
+  Las reglas viven aqui, como datos.
+
+reglas_siguiente:
+  - nombre: siguiente_palabra_desconocida
+    conclusion: palabra_desconocida
+    condiciones:
+      - la_palabra_no_esta(palabra, cuenta)
+    justificacion: secuencia_de_conteo
+  - nombre: siguiente_es_la_ultima
+    conclusion: no_lo_se
+    condiciones:
+      - es_la_ultima(palabra, cuenta)
+    justificacion: orden_estable
+  - nombre: siguiente_hay
+    conclusion: hay_siguiente
+    condiciones:
+      - hay_siguiente(palabra, cuenta)
+    justificacion: orden_estable
+
+reglas_anterior:
+  - nombre: anterior_palabra_desconocida
+    conclusion: palabra_desconocida
+    condiciones:
+      - la_palabra_no_esta(palabra, cuenta)
+    justificacion: secuencia_de_conteo
+  - nombre: anterior_es_la_primera
+    conclusion: no_lo_se
+    condiciones:
+      - es_la_primera(palabra, cuenta)
+    justificacion: orden_estable
+  - nombre: anterior_hay
+    conclusion: hay_anterior
+    condiciones:
+      - hay_anterior(palabra, cuenta)
+    justificacion: orden_estable
+
+reglas_recitar:
+  - nombre: recitar_palabra_desconocida
+    conclusion: palabra_desconocida
+    condiciones:
+      - la_palabra_no_esta(palabra, cuenta)
+    justificacion: secuencia_de_conteo
+  - nombre: recitar_tramo
+    conclusion: recitado
+    condiciones:
+      - la_palabra_esta(palabra, cuenta)
+    justificacion: orden_estable
+
+reglas_revisar_secuencia:
+  - nombre: revisar_secuencia_palabra_desconocida
+    conclusion: palabra_desconocida
+    condiciones:
+      - hay_palabra_desconocida(cuenta)
+    justificacion: secuencia_de_conteo
+  - nombre: revisar_secuencia_orden_saltado
+    conclusion: orden_saltado
+    condiciones:
+      - no_es_el_principio(cuenta)
+    justificacion: orden_estable
+  - nombre: revisar_secuencia_correcta
+    conclusion: correcta
+    condiciones:
+      - es_el_principio(cuenta)
+    justificacion: orden_estable

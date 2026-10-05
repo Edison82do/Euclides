@@ -1,0 +1,83 @@
+id: reglas_2_1
+nombre: Reglas de decision de la unidad 2.1
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 2.1 - CORRESPONDENCIA uno a uno.  Tiene DOS trabajos:
+
+  TRABAJO A - CONTAR: "empareja una palabra con cada objeto de esta coleccion".
+     escena_vacia(escena)              -> no_decidible  (no hay nada que contar)
+     faltan_palabras(escena, cuenta)   -> no_alcanza_la_secuencia  (hay mas objetos que palabras
+                                        conoce el sistema: NO se inventa las que faltan)
+     (si no)                           -> emparejado
+
+  TRABAJO B - REVISAR: "esta cuenta, esta bien hecha?"  Se le da la coleccion y la cuenta que
+  alguien ha hecho (los objetos y las palabras que les puso).  Los errores son LOS TRES de
+  Briars & Secada, y se comprueban en este orden:
+     menos_palabras_que_objetos(escena, cuenta)      -> faltan_objetos_sin_contar
+     mas_palabras_que_objetos(escena, cuenta)        -> palabras_de_mas
+     hay_palabra_repetida(cuenta)                    -> palabra_repetida   (el error mas comun)
+     hay_palabra_desconocida(cuenta)                 -> palabra_desconocida
+     no_es_el_principio(cuenta)                      -> orden_saltado
+     es_el_principio(cuenta)                         -> correcta
+
+  CONDICIONES PRIMITIVAS DISPONIBLES EN EL MOTOR (version 2.1):
+    escena_vacia(escena)
+    faltan_palabras(escena, cuenta)
+    menos_palabras_que_objetos(escena, cuenta)
+    mas_palabras_que_objetos(escena, cuenta)
+    hay_palabra_repetida(cuenta)
+    hay_palabra_desconocida(cuenta)
+    no_es_el_principio(cuenta)
+    es_el_principio(cuenta)
+
+  Las reglas viven aqui, como datos.
+
+reglas_contar:
+  - nombre: contar_sin_objetos
+    conclusion: no_decidible
+    condiciones:
+      - escena_vacia(escena)
+    justificacion: correspondencia
+  - nombre: contar_secuencia_corta
+    conclusion: no_alcanza_la_secuencia
+    condiciones:
+      - faltan_palabras(escena, cuenta)
+    justificacion: secuencia_de_conteo
+  - nombre: contar_emparejar
+    conclusion: emparejado
+    condiciones:
+      - hay_palabras_suficientes(escena, cuenta)
+    justificacion: correspondencia
+
+reglas_revisar:
+  - nombre: revisar_objetos_sin_contar
+    conclusion: faltan_objetos_sin_contar
+    condiciones:
+      - menos_palabras_que_objetos(escena, cuenta)
+    justificacion: correspondencia
+  - nombre: revisar_palabras_de_mas
+    conclusion: palabras_de_mas
+    condiciones:
+      - mas_palabras_que_objetos(escena, cuenta)
+    justificacion: correspondencia
+  - nombre: revisar_palabra_repetida
+    conclusion: palabra_repetida
+    condiciones:
+      - hay_palabra_repetida(cuenta)
+    justificacion: correspondencia
+  - nombre: revisar_palabra_desconocida
+    conclusion: palabra_desconocida
+    condiciones:
+      - hay_palabra_desconocida(cuenta)
+    justificacion: secuencia_de_conteo
+  - nombre: revisar_orden_saltado
+    conclusion: orden_saltado
+    condiciones:
+      - no_es_el_principio(cuenta)
+    justificacion: correspondencia
+  - nombre: revisar_correcta
+    conclusion: correcta
+    condiciones:
+      - es_el_principio(cuenta)
+    justificacion: correspondencia

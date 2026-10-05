@@ -1,0 +1,68 @@
+id: la_resta
+nombre: La resta (el signo -, y quitar de un monton)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  RESTAR ES QUITAR.  Se escribe con el signo - (menos) y el signo = (igual).
+
+     5 - 2 = 3        cinco menos dos igual a tres
+
+  REGLA FIJADA 1 - LOS SIGNOS.
+     -  se lee 'menos' y significa QUITAR lo de la derecha de lo de la izquierda.
+     =  se lee 'igual a' y significa QUE LAS DOS COSAS SON LO MISMO (igual que en la suma).
+
+  REGLA FIJADA 2 - LOS TERMINOS TIENEN NOMBRE.
+     El numero del que se quita es el MINUENDO (5).
+     Lo que se quita es el SUSTRAENDO (2).
+     Y lo que queda es el RESULTADO (3).
+
+  REGLA FIJADA 3 - LA HISTORIA ES 'PRIMERO..., LUEGO..., AHORA...'.  La resta que se aprende
+  primero es la REDUCCION: el monton DISMINUYE.
+     PRIMERO habia cinco.  LUEGO se van dos.  AHORA quedan tres.
+  Esto es QUITAR, y es distinto de PARTIR (unidad 5.1).
+     QUITAR: el sustraendo SE VA del monton, y el monton se hace mas pequeno.
+     PARTIR: el monton entero CADUCA en dos partes, y no se va nada (las dos partes siguen ahi).
+  Si se confunden, se aprende mal: se cree que '5 - 2' es solo 'buscar la pareja del 2 que hace 5',
+  y no es eso: en la reduccion, los dos objetos QUE SE VAN ya no estan.
+
+  REGLA FIJADA 4 - HAY TRES ESTRUCTURAS DE LA RESTA, Y NO SE APRENDEN A LA VEZ (White Rose,
+  NCETM): primero REDUCCION (quitar), y despues la PARTICION (cuantos hay en la otra parte) y la
+  DIFERENCIA (cuantos mas tiene uno que otro).  ESTA unidad es la REDUCCION: quitar.
+
+  REGLA FIJADA 5 - LA CONDICION DE APLICACION, Y ES LA CLAVE DE LA RESTA:
+  NO SE PUEDE QUITAR MAS DE LO QUE HAY.  De dos no se pueden quitar tres.  Cuando pasa eso, el
+  sistema lo DICE; no se inventa un resultado.  (Un numero negativo es otra cosa, y no esta aqui.)
+
+  REGLA FIJADA 6 - LA VUELTA VERIFICA (esto lo pide el plan del nivel).  Si '5 - 2 = 3', entonces
+  '3 + 2 = 5': sumando lo que quedo y lo que se fue tiene que volver a salir el minuendo.
+  La resta DESHACE la suma, y la suma DESHACE la resta.  Son la una la vuelta de la otra.
+
+  REGLA FIJADA 7 - CON EL CERO.  Quitar cero no quita nada: '3 - 0 = 3'.  Y quitar TODO deja cero:
+  '3 - 3 = 0' (el cero es una cantidad, unidad 3.2).
+
+errores_tipicos:
+  - Confundir quitar con partir (aqui los que se van SE VAN).
+  - Poner el resultado al reves: restar el minuendo del sustraendo ('2 - 5' en vez de '5 - 2').
+  - Creer que siempre se puede restar (de dos no se quitan tres).
+  - Restar y no comprobarlo: la vuelta (sumar) tiene que devolver el minuendo.
+fuentes:
+  - NCETM (Primary Mastery), "Additive structures: introduction to augmentation and reduction":
+    "Introduce children to addition as augmentation, and subtraction as REDUCTION (take away),
+    using a 'first..., then..., now...' story representation and abstract notation (+, - and =);
+    explore the INVERSE nature of the two operations."
+  - White Rose Education (2019), "Structures of Subtraction - What's the Difference?": "Reduction is
+    generally taught FIRST, and as pupils progress through primary school, they encounter the
+    partitioning and difference structures."
+  - Oak National Academy, "Interpret and represent subtraction stories": la historia de reduccion
+    disminuye una cantidad, y hay que distinguirla de la particion: "the subtrahend is physically
+    taken away rather than just 'partitioned'".
+  - NCETM, "Additive Reasoning": el error tipico es confundir las estructuras de particion y
+    reduccion, porque los ninos estan mas acostumbrados a 'quitar'.
+  - Gelman & Gallistel (1978): la cantidad de una coleccion cambia al quitarle cosas, y no al
+    reorganizarla.
+depende_de:
+  - la_suma
+  - componer_descomponer
+relacionado_con:
+  - cardinalidad
+  - el_cero

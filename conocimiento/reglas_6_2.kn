@@ -1,0 +1,37 @@
+id: reglas_6_2
+nombre: Reglas de decision de la unidad 6.2 (agrupar de diez en diez)
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 6.2 - AGRUPAR DE DIEZ EN DIEZ: coger los objetos de diez en diez y contar los montones
+  como UNA cosa (una decena), mas lo que sobra suelto (las unidades).
+
+  "agrupar: a,b,c,d,e,f,g,h,i,j,k,l,m"   -> una decena y tres unidades (= 13)
+
+  LA ENTRADA es una COLECCION de objetos (unidad 0.1/0.2, como todas las de cantidad).
+
+  CONDICIONES:
+     no_alcanza_la_secuencia(escena, _)  -> no_alcanza      (mas de cien: mi secuencia llega a cien)
+     no_llega_a_diez(escena, _)          -> no_hay_decena   (con menos de diez no hay monton que hacer)
+     siempre(escena, _)                  -> se_puede
+
+  EL ORDEN IMPORTA: primero el techo, luego si llega a diez.
+
+  Las reglas viven aqui, como datos.
+
+reglas_agrupar:
+  - nombre: ag_no_alcanza
+    conclusion: no_alcanza
+    condiciones:
+      - no_alcanza_la_secuencia(escena, cuenta)
+    justificacion: agrupar_en_decenas
+  - nombre: ag_no_hay_decena
+    conclusion: no_hay_decena
+    condiciones:
+      - no_llega_a_diez(escena, cuenta)
+    justificacion: agrupar_en_decenas
+  - nombre: ag_se_puede
+    conclusion: se_puede
+    condiciones:
+      - siempre(escena, cuenta)
+    justificacion: agrupar_en_decenas

@@ -1,0 +1,37 @@
+id: reglas_0_1
+nombre: Reglas de decision de la unidad 0.1
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Reglas que el motor aplica para decidir, dada una escena, si hay "un objeto" o
+  "varios objetos".  Las reglas viven aqui, como datos; el motor solo sabe evaluar las
+  condiciones primitivas que se nombran abajo.
+
+  OJO (corregido el 2026-10-03): esta unidad NO decide si algo es un GRUPO.  Solo dice
+  cuantas cosas hay, sin contarlas.  El GRUPO (varios objetos que comparten un atributo)
+  se decide en la unidad 0.2.
+
+  CONDICIONES PRIMITIVAS DISPONIBLES EN EL MOTOR (version 0.1):
+    escena_vacia(escena)      -> cierto si la escena no menciona ninguna entidad
+    varios_distintos(escena)  -> cierto si hay dos o mas referencias con identificadores distintos
+    un_solo_distinto(escena)  -> cierto si todas las referencias son de la misma entidad
+
+  Cada regla se aplica en orden; gana la primera cuyas condiciones se cumplan todas.
+  Toda conclusion queda justificada por la regla que la produjo (nada de cajas negras).
+
+reglas:
+  - nombre: escena_sin_entidades
+    conclusion: no_decidible
+    condiciones:
+      - escena_vacia(escena)
+    justificacion: pluralidad
+  - nombre: escena_con_varias_entidades
+    conclusion: varios_objetos
+    condiciones:
+      - varios_distintos(escena)
+    justificacion: pluralidad
+  - nombre: escena_con_una_sola_entidad
+    conclusion: un_objeto
+    condiciones:
+      - un_solo_distinto(escena)
+    justificacion: obj_individual

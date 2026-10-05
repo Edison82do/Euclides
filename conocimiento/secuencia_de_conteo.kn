@@ -1,0 +1,36 @@
+id: secuencia_de_conteo
+nombre: La secuencia de conteo (las palabras, en orden)
+tipo: datos
+categoria: FIJADO
+definicion: |
+  Las PALABRAS de contar, en su orden, una detras de otra.  Es una lista fija: se declara aqui
+  y no se inventa.
+
+  REGLA FIJADA: la secuencia tiene un ORDEN CON ESTABLE (siempre el mismo) y cada palabra
+  tiene una SUCESORA y (salvo la primera) una ANTERIOR.  El sistema solo conoce estas; si le
+  piden contar mas objetos que palabras tiene, NO se inventa las que faltan: lo dice.
+
+  Van EN PALABRAS, no en cifras: las cifras son la unidad 3.1.
+
+  OJO (para la unidad 2.2): aqui esta la lista ESCRITA.  Recitarla y continuarla por uno mismo
+  es la unidad 2.2; esta unidad (2.1) solo la usa para emparejar.
+depende_de: []
+relacionado_con:
+  - correspondencia
+palabras:
+  - uno
+  - dos
+  - tres
+  - cuatro
+  - cinco
+  - seis
+  - siete
+  - ocho
+  - nueve
+  - diez
+fuentes:
+  - Gelman & Gallistel (1978): principio de orden estable - la lista de palabras de contar se
+    usa siempre en el mismo orden.
+  - "Acquisition of the counting principles during the subset-knower stages": el orden estable
+    es el primer principio que se adquiere (la mayoria de los ninos recitan hasta diez a los
+    3 anos).

@@ -1,0 +1,62 @@
+id: reglas_5_1
+nombre: Reglas de decision de la unidad 5.1
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 5.1 - COMPONER Y DESCOMPONER (las partes y el todo).
+
+  DESCOMPONER: partir una coleccion en DOS partes, y decir TODAS las maneras.
+  COMPONER:    juntar dos colecciones y decir el todo.
+
+  OJO: aqui NO se escribe + ni -.  Se dice con palabras: 'tres y dos son cinco'.
+
+  TRABAJO A - DESCOMPONER:  "descomponer: a,b,c,d,e"
+     cuenta_no_alcanza(escena, cuenta)   -> no_alcanza   (mas de diez: no le llegan las palabras)
+     escena_vacia(escena, cuenta)        -> el_cero_no_se_parte
+     hay_algo(escena, cuenta)            -> parejas
+
+  TRABAJO B - COMPONER:  "componer: a,b / c,d,e"
+     juntar_pasa_de_diez(escena, cuenta) -> no_alcanza
+     siempre(escena, cuenta)             -> junto
+
+  LAS PAREJAS se generan SIN REPETIR EL ORDEN (la pareja 2+3 y la 3+2 son LA MISMA, unidad 2.5) y
+  con el CERO incluido como parte (cero y cinco).  Para 'n' salen las parejas (k, n-k) con k desde 0
+  hasta la mitad.
+
+  CONDICIONES PRIMITIVAS DISPONIBLES (version 5.1):
+     escena_vacia(escena, cuenta)
+     cuenta_no_alcanza(escena, cuenta)
+     hay_algo(escena, cuenta)             (NUEVA: tiene al menos una cosa)
+     juntar_pasa_de_diez(escena, cuenta)  (NUEVA: la primera mas la segunda pasa de diez)
+     siempre(escena, cuenta)              (NUEVA: siempre cierto; para la regla final)
+
+  Las reglas viven aqui, como datos.
+
+reglas_descomponer:
+  - nombre: dc_no_alcanza
+    conclusion: no_alcanza
+    condiciones:
+      - cuenta_no_alcanza(escena, cuenta)
+    justificacion: componer_descomponer
+  - nombre: dc_el_cero_no_se_parte
+    conclusion: el_cero_no_se_parte
+    condiciones:
+      - escena_vacia(escena, cuenta)
+    justificacion: el_cero
+  - nombre: dc_partir
+    conclusion: parejas
+    condiciones:
+      - hay_algo(escena, cuenta)
+    justificacion: componer_descomponer
+
+reglas_componer:
+  - nombre: cp_no_alcanza
+    conclusion: no_alcanza
+    condiciones:
+      - juntar_pasa_de_diez(escena, cuenta)
+    justificacion: componer_descomponer
+  - nombre: cp_juntar
+    conclusion: junto
+    condiciones:
+      - siempre(escena, cuenta)
+    justificacion: componer_descomponer

@@ -1,0 +1,58 @@
+id: reglas_6_5
+nombre: Reglas de decision de la unidad 6.5 (partir en decenas y unidades)
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 6.5 - PARTIR EN DECENAS Y UNIDADES: cuanto vale cada cifra.
+
+  "partir: 47"          -> 4 decenas + 7 unidades = 40 + 7 = 47
+  "juntar_decenas: 4 / 7" -> 47
+
+  LA ENTRADA es UN NUMERO (cifra o palabra) para 'partir', y DOS CANTIDADES DE DECENAS Y UNIDADES
+  para 'juntar_decenas'.
+
+  CONDICIONES de 'partir':
+     el_numero_solo_no_existe(escena, cuenta) -> no_es_un_numero
+     fuera_de_la_tabla(escena, cuenta)        -> fuera_de_la_tabla
+     siempre(escena, cuenta)                  -> se_puede
+
+  CONDICIONES de 'juntar_decenas':
+     decenas_o_unidades_negativas(escena, cuenta) -> no_es_un_numero
+     junta_pasa_de_cien(escena, cuenta)           -> fuera_de_la_tabla
+     siempre(escena, cuenta)                      -> se_puede
+
+  Las reglas viven aqui, como datos.
+
+reglas_partir:
+  - nombre: pt_no_es_un_numero
+    conclusion: no_es_un_numero
+    condiciones:
+      - el_numero_solo_no_existe(escena, cuenta)
+    justificacion: partir_en_decenas_y_unidades
+  - nombre: pt_fuera_de_la_tabla
+    conclusion: fuera_de_la_tabla
+    condiciones:
+      - fuera_de_la_tabla(escena, cuenta)
+    justificacion: partir_en_decenas_y_unidades
+  - nombre: pt_se_puede
+    conclusion: se_puede
+    condiciones:
+      - siempre(escena, cuenta)
+    justificacion: partir_en_decenas_y_unidades
+
+reglas_juntar_decenas:
+  - nombre: jd_mal_dicho
+    conclusion: no_es_un_numero
+    condiciones:
+      - decenas_o_unidades_negativas(escena, cuenta)
+    justificacion: partir_en_decenas_y_unidades
+  - nombre: jd_pasa_de_cien
+    conclusion: fuera_de_la_tabla
+    condiciones:
+      - junta_pasa_de_cien(escena, cuenta)
+    justificacion: partir_en_decenas_y_unidades
+  - nombre: jd_se_puede
+    conclusion: se_puede
+    condiciones:
+      - siempre(escena, cuenta)
+    justificacion: partir_en_decenas_y_unidades

@@ -1,0 +1,42 @@
+id: atributo
+nombre: Atributo de un objeto
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  Un ATRIBUTO es una propiedad declarada de un objeto, con un VALOR.
+  Ejemplos: color = rojo ; forma = cubo.
+  REGLA FIJADA 1: dos objetos COMPARTEN un atributo cuando ese atributo esta declarado
+  en los dos y con el MISMO valor.
+  REGLA FIJADA 2: el VALOR no es el ATRIBUTO. "color=rojo" y "tono=rojo" son atributos
+  distintos aunque el valor escrito sea el mismo; un objeto puede compartir uno y no el otro.
+  REGLA FIJADA 3 (honestidad): si un objeto NO tiene declarado un atributo, el sistema no
+  puede afirmar que lo comparte ni que no lo comparte.  En ese caso dice "no decidible".
+  Esto es fijado por nosotros y no se demuestra.  Se fija asi porque el sistema no adivina:
+  un dato que no esta escrito no se supone.
+depende_de:
+  - obj_individual
+relacionado_con:
+  - grupo_por_atributo
+propiedades:
+  - Un atributo tiene un nombre (color) y cada objeto un valor para el (rojo).
+  - El mismo objeto puede tener muchos atributos a la vez (color y forma).
+  - Que dos objetos compartan un atributo no dice nada de los demas atributos.
+representaciones:
+  concreta: |
+    Un cubo rojo y una esfera roja: comparten el color, no la forma.
+  numerica: |
+    Todavia no aplica.
+  formal: |
+    comparten(o1, o2, a)  <=>  valor(o1, a) = valor(o2, a), con a declarado en los dos
+  general: |
+    Vale para cualquier clase de propiedad declarada, no solo color y forma.
+errores_tipicos:
+  - Confundir el valor con el atributo (creer que "rojo" es el atributo en vez del valor de "color").
+  - Suponer un atributo que el objeto no tiene declarado (el sistema debe decir "no decidible").
+  - Mirar dos atributos a la vez cuando toca uno solo: la investigacion muestra que los ninos
+    fallan con dos dimensiones a la vez; se ensena UN atributo cada vez.
+fuentes:
+  - Clements & Sarama, "Learning Trajectories" (Classification and Data Analysis): niveles
+    Similarity Recognizer -> Informal Sorter -> Attribute Identifier -> Attribute Sorter.
+  - Chang, Lee & Koay (NIE, 2017), secuencia Concreto-Pictorico-Abstracto de Singapur.
+  - Montessori: presentar un atributo cada vez, con la leccion de tres tiempos.

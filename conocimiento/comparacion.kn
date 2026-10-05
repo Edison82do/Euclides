@@ -1,0 +1,60 @@
+id: comparacion
+nombre: Comparar cantidades (mas, menos, tantos como)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  COMPARAR DOS COLECCIONES es decir cual tiene MAS cosas, cual tiene MENOS, o si tienen TANTAS COMO
+  la otra (las dos lo mismo).
+
+  REGLA FIJADA 1 - SE DICE CON PALABRAS, NO CON SIMBOLOS.  La respuesta es 'mas', 'menos' o
+  'tantos_como'.  Los simbolos > (mayor que), < (menor que) e = (igual) NO se usan aqui: esos van
+  entre NUMEROS ESCRITOS (cifras), y eso es la unidad siguiente (4.2).  Entre colecciones no se
+  escribe un simbolo: se dice.
+
+  REGLA FIJADA 2 - LA CORRESPONDENCIA UNO A UNO ES EL CAMINO PARA COMPARAR.  Para saber cual tiene
+  mas, se pone una coleccion enfrente de la otra y se empareja: un objeto con un objeto.  Si al
+  emparejar SOBRA uno de la primera, la primera tiene mas.  Si sobra uno de la segunda, tiene menos.
+  Si no sobra nada, tienen TANTAS COMO.  Esto NO necesita contar: solo emparejar.
+
+  REGLA FIJADA 3 - TAMBIEN SE PUEDE DECIDIR CONTANDO.  Se cuenta cada coleccion (unidad 2.3) y se
+  comparan las dos cantidades.  El sistema hace las DOS cosas: decide emparejando y VERIFICA
+  contando.  Si los dos caminos no dijeran lo mismo, el sistema no elegiria uno: lo diria.
+
+  REGLA FIJADA 4 - EL TAMANO DE LAS COSAS NO IMPORTA.  Dos objetos grandes NO son mas que tres
+  objetos pequenos.  La cantidad son las COSAS, no lo que ocupan.  Esto es lo que mas cuesta
+  aprender a un nino (hay que aprender a fijarse en la cantidad y no en el tamano), asi que el
+  sistema lo DICE cuando las colecciones traen tamanos distintos.
+
+  REGLA FIJADA 5 - EL CERO TAMBIEN SE COMPARA (unidad 3.2).  Una coleccion vacia tiene cantidad
+  cero.  Cero y cero son TANTOS COMO.  Y una coleccion vacia tiene MENOS que cualquier otra con
+  algo.
+
+  REGLA FIJADA 6 - SIN DOS COLECCIONES NO HAY COMPARACION.  Comparar es comparar DOS cosas: con una
+  sola no hay nada que decidir, y el sistema lo dice en vez de inventarse la segunda.
+
+errores_tipicos:
+  - Decidir por el TAMANO de los objetos en vez de por la cantidad.
+  - Usar los simbolos >, <, = entre colecciones (van entre cifras, no entre cosas).
+  - Decir 'mas' sin haber emparejado ni contado (adivinar).
+  - Creer que dos colecciones vacias no se pueden comparar (son tantas como: cero y cero).
+  - Comparar contando cuando no le llegan las palabras (mas de diez objetos) y no decirlo.
+fuentes:
+  - NCETM (2023), "Exploring comparison in Early Years": los ninos deben aprender a comparar
+    CANTIDADES antes que los NUMEROS abstractos que las representan; al principio lo hacen
+    PERCEPTUALMENTE (de un vistazo), y es mas facil cuando la diferencia es grande.
+  - Learning Trajectories (Sarama & Clements), "Comparing and Ordering Number": se comparan
+    cantidades PRIMERO perceptualmente y DESPUES numericamente, con dificultad creciente para
+    IGNORAR caracteristicas que distraen, como el TAMANO de los objetos.
+  - National Academy (KS1), "Use equality and inequality symbols to compare sets of objects": los
+    simbolos (=, >, <) se usan SOLO entre cifras.
+  - Counting Fingers and Toes (2021), "Comparing Quantities": la igualdad se ve por correspondencia
+    uno a uno (emparejar un objeto del conjunto A con uno del B).
+  - VKRP, "Number Comparison and Ordering": se emparejan colecciones iguales y luego se comparan
+    grupos por emparejamiento.
+depende_de:
+  - cardinalidad
+  - contar
+  - el_cero
+relacionado_con:
+  - abstraccion
+  - puente

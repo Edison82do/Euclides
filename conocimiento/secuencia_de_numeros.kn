@@ -1,0 +1,57 @@
+id: secuencia_de_numeros
+nombre: La secuencia de los numeros (0, 1, 2, 3...)
+tipo: datos
+categoria: FIJADO
+definicion: |
+  LOS NUMEROS ESCRITOS, EN ORDEN:  cero, uno, dos, tres, cuatro, cinco, seis, siete, ocho, nueve.
+
+  REGLA FIJADA 1 (esto arregla un fallo real, y es lo importante de esta unidad):
+  HAY DOS LISTAS, y son cosas DISTINTAS:
+     - LA LISTA DE CONTAR (unidad 2.2): uno, dos, tres... diez.
+       Es para CONTAR COSAS.  Empieza en "uno": contar arranca en el primer objeto, no en el cero.
+     - LA SECUENCIA DE NUMEROS (esta unidad): cero, uno, dos ... nueve.
+       Es el ORDEN DE LOS NUMEROS.  Aqui el cero SI esta, y va ANTES del uno.
+  Antes de esta unidad el cero estaba en la tabla de cifras pero NO en ninguna lista, y eso creaba
+  una incoherencia: "cuantos" de una coleccion vacia daba cero, pero "que va antes de uno?" decia
+  "no hay nada".  Eran dos datos que hablaban del mismo mundo y no coincidian.
+
+  REGLA FIJADA 2: LA RELACION entre las dos listas.
+     secuencia_de_numeros = cero + lista_de_contar (quitando "diez", que no tiene cifra)
+  O dicho al reves: LA LISTA DE CONTAR ES LA SECUENCIA DE NUMEROS SIN EL CERO.
+  Por eso "antes de uno" esta "cero" (en los numeros), pero el uno sigue siendo el PRIMERO que se
+  dice al contar.
+
+  REGLA FIJADA 3: cuando el sistema contesta usando una de las dos listas, DICE CUAL.  No puede
+  haber dos listas y no decir en cual se esta hablando.
+
+  REGLA FIJADA 4: esta secuencia acaba en "nueve", porque del "diez" solo tenemos la palabra, no la
+  cifra (el 10 son dos simbolos: Sistema Decimal).
+
+errores_tipicos:
+  - Tener dos listas y no decir en cual se habla.
+  - Creer que contar empieza en cero (contar empieza en el primer objeto).
+  - Creer que "antes de uno no hay nada": en los NUMEROS, antes del uno esta el cero.
+  - Meter el diez en la secuencia de numeros, donde no tiene cifra.
+fuentes:
+  - Gelman & Gallistel (1978): la lista de contar es una lista ordenada de palabras para etiquetar
+    objetos; empieza en "uno".
+  - Stanford DREME ("Exploring the Number Zero", 2023): los ninos reconocen el simbolo 0 antes de
+    entender que tiene un SITIO en la secuencia numerica; el sitio del cero es un paso de
+    aprendizaje aparte.
+  - Benoit et al. (2013): las representaciones (cantidad, palabra, cifra) y sus traducciones.
+depende_de:
+  - secuencia_de_conteo
+  - el_cero
+relacionado_con:
+  - simbolos
+numeros:
+  - cero
+  - uno
+  - dos
+  - tres
+  - cuatro
+  - cinco
+  - seis
+  - siete
+  - ocho
+  - nueve

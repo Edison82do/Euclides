@@ -1,0 +1,58 @@
+id: orden_estable
+nombre: Orden estable (la secuencia siempre en el mismo orden)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  La secuencia de contar se dice SIEMPRE en el mismo orden.  "Uno" va antes que "dos", y siempre.
+
+  REGLA FIJADA 1: cada palabra de la lista tiene su SITIO.  Saber la lista es saber, para cada
+  palabra, cual va ANTES y cual va DESPUES.
+
+  REGLA FIJADA 2 (esto es lo que trae esta unidad): saber decir la siguiente palabra SIN EMPEZAR
+  POR "UNO".  Al nino se le pregunta "y despues de tres, que va?", no "cuenta desde el principio".
+  Si solo supiera recitar de corrido desde el principio, no sabria la lista: sabria una cancion.
+  (La tarea se llama "What Comes After" en la investigacion, Davidson et al. 2012.)
+
+  REGLA FIJADA 3: la lista SE ACABA donde el sistema la tiene escrita.  Despues de "diez" el
+  sistema NO se inventa "once": dice que no lo sabe.  Aprender mas palabras no es inventarlas.
+
+  REGLA FIJADA 4 - SEPARACION IMPORTANTE (y aqui me aprieto las tuercas yo mismo):
+  esta unidad es SOLO el orden de la lista.  NO es el "sucesor" matematico.
+  - Aqui el sistema aprende que despues de "tres" va "cuatro" PORQUE ESTA EN LA LISTA.
+  - El sucesor ("cuatro es uno mas que tres") es otra cosa, y la investigacion dice que los ninos
+    lo aprenden DESPUES de entender la cardinalidad (el principio cardinal es el "portero").
+  Por eso aqui NO se dice "uno mas": se dice "la siguiente de la lista".  No se cuela nada.
+
+errores_tipicos:
+  - Saltarse una palabra de la lista (decir "uno, dos, cuatro").
+  - Cambiar el orden ("uno, tres, dos").
+  - Inventarse palabras al llegar al final ("...nueve, diez, once, doce").
+  - Recitar de corrido desde "uno" y no saber responder "que va despues de siete".
+  - Creer que la siguiente palabra es "una mas" (eso es el sucesor: llega despues de la cardinalidad).
+fuentes:
+  - Gelman & Gallistel (1978): el principio de ORDEN ESTABLE - las palabras se usan siempre en el
+    mismo orden.  Es el primero de los tres principios del "como contar".
+  - "The Real Preschoolers of Orange County" (Early Number Learning): distingue CONTAR INTRANSITIVO
+    (recitar la lista) de TRANSITIVO (recitar senalando objetos); los ninos recitan antes de contar
+    objetos.  Y puntua el recitado "hasta el primer error".
+  - Davidson et al. (2012), tarea "What Comes After": saber que va despues de un numero dado, sin
+    empezar por uno.
+  - "Do Preschoolers Use Rules to Represent Their Count List?": los ninos que entienden la
+    estructura GENERAN sucesores de numeros novedosos (no solo memorizan).  Y en los errores,
+    entre un 12% y un 25% dicen directamente "no lo se": reconocer que no se sabe es parte de
+    aprender.
+  - Sarnecka & Carey (2008) / Spaepen et al. (2018): el principio cardinal va ANTES que el sucesor y
+    el orden exacto.  De ahi que aqui solo se aprenda el orden de la lista.
+depende_de:
+  - secuencia_de_conteo
+relacionado_con:
+  - correspondencia
+representaciones:
+  concreta: |
+    Decir la lista como una retahila, y parar donde uno sabe.
+  numerica: |
+    Todavia no aplica.
+  formal: |
+    orden: uno < dos < tres < ... < diez (en el sentido de la LISTA, no de la cantidad)
+  general: |
+    Se puede preguntar por cualquier palabra, no solo por el principio.

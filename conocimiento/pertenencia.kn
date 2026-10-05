@@ -1,0 +1,54 @@
+id: pertenencia
+nombre: Pertenencia a un grupo
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  Un GRUPO viene definido por un criterio: un atributo con un valor (por ejemplo color=rojo).
+
+  REGLA FIJADA 1: un objeto PERTENECE al grupo si tiene declarado ese atributo con ese valor.
+  REGLA FIJADA 2: un objeto NO PERTENECE al grupo si tiene declarado ese atributo con OTRO valor.
+  REGLA FIJADA 3 (honestidad): si al objeto NO le esta declarado el atributo del criterio, NO se
+  sabe si pertenece.  El sistema no adivina: responde "no_decidible", que NO es lo mismo que
+  "no pertenece".  Son TRES respuestas distintas, no dos:
+      pertenece / no_pertenece / no se sabe
+
+  REGLA FIJADA 4 (lo importante que se aprende aqui): la pertenencia NO es fija, depende del
+  criterio elegido.  El mismo objeto puede pertenecer a varios grupos a la vez:
+      un triangulo verde pertenece al grupo de "color=verde" Y al grupo de "forma=triangulo".
+  Por eso hay que decir siempre CON QUE CRITERIO se esta preguntando.
+
+  FUERA DE ESTA UNIDAD (para no adelantar): la INCLUSION DE CLASE ("todo A es algun B",
+  "¿hay mas margaritas o mas flores?").  La investigacion muestra que eso no llega hasta los
+  8-9 años, y hasta los 5 con ayuda.  Es un nivel muy posterior; aqui no se toca.
+depende_de:
+  - atributo
+  - grupo_por_atributo
+relacionado_con:
+  - pluralidad
+propiedades:
+  - Pertenecer es cosa de un objeto frente a un grupo, no de la escena entera.
+  - Un objeto puede pertenecer a muchos grupos distintos, segun el criterio.
+  - "No pertenece" y "no se sabe" son cosas distintas y el sistema las distingue siempre.
+representaciones:
+  concreta: |
+    El monton de los rojos: la taza roja va dentro; el plato azul no va dentro;
+    y del vaso cuyo color no hemos mirado, no podemos decir nada.
+  numerica: |
+    Todavia no aplica.
+  formal: |
+    pertenece(o, a=v)  <=>  valor(o, a) = v
+    no_pertenece(o, a=v)  <=>  valor(o, a) existe y es distinto de v
+    no_decidible  <=>  a no esta declarado en o
+  general: |
+    Vale para cualquier atributo declarado.
+errores_tipicos:
+  - Confundir "no pertenece" con "no se sabe": son dos cosas distintas.
+  - Creer que la pertenencia es fija y unica: el mismo objeto puede estar en varios grupos.
+  - Olvidar con que criterio se esta preguntando.
+fuentes:
+  - "Understanding Primary Math" (S. Sundaram), conceptos pre-numericos: la lista basica es
+    comparar, PERTENECE / NO PERTENECE, emparejar, agrupar/ordenar por atributos y seriar.
+    "La pertenencia de un conjunto no es fija, depende del criterio elegido."
+  - Piaget / Lavatelli: distincion entre "sorting" (se le da el criterio al niño) y "classifying"
+    (el niño descubre el criterio).  La pertenencia con criterio dado es el paso anterior.
+  - Clements & Sarama, Learning Trajectories: niveles Consistent Sorter y Exhaustive Sorter.

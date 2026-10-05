@@ -1,0 +1,40 @@
+id: patrones
+nombre: Tabla de patrones reconocibles de un vistazo
+tipo: datos
+categoria: FIJADO
+definicion: |
+  Los patrones que el sistema reconoce DE UN VISTAZO, sin contar.
+
+  Como se dibuja un patron: una rejilla de 3 filas x 3 columnas.  Se escribe con TRES
+  trozos separados por '/':
+        x.x/.../x.x
+  donde 'x' es un elemento y '.' es un hueco.  La comprobacion de que el patron esta bien
+  escrito la hace el motor (tres filas, todas del mismo largo).
+
+  Las etiquetas van EN PALABRAS (uno, dos, tres...), no en cifras: las cifras son la
+  unidad 3.1.  Este formato de 3x3 es una decision nuestra, no de la investigacion; la
+  investigacion solo dice que las disposiciones canonicas (tipo dado) se reconocen y las
+  lineales o desordenadas no.
+
+patrones:
+  - nombre: punto
+    patron: .../.x./...
+    etiqueta: uno
+  - nombre: diagonal_dos
+    patron: x../.../..x
+    etiqueta: dos
+  - nombre: diagonal_tres
+    patron: x../.x./..x
+    etiqueta: tres
+  - nombre: esquinas_cuatro
+    patron: x.x/.../x.x
+    etiqueta: cuatro
+  - nombre: cuadrado_cuatro
+    patron: xx./xx./...
+    etiqueta: cuatro
+  - nombre: dado_cinco
+    patron: x.x/.x./x.x
+    etiqueta: cinco
+  - nombre: dado_seis
+    patron: x.x/x.x/x.x
+    etiqueta: seis

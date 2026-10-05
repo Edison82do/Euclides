@@ -1,0 +1,49 @@
+id: reglas_5_5
+nombre: Reglas de decision de la unidad 5.5
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 5.5 - LA DIFERENCIA (la tercera estructura de la resta).
+
+  "diferencia: <monton A> / <monton B>"  ->  cual es el HUECO entre los dos?
+
+  NO se quita nada: los dos montones siguen enteros.  Se empareja y se cuentan los que SOBRAN.
+
+  TRABAJO A - LA DIFERENCIA ENTRE DOS COLECCIONES:
+     cuenta_no_alcanza(escena, cuenta)          -> no_alcanza  (alguna pasa de diez)
+     las_dos_iguales(escena, cuenta)            -> tantos_como (hueco CERO)
+     la_primera_tiene_mas(escena, cuenta)       -> hay_diferencia (tiene mas A)
+     la_primera_tiene_menos(escena, cuenta)     -> hay_diferencia (tiene mas B)
+  (Las cuatro primitivas son las MISMAS que en 4.1: comparar y hallar la diferencia son lo mismo,
+  y no puede haber dos verdades.  Unidad 4.1 ya decidia quien tiene mas; aqui solo se ANADE cuanto.)
+
+  TRABAJO B - LA DIFERENCIA ENTRE DOS NUMEROS:  "diferencia_numeros: 5 / 3"
+
+  EL NUMERO QUE SALE responde a las DOS preguntas: cuantos mas tiene uno Y cuantos menos tiene el
+  otro.  Es el mismo numero.
+
+  LA VERIFICACION: la diferencia sumada al pequeno tiene que dar el grande (unidad 5.2).
+
+  Las reglas viven aqui, como datos.
+
+reglas_diferencia:
+  - nombre: df_no_alcanza
+    conclusion: no_alcanza
+    condiciones:
+      - cuenta_no_alcanza(escena, cuenta)
+    justificacion: la_diferencia
+  - nombre: df_tantos_como
+    conclusion: tantos_como
+    condiciones:
+      - las_dos_iguales(escena, cuenta)
+    justificacion: la_diferencia
+  - nombre: df_tiene_mas_la_primera
+    conclusion: hay_diferencia
+    condiciones:
+      - la_primera_tiene_mas(escena, cuenta)
+    justificacion: la_diferencia
+  - nombre: df_tiene_mas_la_segunda
+    conclusion: hay_diferencia
+    condiciones:
+      - la_primera_tiene_menos(escena, cuenta)
+    justificacion: la_diferencia

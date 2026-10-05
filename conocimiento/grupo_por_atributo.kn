@@ -1,0 +1,44 @@
+id: grupo_por_atributo
+nombre: Grupo por atributo
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  Un GRUPO POR ATRIBUTO es una coleccion de objetos que comparten un atributo con el mismo valor.
+  Ejemplos: "los rojos" (todos con color=rojo) ; "los cubos" (todos con forma=cubo).
+
+  REGLA FIJADA 1 (exhaustividad): el grupo esta completo.  Todo objeto de la escena que cumple
+  el criterio esta dentro, y ningun objeto que no lo cumple esta dentro.
+  REGLA FIJADA 2 (un atributo cada vez): se forma y se reconoce un grupo mirando UN atributo.
+  Que varios objetos compartan ademas otro atributo es un hecho distinto, y se dice aparte.
+  REGLA FIJADA 3: si algun objeto de la escena no tiene declarado el atributo del criterio, el
+  grupo NO se puede dar por completo (no se sabe si ese objeto va dentro o fuera).  En ese caso
+  el sistema responde "no decidible".  Es la regla de honestidad aplicada a la exhaustividad.
+depende_de:
+  - atributo
+relacionado_con:
+  - pluralidad
+propiedades:
+  - Un grupo puede tener un solo miembro.
+  - Si ningun objeto cumple el criterio, no hay grupo (no es un grupo vacio: es que no hay grupo).
+  - El mismo conjunto de objetos puede dar grupos distintos segun el atributo elegido.
+representaciones:
+  concreta: |
+    Montoncitos: los rojos aqui, los azules alla.
+  numerica: |
+    Todavia no aplica.  Decir CUANTOS hay es la unidad 2.3 (contar); aqui solo se forma el grupo.
+  formal: |
+    grupo(a=v) = { o en escena : valor(o, a) = v }
+  general: |
+    Vale para cualquier atributo declarado.
+errores_tipicos:
+  - Cambiar de criterio a mitad de agrupar (nivel "Informal Sorter"): empezar por color y seguir por forma.
+  - Mezclar dos atributos a la vez (los rojos Y cubos) cuando se pidio uno.
+  - Dejar fuera un objeto que si cumple (grupo no exhaustivo).
+  - Meter un objeto que no cumple.
+  - Dar por completo un grupo cuando hay un objeto cuyo atributo no se sabe.
+fuentes:
+  - Clements & Sarama (2020), Learning Trajectories: niveles Consistent Sorter (5) y
+    Exhaustive Sorter (6) - "can sort consistently and exhaustively by an attribute".
+  - Inhelder & Piaget, "The Early Growth of Logic in the Child": fases de las colecciones
+    (graficas -> no graficas -> clasificacion propiamente dicha); la inclusion de clase es lo ultimo.
+  - Montessori / Singapur: un atributo cada vez, de lo concreto a lo abstracto.

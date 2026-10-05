@@ -1,0 +1,39 @@
+id: reglas_0_3
+nombre: Reglas de decision de la unidad 0.3
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 0.3 - PERTENENCIA.  La pregunta es:
+      "este objeto, pertenece al grupo de <atributo>=<valor>?"
+
+  La pregunta es sobre UN objeto; si se escriben varios, el sistema contesta por cada uno.
+
+  Reglas, en orden (gana la primera que se cumpla):
+     objeto_sin_el_atributo(escena, crit) -> no_decidible  (no sabemos ese atributo del objeto:
+                                                             NO es lo mismo que no pertenecer)
+     el_objeto_cumple(escena, crit)       -> pertenece
+     (si nada de lo anterior)             -> no_pertenece
+
+  CONDICIONES PRIMITIVAS DISPONIBLES EN EL MOTOR (version 0.3):
+    objeto_sin_el_atributo(escena, criterio)  -> cierto si el objeto no declara el atributo
+    el_objeto_cumple(escena, criterio)        -> cierto si lo declara con ese valor
+    el_objeto_no_cumple(escena, criterio)     -> cierto si lo declara con OTRO valor
+
+  Las reglas viven aqui, como datos.
+
+reglas:
+  - nombre: pertenencia_atributo_no_declarado
+    conclusion: no_decidible
+    condiciones:
+      - objeto_sin_el_atributo(escena, criterio)
+    justificacion: pertenencia
+  - nombre: pertenencia_si_cumple
+    conclusion: pertenece
+    condiciones:
+      - el_objeto_cumple(escena, criterio)
+    justificacion: pertenencia
+  - nombre: pertenencia_no_cumple
+    conclusion: no_pertenece
+    condiciones:
+      - el_objeto_no_cumple(escena, criterio)
+    justificacion: pertenencia

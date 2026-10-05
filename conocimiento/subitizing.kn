@@ -1,0 +1,64 @@
+id: subitizing
+nombre: Subitizing (reconocer una cantidad de un vistazo)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  SUBITIZING es reconocer CUANTOS elementos hay en un grupo pequeno DE UN VISTAZO, SIN CONTAR.
+  La palabra viene del latin "llegar de repente": la cantidad no se calcula, se ve.
+
+  REGLA FIJADA 1: reconocer de un vistazo NO es contar.  Son dos procesos distintos, y aqui
+  solo se hace el primero.  Si el sistema no reconoce el grupo de un vistazo, NO LO CUENTA:
+  dice "no_reconocido".  Contar es la unidad 2.3, y todavia no toca.
+  (La investigacion muestra que son dos procesos distintos: en el rango de subitizing la
+  disposicion y el tiempo NO afectan al resultado; en el rango de conteo, si.)
+
+  REGLA FIJADA 2: lo que hace reconocible a un grupo pequeno es SU DISPOSICION.  Los patrones
+  conocidos (los de los dados) se reconocen enteros, de golpe.  Una fila recta o una
+  disposicion desordenada NO se reconocen: ahi hay que contar, y aqui no se cuenta.
+  (La investigacion: "una linea recta de puntos es a veces dificil de subitizar"; las
+  disposiciones canonicas se procesan como un todo y las aleatorias no.)
+
+  REGLA FIJADA 3: la misma cantidad en dos disposiciones distintas es LA MISMA cantidad.
+  Cuatro en cuadrado y cuatro en dado son los dos "cuatro" (esto se llama conservacion).
+
+  DOS TIPOS (los dos se usan, pero en esta unidad manda el primero):
+    - PERCEPTUAL: hasta 4 o 5 elementos, de un solo golpe.  Es el que se aprende primero.
+    - CONCEPTUAL: grupos mayores (5-10), viendo partes ya conocidas ("cinco y dos mas").
+      Eso llega despues, y toca en una unidad posterior.
+
+  LAS ETIQUETAS VAN EN PALABRAS (uno, dos, tres...), no en cifras: las cifras son la
+  unidad 3.1 y todavia no existen en el sistema.
+depende_de:
+  - obj_individual
+relacionado_con:
+  - pluralidad
+propiedades:
+  - Reconocer la cantidad no dice nada del color ni de la forma de los objetos.
+  - Un grupo que no esta en la tabla de patrones no se reconoce: no se cuentan sus elementos.
+  - La misma cantidad puede verse en varias disposiciones, y todas valen lo mismo.
+representaciones:
+  concreta: |
+    Ver los puntos de un dado y saber que son cinco, sin contarlos uno a uno.
+  numerica: |
+    Todavia no aplica: las cifras son la unidad 3.1.
+  formal: |
+    subitizar(figura) = etiqueta, si la figura coincide con un patron declarado
+                      = no_reconocido, en otro caso
+  general: |
+    Vale para puntos, dedos, marcas: cualquier cosa colocada en un patron conocido.
+errores_tipicos:
+  - Contar en vez de reconocer (aqui el sistema NO debe contar: dice no_reconocido).
+  - Creer que una fila recta de cuatro se reconoce como cuatro: no se reconoce de un vistazo.
+  - Creer que hace falta que los objetos sean iguales o que tengan el mismo color.
+  - Creer que dos disposiciones distintas de la misma cantidad son cantidades distintas.
+fuentes:
+  - Clements & Sarama, "Learning Trajectories" (Subitizing): perceptual (hasta 4-5) y
+    conceptual (componiendo partes).
+  - IES/REL, "Module 1: Subitizing Developmental Progression": progresion de 2 a 6 anos;
+    "instantly labels sets up to 4 (perceptual)".
+  - Van der Ven et al., "The role of pattern recognition in children's exact enumeration of
+    small numbers" (JECP): subitizing y conteo son procesos distintos; el maximo subitizable
+    en ninos de 4-6 anos fue TRES; la disposicion tipo dado facilita, la aleatoria no.
+  - Jansen et al. (2014) y Benoit et al. (2004): la disposicion afecta a partir de 4 elementos;
+    las disposiciones canonicas se reconocen mejor que las lineales o aleatorias.
+  - Guia docente IES: "Why is a straight line of dots sometimes hard to subitize?"

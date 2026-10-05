@@ -1,0 +1,55 @@
+id: la_tabla_de_cien
+nombre: La tabla de 100 (el sitio de cada numero)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  LA TABLA DE 100 ES LA CUADRICULA DONDE CADA NUMERO TIENE SU SITIO.
+
+      1   2   3   4   5   6   7   8   9  10
+     11  12  13  14  15  16  17  18  19  20
+     ...
+     91  92  93  94  95  96  97  98  99 100
+
+  El numero de la FILA son las DECENAS y el de la COLUMNA son las UNIDADES.  Asi, el 47 esta en la
+  fila 4 (cuarenta) y en la columna 7 (siete): 4 decenas y 7 unidades.  Eso es el VALOR POSICIONAL:
+  el sitio de un digito dice cuanto vale.
+
+  REGLA FIJADA 1 - EL SITIO ES EL VALOR, Y NO ES LO MISMO QUE LA CANTIDAD.
+  El "47" no vale por ser el numero 47 de una fila: vale porque el 4 esta en el sitio de las DECENAS
+  y el 7 en el de las UNIDADES.  El mismo digito vale cosas distintas segun donde este: en 47, el 7
+  son siete unidades; en 74, el 7 son SIETE DECENAS (setenta).
+
+  REGLA FIJADA 2 - DE AQUI SALE LEER CIFRAS DE DOS DIGITOS.
+  Leer "47" es: la primera cifra son DECENAS (cuarenta) y la segunda son UNIDADES (siete) ->
+  "cuarenta y siete".  Y al reves: "cuarenta y siete" son 4 decenas y 7 unidades -> 47.
+  El sistema lo CONSTRUYE con la regla de la 6.1; no esta memorizado.
+
+  REGLA FIJADA 3 - EL CERO DE LAS DECENAS NO SE DICE.  Del 1 al 9 hay CERO decenas, y por eso se
+  dicen "siete" y no "cero decenas y siete".  Y en el 10 hay CERO unidades ("diez", no "diez y cero").
+
+  REGLA FIJADA 4 - LA TABLA SE RECORRE DE DOS MANERAS, Y LAS DOS SON CIERTAS.
+  De uno en uno (contando) o de diez en diez (por filas).  Cada fila es UNA DECENA ENTERA, que es
+  justo lo que se aprendio en la 6.2 (el diez como una cosa).  Por eso la tabla va despues de la 6.2.
+
+  REGLA FIJADA 5 - HASTA CIEN.  La tabla llega al 100 (que son DIEZ decenas justas: la ultima fila
+  completa).  Mas alla no: el 101 no tiene sitio en mi tabla, y lo digo.
+
+errores_tipicos:
+  - Contar las filas de una en una en vez de saltar de diez en diez (ir de 47 a 48 SI es de uno en
+    uno, porque es la misma fila; subir de fila SI es de diez en diez).
+  - Leer las cifras al reves: 47 como "setenta y cuatro" (el 4 delante son DECENAS, no unidades).
+  - Decir "cero decenas y siete" en vez de "siete" (el cero de las decenas no se dice).
+  - Creer que el 7 vale lo mismo en 47 que en 74: no; el sitio es el valor.
+fuentes:
+  - NCETM, "Numbers 10 to 100" (Year 2, unit 1): la secuencia de los numeros hasta 100 y la
+    estructura de decenas y unidades.
+    https://www.ncetm.org.uk/classroom-resources/cp-year-2-unit-1-numbers-10-to-100/
+  - NCETM, "What is unitising, and why is it important?": "understanding the unitising of 2-digit
+    numbers into 10s and 1s".
+  - Oak National Academy, "Count a large group of objects by counting tens and ones": "We can use a
+    one hundred square to help find the value of two-digit numbers more efficiently."
+  - Decision de Carlos (4 oct 2026): la 6.3 va despues de la 6.2, y es lo que hace que el sistema
+    lea cifras de dos digitos (hoy dice que no las lee).
+depende_de:
+  - agrupar_en_decenas
+  - secuencia_hasta_cien

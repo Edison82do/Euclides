@@ -1,0 +1,69 @@
+id: componer_descomponer
+nombre: Componer y descomponer cantidades (las partes y el todo)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  UNA CANTIDAD SE PUEDE PARTIR EN PARTES, Y LAS PARTES SE PUEDEN VOLVER A JUNTAR.
+
+     DESCOMPONER  ->  partir el todo en partes.   cinco  ->  tres y dos
+     COMPONER     ->  juntar las partes en el todo.   tres y dos  ->  cinco
+
+  Se llaman PARTES (lo que se junta) y TODO (lo que sale).  Y lo importante es VER LAS DOS COSAS A LA
+  VEZ: el todo y sus partes.
+
+  REGLA FIJADA 1 - LA CANTIDAD NO CAMBIA: NADA SE CREA NI SE PIERDE.  Si partes cinco en tres y dos,
+  siguen siendo cinco cosas: tres en un lado y dos en el otro.  Y si vuelves a juntarlas, vuelven a ser
+  cinco.  Eso es lo que hace que la vuelta (componer) VERIFIQUE la ida (descomponer).
+
+  REGLA FIJADA 2 - EL ORDEN NO IMPORTA (unidad 2.5).  Dos y tres es lo MISMO que tres y dos: las mismas
+  dos partes de lo mismo.  Asi que NO se cuentan como dos maneras distintas: se cuentan UNA.
+  Por eso, al decir todas las maneras de partir un numero, NO se repite la pareja al reves.
+
+  REGLA FIJADA 3 - EL CERO ES UNA PARTE VALIDA.  'cero y cinco' es una manera de partir cinco (un lado
+  vacio y el otro con todo).  Los 'number bonds' de cinco son: cero y cinco, uno y cuatro, dos y tres
+  (NCETM).  Son TRES, no seis.
+  PERO OJO: el cero NO SE PUEDE PARTIR.  De cero no hay nada que partir: si alguien pide partir el cero,
+  el sistema lo dice.  (Que el cero sea una PARTE no es lo mismo que el cero sea un TODO.)
+
+  REGLA FIJADA 4 - AQUI SE PARTE EN DOS PARTES.  Partir en TRES o mas (tres partes, cuatro...) es un
+  paso POSTERIOR: la investigacion (NCETM) pone primero las PAREJAS que hacen un total, y despues
+  'partir en mas de dos numeros'.  Esta unidad hace parejas.
+
+  REGLA FIJADA 5 - HAY DOS MANERAS DE PARTIR, Y LAS DOS SON LA MISMA COSA.  Se puede hacer SEPARANDO
+  (coger el grupo entero y dividirlo en dos) o CONSTRUYENDO (hacer el grupo entero con dos montones).
+  El sistema lo hace separando el conjunto que le dan, y lo ensena.
+
+  REGLA FIJADA 6 - SE PUEDE DECIR DE TRES MANERAS (unidad 3.4).  Con la cantidad (los objetos), con la
+  palabra (cinco) y con la cifra (5).  Y la pareja tambien: 'tres y dos', '3 y 2'.
+
+  REGLA FIJADA 7 - ESTO ES EL CIMIENTO DE LA SUMA Y DE LA RESTA.  Juntar es componer (sumar) y partir
+  es descomponer (restar).  Pero AQUI todavia no se escribe el signo + ni el -: eso es la unidad
+  siguiente.  Aqui se dice con palabras: 'tres y dos son cinco'.
+
+errores_tipicos:
+  - Contar la pareja dos veces (2+3 y 3+2): es la MISMA (el orden no importa, unidad 2.5).
+  - Creer que el cero no puede ser una parte (si puede: 'cero y cinco').
+  - Creer que el cero se puede partir (no: de cero no hay nada que partir).
+  - Perder cosas al partir (la cantidad tiene que seguir siendo la misma).
+partir_en_mas_de_dos_es_posterior: si
+fuentes:
+  - NCETM, "Composition" (Early Years): "Learning to 'see' a whole number and its parts at the same
+    time is a key development in children's number understanding".  "Partitioning numbers into other
+    numbers and putting them back together again underpins understanding of addition and subtraction
+    as inverse operations".  Los number bonds de 5 son "0 and 5, 1 and 4, 2 and 3".
+  - NCETM, "Exploring the composition of number" (2021): "Understanding composition also supports an
+    understanding of commutativity: if you have learned that 2+3=5, then you also know that 3+2=5
+    without having to learn it as a new fact".
+  - NCETM, "Typical progression: composition" (PDF): primero las PAREJAS que hacen un total, y
+    despues "a number can be partitioned into more than two numbers".  Y las dos maneras de hacerlo:
+    "physically separating a group, or constructing a group from two kinds of things".
+  - Clements & Sarama, "Learning Trajectories" (Comparing/Composing and Decomposing): componer y
+    descomponer precede a la suma y a la resta.
+  - Gelman & Gallistel (1978): la cantidad de una coleccion no cambia al reorganizarla.
+depende_de:
+  - cardinalidad
+  - comparacion
+  - puente
+relacionado_con:
+  - orden_irrelevante
+  - el_cero

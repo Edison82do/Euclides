@@ -1,0 +1,69 @@
+id: correspondencia
+nombre: Correspondencia uno a uno (una palabra por objeto)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  CONTAR empieza por EMPAREJAR: a cada objeto, UNA Y SOLO UNA palabra de la secuencia, y a cada
+  palabra, UN Y SOLO UN objeto.
+
+  REGLA FIJADA 1: el emparejamiento se hace EN ORDEN.  Se recorren los objetos y se les van
+  dando las palabras de la secuencia, empezando por la primera, sin saltarse ninguna.
+
+  REGLA FIJADA 2 (los dos procesos, Fuson 1988 / Lagos 1992):
+     - PARTICION: la coleccion se parte en dos: los objetos YA contados y los que AUN NO.
+       (Fijate que esto es lo mismo que la pertenencia de la unidad 0.3: estar en el grupo de
+       "los ya contados".)
+     - ETIQUETADO: a cada objeto contado se le pone su palabra.
+
+  REGLA FIJADA 3 (los TRES ERRORES que hay que saber ver, Briars & Secada 1988):
+     - OMITIR un objeto: queda sin palabra.
+     - REPETIR: darle dos palabras al mismo objeto (o la misma palabra a dos objetos).
+       Este es el error MAS COMUN en los ninos.
+     - SALTARSE una palabra de la secuencia: ir "uno, dos, cuatro".
+
+  REGLA FIJADA 4: emparejar NO es todavia saber cuantos hay.  Saber que la ultima palabra es
+  el total de la coleccion es la CARDINALIDAD (unidad 2.4), y llega despues.
+  (La investigacion: el orden de adquisicion es orden estable, luego correspondencia, luego
+  cardinalidad.)
+
+  REGLA FIJADA 5: esto NO es lo mismo que el principio de Hume (dos conjuntos en correspondencia
+  tienen el mismo tamano).  Aqui solo se empareja objeto con palabra.
+
+  HONESTIDAD: si hay mas objetos que palabras en la secuencia, el sistema NO se inventa las que
+  faltan.  Dice que no llega.
+
+depende_de:
+  - secuencia_de_conteo
+relacionado_con:
+  - obj_individual
+  - pertenencia
+propiedades:
+  - Cada objeto recibe exactamente una palabra; ninguna palabra se usa dos veces.
+  - Las palabras van en el orden de la secuencia, empezando por la primera.
+  - Repetir la misma entidad no la convierte en dos objetos (unidad 0.1).
+representaciones:
+  concreta: |
+    Poner un cubo en cada vaso, mientras se dice la palabra.  Un objeto, una palabra.
+  numerica: |
+    Todavia no aplica.
+  formal: |
+    emparejar([o1, o2, o3]) = [(o1, uno), (o2, dos), (o3, tres)]
+  general: |
+    Vale para contar cualquier cosa, y tambien para emparejar objetos entre si sin palabras
+    (una taza por plato).
+errores_tipicos:
+  - Omitir un objeto (queda sin palabra).
+  - Dar dos palabras al mismo objeto, o la misma palabra a dos objetos: el error mas comun.
+  - Saltarse una palabra de la secuencia (uno, dos, cuatro).
+  - Creer que contar es solo decir la lista de palabras de corrido, sin tocar los objetos.
+  - Creer que el emparejamiento ya dice cuantos hay (eso es la cardinalidad, unidad 2.4).
+fuentes:
+  - Gelman & Gallistel (1978): el principio de uno-a-uno (una palabra por objeto).
+  - Briars & Secada (1988): los tres tipos de error en el conteo de una coleccion.
+  - Fuson (1988), Lagos (1992): los dos procesos, particion y etiquetado.
+  - "Acquisition of the counting principles during the subset-knower stages": la correspondencia
+    palabra-objeto se adquiere antes que la cardinalidad, y sigue teniendo errores despues.
+  - Gelman & Gallistel (1978): con colecciones de 3 a 5 elementos los ninos de 2-3 anos casi no
+    fallan; los errores aparecen al crecer la coleccion.
+  - IES/DREME: la correspondencia se puede trabajar SIN numeros (una taza por plato, una
+    servilleta por nino).

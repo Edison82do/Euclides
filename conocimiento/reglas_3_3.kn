@@ -1,0 +1,87 @@
+id: reglas_3_3
+nombre: Reglas de decision de la unidad 3.3
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 3.3 - LA SECUENCIA DE NUMEROS (y su diferencia con la lista de contar).
+
+  A partir de aqui, "siguiente" y "anterior" van sobre LA SECUENCIA DE NUMEROS, que SI lleva el
+  cero; y "recitar" va sobre LA LISTA DE CONTAR.  Y el sistema DICE cual usa.
+
+  TRABAJO A - SIGUIENTE (en los numeros):  "que numero va despues de este?"
+     el_numero_no_esta(palabra, cuenta)   -> palabra_desconocida
+     es_el_ultimo_numero(palabra, cuenta) -> no_lo_se   (nueve es el ultimo: no hay cifra para diez)
+     hay_numero_siguiente(palabra, cuenta) -> hay_siguiente
+
+  TRABAJO B - ANTERIOR (en los numeros):  "que numero va antes de este?"
+     el_numero_no_esta(palabra, cuenta)   -> palabra_desconocida
+     es_el_primer_numero(palabra, cuenta) -> no_lo_se   (antes del cero no hay nada)
+     hay_numero_anterior(palabra, cuenta) -> hay_anterior
+
+  TRABAJO C - RECITAR (en la lista de contar, como en la 2.2), pero ahora sabe explicar el cero:
+     la_palabra_no_esta(palabra, cuenta)  -> palabra_desconocida
+     la_palabra_esta(palabra, cuenta)     -> recitado
+
+  TRABAJO D - LAS DOS LISTAS:  "ensename las dos listas y en que se diferencian"
+     (siempre)                            -> dos_listas
+
+  OJO: en la lista de contar NO se puede pedir "anterior: uno"; pero en los numeros SI, y da cero.
+  Ese es el arreglo del fallo: la incoherencia no se maquilla, se resuelve diciendo en cual se habla.
+
+  CONDICIONES PRIMITIVAS DISPONIBLES (version 3.3):
+     la_palabra_no_esta(palabra, cuenta)
+     la_palabra_esta(palabra, cuenta)
+     es_la_primera(palabra, cuenta)
+     hay_anterior(palabra, cuenta)
+     el_numero_no_esta(palabra, cuenta)      (NUEVA: no esta en la secuencia de NUMEROS)
+     el_numero_esta(palabra, cuenta)         (NUEVA)
+     es_el_primer_numero(palabra, cuenta)    (NUEVA)
+     es_el_ultimo_numero(palabra, cuenta)    (NUEVA)
+     hay_numero_anterior(palabra, cuenta)    (NUEVA)
+     hay_numero_siguiente(palabra, cuenta)   (NUEVA)
+
+  Las reglas viven aqui, como datos.
+
+reglas_siguiente_numero:
+  - nombre: num_siguiente_hay
+    conclusion: hay_siguiente
+    condiciones:
+      - hay_numero_siguiente(palabra, cuenta)
+    justificacion: secuencia_de_numeros
+  - nombre: num_siguiente_es_el_ultimo
+    conclusion: no_lo_se
+    condiciones:
+      - es_el_ultimo_numero(palabra, cuenta)
+    justificacion: secuencia_de_numeros
+  - nombre: num_sin_sitio
+    conclusion: sin_numero
+    condiciones:
+      - la_palabra_esta(palabra, cuenta)
+    justificacion: secuencia_de_numeros
+  - nombre: num_siguiente_desconocido
+    conclusion: palabra_desconocida
+    condiciones:
+      - no_esta_en_ninguna_lista(palabra, cuenta)
+    justificacion: secuencia_de_conteo
+
+reglas_anterior_numero:
+  - nombre: num_anterior_hay
+    conclusion: hay_anterior
+    condiciones:
+      - hay_numero_anterior(palabra, cuenta)
+    justificacion: secuencia_de_numeros
+  - nombre: num_anterior_es_el_primero
+    conclusion: no_lo_se
+    condiciones:
+      - es_el_primer_numero(palabra, cuenta)
+    justificacion: secuencia_de_numeros
+  - nombre: num_anterior_sin_sitio
+    conclusion: sin_numero
+    condiciones:
+      - la_palabra_esta(palabra, cuenta)
+    justificacion: secuencia_de_numeros
+  - nombre: num_anterior_desconocido
+    conclusion: palabra_desconocida
+    condiciones:
+      - no_esta_en_ninguna_lista(palabra, cuenta)
+    justificacion: secuencia_de_conteo

@@ -1,0 +1,43 @@
+id: reglas_7_2
+nombre: Reglas de decision de la unidad 7.2 (derivar / hacer diez)
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 7.2 - DERIVAR (hacer diez): usar lo que ya se sabe para no contar.
+
+  "derivar: 7 + 5"   -> parte el segundo para completar diez, y suma lo que sobra.
+
+  LAS DOS ENTRADAS son NUMEROS de UNA CIFRA (0..9), dichos con cifra o con palabra.
+
+  CONDICIONES:
+     entrada_no_es_numero(escena, cuenta)   -> no_es_un_numero
+     primer_numero_es_de_dos_cifras(...)    -> necesito_las_columnas
+     la_suma_no_cruza_de_diez(escena, cuenta) -> no_hace_falta
+     siempre(escena, cuenta)                -> se_puede
+
+  EL ORDEN IMPORTA: primero se comprueba que son numeros, luego si son de una cifra, y luego si
+  hace falta (si no cruza el diez, no hay nada que derivar).
+
+  Las reglas viven aqui, como datos.
+
+reglas_derivar:
+  - nombre: dv_no_es_un_numero
+    conclusion: no_es_un_numero
+    condiciones:
+      - entrada_no_es_numero(escena, cuenta)
+    justificacion: derivar
+  - nombre: dv_necesito_las_columnas
+    conclusion: necesito_las_columnas
+    condiciones:
+      - primer_numero_es_de_dos_cifras(escena, cuenta)
+    justificacion: derivar
+  - nombre: dv_no_hace_falta
+    conclusion: no_hace_falta
+    condiciones:
+      - la_suma_no_cruza_de_diez(escena, cuenta)
+    justificacion: derivar
+  - nombre: dv_se_puede
+    conclusion: se_puede
+    condiciones:
+      - siempre(escena, cuenta)
+    justificacion: derivar

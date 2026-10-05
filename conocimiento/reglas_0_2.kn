@@ -1,0 +1,91 @@
+id: reglas_0_2
+nombre: Reglas de decision de la unidad 0.2
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  0.2 tiene DOS preguntas, y cada una con sus reglas:
+
+  PREGUNTA A - RECONOCER: "estos objetos, forman grupo?"  Se responde diciendo que atributos
+  comparten todos.  Reglas, en orden:
+     escena_vacia                       -> no_decidible
+     menos_de_dos_entidades             -> una_sola_entidad  (un grupo necesita varios objetos)
+     algun_atributo_indeterminado       -> no_decidible   (no sabemos, no inventamos)
+     hay_atributo_compartido_por_todos  -> grupo_por_atributo
+     (si nada de lo anterior)           -> sin_atributo_comun
+
+  OJO: "sin_atributo_comun" NO quiere decir "no son un grupo" en el sentido de la unidad 0.1.
+  Quiere decir: son varios objetos (eso ya lo decidio 0.1) pero no comparten ningun atributo.
+  Antes esta conclusion se llamaba "no_grupo" y contradecia a 0.1; se corrigio el 2026-10-03.
+
+  OJO 2: aqui NO hay regla de contradiccion.  Un mismo nombre con dos valores distintos en el
+  mismo atributo se resuelve ANTES de llegar aqui: son objetos DISTINTOS (ver
+  identidad_de_referencias, regla 3).  Corregido el 2026-10-03 a raiz de las pruebas de Carlos.
+
+  PREGUNTA B - FORMAR: "dame el grupo de <atributo>=<valor> de esta escena".
+     escena_vacia                       -> no_decidible
+     alguno_sin_el_atributo             -> no_decidible   (no se puede dar por completo)
+     hay_alguno_que_cumple              -> grupo_formado
+     (si nada de lo anterior)           -> no_hay_grupo   (ningun objeto cumple: no hay grupo)
+
+  CONDICIONES PRIMITIVAS DISPONIBLES EN EL MOTOR (version 0.2):
+    escena_vacia(escena)
+    menos_de_dos_entidades(escena)         -> cierto si hay menos de dos identificadores distintos
+                                              (un grupo necesita mas de un miembro)
+    algun_atributo_indeterminado(escena)   -> cierto si algun objeto no declara algun atributo
+                                              que otro si declara (no se puede afirmar ni negar)
+    hay_atributo_compartido_por_todos(escena) -> cierto si existe un atributo declarado en TODOS
+                                              y con el mismo valor en todos
+    alguno_sin_el_atributo(escena, criterio)  -> cierto si algun objeto no declara el atributo
+                                              del criterio
+    hay_alguno_que_cumple(escena, criterio)   -> cierto si algun objeto tiene atributo=valor
+
+  Las reglas viven aqui, como datos; el motor solo sabe evaluar esas condiciones.
+
+reglas_reconocer:
+  - nombre: reconocer_escena_vacia
+    conclusion: no_decidible
+    condiciones:
+      - escena_vacia(escena)
+    justificacion: atributo
+  - nombre: reconocer_una_sola_entidad
+    conclusion: una_sola_entidad
+    condiciones:
+      - menos_de_dos_entidades(escena)
+    justificacion: pluralidad
+  - nombre: reconocer_atributo_indeterminado
+    conclusion: no_decidible
+    condiciones:
+      - algun_atributo_indeterminado(escena)
+    justificacion: atributo
+  - nombre: reconocer_grupo_por_atributo
+    conclusion: grupo_atributo
+    condiciones:
+      - hay_atributo_compartido_por_todos(escena)
+    justificacion: grupo_por_atributo
+  - nombre: reconocer_sin_atributo_comun
+    conclusion: sin_atributo_comun
+    condiciones:
+      - sin_atributo_compartido_por_todos(escena)
+    justificacion: grupo_por_atributo
+
+reglas_formar:
+  - nombre: formar_escena_vacia
+    conclusion: no_decidible
+    condiciones:
+      - escena_vacia(escena)
+    justificacion: grupo_por_atributo
+  - nombre: formar_atributo_desconocido
+    conclusion: no_decidible
+    condiciones:
+      - alguno_sin_el_atributo(escena, criterio)
+    justificacion: atributo
+  - nombre: formar_grupo
+    conclusion: grupo_formado
+    condiciones:
+      - hay_alguno_que_cumple(escena, criterio)
+    justificacion: grupo_por_atributo
+  - nombre: formar_sin_ninguno
+    conclusion: no_hay_grupo
+    condiciones:
+      - ninguno_cumple(escena, criterio)
+    justificacion: grupo_por_atributo

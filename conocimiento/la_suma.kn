@@ -1,0 +1,67 @@
+id: la_suma
+nombre: La suma (el signo +, y las dos maneras de contarla)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  SUMAR ES JUNTAR CANTIDADES.  Se escribe con el signo + (mas) y el signo = (igual).
+
+     3 + 2 = 5        tres mas dos igual a cinco
+
+  REGLA FIJADA 1 - LOS SIGNOS.
+     +  se lee 'mas'  y significa JUNTAR lo de los dos lados.
+     =  se lee 'igual a' y significa QUE LAS DOS COSAS SON LO MISMO.
+  OJO CON EL = (esto es importante): el = NO quiere decir "haz la cuenta y pon el resultado".
+  Quiere decir QUE LO DE LA IZQUIERDA Y LO DE LA DERECHA SON LA MISMA COSA.  3 + 2 y 5 son lo
+  mismo, dicho de dos maneras.  Por eso 5 = 3 + 2 es exactamente tan cierto como 3 + 2 = 5.
+
+  REGLA FIJADA 2 - LOS TERMINOS TIENEN NOMBRE.  Los numeros que se juntan son los SUMANDOS, y el
+  resultado es la SUMA.  En 3 + 2 = 5: sumandos son 3 y 2; la suma es 5.
+
+  REGLA FIJADA 3 - HAY DOS MANERAS DE CONTAR LA SUMA, y no son la misma historia:
+     AGREGACION  - juntar dos montones que YA ESTAN ahi.  No se anade nada: se juntan dos grupos.
+                   "En un lado hay tres y en el otro dos; juntos son cinco."
+     AUMENTACION - a un monton se le ANADEN mas cosas.  El monton CRECE.
+                   "Primero habia tres; luego he anadido dos mas; ahora hay cinco."
+  El numero final es el mismo (cinco), pero la historia es distinta.  Las dos importan: ensenan
+  cosas distintas de como se comportan los numeros.
+
+  REGLA FIJADA 4 - EL ORDEN DE LOS SUMANDOS NO CAMBIA LA SUMA (conmutatividad, unidad 2.5).
+  3 + 2 son cinco, y 2 + 3 son cinco.  Es la misma suma.
+
+  REGLA FIJADA 5 - LA SUMA ES COMPONER (unidad 5.1), ahora con signos.  Juntar era 'componer', y
+  ahora se escribe con el +.  Y LA VUELTA VERIFICA: si 3 + 2 = 5, entonces partiendo 5 en dos partes
+  una de ellas tiene que ser 'tres y dos'.  Eso es la verificacion (unidad 5.1).
+
+  REGLA FIJADA 6 - CONDICIONES DE APLICACION.  Aqui se suma con lo que el sistema tiene:
+     - Solo hasta DIEZ, porque la lista de contar llega a diez.  Si la suma pasa de diez, el sistema
+       lo DICE; no se inventa el resultado.
+     - Y hacen falta DOS cantidades: con una sola no hay nada que juntar.
+
+errores_tipicos:
+  - Creer que el = significa "pon el resultado" (es "son lo mismo", en los dos sentidos).
+  - Creer que el + significa otra cosa que juntar.
+  - Confundir agregacion con aumentacion (una junta dos grupos; la otra hace crecer un grupo).
+  - Creer que el orden de los sumandos cambia la suma.
+  - Sumar mas alla de lo que se cuenta (pasarse de diez) y no decirlo.
+fuentes:
+  - NCETM (Primary Mastery), "Additive structures: introduction to aggregation and partitioning":
+    "combining two or more parts to make a whole is called aggregation; the addition symbol, +, can
+    be used to represent aggregation".  "The equals symbol, =, can be used to show EQUIVALENCE
+    between the whole and the sum of the parts".
+  - NCETM (Primary Mastery), "Additive structures: introduction to augmentation and reduction":
+    la suma como AUMENTACION con la historia "first..., then..., now..." y explorar la naturaleza
+    INVERSA de la suma y la resta.
+  - NCETM, "Additive Reasoning": "aggregation is when two or more parts are put together to make a
+    whole, and that partitioning is when the whole is split into two or more parts".
+  - mrbeeteach (resumen NCETM): "children meet addition long before they ever see the symbol +.
+    They learn it through two powerful structures: aggregation and augmentation.  Both matter."
+  - Wikipedia, "Addition": "3 + 2 = 5, which is read as 'three plus two equals five'".  Y que la
+    suma se puede hacer sin objetos concretos, con numeros.
+  - Maths with Mum, "Addition number sentences": "having 3 counters and then 2 more is the SAME AS
+    simply having 5 counters".
+depende_de:
+  - componer_descomponer
+  - puente
+relacionado_con:
+  - cardinalidad
+  - orden_irrelevante

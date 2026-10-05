@@ -1,0 +1,76 @@
+id: simbolos
+nombre: Los simbolos (las cifras 1..9)
+tipo: datos
+categoria: FIJADO
+definicion: |
+  Las CIFRAS: 1, 2, 3, 4, 5, 6, 7, 8, 9.  Son SIMBOLOS: una marca que representa una cantidad.
+  Hasta aqui el sistema solo tenia PALABRAS ("tres"); ahora tiene tambien CIFRAS ("3").
+
+  REGLA FIJADA 1: son TRES representaciones distintas de lo mismo (Hurst, Anderson & Cordes 2017):
+     - CANTIDAD: la coleccion de cosas (una coleccion de tres sillas).
+     - PALABRA:  "tres".
+     - CIFRA:    3.
+  Y ninguna es "la buena": son tres formas de decir lo mismo.  Lo que importa es poder pasar de
+  una a otra sin equivocarse.
+
+  REGLA FIJADA 2 (la cifra es UN simbolo, no muchos): cada cifra de esta tabla es UN simbolo, y
+  representa UNA cantidad.  La cifra NO es la cantidad ni la palabra: es una marca que la
+  representa.  (Como la palabra "tres" no es tres cosas.)
+
+  REGLA FIJADA 3 (el orden en que se aprenden, Benoit et al. 2013):
+     - a los 3 anos: se pasa bien de COLECCION a PALABRA, pero MAL de coleccion a CIFRA.
+     - a los 4 anos: ya se pasa igual de bien a cifras.
+     - a los 5 anos: se pasa entre las tres sin dificultad.
+     El orden es: PALABRA->COLECCION, luego CIFRA->COLECCION, y POR ULTIMO PALABRA->CIFRA.
+     Y el motivo: las palabras se las lleva el viento en cuanto se dicen; las colecciones y las
+     cifras se quedan a la vista.
+  Por eso la unidad 3.4 (el puente) va despues: aqui se aprende la tabla; alli se usa para traducir
+  en los dos sentidos.
+
+  REGLA FIJADA 4 (donde acaba esta unidad): el sistema conoce las cifras del 1 al 9.  El "10" son
+  DOS simbolos juntos, y eso es otra cosa (Sistema Decimal, unidad posterior).  Si le piden la
+  cifra de "diez", lo dice: no la tiene.
+
+  REGLA FIJADA 5 (6 y 9): son DOS simbolos distintos.  Que uno parezca el otro girado NO los hace
+  el mismo: "seis" y "nueve" son cantidades distintas y sus cifras tambien.  (En los estudios, los
+  ninos de 4-6 anos tienen a menudo las cifras "sin orientacion" en la memoria y confunden 6 con 9;
+  por eso esta regla se escribe y se prueba.)
+
+depende_de:
+  - secuencia_de_conteo
+  - cardinalidad
+relacionado_con:
+  - subitizing
+simbolos:
+  - palabra: cero
+    cifra: 0
+  - palabra: uno
+    cifra: 1
+  - palabra: dos
+    cifra: 2
+  - palabra: tres
+    cifra: 3
+  - palabra: cuatro
+    cifra: 4
+  - palabra: cinco
+    cifra: 5
+  - palabra: seis
+    cifra: 6
+  - palabra: siete
+    cifra: 7
+  - palabra: ocho
+    cifra: 8
+  - palabra: nueve
+    cifra: 9
+fuentes:
+  - Hurst, Anderson & Cordes (2017): el sistema numerico tiene TRES tipos de representacion -
+    cantidades registradas, palabras numericas y cifras.
+  - Benoit et al. (2013), citado en "Production and Recognition of Linguistic and Numerical
+    Notations by Children" (Educ. Real., 2025): la secuencia de las traducciones entre
+    representaciones a los 3, 4 y 5 anos; y que las palabras se pierden de la memoria de trabajo,
+    mientras la coleccion y la cifra se quedan a la vista.
+  - Fischer & Luxembourger, y "The Battle between the Correct and Mirror Writings of a Digit":
+    los ninos de 4-6 anos tienen las cifras SIN ORIENTACION en la memoria y confunden una cifra
+    con su reflejo (sobre todo 6/9 y con b/d, q/p).
+  - "Visual recognition difficulties" (South African J. of Occupational Therapy, 2014): que
+    cifras se reversan mas al escribir (7, 9, 3) y el par 6/9.

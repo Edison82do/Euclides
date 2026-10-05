@@ -1,0 +1,49 @@
+id: pluralidad
+nombre: Pluralidad de una escena
+tipo: regla
+categoria: FIJADO
+definicion: |
+  Una ESCENA es una lista de referencias.
+
+  CORREGIDO EL 2026-10-03 (lo destapo Carlos probando el sistema).
+  Antes esta unidad decia "un objeto o un GRUPO", y eso chocaba con la unidad 0.2, donde
+  GRUPO significa otra cosa (una coleccion CON un atributo comun). El sistema llegaba a
+  decir "grupo" y "no grupo" de la misma pareja de objetos. Era una contradiccion.
+
+  REGLA FIJADA (ahora): la unidad 0.1 NO habla de grupos. Solo dice CUANTAS cosas hay:
+    si en la escena hay DOS O MAS entidades distintas -> VARIOS OBJETOS
+    si hay UNA SOLA entidad                        -> UN OBJETO
+  La palabra GRUPO se reserva para la unidad 0.2, y siempre quiere decir
+  "varios objetos que ademas comparten un atributo con el mismo valor".
+
+  Nota: esto NO es contar. Se distingue "uno" de "varios"; no se dice cuantos hay.
+  Decir cuantos es la unidad 2.3 (contar) y todavia no toca.
+depende_de:
+  - identidad_de_referencias
+relacionado_con:
+  - obj_individual
+  - grupo_por_atributo
+propiedades:
+  - Para decidir uno/varios basta con mirar si hay dos referencias distintas.
+  - Repetir la misma entidad no hace varios objetos.
+  - Que haya varios objetos NO dice nada de si forman grupo por atributo: eso es 0.2.
+representaciones:
+  concreta: |
+    [silla]                      -> un objeto
+    [silla, mesa]                -> varios objetos
+    [silla, silla(misma silla)]  -> un objeto  (se senala dos veces lo mismo)
+  numerica: |
+    Todavia no aplica.
+  formal: |
+    varios_objetos(escena) <=> existe un par de referencias con identificadores distintos
+  general: |
+    Vale para cualquier clase de entidad, y para referencias repetidas o no.
+errores_tipicos:
+  - Contar dos veces la misma entidad y creer que hay varios objetos.
+  - Creer que dos objetos distintos con el mismo nombre son uno solo.
+  - (Error ya corregido) Llamar "grupo" a tener varias cosas, y luego decir "no es grupo" cuando no comparten nada. Son dos propiedades distintas.
+fuentes:
+  - Clements & Sarama, "Learning Trajectories in Early Mathematics": el nivel mas temprano
+    es distinguir colecciones de 1 frente a 2 antes de saber contar.
+  - Clements & Sarama (2020), trayectoria de clasificacion: la clasificacion por atributo
+    (Attribute Identifier, Consistent Sorter) es un nivel POSTERIOR a distinguir tamanos.
