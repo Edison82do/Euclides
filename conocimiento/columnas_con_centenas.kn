@@ -1,0 +1,50 @@
+id: columnas_con_centenas
+nombre: Sumar y restar por columnas con la centena (unidad, decena, centena)
+tipo: procedimiento
+categoria: FIJADO
+definicion: |
+  Es la NOTA 7 DE CARLOS entera: "sumar unidad con unidad, luego decena con decena y LUEGO
+  CENTENA CON CENTENA; y si pasa de 9 se anota la unidad y la decena que se lleva se suma con lo
+  siguiente".  Las unidades 7.3 y 7.5 lo hacian con DOS columnas; esta lo hace con las que hagan
+  falta (hasta mil).  No es un metodo nuevo: es EL MISMO, una columna mas.
+
+  REGLA FIJADA 1 - SE EMPIEZA POR LA DERECHA y se va columna a columna: unidades, decenas,
+  centenas.  Cada columna es una suma (o resta) de UNA cifra, y se hace con SU MECANISMO
+  (los dedos 7.1 / 7.4).  Nada de memoria ni de calculadora.
+
+  REGLA FIJADA 2 - EL LLEVARSE ES RE-AGRUPAR, en CUALQUIER columna:
+      diez unidades  hacen una decena  -> sube a la columna de las decenas
+      diez decenas   hacen una centena -> sube a la columna de las centenas
+      diez centenas  hacen una unidad de mil
+  Lo que se lleva nunca pasa de 1 (9 + 9 + 1 = 19).  Y si una columna tiene que sumar TRES
+  numeros (los dos de arriba y el que se lleva), se hace en DOS PASOS (el sistema solo tiene el
+  metodo de sumar dos).
+
+  REGLA FIJADA 3 - EL INTERCAMBIO (en la resta) TAMBIEN SUBE DE ESCALON:
+      una decena  se cambia por diez unidades   (7.5)
+      una centena se cambia por diez decenas    (7.6)
+  Y NO es un prestamo: no se devuelve nada (AET: "swapping a '100' for ten '10s'").
+
+  REGLA FIJADA 4 - RESTAR A TRAVES DE UN CERO.  Si la columna de al lado no tiene nada que
+  cambiar (es un cero), se va a la SIGUIENTE que tenga algo:
+      500 - 247:  las unidades (0) no llegan; las decenas tambien son 0;
+                  -> se cambia 1 CENTENA por 10 DECENAS   (500 = 4 c, 10 d, 0 u)
+                  -> y 1 de esas DECENAS por 10 UNIDADES  (500 = 4 c, 9 d, 10 u)
+      y ahora si: 10-7=3, 9-4=5, 4-2=2  ->  253
+  (Matarus: "regroup from the first nonzero place to the left".  Y Saddle Up for 2nd Grade:
+  "300 is the same as 30 tens".)  El numero de arriba NO cambia de valor: 4 c, 9 d y 10 u
+  siguen siendo 500.  El sistema lo COMPRUEBA despues de cada cambio.
+
+  REGLA FIJADA 5 - LA VUELTA VERIFICA: la resta se comprueba sumando, y la suma restando.
+
+errores_tipicos:
+  - Dar la vuelta a la resta en una columna (restar el pequeno del grande): 500-247 -> 347.
+  - Olvidarse de lo que se lleva (en la suma) o de bajar la columna de la que se cambio (resta).
+  - Restar a traves de un cero sin dejar 9 en la columna del cero (Saddle Up, error 13).
+  - Empezar por la izquierda en vez de por las unidades (Saddle Up, error 4).
+fuentes:
+  - Nota 7 de Carlos (4 oct 2026): unidad con unidad, decena con decena, centena con centena.
+  - Matarus, "Subtract across zeros" (grade 4): "regroup from the first nonzero place to the left".
+  - Saddle Up for 2nd Grade, "13 Common Regrouping Mistakes": nº 13 "Regrouping Across Zeroes",
+    "300 is the same as 30 tens"; nº 4 empezar por las decenas; nº 6 no sumar lo que se lleva.
+  - AET Mathematics Calculation Policy: "Exchanging -- swapping a '100' for ten '10s'".

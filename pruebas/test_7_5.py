@@ -77,7 +77,11 @@ r = motor.decidir_7_5_columnas("45", "72", SABER)
 comprobar("B2 quitar mas de lo que hay: no hay resta negativa", r["conclusion"], "no_hay_bastantes")
 
 r = motor.decidir_7_5_columnas("150", "40", SABER)
-comprobar("B3 pasar de cien: no alcanza", r["conclusion"], "no_alcanza")
+# ANTES (7.5): 150 - 40 -> no_alcanza (la resta por columnas llegaba a cien).
+# MEJORA 7.6 (5 oct 2026): con la columna de las CENTENAS ya se puede: 110.
+comprobar("B3 (MEJORA 7.6) 150 - 40 ya se resta: 110", r.get("resta"), 110)
+r = motor.decidir_7_5_columnas("1500", "40", SABER)
+comprobar("B3b (7.6) pasar de MIL: no alcanza", r["conclusion"], "no_alcanza")
 
 # ------------------------------------------------------------------ C: LOS TRES ERRORES TIPICOS
 print("\nC - LOS TRES ERRORES TIPICOS DE LA RESTA POR COLUMNAS (los documentados)")

@@ -22,6 +22,18 @@ reglas_sitio:
     condiciones:
       - el_numero_solo_no_existe(escena, cuenta)
     justificacion: la_tabla_de_cien
+  # UNIDAD 6.7: lo que se sale de la tabla de 100 ya NO es "no lo se": si no pasa de mil, es un
+  # numero de la CENTENA y se parte en centenas, decenas y unidades.  Y si pasa de mil, no_alcanza.
+  - nombre: st_no_alcanza
+    conclusion: no_alcanza
+    condiciones:
+      - numero_pasa_de_mil(escena, cuenta)
+    justificacion: la_centena
+  - nombre: st_es_de_la_centena
+    conclusion: de_la_centena
+    condiciones:
+      - es_de_la_centena(escena, cuenta)
+    justificacion: la_centena
   - nombre: st_fuera_de_la_tabla
     conclusion: fuera_de_la_tabla
     condiciones:

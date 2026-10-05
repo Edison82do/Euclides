@@ -64,8 +64,8 @@ DEBE_ESTAR = [
     "3.1", "3.2", "3.3", "3.4",   # simbolos, el cero, las dos listas, el puente
     "4.1", "4.2",                 # comparar
     "5.1", "5.2", "5.3", "5.4", "5.5",   # operaciones
-    "6.1", "6.2", "6.3", "6.5",   # la secuencia, las decenas, la tabla, partir
-    "7.1", "7.2", "7.3",          # los dedos, derivar, columnas
+    "6.1", "6.2", "6.3", "6.5", "6.7",   # la secuencia, las decenas, la tabla, partir, la centena
+    "7.1", "7.2", "7.3", "7.4", "7.5", "7.6",   # dedos, derivar, columnas (suma, resta, centenas)
 ]
 for u in DEBE_ESTAR:
     check("B la ayuda menciona la unidad %s" % u, u in AYUDA)
@@ -83,6 +83,7 @@ ORDENES = [
     "restar_numeros", "diferencia", "diferencia_numeros", "dedos", "derivar",
     "nombre", "numero", "decenas", "agrupar", "sitio", "tabla", "partir",
     "juntar_decenas", "columnas", "pertenece", "casos", "ayuda", "salir", "listas",
+    "centena",
 ]
 for o in ORDENES:
     check("C la ayuda menciona la orden '%s'" % o, o in AYUDA)
@@ -102,7 +103,7 @@ check("D2 y NO contesta 'un_objeto'", "un_objeto" not in r.stdout)
 r = subprocess.run([sys.executable, os.path.join(RAIZ, "probar.py")],
                    cwd=RAIZ, capture_output=True, text=True, input="ayuda\nsalir\n")
 check("D3 en interactivo tambien", "QUE SE PUEDE ESCRIBIR" in r.stdout)
-check("D4 y llega hasta la ultima unidad (7.3)", "7.3" in r.stdout)
+check("D4 y llega hasta la ultima unidad (7.6)", "7.6" in r.stdout)
 
 # ---------------------------------------------------------------------------
 print("PRUEBAS DE LA AYUDA")

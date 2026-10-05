@@ -168,18 +168,43 @@ def explicar_6_1_nombre(texto, saber=None):
         saber = cargar_conocimiento()
     lineas = ["PREGUNTA (6.1): como se LLAMA este numero?"]
     t = texto.strip()
-    try:
-        n = int(t)
-    except ValueError:
+    d = decidir_6_1_nombre(t, saber)
+    if d["conclusion"] in ("no_lo_se", "no_entendido"):
         lineas.append("RESULTADO: no_lo_se")
-        lineas.append("  '%s' no es un numero del 1 al 100." % t)
+        lineas.append("  '%s' no es un numero del 1 al %d escrito con cifras."
+                      % (t, len(saber["secuencia_de_conteo"]["palabras"])))
         return "\n".join(lineas)
+    n = d["valor"]
     lineas.append("NUMERO: %d" % n)
-    palabra = construir_nombre_hasta_cien(n, saber)
-    if palabra is None:
+    if d["conclusion"] == "fuera_de_mi_secuencia":
         lineas.append("RESULTADO: fuera_de_mi_secuencia")
-        lineas.append("  Mi secuencia de contar llega del UNO al CIEN.  Mas alla no me invento")
+        lineas.append("  Mi secuencia de contar llega del UNO al MIL.  Mas alla no me invento")
         lineas.append("  nombres, porque no los tengo escritos en ningun sitio.")
+        return "\n".join(lineas)
+    palabra = d["palabra"]
+    if n > 100:
+        # UNIDAD 6.7: el CIENTO se sabe de memoria (son nueve) y el resto se construye como antes.
+        cent, resto = divmod(n, 100)
+        cientos = _centenas(saber)
+        lineas.append("")
+        if n == 1000:
+            lineas.append("  DIEZ CENTENAS son UNA UNIDAD DE MIL, y se llama '%s' (hay que saberselo)."
+                          % palabra)
+        elif resto == 0:
+            lineas.append("  ES UNA CENTENA EXACTA: %d centenas se dicen '%s' (de memoria: los cientos"
+                          % (cent, palabra))
+            lineas.append("  son nueve palabras, y quinientos, setecientos y novecientos son irregulares).")
+        else:
+            lineas.append("  SE CONSTRUYE con DOS piezas (unidad 6.7):")
+            lineas.append("     el ciento '%s' (de %d centenas, de memoria) + el resto, %d, que es '%s' (6.1)"
+                          % (cientos["cientos"].get(cent), cent, resto,
+                             construir_nombre_hasta_cien(resto, saber)))
+            lineas.append("     ->  %s" % palabra)
+            if cent == 1:
+                lineas.append("  OJO: 100 solo es 'cien', pero delante de algo es 'ciento' (no 'cien %s')."
+                              % construir_nombre_hasta_cien(resto, saber))
+        lineas.append("")
+        lineas.append("RESULTADO: %s" % palabra)
         return "\n".join(lineas)
     info = de_donde_sale_el_nombre(n, saber) or {}
     lineas.append("")
@@ -218,6 +243,14 @@ def explicar_6_1_numero(texto, saber=None):
     lineas = ["PREGUNTA (6.1): que numero es este nombre?  (la vuelta)"]
     t = texto.strip().lower()
     lineas.append("PALABRA: %s" % t)
+    d = decidir_6_1_numero(t, saber)
+    if d["conclusion"] == "numero" and d["valor"] > 100:
+        lineas.append("")
+        lineas.append("  Lo busco en mi secuencia de MIL nombres (los construyo con la regla, 6.7):")
+        lineas.append("  es el que esta en el sitio %d." % d["valor"])
+        lineas.append("")
+        lineas.append("RESULTADO: %d" % d["valor"])
+        return "\n".join(lineas)
     for n in range(1, 101):
         if construir_nombre_hasta_cien(n, saber) == t:
             lineas.append("")
@@ -236,7 +269,7 @@ def explicar_6_1_numero(texto, saber=None):
             return "\n".join(lineas)
     lineas.append("RESULTADO: no_lo_se")
     lineas.append("  '%s' no es un nombre de mi secuencia.  No me lo invento." % t)
-    lineas.append("  (Mi secuencia son los 100 nombres; los construyo con la regla y los recorro.)")
+    lineas.append("  (Mi secuencia son los 1000 nombres; los construyo con la regla y los recorro.)")
     return "\n".join(lineas)
 
 
@@ -412,6 +445,12 @@ def decidir_6_3_sitio(texto, saber=None):
     r["palabra"] = palabra
     r["venia_en_cifra"] = venia_en_cifra
     r["valor"] = valor
+    if r["conclusion"] == "de_la_centena":
+        # UNIDAD 6.7: pasa de cien pero no de mil.  Su sitio son centenas, decenas y unidades.
+        ce = decidir_6_7_centena(texto, saber)
+        ce["regla_6_3"] = r["regla"]
+        ce["de_la_centena"] = True
+        return ce
     if r["conclusion"] != "se_puede":
         return r
     d, u = valor // 10, valor % 10
@@ -439,9 +478,15 @@ def explicar_6_3_sitio(texto, saber=None):
     if saber is None:
         saber = cargar_conocimiento()
     r = decidir_6_3_sitio(texto, saber)
+    if r.get("de_la_centena"):
+        return explicar_6_7_centena(texto, saber, desde="sitio")
     lineas = ["PREGUNTA (6.3): en que SITIO esta este numero en la tabla de 100?"
               "  (fila = DECENAS, columna = UNIDADES)"]
     lineas.append("NUMERO:  %s" % texto)
+    if r["conclusion"] == "no_alcanza":
+        lineas.append("RESULTADO: no_alcanza")
+        lineas.append("  Es un numero, pero pasa de MIL: se sale de mi secuencia.  No me lo invento.")
+        return "\n".join(lineas)
     if r["conclusion"] == "no_es_un_numero":
         lineas.append("RESULTADO: no_es_un_numero")
         lineas.append("  No es un numero que conozca (los mios van del CERO al CIEN).")
@@ -551,6 +596,11 @@ def decidir_6_5_partir(texto, saber=None):
     cuenta = {"valor": valor, "secuencia": secuencia}
     r = _aplicar_reglas(saber["reglas_6_5"]["reglas_partir"], None, None, saber, cuenta=cuenta)
     r["texto_dado"], r["palabra"], r["venia_en_cifra"], r["valor"] = texto, palabra, venia, valor
+    if r["conclusion"] == "de_la_centena":
+        # UNIDAD 6.7: de tres cifras se parte en CENTENAS, decenas y unidades.
+        ce = decidir_6_7_centena(texto, saber)
+        ce["de_la_centena"] = True
+        return ce
     if r["conclusion"] != "se_puede":
         return r
     d, u = valor // 10, valor % 10
@@ -564,6 +614,7 @@ def decidir_6_5_partir(texto, saber=None):
         _palabra_de(u, secuencia) if u else "cero")
     r["cuenta_de_la_particion"] = ("%d decenas y %d unidades son %d" % (d, u, valor) if d
                                    else "solo unidades: son %d" % valor)
+    r["como_se_parte"] = "%d decenas + %d unidades = %d" % (d, u, valor)
     r["valor_posicional"] = ("%d vale %d (no %d)" % (d, r["valor_de_las_decenas"], d)
                              if d else "el 0 de las decenas no vale nada")
     # EL ERROR TIPICO DE OAK: sumar las cifras como si valieran lo mismo
@@ -576,8 +627,14 @@ def explicar_6_5_partir(texto, saber=None):
     if saber is None:
         saber = cargar_conocimiento()
     r = decidir_6_5_partir(texto, saber)
+    if r.get("de_la_centena"):
+        return explicar_6_7_centena(texto, saber, desde="partir")
     lineas = ["PREGUNTA (6.5): cuanto vale CADA CIFRA de este numero?  (partirlo en decenas y unidades)"]
     lineas.append("NUMERO:  %s" % texto)
+    if r["conclusion"] == "no_alcanza":
+        lineas.append("RESULTADO: no_alcanza")
+        lineas.append("  Es un numero, pero pasa de MIL: se sale de mi secuencia.  No me lo invento.")
+        return "\n".join(lineas)
     if r["conclusion"] == "no_es_un_numero":
         lineas.append("RESULTADO: no_es_un_numero")
         lineas.append("  No es un numero que conozca (los mios van del CERO al CIEN).")
@@ -670,9 +727,9 @@ def explicar_6_5_juntar_decenas(decenas, unidades, saber=None):
         lineas.append("RESULTADO: no_es_un_numero")
         lineas.append("  Las decenas y las unidades tienen que ser numeros que conozca.")
         return "\n".join(lineas)
-    if r["conclusion"] == "fuera_de_la_tabla":
-        lineas.append("RESULTADO: fuera_de_la_tabla")
-        lineas.append("  Eso se pasa de CIEN (%d decenas y %d unidades), y mi tabla llega al cien."
+    if r["conclusion"] in ("fuera_de_la_tabla", "no_alcanza"):
+        lineas.append("RESULTADO: %s" % r["conclusion"])
+        lineas.append("  Eso se pasa de MIL (%d decenas y %d unidades), y mi secuencia llega al mil."
                       % (r["decenas"], r["unidades"]))
         return "\n".join(lineas)
     d, u = r["decenas"], r["unidades"]
@@ -741,3 +798,214 @@ def _dos_pasos(a, b, c, saber):
     p1 = _suma_con_metodo(a, b, saber)
     p2 = _suma_con_metodo(p1["total"], c, saber)
     return {"paso_1": p1, "paso_2": p2, "total": p2["total"]}
+
+
+# ------------------------------------------------- la centena (6.7)
+#
+# LA ESCALERA: 10 unidades hacen 1 decena, 10 decenas hacen 1 centena, 10 centenas hacen 1 unidad
+# de mil.  Es el MISMO movimiento de la 6.2 (el diez como UNA cosa), un escalon mas arriba.
+# Todo lo que se dice aqui sale de la_centena.kn y de reglas_6_7.kn.
+
+_ORDENES = (("unidad", "unidades"), ("decena", "decenas"), ("centena", "centenas"),
+            ("unidad de mil", "unidades de mil"))
+
+
+def _orden(i, cuantas):
+    """'1 centena' / '2 centenas' (en singular cuando toca)."""
+    sing, plur = _ORDENES[i]
+    return "%d %s" % (cuantas, sing if cuantas == 1 else plur)
+
+
+def _partir_por_ordenes(valor):
+    """Las cifras de un numero, de la derecha a la izquierda: [unidades, decenas, centenas, ...].
+    Es PARTIR (6.5) repetido: quito las unidades, lo que queda son decenas; quito las decenas, lo
+    que queda son centenas.  Cada paso es 'cuantas decenas hay' -- lo que ya sabe la 6.5."""
+    cifras = []
+    resto = valor
+    while True:
+        resto, c = divmod(resto, 10)
+        cifras.append(c)
+        if resto == 0:
+            break
+    return cifras
+
+
+def _nombre_o_cero(n, saber):
+    return construir_nombre_hasta_mil(n, saber) if n else "cero"
+
+
+def decidir_6_7_centena(texto, saber=None):
+    """
+    Unidad 6.7: LA CENTENA.  Un numero hasta mil, partido en centenas, decenas y unidades.
+
+      247  ->  2 centenas, 4 decenas y 7 unidades  =  doscientos + cuarenta + siete
+      204  ->  2 centenas, 0 decenas y 4 unidades  (y OJO: tiene VEINTE decenas, no cero)
+    """
+    if saber is None:
+        saber = cargar_conocimiento()
+    secuencia = saber["secuencia_de_conteo"]["palabras"]
+    palabra, venia = nombre_de_numero(texto, saber)
+    valor = _valor_de_numero(palabra, saber)
+    t = texto.strip()
+    if valor is None and t.isdigit():
+        valor = int(t)          # es un numero aunque se salga: que lo diga la regla (no_alcanza)
+    cuenta = {"valor": valor, "secuencia": secuencia}
+    r = _aplicar_reglas(saber["reglas_6_7"]["reglas_centena"], None, None, saber, cuenta=cuenta)
+    r["texto_dado"], r["palabra"], r["venia_en_cifra"], r["valor"] = texto, palabra, venia, valor
+    if r["conclusion"] != "se_puede":
+        return r
+    cifras = _partir_por_ordenes(valor)
+    while len(cifras) < 3:
+        cifras.append(0)        # 47 -> 0 centenas, 4 decenas, 7 unidades
+    r["cifras"] = cifras
+    r["unidades"], r["decenas"], r["centenas"] = cifras[0], cifras[1], cifras[2]
+    r["unidades_de_mil"] = cifras[3] if len(cifras) > 3 else 0
+    # LO QUE VALE CADA CIFRA (por su SITIO).  Se dice con nombres, no con 'x 100' (regla 6).
+    valores = []
+    peso = 1
+    for i, c in enumerate(cifras):
+        valores.append({"orden": _ORDENES[i][1], "cifra": c, "vale": c * peso,
+                        "dicho": _orden(i, c),
+                        "vale_en_palabra": _nombre_o_cero(c * peso, saber)})
+        peso = peso * 10
+    r["valores"] = valores
+    partes = [_orden(i, c) for i, c in reversed(list(enumerate(cifras)))]
+    r["dato"] = ", ".join(partes[:-1]) + " y " + partes[-1]
+    r["como_se_parte"] = " + ".join(partes) + " = %d" % valor
+    r["palabra"] = _nombre_o_cero(valor, saber)
+    # EL ERROR TIPICO (NZ Maths): "204 no tiene decenas".  Si las tiene: las de las centenas tambien.
+    r["decenas_en_total"] = valor // 10
+    r["centenas_en_total"] = valor // 100
+    r["ceros_de_relleno"] = [v["orden"] for v in valores[:-1] if v["cifra"] == 0 and valor >= 10]
+    # COMPROBACIONES (sin cajas negras: juntar otra vez tiene que dar el numero)
+    r["recompone"] = sum(v["vale"] for v in valores) == valor
+    r["nombre_coincide"] = (_valor_de_numero(r["palabra"], saber) == valor) if valor else True
+    return r
+
+
+def explicar_6_7_escalera(saber=None):
+    """'centena' (sin numero) -> la escalera entera, comprobada con lo que el sistema ya sabe."""
+    if saber is None:
+        saber = cargar_conocimiento()
+    cent = _centenas(saber)
+    lineas = ["PREGUNTA (6.7): que es una CENTENA?  (la escalera del valor posicional)", ""]
+    lineas.append("  LA ESCALERA VA DE DIEZ EN DIEZ, Y SIEMPRE IGUAL (la_centena.kn, regla 1):")
+    pasos = [("10 unidades", "1 decena", 10), ("10 decenas", "1 centena", 100),
+             ("10 centenas", "1 unidad de mil", 1000)]
+    for a, b, v in pasos:
+        lineas.append("    %-12s hacen  %-16s  (%s)" % (a, b, _nombre_o_cero(v, saber)))
+    lineas.append("  Es el MISMO movimiento repetido: juntas DIEZ de una cosa y tienes UNA de la"
+                  " siguiente.")
+    lineas.append("  (Lo mismo que la 6.2 hizo con el diez, un escalon mas arriba.)")
+    lineas.append("")
+    lineas.append("  COMPROBADO CON LO QUE YA SABIA:")
+    jd = decidir_6_5_juntar_decenas("10", "0", saber)
+    lineas.append("    juntar 10 decenas y 0 unidades (6.5) -> %s ... %s"
+                  % (jd.get("palabra", jd["conclusion"]), "SI" if jd.get("total") == 100 else "NO"))
+    c10 = decidir_6_7_centena("1000", saber)
+    lineas.append("    1000 partido por ordenes -> %s ... %s"
+                  % (c10.get("dato", c10["conclusion"]),
+                     "SI" if c10.get("unidades_de_mil") == 1 else "NO"))
+    lineas.append("")
+    lineas.append("  LOS NOMBRES DE LOS CIENTOS hay que SABERSELOS (son nueve); el resto se construye:")
+    for k in range(1, 10):
+        solo = cent["cientos_solos"].get(k)
+        con = cent["cientos"].get(k)
+        extra = "" if solo == con else "   (pero %d solo es '%s')" % (k * 100, solo)
+        irr = "   <- IRREGULAR" if con in (cent.get("irregulares") or []) else ""
+        lineas.append("    %d centenas -> %s ...%s%s" % (k, con, extra, irr))
+    lineas.append("    y 10 centenas -> %s" % (cent.get("mil") or "mil"))
+    lineas.append("")
+    lineas.append("  EL CERO TIENE DOS USOS (NZ Maths): como CANTIDAD ('ninguno') y como")
+    lineas.append("  MARCADOR DE POSICION (en 704 dice que no hay decenas SUELTAS).")
+    lineas.append("")
+    lineas.append("RESULTADO: la_escalera")
+    return "\n".join(lineas)
+
+
+def explicar_6_7_centena(texto, saber=None, desde=None):
+    """'centena: 247' (y sitio:/partir: de tres cifras) -> centenas, decenas y unidades."""
+    if saber is None:
+        saber = cargar_conocimiento()
+    r = decidir_6_7_centena(texto, saber)
+    cab = "PREGUNTA (6.7): como se PARTE este numero en centenas, decenas y unidades?"
+    if desde:
+        cab += "  (llegado por '%s:', que pasa de cien)" % desde
+    lineas = [cab, "NUMERO:  %s" % texto]
+    if r["conclusion"] == "no_es_un_numero":
+        lineas.append("RESULTADO: no_es_un_numero")
+        lineas.append("  '%s' no es un numero que sepa leer (los mios van del CERO al MIL)." % texto)
+        return "\n".join(lineas)
+    if r["conclusion"] == "no_alcanza":
+        lineas.append("RESULTADO: no_alcanza")
+        lineas.append("  %s es un numero, pero se sale de mi secuencia (llega a MIL).  No me lo"
+                      " invento." % r["valor"])
+        return "\n".join(lineas)
+    v = r["valor"]
+    lineas.append("")
+    lineas.append("  SE PARTE POR SITIOS, de la derecha a la izquierda (la posicion dice el valor, Oak):")
+    for i, c in enumerate(r["valores"]):
+        if i >= 3 and c["cifra"] == 0:
+            continue
+        lineas.append("    %-16s %d  ->  vale %s (%d)" % (c["orden"].upper() + ":", c["cifra"],
+                                                          c["vale_en_palabra"], c["vale"]))
+    lineas.append("")
+    lineas.append("  O SEA:  %s" % r["como_se_parte"])
+    if r["centenas"] or r["unidades_de_mil"]:
+        lineas.append("  (y NO se dice '%d x 100': el sistema no sabe multiplicar.  Se dice '%s', que"
+                      % (r["centenas"], _orden(2, r["centenas"])))
+        lineas.append("   es juntar decenas de diez en diez, un escalon mas arriba.)")
+    if r["ceros_de_relleno"]:
+        lineas.append("")
+        lineas.append("  OJO CON EL CERO: aqui es un MARCADOR DE POSICION (no hay %s sueltas)."
+                      % " ni ".join(r["ceros_de_relleno"]))
+    if v >= 100:
+        lineas.append("")
+        lineas.append("  Y EL ERROR TIPICO (NZ Maths): '%d no tiene decenas' o 'tiene %d decenas'."
+                      % (v, r["decenas"]))
+        lineas.append("  NO: en %d hay %d DECENAS en total (las de las centenas tambien cuentan)."
+                      % (v, r["decenas_en_total"]))
+        lineas.append("  La cifra de las decenas dice solo las SUELTAS: %d." % r["decenas"])
+    lineas.append("")
+    lineas.append("  EL NOMBRE SE CONSTRUYE (6.1 + los cientos de la 6.7):  '%s'" % r["palabra"])
+    lineas.append("")
+    lineas.append("  COMPROBACIONES:")
+    lineas.append("    - juntando lo que vale cada cifra sale %d ... %s"
+                  % (v, "SI" if r["recompone"] else "NO"))
+    lineas.append("    - y el nombre, leido otra vez, es %d ... %s"
+                  % (v, "SI" if r["nombre_coincide"] else "NO"))
+    lineas.append("")
+    lineas.append("RESULTADO: %s -> '%s'" % (r["dato"], r["palabra"]))
+    return "\n".join(lineas)
+
+
+def decidir_6_1_nombre(texto, saber=None):
+    """
+    'nombre: 247' -> la palabra.  UNA SOLA VERDAD para el probador y para el explicador.
+    (Antes el probador tenia su propia logica y decia 'ciento uno' mientras el explicador -- lo
+    que ve quien prueba -- decia 'fuera_de_mi_secuencia'.  Lo cazo la revision del 5 oct 2026.)
+    """
+    if saber is None:
+        saber = cargar_conocimiento()
+    t = texto.strip()
+    if not t:
+        return {"conclusion": "no_entendido"}
+    if not t.isdigit():
+        return {"conclusion": "no_lo_se", "texto": t}
+    n = int(t)
+    if n < 1 or n > len(saber["secuencia_de_conteo"]["palabras"]):
+        return {"conclusion": "fuera_de_mi_secuencia", "valor": n}
+    return {"conclusion": "nombre", "valor": n, "palabra": construir_nombre_hasta_mil(n, saber)}
+
+
+def decidir_6_1_numero(texto, saber=None):
+    """'numero: doscientos cuarenta y siete' -> 247.  Lee el MISMO mapa que todas las puertas."""
+    if saber is None:
+        saber = cargar_conocimiento()
+    t = texto.strip().lower()
+    if not t:
+        return {"conclusion": "no_entendido"}
+    v = (saber.get("_nombre_a_valor") or {}).get(t)
+    if v is None:
+        return {"conclusion": "no_lo_se", "texto": t}
+    return {"conclusion": "numero", "valor": v, "palabra": t}

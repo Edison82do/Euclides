@@ -321,6 +321,9 @@ def decidir_7_3_columnas(texto_a, texto_b, saber=None):
     """
     if saber is None:
         saber = cargar_conocimiento()
+    # UNIDAD 7.6: si el total pasa de cien, hace falta la columna de las CENTENAS.
+    if _va_a_la_7_6("+", texto_a, texto_b, saber):
+        return decidir_7_6_columnas(texto_a, "+", texto_b, saber)
     secuencia = saber["secuencia_de_conteo"]["palabras"]
     pa, ca = nombre_de_numero(texto_a, saber)
     pb, cb = nombre_de_numero(texto_b, saber)
@@ -369,6 +372,8 @@ def decidir_7_3_columnas(texto_a, texto_b, saber=None):
 def explicar_7_3_columnas(texto_a, texto_b, saber=None):
     if saber is None:
         saber = cargar_conocimiento()
+    if _va_a_la_7_6("+", texto_a, texto_b, saber):
+        return explicar_7_6_columnas(texto_a, "+", texto_b, saber)
     r = decidir_7_3_columnas(texto_a, texto_b, saber)
     lineas = ["PREGUNTA (7.3): sumar estos DOS NUMEROS por COLUMNAS"
               "  (unidad con unidad, decena con decena, y el llevarse)"]
@@ -651,6 +656,9 @@ def decidir_7_5_columnas(texto_a, texto_b, saber=None):
     """
     if saber is None:
         saber = cargar_conocimiento()
+    # UNIDAD 7.6: si el de arriba pasa de cien, hace falta la columna de las CENTENAS.
+    if _va_a_la_7_6("-", texto_a, texto_b, saber):
+        return decidir_7_6_columnas(texto_a, "-", texto_b, saber)
     secuencia = saber["secuencia_de_conteo"]["palabras"]
     pa, ca = nombre_de_numero(texto_a, saber)
     pb, cb = nombre_de_numero(texto_b, saber)
@@ -706,6 +714,8 @@ def decidir_7_5_columnas(texto_a, texto_b, saber=None):
 def explicar_7_5_columnas(texto_a, texto_b, saber=None):
     if saber is None:
         saber = cargar_conocimiento()
+    if _va_a_la_7_6("-", texto_a, texto_b, saber):
+        return explicar_7_6_columnas(texto_a, "-", texto_b, saber)
     r = decidir_7_5_columnas(texto_a, texto_b, saber)
     lineas = ["PREGUNTA (7.5): restar estos DOS NUMEROS por COLUMNAS  (y el intercambio de una"
               " decena)"]
@@ -822,3 +832,243 @@ def _detalle_error(escena, r):
             return "  -> falta por decir: %s" % ", ".join(faltan)
         return "  -> las palabras no van en el orden de la secuencia"
     return None
+
+
+# ------------------------------------------------- columnas con la centena (7.6)
+#
+# LA NOTA 7 DE CARLOS ENTERA: unidad con unidad, decena con decena, CENTENA CON CENTENA.
+# No es un metodo nuevo: es el de la 7.3 y la 7.5 con las columnas que hagan falta (hasta mil).
+# Cada columna se hace con SU MECANISMO (dedos 7.1 / 7.4): ninguna cuenta sale de "Python suma".
+
+_NOMBRE_COLUMNA = ("unidades", "decenas", "centenas", "unidades de mil")
+_UNA_DE_LA_COLUMNA = ("unidad", "decena", "centena", "unidad de mil")
+
+
+def _dos_valores(texto_a, texto_b, saber):
+    pa, _ = nombre_de_numero(texto_a, saber)
+    pb, _ = nombre_de_numero(texto_b, saber)
+    return pa, pb, _valor_de_numero(pa, saber), _valor_de_numero(pb, saber)
+
+
+def _va_a_la_7_6(op, texto_a, texto_b, saber):
+    """Decide si una suma/resta por columnas pasa de la 7.3/7.5 (hasta cien) a la 7.6.
+    Suma: si el TOTAL pasa de cien.  Resta: si el de ARRIBA pasa de cien.  (Asi todo lo que la
+    7.3 y la 7.5 ya hacian sigue saliendo EXACTAMENTE igual.)"""
+    _, _, va, vb = _dos_valores(texto_a, texto_b, saber)
+    for t in (texto_a, texto_b):          # una cifra que no se sabe leer pero ES un numero
+        t = (t or "").strip()
+        if t.isdigit() and int(t) > 100 and (va is None or vb is None):
+            return True
+    if va is None or vb is None:
+        return False
+    return (va + vb > 100) if op == "+" else (va > 100)
+
+
+def decidir_7_6_columnas(texto_a, op, texto_b, saber=None, verificar=True):
+    """
+    Unidad 7.6: SUMAR (op '+') o RESTAR (op '-') POR COLUMNAS, con las que hagan falta.
+
+      247 + 385:  7+5=12 (anoto 2, llevo 1) ; 4+8=12, +1=13 (anoto 3, llevo 1) ; 2+3=5, +1=6 -> 632
+      500 - 247:  0 no llega, y las decenas son 0 -> cambio 1 centena por 10 decenas, y 1 decena
+                  por 10 unidades -> 10-7=3 ; 9-4=5 ; 4-2=2 -> 253
+    """
+    if saber is None:
+        saber = cargar_conocimiento()
+    secuencia = saber["secuencia_de_conteo"]["palabras"]
+    pa, pb, va, vb = _dos_valores(texto_a, texto_b, saber)
+    cuenta = {"valor_a": va, "valor_b": vb, "secuencia": secuencia,
+              "texto_a": texto_a, "texto_b": texto_b, "_saber": saber}
+    reglas = saber["reglas_7_6"]["reglas_suma" if op == "+" else "reglas_resta"]
+    r = _aplicar_reglas(reglas, None, None, saber, cuenta=cuenta)
+    r["unidad"] = "7.6"
+    r["op"] = op
+    r["texto_a"], r["texto_b"] = texto_a, texto_b
+    r["palabra_a"], r["palabra_b"] = pa, pb
+    r["valor_a"], r["valor_b"] = va, vb
+    if r["conclusion"] != "se_puede":
+        return r
+    arriba = _partir_por_ordenes(va)          # 6.7: las cifras por sitio, de derecha a izquierda
+    abajo = _partir_por_ordenes(vb)
+    n = max(len(arriba), len(abajo))
+    arriba += [0] * (n - len(arriba))
+    abajo += [0] * (n - len(abajo))
+    r["arriba"], r["abajo"] = list(arriba), list(abajo)
+    pasos = []
+    if op == "+":
+        lleva = 0
+        anotadas = []
+        for i in range(n):
+            p1 = _suma_con_metodo(arriba[i], abajo[i], saber)
+            p2 = _suma_con_metodo(p1["total"], lleva, saber) if lleva else None
+            s = p2["total"] if p2 else p1["total"]
+            anota, nueva = s % 10, s // 10        # PARTIR (6.5): s son 'nueva' decenas y 'anota'
+            pasos.append({"columna": _NOMBRE_COLUMNA[i], "a": arriba[i], "b": abajo[i],
+                          "paso_1": p1, "paso_2": p2, "lleva_de_antes": lleva,
+                          "suma": s, "anota": anota, "se_lleva": nueva})
+            anotadas.append(anota)
+            lleva = nueva
+        if lleva:
+            anotadas.append(lleva)
+            pasos.append({"columna": _NOMBRE_COLUMNA[n], "solo_lo_que_se_lleva": lleva,
+                          "anota": lleva})
+        cifras_resultado = anotadas
+    else:
+        arr = list(arriba)
+        cifras_resultado = []
+        for i in range(n):
+            cambios = []
+            if arr[i] < abajo[i]:
+                # EL INTERCAMBIO: se busca la PRIMERA columna de la izquierda que tenga algo
+                j = i + 1
+                while j < n and arr[j] == 0:
+                    j += 1
+                for k in range(j, i, -1):     # y se baja escalon a escalon (a traves de los ceros)
+                    arr[k] -= 1
+                    arr[k - 1] += 10
+                    cambios.append({"de": _UNA_DE_LA_COLUMNA[k], "por": "diez %s" % _NOMBRE_COLUMNA[k - 1],
+                                    "queda": list(arr),
+                                    "sigue_valiendo": _juntar_ordenes(arr) == va})
+            rr = _resta_con_metodo(arr[i], abajo[i], saber)
+            pasos.append({"columna": _NOMBRE_COLUMNA[i], "a": arr[i], "b": abajo[i],
+                          "cambios": cambios, "resta": rr, "queda": rr["queda"],
+                          "a_traves_de_un_cero": len(cambios) > 1})
+            cifras_resultado.append(rr["queda"])
+        r["arriba_despues"] = arr
+        # EL ERROR TIPICO nº1: dar la vuelta en cada columna (restar el pequeno del grande)
+        r["si_diera_la_vuelta"] = _juntar_ordenes([abs(a - b) for a, b in zip(arriba, abajo)])
+    r["pasos"] = pasos
+    total = _juntar_ordenes(cifras_resultado)
+    r["total_valor"] = total
+    r["resta"] = total
+    r["total"] = _nombre_o_cero(total, saber)
+    r["resultado"] = r["total"]
+    r["expresion"] = "%s %s %s = %s" % (pa, op, pb, r["total"])
+    r["expresion_cifras"] = "%d %s %d = %d" % (va, op, vb, total)
+    r["hay_que_llevarse"] = any(p.get("se_lleva") for p in pasos) if op == "+" else None
+    r["hay_intercambio"] = any(p.get("cambios") for p in pasos) if op == "-" else None
+    r["a_traves_de_un_cero"] = any(p.get("a_traves_de_un_cero") for p in pasos)
+    r["metodos_usados"] = sorted({(p.get("paso_1") or p.get("resta") or {}).get("metodo") or "?"
+                                  for p in pasos if "solo_lo_que_se_lleva" not in p})
+    # LA VUELTA: la resta se comprueba sumando, y la suma restando (sin bucles: un solo nivel)
+    if verificar:
+        if op == "+":
+            v = decidir_7_6_columnas(str(total), "-", str(vb), saber, verificar=False)
+            r["verificacion"] = v["conclusion"] == "se_puede" and v["total_valor"] == va
+            r["verificacion_texto"] = "%d - %d = %s" % (total, vb, v.get("total_valor"))
+        else:
+            v = decidir_7_6_columnas(str(total), "+", str(vb), saber, verificar=False)
+            r["verificacion"] = v["conclusion"] == "se_puede" and v["total_valor"] == va
+            r["verificacion_texto"] = "%d + %d = %s" % (total, vb, v.get("total_valor"))
+    return r
+
+
+def _juntar_ordenes(cifras):
+    """Lo contrario de partir: unidades + decenas + centenas... (6.5 y 6.7, juntar)."""
+    total, peso = 0, 1
+    for c in cifras:
+        total += c * peso
+        peso *= 10
+    return total
+
+
+def _como_columna(p):
+    m = (p.get("paso_1") or p.get("resta") or {})
+    return "%s" % (m.get("metodo") or "sin metodo")
+
+
+def explicar_7_6_columnas(texto_a, op, texto_b, saber=None):
+    if saber is None:
+        saber = cargar_conocimiento()
+    r = decidir_7_6_columnas(texto_a, op, texto_b, saber)
+    verbo = "sumar" if op == "+" else "restar"
+    lineas = ["PREGUNTA (7.6): %s estos DOS NUMEROS por COLUMNAS  (unidad, decena y CENTENA)" % verbo]
+    lineas.append("NUMEROS:  %s  y  %s" % (texto_a, texto_b))
+    if r["conclusion"] == "no_es_un_numero":
+        lineas.append("RESULTADO: no_es_un_numero")
+        lineas.append("  Alguno no es un numero que sepa leer (los mios van del CERO al MIL).")
+        return "\n".join(lineas)
+    if r["conclusion"] == "no_alcanza":
+        lineas.append("RESULTADO: no_alcanza")
+        lineas.append("  Se pasa de MIL, y mi secuencia de contar llega al mil.  No me lo invento.")
+        return "\n".join(lineas)
+    if r["conclusion"] == "no_hay_bastantes":
+        lineas.append("RESULTADO: no_hay_bastantes")
+        lineas.append("  Al de arriba (%s) no se le puede quitar el de abajo (%s): seria NEGATIVA."
+                      % (r["valor_a"], r["valor_b"]))
+        lineas.append("  CONDICION DE LA RESTA (5.4): no se puede quitar mas de lo que hay.")
+        return "\n".join(lineas)
+    va, vb = r["valor_a"], r["valor_b"]
+    ancho = max(len(str(va)), len(str(vb))) + 2
+    lineas.append("")
+    lineas.append("  SE PONE UNO DEBAJO DEL OTRO, cada cifra en SU columna (6.7):")
+    lineas.append("")
+    lineas.append("     %s" % str(va).rjust(ancho))
+    lineas.append("   %s %s" % (op, str(vb).rjust(ancho)))
+    lineas.append("     " + "-" * ancho)
+    lineas.append("")
+    lineas.append("  SE EMPIEZA POR LA DERECHA (las unidades) y se va columna a columna:")
+    for i, p in enumerate(r["pasos"]):
+        lineas.append("")
+        if "solo_lo_que_se_lleva" in p:
+            lineas.append("  COLUMNA DE LAS %s: no hay cifras, pero baja la que me llevo: %d"
+                          % (p["columna"].upper(), p["anota"]))
+            continue
+        lineas.append("  COLUMNA DE LAS %s:" % p["columna"].upper())
+        if op == "+":
+            p1 = p["paso_1"]
+            lineas.append("    %d + %d = %d   (metodo: %s%s)"
+                          % (p["a"], p["b"], p1["total"], p1.get("metodo") or "ninguno",
+                             (": " + p1["como"]) if p1.get("como") else ""))
+            if p["paso_2"]:
+                p2 = p["paso_2"]
+                lineas.append("    y le sumo la que me llevo, EN OTRO PASO: %d + %d = %d   (metodo: %s)"
+                              % (p1["total"], p["lleva_de_antes"], p2["total"],
+                                 p2.get("metodo") or "ninguno"))
+            if p["se_lleva"]:
+                lineas.append("    -> %d PASA DE NUEVE: son 1 %s y %d.  Anoto %d y ME LLEVO 1 a las %s."
+                              % (p["suma"], _UNA_DE_LA_COLUMNA[i + 1], p["anota"], p["anota"],
+                                 _NOMBRE_COLUMNA[i + 1]))
+                lineas.append("       (diez %s hacen una %s: es RE-AGRUPAR, no un truco)"
+                              % (p["columna"], _UNA_DE_LA_COLUMNA[i + 1]))
+            else:
+                lineas.append("    -> anoto %d" % p["anota"])
+        else:
+            for c in p["cambios"]:
+                lineas.append("    no llega: CAMBIO 1 %s por %s   -> arriba queda %s ... sigue valiendo %d: %s"
+                              % (c["de"], c["por"], _dibujar_ordenes(c["queda"]), va,
+                                 "SI" if c["sigue_valiendo"] else "NO"))
+            if p["a_traves_de_un_cero"]:
+                lineas.append("    (A TRAVES DE UN CERO: la columna de al lado no tenia nada que cambiar, asi")
+                lineas.append("     que se fue a la siguiente, y se bajo ESCALON A ESCALON.  Por eso el cero")
+                lineas.append("     se queda en 9, no en 10: uno de esos diez bajo a la columna de la derecha.)")
+            rr = p["resta"]
+            lineas.append("    %d - %d = %d   (metodo: %s%s)"
+                          % (p["a"], p["b"], rr["queda"], rr.get("metodo") or "ninguno",
+                             (": " + rr["como"]) if rr.get("como") else ""))
+    lineas.append("")
+    lineas.append("  LA CUENTA ENTERA:  %s   ('%s')" % (r["expresion_cifras"], r["total"]))
+    lineas.append("")
+    lineas.append("  COMPROBACIONES:")
+    lineas.append("    - cada columna salio de un METODO (%s), no de memoria ... %s"
+                  % (", ".join(r["metodos_usados"]),
+                     "SI" if "?" not in r["metodos_usados"] else "NO"))
+    lineas.append("    - la vuelta (%s): %s sale otra vez el de arriba ... %s"
+                  % ("la suma deshace la resta" if op == "-" else "la resta deshace la suma",
+                     r.get("verificacion_texto"), "SI" if r.get("verificacion") else "NO"))
+    if op == "-" and r["si_diera_la_vuelta"] != r["total_valor"]:
+        lineas.append("")
+        lineas.append("  OJO CON EL ERROR TIPICO: dar la vuelta en las columnas (restar el pequeno del")
+        lineas.append("  grande) daria %d, y seria FALSO." % r["si_diera_la_vuelta"])
+    lineas.append("")
+    lineas.append("RESULTADO: %s" % r["expresion"])
+    lineas.append("  (en cifras: %s)" % r["expresion_cifras"])
+    lineas.append("")
+    lineas.append("  ES LA NOTA 7 ENTERA: unidad con unidad, decena con decena y CENTENA CON CENTENA.")
+    return "\n".join(lineas)
+
+
+def _dibujar_ordenes(cifras):
+    partes = []
+    for i in range(len(cifras) - 1, -1, -1):
+        partes.append("%d %s" % (cifras[i], {0: "u", 1: "d", 2: "c", 3: "um"}[i]))
+    return ", ".join(partes)

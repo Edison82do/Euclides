@@ -1,0 +1,52 @@
+id: reglas_7_6
+nombre: Reglas de decision de la unidad 7.6 (columnas con la centena)
+tipo: reglas
+categoria: FIJADO
+definicion: |
+  Unidad 7.6 - SUMAR Y RESTAR POR COLUMNAS HASTA MIL (unidad, decena, centena).
+  "columnas: 247 + 385" -> 632      "columnas: 500 - 247" -> 253
+  Las 7.3 y 7.5 siguen haciendo lo suyo hasta cien; lo que pasa de cien llega aqui.
+
+  CONDICIONES (el orden importa):
+     suma:   entrada_no_es_numero -> no_es_un_numero ; total_pasa_del_techo -> no_alcanza
+     resta:  alguna_pasa_del_techo -> no_alcanza ; entrada_no_es_numero -> no_es_un_numero ;
+             quiere_quitar_mas_de_lo_que_hay -> no_hay_bastantes
+
+reglas_suma:
+  - nombre: c6_no_es_un_numero
+    conclusion: no_es_un_numero
+    condiciones:
+      - entrada_no_es_numero(escena, cuenta)
+    justificacion: columnas_con_centenas
+  - nombre: c6_no_alcanza
+    conclusion: no_alcanza
+    condiciones:
+      - total_pasa_de_cien(escena, cuenta)
+    justificacion: columnas_con_centenas
+  - nombre: c6_se_puede
+    conclusion: se_puede
+    condiciones:
+      - siempre(escena, cuenta)
+    justificacion: columnas_con_centenas
+
+reglas_resta:
+  - nombre: r6_no_alcanza
+    conclusion: no_alcanza
+    condiciones:
+      - alguna_pasa_del_techo(escena, cuenta)
+    justificacion: columnas_con_centenas
+  - nombre: r6_no_es_un_numero
+    conclusion: no_es_un_numero
+    condiciones:
+      - entrada_no_es_numero(escena, cuenta)
+    justificacion: columnas_con_centenas
+  - nombre: r6_no_hay_bastantes
+    conclusion: no_hay_bastantes
+    condiciones:
+      - quiere_quitar_mas_de_lo_que_hay(escena, cuenta)
+    justificacion: columnas_con_centenas
+  - nombre: r6_se_puede
+    conclusion: se_puede
+    condiciones:
+      - siempre(escena, cuenta)
+    justificacion: columnas_con_centenas

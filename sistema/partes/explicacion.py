@@ -578,6 +578,14 @@ def _puente(cantidad_marcas, palabra, cifra):
             "    cifra:     %s" % cifra]
 
 
+def _marcas(n):
+    """La cantidad dibujada con marcas.  Hasta cien se dibujan una a una (como siempre); con mas,
+    una fila de 247 asteriscos no ensena nada, asi que se DICE cuantas son (6.7)."""
+    if n <= 100:
+        return "*" * n
+    return "(%d marcas: demasiadas para dibujarlas una a una)" % n
+
+
 def explicar_3_1_cifra(palabra, saber=None):
     if saber is None:
         saber = cargar_conocimiento()
@@ -586,7 +594,7 @@ def explicar_3_1_cifra(palabra, saber=None):
     lineas.append("PALABRA: %s" % palabra)
     lineas.extend(_traza_texto(r))
     if r["conclusion"] == "cifra":
-        marcas = "*" * int(r["cifra"])
+        marcas = _marcas(int(r["cifra"]))
         lineas.extend(_puente(marcas if marcas else "(nada)", palabra, r["cifra"]))
         lineas.append("")
         lineas.append("RESULTADO: %s" % r["cifra"])
@@ -612,7 +620,7 @@ def explicar_3_1_palabra(cifra, saber=None):
     lineas.append("CIFRA: %s" % cifra)
     lineas.extend(_traza_texto(r))
     if r["conclusion"] == "palabra":
-        marcas = "*" * int(cifra)
+        marcas = _marcas(int(cifra))
         lineas.extend(_puente(marcas if marcas else "(nada)", r["palabra"], cifra))
         lineas.append("")
         lineas.append("RESULTADO: %s" % r["palabra"])
@@ -847,6 +855,15 @@ def explicar_pregunta(texto, saber=None):
             return explicar_6_5_juntar_decenas(izq.strip(), der.strip(), saber)
         if t.lower().strip() == "tabla":
             return explicar_6_3_tabla(saber)
+        if t.lower().strip() in ("centena", "centenas"):
+            return explicar_6_7_escalera(saber)
+        if t.lower().startswith("centena"):
+            resto = t[len("centena"):].strip()
+            if resto.startswith(":"):
+                resto = resto[1:].strip()
+            if not resto:
+                return "NO ENTIENDO ESTO: dime un numero.\n   se escribe asi:  centena: 247"
+            return explicar_6_7_centena(resto, saber)
         if t.lower().startswith("sitio"):
             resto = t[len("sitio"):].strip()
             if resto.startswith(":"):

@@ -159,6 +159,22 @@ pero falta todo lo demás del nivel 5 — métodos, combinarlas, y sobre todo **
 Cerrar una estructura **no es** cerrar la operación.
 
 
+### ESTADO (5 oct 2026): la centena y la resta por columnas hasta mil, CERRADAS (6.7 y 7.6)
+
+Orden acordado por Carlos: 7.4 → resta por columnas → **la centena** → multiplicar y dividir.
+Las tres primeras están hechas. **Antes de multiplicar**, la revisión del 5 oct propone abrir
+**R.1 — el resolvedor** (el corazón del proyecto según la nota del 3 oct: «aplicar lo que sabe y
+combinaciones, con descarte»), con lo que el sistema YA sabe (suma y resta, sus tres estructuras).
+Motivo: es el criterio de éxito del proyecto y hasta ahora no había nada que lo probara; cuanto
+más tarde se pruebe la arquitectura con problemas, más caro sale cambiarla. **Pendiente del OK de
+Carlos** para seguir por ahí o volver a la multiplicación.
+
+| Unidad | Objetivo | Prueba de dominio |
+|---|---|---|
+| **R.1** Resolver problemas de una operación | Dado un enunciado de suma o resta, **aplicar** todos los conocimientos que podrían encajar, **descartar** con su porqué los que no, y resolver con el que queda, verificando | Problemas no programados de las 4 estructuras (juntar, añadir, quitar, comparar), con las **trampas de palabra clave** («más» que es resta) |
+| R.2 | Dos pasos (combinar: la respuesta de uno es dato del siguiente) | — |
+| R.3 | Enseñar un descarte nuevo («esto lo sé, pero aquí no vale porque…») | — |
+
 ## Fase 3 — lenguaje matemático, métodos y condiciones de aplicación (niveles 6 y 7)
 - Nivel 6: terminología y símbolos (sumando, minuendo, divisor…), **cada palabra con su uso**.
 - Nivel 7: métodos alternativos (descomposición, cálculo por decenas…) y **cuándo conviene cada uno**.

@@ -31,6 +31,13 @@ def _resultado_de_la_6_3(conclusion, regla, saber, **campos):
         "traza": [{"regla": regla,
                    "condiciones": [("el numero tiene DOS cifras (unidad 6.3)", True)]}],
     }
+    # UNIDAD 6.7: con TRES cifras la traza lo dice (antes decia "DOS cifras" tambien para 247).
+    if "tres_cifras" in regla:
+        c = saber.get("la_centena") or {}
+        d["justificacion"] = {"id": "la_centena", "nombre": c.get("nombre", "la centena"),
+                              "categoria": c.get("categoria", "FIJADO")}
+        d["traza"] = [{"regla": regla,
+                       "condiciones": [("el numero tiene TRES cifras o mas (unidad 6.7)", True)]}]
     d.update(campos)
     return d
 
@@ -74,7 +81,8 @@ def decidir_3_1_palabra(cifra, saber=None):
         # Cifra de DOS O TRES digitos: el nombre se CONSTRUYE con la regla (6.1 y 6.7).
         nombre = construir_nombre_hasta_mil(n, saber)
         if nombre:
-            return _resultado_de_la_6_3("palabra", "palabra_de_dos_digitos (6.3)", saber,
+            regla_ = ("palabra_de_tres_cifras (6.7)" if n > 99 else "palabra_de_dos_digitos (6.3)")
+            return _resultado_de_la_6_3("palabra", regla_, saber,
                                         palabra=nombre, cifra_dada=cifra, valor=n,
                                         secuencia=secuencia, tabla=tabla)
     cuenta = {"secuencia": secuencia, "simbolos": tabla}

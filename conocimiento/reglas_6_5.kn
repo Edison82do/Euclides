@@ -29,6 +29,17 @@ reglas_partir:
     condiciones:
       - el_numero_solo_no_existe(escena, cuenta)
     justificacion: partir_en_decenas_y_unidades
+  # UNIDAD 6.7: de 101 a mil se parte en CENTENAS, decenas y unidades (no "fuera de la tabla").
+  - nombre: pt_no_alcanza
+    conclusion: no_alcanza
+    condiciones:
+      - numero_pasa_de_mil(escena, cuenta)
+    justificacion: la_centena
+  - nombre: pt_es_de_la_centena
+    conclusion: de_la_centena
+    condiciones:
+      - es_de_la_centena(escena, cuenta)
+    justificacion: la_centena
   - nombre: pt_fuera_de_la_tabla
     conclusion: fuera_de_la_tabla
     condiciones:
@@ -46,10 +57,12 @@ reglas_juntar_decenas:
     condiciones:
       - decenas_o_unidades_negativas(escena, cuenta)
     justificacion: partir_en_decenas_y_unidades
-  - nombre: jd_pasa_de_cien
-    conclusion: fuera_de_la_tabla
+  # UNIDAD 6.7: el techo ya no es cien sino el de la secuencia (mil).  11 decenas son 110.
+  # (Antes: jd_pasa_de_cien -> fuera_de_la_tabla, con junta_pasa_de_cien.)
+  - nombre: jd_pasa_del_techo
+    conclusion: no_alcanza
     condiciones:
-      - junta_pasa_de_cien(escena, cuenta)
+      - junta_pasa_del_techo(escena, cuenta)
     justificacion: partir_en_decenas_y_unidades
   - nombre: jd_se_puede
     conclusion: se_puede

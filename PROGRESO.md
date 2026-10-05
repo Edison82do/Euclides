@@ -3,7 +3,9 @@
 > **Regla:** este archivo se **lee al empezar** cada sesión y se **actualiza al terminar**. Si no se
 > actualiza, el proyecto deja de ser acumulativo también para ti.
 
-**Última actualización:** 3 de octubre de 2026 — sesión 1: investigación + unidades 0.1 y 0.2 cerradas.
+**Última actualización:** 5 de octubre de 2026 — revisión de Claude (Cowork): git, motor partido en
+`sistema/partes/`, unidades **6.7** y **7.6** cerradas, fallos de `restar_numeros`/`diferencia_numeros`
+arreglados, y **R.1 (el resolvedor)** abierta. Ver `diario/2026-10-05-*.md`.
 
 ## Estado por unidades
 
@@ -73,7 +75,8 @@ inversas»* (NCETM). Y las trayectorias (Clements & Sarama) lo sitúan **antes**
 | **7.4 La resta con los dedos** | **CERRADA** | 25/25 VERDE (+ las 66 parejas) | 2026-10-04 | `diario\2026-10-04-unidad-7.4.md`. **La nota 3 de Carlos**: se toma **EL PRIMERO** con los dedos, se van **BAJANDO** los del segundo, y los que quedan son el resultado. Es **el mecanismo de la 5.4** y el gemelo de la 7.1, pero **al revés** (contar atrás). Se verifica por **la vuelta** (la suma deshace la resta). Y **reutiliza** la condición de la 5.4 en vez de escribir otra |
 | **7.5 Restar por columnas** | **CERRADA** | 30/30 VERDE (+ las 5151 parejas) | 2026-10-04 | `diario\2026-10-04-unidad-7.5.md`. **El par de la 7.3**: `columnas: 72 - 45` → 27. Si las unidades de arriba **no llegan**, **NO se da la vuelta a la resta** (el error nº1 de la resta: `5-2=3` sería falso); se **CAMBIA una decena por diez unidades** (72 = 6 dec y 12 u). **Y no es un préstamo**: no se devuelve nada. Es **la misma moneda que el llevarse de la 7.3, al revés**. Y **los tres errores típicos documentados dentro** (34, 36, 24) |
 | La resta por columnas | **CERRADA (7.5)** | — | — | — |
-| El valor posicional hasta la centena | **Pendiente** | — | — | **Lo que viene** (decisión de Carlos: la centena va **antes** que la multiplicación). Nota 6: unidad, decena, centena, unidad de mil… |
+| **6.7 La centena** | **CERRADA** | 39/39 VERDE (los 1001 números por 7 puertas) | 2026-10-05 | `diario\2026-10-05-unidad-6.7-y-7.6.md`. **La escalera** (10 d = 1 c), centenas/decenas/unidades, el cero **marcador**, **204 tiene 20 decenas**, nombres de tres cifras (irregulares y cien/ciento). `centena`, `centena:`, y `sitio:`/`partir:` de 101 a 1000. **Una sola verdad** en `nombre:`/`numero:` |
+| **7.6 Columnas con la centena** | **CERRADA** | 46/46 VERDE (8072 sumas + 29275 restas) | 2026-10-05 | Mismo diario. **La nota 7 entera**: «y luego centena con centena». Llevadas en cualquier columna, **restar a través de un cero** (500−247: 4 c, 9 d, 10 u), cada columna con su mecanismo (**cero cajas negras**). 7.3/7.5 solo desvían lo que no sabían |
 | 6.4 Comparar de dos cifras | Pendiente | — | — | Casi hecho con la 6.3 (`comparar_cifras: 47 / 3` ya funciona); falta decidir si es unidad propia |
 | 6.6 Calcular con decenas y unidades | Pendiente | — | — | |
 
@@ -493,3 +496,6 @@ E:\Euclides\
 | 2026-10-03 | Cambio de orden del plan | 1.1–1.4 aplazadas por decisión de Carlos; se pasa a 2.x. Anotado en `PLAN.md` |
 | 2026-10-03 | Reglas de 0.2 | 10 (5 para reconocer, 5 para formar), tras añadir la de entidad contradictoria |
 | 2026-10-03 | Primitivas del motor | 23 en total (contadas del codigo) |
+| 2026-10-05 | **Revisión de Claude (Cowork) mientras Euclides estaba sin saldo** | **Git** (`6a446c9` punto de retorno). **Motor partido** en `sistema/partes/` (una pieza por nivel; `motor.py` es la fachada) con la salida de las pruebas **idéntica byte a byte**. El empaquetador del móvil embebe las piezas |
+| 2026-10-05 | **OCHO puertas mintiendo con tres cifras, tapadas por el verde** | `columnas: 247+385` sumaba 24+38 «sin método» (caja negra); `restar_numeros: 50-27` daba `None - None` (desde la 6.3); `diferencia_numeros` igual; `sumar_numeros: 900+900` → `KeyError`; `nombre: 247` → `fuera_de_mi_secuencia` mientras el probador decía otra cosa; `sitio:`/`partir:` 247 → fuera_de_la_tabla; `palabra: 247` con traza «DOS cifras» y 247 asteriscos. **Todo arreglado** |
+| 2026-10-05 | **Unidades 6.7 y 7.6 cerradas** | **57358/57358 — VERDE**, 33 archivos, **386/386** casos |

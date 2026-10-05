@@ -102,9 +102,19 @@ for n in range(0, 101):
               "%d -> %d" % (n, s["fila"] * 10 + s["columna"]))
 
 # Fuera de la tabla
-for malo in ("101", "200", "999"):
+# ANTES (6.3): 101, 200 y 999 -> fuera_de_la_tabla ("mi tabla llega al cien").
+# MEJORA 6.7 (5 oct 2026): siguen fuera de la tabla de 100, pero ya NO son "no lo se": son
+# numeros de la CENTENA y su sitio son centenas, decenas y unidades.  Y lo que pasa de MIL,
+# no_alcanza.  Los casos viejos se quedan aqui al lado, con lo que dicen ahora.
+for malo, dato in (("101", "1 centena, 0 decenas y 1 unidad"),
+                   ("200", "2 centenas, 0 decenas y 0 unidades"),
+                   ("999", "9 centenas, 9 decenas y 9 unidades")):
     s = motor.decidir_6_3_sitio(malo, SABER)
-    check("B fuera: %s" % malo, s["conclusion"] == "fuera_de_la_tabla", s["conclusion"])
+    check("B (MEJORA 6.7) %s ya no es fuera_de_la_tabla: %s" % (malo, dato),
+          s["conclusion"] == "se_puede" and s.get("de_la_centena") and s.get("dato") == dato,
+          (s["conclusion"], s.get("dato")))
+s = motor.decidir_6_3_sitio("1001", SABER)
+check("B (6.7) 1001 pasa de mil: no_alcanza", s["conclusion"] == "no_alcanza", s["conclusion"])
 s = motor.decidir_6_3_sitio("manzana", SABER)
 check("B no es numero", s["conclusion"] == "no_es_un_numero", s["conclusion"])
 s = motor.decidir_6_3_sitio("0", SABER)

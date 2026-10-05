@@ -410,14 +410,15 @@ partir: 7                                  | 0 decenas + 7 unidades = 7 | una ci
 partir: 10                                 | 1 decenas + 0 unidades = 10 | una decena exacta
 partir: 100                                | 10 decenas + 0 unidades = 100 | diez decenas justas
 partir: 0                                  | 0 decenas + 0 unidades = 0 |
-partir: 101                                | fuera_de_la_tabla | mi tabla llega al cien
+partir: 101                                | 1 centena + 0 decenas + 1 unidad = 101 | MEJORA 6.7 (antes: fuera_de_la_tabla, 'mi tabla llega al cien')
+partir: 1001                               | no_alcanza | (6.7) mas de mil no me lo invento
 partir: manzana                            | no_es_un_numero | eso no es un numero
 juntar_decenas: 4 / 7                      | cuarenta y siete -> 47 | la vuelta
 juntar_decenas: 0 / 7                      | siete -> 7 | cero decenas
 juntar_decenas: 10 / 0                     | cien -> 100 |
 juntar_decenas: 2 / 5                      | veinticinco -> 25 |
 juntar_decenas: 3 / 12                     | cuarenta y dos -> 42 | ¡NO se dice 'treinta y doce'! (error de NZ Maths)
-juntar_decenas: 11 / 0                     | fuera_de_la_tabla | once decenas pasa de cien
+juntar_decenas: 11 / 0                     | ciento diez -> 110 | MEJORA 6.7 (antes: fuera_de_la_tabla, 'once decenas pasa de cien')
 # OJO: partir NO es descomponer.  'descomponer_numero: 5' da 0+5,1+4,2+3 (las partes que SUMAN);
 #      'partir: 47' da las DECENAS y las UNIDADES (el valor de cada cifra).  Son cosas distintas.
 
@@ -435,7 +436,7 @@ sitio: cuarenta y siete                    | 4 decenas y 7 unidades | lo mismo c
 sitio: 10                                  | 1 decenas y 0 unidades | OJO: el 10 esta al FINAL de la fila 0 (columna 10)
 sitio: 100                                 | 10 decenas y 0 unidades | diez decenas justas: fila 9, columna 10
 sitio: 0                                   | cero decenas y cero unidades | el CERO no esta en la tabla (empieza en el uno)
-sitio: 101                                 | fuera_de_la_tabla | mi tabla llega al cien, y lo digo
+sitio: 101                                 | 1 centena, 0 decenas y 1 unidad | MEJORA 6.7 (antes: fuera_de_la_tabla).  Sigue fuera de la tabla de 100, pero ya se parte
 sitio: manzana                             | no_es_un_numero | eso no es un numero
 tabla                                      | la_tabla_de_100 | la tabla entera, fila a fila
 # Y LA COHERENCIA (lo que pidio Carlos): el MISMO numero por TODAS las puertas
@@ -522,6 +523,47 @@ columnas: 40 - 18                           | 40 - 18 = 22 | con intercambio, y 
 columnas: 43 - 17                           | 43 - 17 = 26 | NO 34 (dar la vuelta) ni 36 (olvidar bajar la decena)
 columnas: 52 - 27                           | 52 - 27 = 25 | el ejemplo de manual
 columnas: 45 - 72                           | no_hay_bastantes | no hay resta negativa (5.4)
-columnas: 150 - 40                          | no_alcanza | es un numero, pero se sale de la tabla
+columnas: 150 - 40  | 150 - 40 = 110 | MEJORA 7.6 (antes: no_alcanza): ya hay columna de las centenas
 columnas: silla_1 - cuatro                  | no_es_un_numero | un objeto no es un numero
 columnas: 47 + 15                           | 47 + 15 = 62 | OJO: con '+' sigue siendo la SUMA (7.3)
+
+# ---------------------------------------------------------------------------
+# UNIDAD 6.7 - LA CENTENA (cerrada el 5 oct 2026)
+# ---------------------------------------------------------------------------
+centena                                    | la_escalera | 10 u = 1 d ; 10 d = 1 c ; 10 c = 1 unidad de mil
+centena: 247                               | 2 centenas, 4 decenas y 7 unidades | el 2 vale doscientos, el 4 cuarenta
+centena: 204                               | 2 centenas, 0 decenas y 4 unidades | el cero es MARCADOR (y hay 20 decenas en total)
+centena: 1000                              | 1 unidad de mil, 0 centenas, 0 decenas y 0 unidades | diez centenas
+centena: doscientos cuarenta y siete       | 2 centenas, 4 decenas y 7 unidades | con palabras tambien
+centena: 1001                              | no_alcanza | mas de mil no me lo invento
+centena: manzana                           | no_es_un_numero | un objeto no es un numero
+sitio: 247                                 | 2 centenas, 4 decenas y 7 unidades | sitio de tres cifras (6.7)
+partir: 704                                | 7 centenas + 0 decenas + 4 unidades = 704 | el cero intercalado
+nombre: 247                                | doscientos cuarenta y siete | ciento de memoria + el resto (6.1)
+nombre: 500                                | quinientos | irregular: NO 'cincocientos'
+nombre: 700                                | setecientos | irregular: NO 'sietecientos'
+nombre: 900                                | novecientos | irregular: NO 'nuevecientos'
+nombre: 100                                | cien | 100 solo es 'cien'...
+nombre: 120                                | ciento veinte | ...pero delante de algo es 'ciento'
+nombre: 1000                               | mil |
+numero: doscientos cuarenta y siete        | 247 | la vuelta, por el MISMO mapa que todas las puertas
+numero: cincocientos                       | no_lo_se | esa palabra no existe
+palabra: 247                               | doscientos cuarenta y siete |
+cifra: novecientos noventa y nueve         | 999 |
+juntar_decenas: 24 / 7                     | doscientos cuarenta y siete -> 247 | 24 decenas son 240 (NO 'anadir un cero')
+
+# ---------------------------------------------------------------------------
+# UNIDAD 7.6 - COLUMNAS CON LA CENTENA (cerrada el 5 oct 2026) - la NOTA 7 entera
+# ---------------------------------------------------------------------------
+columnas: 247 + 385                        | 247 + 385 = 632 | dos llevadas: a las decenas y a las centenas
+columnas: 999 + 1                          | 999 + 1 = 1000 | tres llevadas seguidas: sale la unidad de mil
+columnas: 99 + 99                          | 99 + 99 = 198 | el total pasa de cien: ya hay columna de centenas
+columnas: 900 + 200                        | no_alcanza | 1100 pasa de mil
+columnas: 500 - 247                        | 500 - 247 = 253 | A TRAVES DE UN CERO (y NO 347, dar la vuelta)
+columnas: 1000 - 1                         | 1000 - 1 = 999 | tres cambios seguidos
+columnas: 300 - 301                        | no_hay_bastantes | no hay resta negativa
+columnas: 1500 - 40                        | no_alcanza | es un numero, pero pasa de mil
+sumar_numeros: 247 + 385                   | 247 + 385 = 632 | sumar numeros usa las columnas (7.6)
+restar_numeros: 50 - 27                    | 50 - 27 = 23 | ANTES salia 'None - None = veintitres' (fallo arreglado el 5 oct)
+restar_numeros: 500 - 247                  | 500 - 247 = 253 | con dos o tres cifras, por columnas
+diferencia_numeros: 30 / 47                | diecisiete | el hueco, medido restando por columnas

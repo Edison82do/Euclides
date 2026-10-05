@@ -635,6 +635,56 @@ def p_total_pasa_de_cien(escena, cuenta):
     return a + b > len(cuenta.get("secuencia") or [])
 
 
+# ------------------------------------------------- la centena (6.7) y las columnas de tres (7.6)
+# OJO: los techos se escriben con len(secuencia), NUNCA con el numero a mano (carne de errores).
+
+def _techo(cuenta):
+    return len(cuenta.get("secuencia") or [])
+
+
+def p_entrada_no_es_un_numero(escena, cuenta):
+    """Para las ordenes de UN numero (6.7): no es un numero que se pueda leer."""
+    return cuenta.get("valor") is None
+
+
+def p_numero_pasa_de_mil(escena, cuenta):
+    """El numero se sale de la secuencia de contar (hoy llega a mil)."""
+    v = cuenta.get("valor")
+    return v is not None and v > _techo(cuenta)
+
+
+def p_es_de_la_centena(escena, cuenta):
+    """El numero pasa de cien (se sale de la tabla de 100) pero no del techo: es de la 6.7."""
+    v = cuenta.get("valor")
+    return v is not None and 100 < v <= _techo(cuenta)
+
+
+def p_junta_pasa_del_techo(escena, cuenta):
+    """Juntar esas decenas y unidades se sale de la secuencia de contar (6.5 con la 6.7)."""
+    d, u = cuenta.get("decenas"), cuenta.get("unidades")
+    if d is None or u is None:
+        return False
+    return d * 10 + u > _techo(cuenta)
+
+
+def p_alguna_pasa_del_techo(escena, cuenta):
+    """Restar por columnas (7.6): ninguno de los dos puede salirse de la secuencia.
+    Mira tambien el TEXTO: '1500' es un numero aunque no se pueda leer (no_alcanza, no
+    no_es_un_numero)."""
+    techo = _techo(cuenta)
+    for texto in (cuenta.get("texto_a"), cuenta.get("texto_b")):
+        if isinstance(texto, str) and texto.strip().isdigit() and int(texto.strip()) > techo:
+            return True
+    a, b = cuenta.get("valor_a"), cuenta.get("valor_b")
+    return (a is not None and a > techo) or (b is not None and b > techo)
+
+
+def p_quiere_quitar_mas_de_lo_que_hay(escena, cuenta):
+    """CONDICION DE LA RESTA (5.4), con numeros: no se puede quitar mas de lo que hay."""
+    a, b = cuenta.get("valor_a"), cuenta.get("valor_b")
+    return a is not None and b is not None and b > a
+
+
 PRIMITIVAS = {
     "escena_vacia": p_escena_vacia,
     "varios_distintos": p_varios_distintos,
@@ -716,6 +766,13 @@ PRIMITIVAS = {
     "numero_de_dos_cifras": p_numero_de_dos_cifras,
     "primer_numero_pasa_de_diez": p_primer_numero_pasa_de_diez,
     "pasa_de_cien": p_alguna_pasa_de_cien,
+    # 6.7 y 7.6
+    "entrada_no_es_un_numero": p_entrada_no_es_un_numero,
+    "numero_pasa_de_mil": p_numero_pasa_de_mil,
+    "es_de_la_centena": p_es_de_la_centena,
+    "junta_pasa_del_techo": p_junta_pasa_del_techo,
+    "alguna_pasa_del_techo": p_alguna_pasa_del_techo,
+    "quiere_quitar_mas_de_lo_que_hay": p_quiere_quitar_mas_de_lo_que_hay,
 }
 
 

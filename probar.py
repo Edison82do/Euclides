@@ -140,7 +140,7 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         columnas: 47 + 15      -> 47 + 15 = 62   (7+5=12: anoto 2 y ME LLEVO 1; y 4+1+1=6)
         columnas: 28 + 15      -> 28 + 15 = 43   (8+5=13: anoto 3 y me llevo 1)
         columnas: 5 + 3        -> 5 + 3 = 8      (SIN llevarse: no pasa de nueve)
-        columnas: 60 + 50      -> no_alcanza     (110 pasa de cien)
+        columnas: 60 + 50      -> 60 + 50 = 110  (MEJORA 7.6: antes no_alcanza; ver 7.6)
         CADA SITIO CON SU SITIO.  Y lo que pasa de nueve en las unidades es UNA DECENA que sube
         a la columna de las decenas: ESO es el llevarse.  No es un truco: es RE-AGRUPAR (diez
         unidades hacen una decena, unidad 6.2).  Y lo que se lleva NUNCA puede ser mas de 1
@@ -167,7 +167,7 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         columnas: 58 - 27      -> 58 - 27 = 31  (SIN cambiar nada: 8-7=1 y 5-2=3)
         columnas: 43 - 17      -> 43 - 17 = 26  (NO da 34 ni 36: los errores tipicos)
         columnas: 45 - 72      -> no_hay_bastantes (no hay resta negativa)
-        columnas: 150 - 40     -> no_alcanza
+        columnas: 150 - 40     -> 150 - 40 = 110 (MEJORA 7.6: antes no_alcanza)
         SI LAS UNIDADES DE ARRIBA NO LLEGAN, NO SE DA LA VUELTA A LA RESTA: 5 - 2 = 3 seria
         FALSO.  Lo que pasa es que SE CAMBIA una decena por diez unidades (72 = 6 decenas y 12
         unidades, y sigue siendo 72).  Y ESO NO ES PEDIR PRESTADO: no se devuelve nada.  Es la
@@ -193,7 +193,8 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         cifra: cuarenta y siete -> 47               (la vuelta)
         sitio: 47              -> 4 decenas y 7 unidades (fila 4, columna 7)
         sitio: 100             -> 10 decenas y 0 unidades (fila 9, columna 10)
-        sitio: 101             -> fuera_de_la_tabla
+        sitio: 101             -> 1 centena, 0 decenas y 1 unidad (MEJORA 6.7; antes
+                                  fuera_de_la_tabla: sigue fuera de la tabla de 100, pero se parte)
         tabla                  -> la tabla de 100 entera, fila a fila
         Y el MISMO numero se lee igual por TODAS las puertas (una sola verdad): nombre:, palabra:,
         sitio:, comparar_cifras:, cifra_de:, dedos:...  Antes de la 6.3, cuatro de esas puertas
@@ -225,8 +226,7 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         dedos: ocho + doce        -> no_caben_en_los_dedos (el segundo no puede pasar de 10)
         dedos: 5 + 0              -> el total es el primero (no se levanta ningun dedo)
         Y ensena POR QUE es mejor que contar todo: 5 pasos frente a 13.
-        OJO: dedos: 47 + 3 -> no_es_un_numero, porque el sistema TODAVIA NO LEE cifras de dos
-        digitos (eso es la unidad 6.3).  Se escribe con palabras: dedos: cuarenta y siete + tres
+        (Desde la 6.3 tambien lee cifras de dos digitos: dedos: 47 + 3 -> 47 + 3 = 50.)
 
   7.2  DERIVAR (hacer diez)  ->  la OTRA via para sumar: usar lo que ya sabes, SIN contar
         derivar: 7 + 5      -> siete + cinco = doce, y lo ENSENA paso a paso:
@@ -239,6 +239,28 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         y derivar; el que pruebe las dos'.)
         NO se sabe de memoria ni se usa calculadora: derivar COMBINA lo que ya sabes (partir, 5.1)
         y llegar a diez (6.1).  Y esta medido: los que saben usan hechos DERIVADOS, no contar.
+
+  6.7  LA CENTENA  ->  diez decenas son UNA centena, y la escalera sigue
+        centena                -> la escalera: 10 u = 1 d ; 10 d = 1 c ; 10 c = 1 unidad de mil
+        centena: 247           -> 2 centenas, 4 decenas y 7 unidades ('doscientos cuarenta y siete')
+        centena: 204           -> 2 centenas, 0 decenas y 4 unidades  (el cero es MARCADOR de
+                                  posicion; y OJO: 204 tiene VEINTE decenas en total, NZ Maths)
+        sitio: 247 / partir: 247  -> lo mismo (pasan de cien: se parten en centenas)
+        nombre: 247            -> el ciento de MEMORIA ('doscientos') + el resto de la 6.1
+        numero: quinientos     -> 500      (quinientos, setecientos y novecientos son IRREGULARES)
+        Y NO se dice '2 x 100': el sistema no sabe multiplicar.  Se dice '2 centenas'.
+        La secuencia de contar llega a MIL en todo el sistema.
+
+  7.6  COLUMNAS CON LA CENTENA  ->  LA NOTA 7 ENTERA: unidad, decena y CENTENA
+        columnas: 247 + 385    -> 632   (dos llevadas: a las decenas y a las centenas)
+        columnas: 999 + 1      -> 1000  (tres llevadas seguidas: sale la unidad de mil)
+        columnas: 500 - 247    -> 253   (A TRAVES DE UN CERO: 1 centena por 10 decenas, y 1 de
+                                         esas decenas por 10 unidades -> 4 c, 9 d, 10 u.  NO 347)
+        columnas: 900 + 200    -> no_alcanza  (pasa de mil)
+        Es EL MISMO metodo de la 7.3 y la 7.5, con una columna mas.  Cada columna con su
+        mecanismo (los dedos); ninguna cuenta de memoria.  sumar_numeros:, restar_numeros: y
+        diferencia_numeros: con varias cifras usan ESTE metodo (antes restar_numeros: 50 - 27
+        decia 'None - None', y sumar_numeros: 900 + 900 reventaba).
 
   Los atributos van entre parentesis como nombre=valor, separados por comas;
   las cosas entre si van separadas por punto y coma.
@@ -414,24 +436,15 @@ def preguntar(texto, saber):
             resto = t[len("nombre"):].strip()
             if resto.startswith(":"):
                 resto = resto[1:].strip()
-            if not resto:
-                return "no_entendido", None
-            if not resto.isdigit():
-                return "no_lo_se", None
-            n_ = int(resto)
-            if n_ < 1 or n_ > len(saber["secuencia_de_conteo"]["palabras"]):
-                return "fuera_de_mi_secuencia", None
-            return motor.construir_nombre_hasta_mil(n_, saber), None
+            # UNA SOLA VERDAD: la misma funcion que usa el explicador (antes habia aqui otra logica).
+            r = motor.decidir_6_1_nombre(resto, saber)
+            return r.get("palabra") or r["conclusion"], r
         if t.lower().startswith("numero"):
             resto = t[len("numero"):].strip()
             if resto.startswith(":"):
                 resto = resto[1:].strip()
-            if not resto:
-                return "no_entendido", None
-            for n in range(1, 1001):  # 6.7: hasta mil
-                if motor.construir_nombre_hasta_mil(n, saber) == resto.lower():
-                    return str(n), None
-            return "no_lo_se", None
+            r = motor.decidir_6_1_numero(resto, saber)
+            return (str(r["valor"]) if r["conclusion"] == "numero" else r["conclusion"]), r
         if t.lower().startswith("columnas"):
             resto = t[len("columnas"):].strip()
             if resto.startswith(":"):
@@ -461,7 +474,7 @@ def preguntar(texto, saber):
                 return "no_entendido", None
             r = motor.decidir_6_5_partir(resto, saber)
             if r["conclusion"] == "se_puede":
-                return "%d decenas + %d unidades = %d" % (r["decenas"], r["unidades"], r["valor"]), r
+                return r["como_se_parte"], r
             return r["conclusion"], r
         if t.lower().startswith("juntar_decenas"):
             resto = t[len("juntar_decenas"):].strip()
@@ -476,6 +489,18 @@ def preguntar(texto, saber):
             return r["conclusion"], r
         if t.lower().strip() == "tabla":
             return "la_tabla_de_100", None
+        if t.lower().strip() in ("centena", "centenas"):
+            return "la_escalera", None
+        if t.lower().startswith("centena"):
+            resto = t[len("centena"):].strip()
+            if resto.startswith(":"):
+                resto = resto[1:].strip()
+            if not resto:
+                return "no_entendido", None
+            r = motor.decidir_6_7_centena(resto, saber)
+            if r["conclusion"] == "se_puede":
+                return r["dato"], r
+            return r["conclusion"], r
         if t.lower().startswith("sitio"):
             resto = t[len("sitio"):].strip()
             if resto.startswith(":"):

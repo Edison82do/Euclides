@@ -420,7 +420,12 @@ def explicar_5_3_sumar_numeros(texto_a, texto_b, saber=None):
         return "\n".join(lineas)
     if r["conclusion"] == "no_alcanza":
         lineas.append("RESULTADO: no_alcanza")
-        lineas.append("  La suma daria %d, y mi lista de contar llega a diez." % r["total_valor"])
+        # (Antes decia "la suma daria %d" con un total que NO salia de ningun metodo -- y con dos
+        # cifras reventaba con KeyError, porque las columnas no dan ese total.  Ahora se dice
+        # lo que se sabe: que se pasa del techo.)
+        lineas.append("  %s + %s se pasa de mi lista de contar (llega a '%s')."
+                      % (r.get("valor_a", texto_a), r.get("valor_b", texto_b),
+                         saber["secuencia_de_conteo"]["palabras"][-1]))
         lineas.append("  CONDICION DE APLICACION: no se suma mas alla de lo que se cuenta.")
         return "\n".join(lineas)
     lineas.append("")
@@ -550,6 +555,26 @@ def decidir_5_4_restar_numeros(texto_a, texto_b, saber=None):
         r["conclusion"] = "no_hay_bastantes"
         r["valor_a"], r["valor_b"] = va, vb
         return r
+    if va > 9 or vb > 9:
+        # Con DOS o TRES cifras el metodo son las COLUMNAS (7.5 / 7.6), como en la suma (5.3).
+        # (Antes: va - vb calculado por dentro, sin metodo, y la salida decia "None - None = ...":
+        #  la cifra se buscaba en la tabla del 0 al 9.  Lo cazo la revision del 5 oct 2026.)
+        col = decidir_7_5_columnas(str(va), str(vb), saber)
+        r["valor_a"], r["valor_b"] = va, vb
+        if col["conclusion"] != "se_puede":
+            r["conclusion"] = col["conclusion"]
+            return r
+        r["conclusion"] = "resta"
+        r["resultado_valor"] = col["resta"]
+        r["resultado"] = col["resultado"]
+        r["cifra_a"], r["cifra_b"], r["cifra_resultado"] = str(va), str(vb), str(col["resta"])
+        r["expresion"] = "%d - %d = %d" % (va, vb, col["resta"])
+        r["alguno_sin_cifra"] = False
+        r["por_columnas"] = col
+        r["metodo"] = "columnas (%s)" % col.get("unidad", "7.5")
+        r["verificacion"] = bool(col.get("verificacion"))
+        r["expresion_inversa"] = "%d + %d = %d" % (col["resta"], vb, va)
+        return r
     r["conclusion"] = "resta"
     r["valor_a"], r["valor_b"] = va, vb
     r["resultado_valor"] = va - vb
@@ -646,6 +671,19 @@ def explicar_5_4_restar_numeros(texto_a, texto_b, saber=None):
     lineas = ["PREGUNTA (5.4): resta estos DOS NUMEROS  (numeros, no objetos)"]
     r = decidir_5_4_restar_numeros(texto_a, texto_b, saber)
     lineas.append("NUMEROS:  %s  y  %s" % (texto_a, texto_b))
+    if r.get("por_columnas"):
+        lineas.append("")
+        lineas.append("  Y OJO: como pasan de NUEVE, el metodo son las COLUMNAS (unidades 7.5 y 7.6).")
+        lineas.append("  El desarrollo entero:")
+        lineas.append("")
+        lineas.extend(explicar_7_5_columnas(str(r["valor_a"]), str(r["valor_b"]), saber).split("\n"))
+        lineas.append("")
+        lineas.append("RESULTADO: %s" % r["expresion"])
+        return "\n".join(lineas)
+    if r["conclusion"] == "no_alcanza":
+        lineas.append("RESULTADO: no_alcanza")
+        lineas.append("  Alguno pasa de mi lista de contar.  No me lo invento.")
+        return "\n".join(lineas)
     if r["conclusion"] == "no_es_un_numero":
         lineas.append("RESULTADO: no_es_un_numero")
         lineas.append("  '%s' no es un numero que conozca: los mios van del CERO al NUEVE." % r["cual"])
@@ -762,11 +800,19 @@ def decidir_5_5_diferencia_numeros(texto_a, texto_b, saber=None):
     tabla = _tabla(saber)
     r["valor_a"], r["valor_b"] = va, vb
     r["conclusion"] = "tantos_como" if va == vb else "hay_diferencia"
-    r["diferencia_valor"] = abs(va - vb)
-    r["diferencia"] = _palabra_de(r["diferencia_valor"], r["secuencia"])
+    if max(va, vb) > 9:
+        # Con mas de una cifra, el HUECO se mide restando por COLUMNAS (7.5 / 7.6) el grande menos
+        # el pequeno.  (Antes: abs(va - vb) por dentro, sin metodo, y la cifra salia None.)
+        col = decidir_7_5_columnas(str(max(va, vb)), str(min(va, vb)), saber)
+        r["diferencia_valor"] = col["resta"]
+        r["por_columnas"] = col
+    else:
+        r["diferencia_valor"] = abs(va - vb)
+    r["diferencia"] = _palabra_de(r["diferencia_valor"], r["secuencia"]) if r["diferencia_valor"] else "cero"
     r["mayor"], r["menor"] = (pa, pb) if va >= vb else (pb, pa)
-    r["cifra_mayor"], r["cifra_menor"] = tabla.get(r["mayor"]), tabla.get(r["menor"])
-    r["cifra_diferencia"] = tabla.get(r["diferencia"])
+    r["cifra_mayor"] = tabla.get(r["mayor"]) or str(max(va, vb))
+    r["cifra_menor"] = tabla.get(r["menor"]) or str(min(va, vb))
+    r["cifra_diferencia"] = tabla.get(r["diferencia"]) or str(r["diferencia_valor"])
     r["tiene_mas"] = "la primera" if va >= vb else "la segunda"
     r["expresion"] = "%s - %s = %s" % (r["cifra_mayor"], r["cifra_menor"],
                                        r["cifra_diferencia"] or r["diferencia"])

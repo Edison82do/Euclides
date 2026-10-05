@@ -82,13 +82,24 @@ for n in range(0, 101):
     check("B %d: y se llama igual" % n, j["palabra"] == NOMBRE[n], "%s / %s" % (j["palabra"], NOMBRE[n]))
 
 # Fuera de la tabla
-for malo in ("101", "200"):
+# ANTES (6.5): partir 101 y 200 -> fuera_de_la_tabla.
+# MEJORA 6.7 (5 oct 2026): se parten en CENTENAS, decenas y unidades.  Y mas de mil, no_alcanza.
+for malo, parte in (("101", "1 centena + 0 decenas + 1 unidad = 101"),
+                    ("200", "2 centenas + 0 decenas + 0 unidades = 200")):
     r = motor.decidir_6_5_partir(malo, SABER)
-    check("B fuera: %s" % malo, r["conclusion"] == "fuera_de_la_tabla", r["conclusion"])
+    check("B (MEJORA 6.7) partir %s: %s" % (malo, parte),
+          r["conclusion"] == "se_puede" and r.get("como_se_parte") == parte,
+          (r["conclusion"], r.get("como_se_parte")))
+r = motor.decidir_6_5_partir("1001", SABER)
+check("B (6.7) partir 1001: no_alcanza", r["conclusion"] == "no_alcanza", r["conclusion"])
 r = motor.decidir_6_5_partir("manzana", SABER)
 check("B no es numero", r["conclusion"] == "no_es_un_numero", r["conclusion"])
 r = motor.decidir_6_5_juntar_decenas("11", "0", SABER)
-check("B juntar 11 decenas pasa de cien", r["conclusion"] == "fuera_de_la_tabla", r["conclusion"])
+# ANTES: 11 decenas pasaba de cien -> fuera_de_la_tabla.  MEJORA 6.7: son 110 (ciento diez).
+check("B (MEJORA 6.7) juntar 11 decenas son ciento diez",
+      r["conclusion"] == "se_puede" and r.get("total") == 110, (r["conclusion"], r.get("total")))
+r = motor.decidir_6_5_juntar_decenas("101", "0", SABER)
+check("B (6.7) juntar 101 decenas pasa de mil: no_alcanza", r["conclusion"] == "no_alcanza", r["conclusion"])
 
 
 # ---------------------------------------------------------------------------
@@ -137,8 +148,9 @@ t = motor.explicar_6_5_partir("7", SABER)
 check("E7 una cifra sola: cero decenas", "0 decenas y 7 unidades" in t)
 check("E8 y el cero de las decenas no se dice", "NO se dice" in t)
 
-t = motor.explicar_6_5_partir("101", SABER)
-check("E9 el techo se explica", "fuera_de_la_tabla" in t)
+t = motor.explicar_6_5_partir("1001", SABER)
+# ANTES: el techo era 101 (fuera_de_la_tabla).  MEJORA 6.7: el techo es MIL.
+check("E9 el techo se explica (ahora en MIL)", "no_alcanza" in t and "MIL" in t)
 
 
 # ---------------------------------------------------------------------------
