@@ -60,7 +60,7 @@ def decidir_7_1_dedos(texto_a, texto_b, saber=None):
     r["expresion"] = "%s + %s = %s" % (pa, pb, r["total"])
     tabla = _tabla(saber)
     r["cifra_a"], r["cifra_b"] = tabla.get(pa), tabla.get(pb)
-    r["cifra_total"] = tabla.get(r["total"])
+    r["cifra_total"] = tabla.get(r["total"]) or str(r["total_valor"])
     r["hay_cifras"] = (r["cifra_a"] is not None and r["cifra_b"] is not None)
     if r["hay_cifras"]:
         r["expresion_cifras"] = "%s + %s = %s" % (r["cifra_a"], r["cifra_b"],
@@ -221,7 +221,7 @@ def decidir_7_2_derivar(texto_a, texto_b, saber=None):
     r["suma_de_tres"] = "%d + %d + %d" % (va, faltan, sobra)
     tabla = _tabla(saber)
     r["cifra_a"], r["cifra_b"] = tabla.get(pa), tabla.get(pb)
-    r["cifra_total"] = tabla.get(r["total"])
+    r["cifra_total"] = tabla.get(r["total"]) or str(r["total_valor"])
     if r["cifra_a"] is not None and r["cifra_b"] is not None:
         r["expresion_cifras"] = "%s + %s = %s" % (r["cifra_a"], r["cifra_b"],
                                                   r["cifra_total"] or r["total"])

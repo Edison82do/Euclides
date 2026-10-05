@@ -62,7 +62,8 @@ comprobar("A6 y van quedando dedos: 4,3,2,1,0",
           [x["quedan"] for x in r["los_pasos"]], [4, 3, 2, 1, 0])
 comprobar("A7 el total es el ULTIMO numero dicho", r["total"], "trece")
 comprobar("A8 el total NO cabe en los dedos (y no importa)", r["total_valor"] > r["dedos"], True)
-comprobar("A9 la expresion en cifras", r["expresion_cifras"], "8 + 5 = trece")
+# ANTES: "8 + 5 = trece" (la cifra del 13 no existia antes de la 6.3).  MEJORA: ya se escribe.
+comprobar("A9 la expresion en cifras (MEJORA: el 13 ya tiene cifra)", r["expresion_cifras"], "8 + 5 = 13")
 
 # --------------------------------------------------------- B) los bordes
 print("\nB) LOS BORDES")
