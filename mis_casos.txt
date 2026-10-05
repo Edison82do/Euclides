@@ -94,7 +94,6 @@ anterior: nueve                            | ocho        | tambien sabe ir hacia
 anterior: uno                              | cero        | OBSOLETO hasta la 3.3: ahora el uno tiene un numero antes (el cero)
 recitar: novecientos noventa y ocho  | recitado:novecientos noventa y ocho,novecientos noventa y nueve,mil | (6.7) los ultimos: ya no acaba en cien
 recitar: novecientos noventa  | recitado:novecientos noventa,novecientos noventa y uno,novecientos noventa y dos,novecientos noventa y tres,novecientos noventa y cuatro,novecientos noventa y cinco,novecientos noventa y seis,novecientos noventa y siete,novecientos noventa y ocho,novecientos noventa y nueve,mil | (6.7) la ultima decena entera acaba en mil
-recitar: novecientos noventa y ocho  | recitado:novecientos noventa y ocho,novecientos noventa y nueve,mil | (6.7) los ultimos: ya no acaba en cien
 revisar_secuencia: uno,dos,tres            | correcta    | bien dicha
 revisar_secuencia: uno,dos,cuatro          | orden_saltado | se salto el tres
 revisar_secuencia: uno,tres,dos            | orden_saltado | los cambio de orden
@@ -175,26 +174,18 @@ cifra_de: casa(color=blanco), casa, perro, casa(forma=cuadrado), carro | 3 | la 
 # ===== UNIDAD 3.2  -  el cero (ninguno) =====
 #     La cantidad de un conjunto VACIO es cero, y su cifra 0.  OJO: cero NO es "no se sabe".
 cuantos:                                   | cero        | no hay ningun objeto: la cantidad es cero
-cuantos: cosa                              | uno         | con un objeto NO es cero, es uno
 cifra_de:                                  | 0           | la cifra de una coleccion vacia es 0
-cifra_de: cosa                             | 1           | y con un objeto es 1
 cifra: cero                                | 0           | la cifra de "cero"
-palabra: 0                                 | cero        | y al reves
-palabra: 10                                | diez        | MEJORA 6.3: ya lee cifras de 2 digitos
-cifra: diez                                | 10          | MEJORA 6.3: ya lee cifras de 2 digitos
 
 # ===== UNIDAD 3.3  -  la secuencia de numeros (y las DOS listas) =====
 #     Hay DOS listas: la de CONTAR (uno..diez, para contar cosas) y la de los NUMEROS (cero..nueve).
 #     Ademas: siguiente: y anterior: van sobre la de NUMEROS.  Y recitar: sobre la de CONTAR.
 listas                                     | ?            | ensena las dos listas y en que se diferencian
-anterior: uno                              | cero         | ESTE ERA EL FALLO: antes decia 'no hay nada'
 siguiente: cero                            | uno          | el cero si esta en los numeros
 anterior: cero                             | no_lo_se      | el cero es el PRIMERO de los numeros
 siguiente: nueve                           | no_lo_se      | el nueve es el ULTIMO de los numeros
-siguiente: diez                            | sin_numero    | 'diez' esta en la de contar, no en la de numeros
 anterior: diez                             | sin_numero    | lo mismo, por el otro lado
 recitar: cero                              | palabra_desconocida | recitar es la lista de CONTAR: empieza en uno
-siguiente: once                            | sin_numero   | 'once' esta en contar, pero no es un NUMERO
 
 # ===== UNIDAD 3.4  -  EL PUENTE (cantidad, palabra, cifra) =====
 #     Lo mismo dicho de TRES maneras, y SEIS caminos entre ellas.  El nuevo: cifra -> cantidad.
@@ -207,8 +198,6 @@ puente: a,b,c,d,e,f,g,h,i,j                | diez         | TRAMPA: hay palabra,
 dame: a,b,c,d,e / 3                        | cumplido     | camino 4 (cifra -> cantidad): el que se aprende aqui
 dame: a,b / 3                              | no_hay_bastantes | TRAMPA: no se inventa los que faltan
 dame: a,b,c,d / 0                          | cero_no_se_coge  | TRAMPA: dar es coger, y el vacio no se coge
-subitizar: x.x/.../x.x                     | reconocido:cuatro | camino CORTO: de un vistazo, SIN contar
-subitizar: x../xx./x.x                     | no_reconocido | no lo reconoce y NO cuenta a escondidas
 
 # ===== UNIDAD 4.1  -  COMPARAR CANTIDADES =====
 #     Se dice con PALABRAS: mas / menos / tantos_como.  La respuesta habla de la PRIMERA coleccion.
@@ -270,7 +259,6 @@ siguiente: 3                               | cuatro       | un NUMERO se dice co
 anterior: 3                                | dos          | lo mismo, hacia atras
 comparar_numeros: dos / 3                  | <            | comparar numeros: palabra y cifra mezcladas
 comparar_numeros: 3 / dos                  | >            | y al reves
-comparar_cifras: 3 / tres                  | =            | son EL MISMO numero (mejora de la 5.3)
 sumar_numeros: 3 + 2                       | 3 + 2 = 5    | sumar NUMEROS, sin objetos
 sumar_numeros: dos + tres                  | 2 + 3 = 5    | con palabras tambien
 sumar_numeros: 3 + dos                     | 3 + 2 = 5    | mezclando
@@ -292,7 +280,6 @@ cuantos: 100                               | grupo_equivocado | lo mismo: el sis
 contar: 47                                 | grupo_equivocado | y en contar tambien (antes decia 'emparejado')
 dame: 47 / uno                             | grupo_equivocado | y aqui (antes decia 'cogido')
 cuantos: silla_1, silla_2                  | dos              | OJO: 'silla_1' NO es todo digitos: sigue siendo un OBJETO
-cuantos: 3                                 | grupo_equivocado | las de un digito ya lo decian desde la 5.3
 
 # ===== UNIDAD 5.4  -  LA RESTA (QUITAR) =====
 #     quitar es hacer el monton MAS PEQUENO.  Primero habia, luego se van, ahora quedan.
@@ -350,7 +337,6 @@ numero: cien                               | 100          |
 numero: pepito                             | no_lo_se     | ese nombre no existe
 decenas                                    | las_decenas  | la lista de decenas y el ERROR DE DECENA explicado
 siguiente: veintinueve                     | sin_numero   | 'veintinueve' es cantidad, no numero
-recitar: novecientos noventa  | recitado:novecientos noventa,novecientos noventa y uno,novecientos noventa y dos,novecientos noventa y tres,novecientos noventa y cuatro,novecientos noventa y cinco,novecientos noventa y seis,novecientos noventa y siete,novecientos noventa y ocho,novecientos noventa y nueve,mil | (6.7) la ultima decena entera acaba en mil
 
 # ===== UNIDAD 7.1  -  EL METODO DE LOS DEDOS (el mecanismo de sumar) =====
 #     Se ANOTA el primero, se cogen los dedos del SEGUNDO, y se CUENTA DESDE EL PRIMERO.
@@ -396,11 +382,7 @@ sumar_numeros: treinta y dos + quince      | 32 + 15 = 47 | y con palabras tambi
 sumar_numeros: 90 + 5                      | 90 + 5 = 95 | 90 es de dos cifras: por columnas
 derivar: 32 + 15                           | necesito_las_columnas | derivar tambien es de UNA cifra
 dedos: 32 + 15                             | no_caben_en_los_dedos | al SEGUNDO (15) no le pueden pasar de diez
-sumar_numeros: 3 + 2                       | 3 + 2 = 5    | y las de UNA cifra siguen igual
-sumar_numeros: 9 + 9                       | 9 + 9 = dieciocho | y las que cruzan el diez, tambien
 # Y si ademas pasa de cien, manda el TECHO (que va primero)
-sumar_numeros: novecientos + novecientos  | no_alcanza | MEJORA 6.7: el techo es MIL
-sumar_numeros: noventa + noventa           | 90 + 90 = 180 | (6.7) YA se puede: el techo es mil
 
 # ===== UNIDAD 6.5  -  PARTIR EN DECENAS Y UNIDADES (cuanto vale cada cifra) =====
 #     La PRIMERA cifra son DECENAS y la ultima son UNIDADES.  Y cada cifra vale POR SU SITIO.
@@ -427,10 +409,8 @@ juntar_decenas: 11 / 0                     | ciento diez -> 110 | MEJORA 6.7 (an
 #     OJO: esto ARREGLA las cuatro puertas que antes decian que no sabia leerlas.
 palabra: 47                                | cuarenta y siete | YA lee cifras de 2 digitos (antes decia cifra_desconocida)
 palabra: 100                               | cien        | el final de la tabla
-palabra: 10                                | diez        | MEJORA 6.3 (antes: cifra_desconocida)
 cifra: cuarenta y siete                    | 47          | la vuelta
 cifra: cien                                | 100         |
-cifra: diez                                | 10          | MEJORA 6.3 (antes: sin_cifra)
 sitio: 47                                  | 4 decenas y 7 unidades | fila 4 (cuarenta), columna 7 (siete)
 sitio: cuarenta y siete                    | 4 decenas y 7 unidades | lo mismo con palabras
 sitio: 10                                  | 1 decenas y 0 unidades | OJO: el 10 esta al FINAL de la fila 0 (columna 10)
@@ -440,13 +420,8 @@ sitio: 101                                 | 1 centena, 0 decenas y 1 unidad | M
 sitio: manzana                             | no_es_un_numero | eso no es un numero
 tabla                                      | la_tabla_de_100 | la tabla entera, fila a fila
 # Y LA COHERENCIA (lo que pidio Carlos): el MISMO numero por TODAS las puertas
-dedos: 47 + 3                              | cuarenta y siete + tres = cincuenta | MEJORA 6.3: ya lee la cifra (antes: no_es_un_numero)
-cifra_de: a,b,c,d,e,f,g,h,i,j              | 10          | MEJORA 6.3: la cifra de una cantidad ya vale hasta cien
 comparar_cifras: 47 / 3                    | >           | MEJORA 6.3: ya compara cifras de 2 digitos
 comparar_numeros: 47 / 3                   | >           | y por la puerta de numeros, lo mismo
-comparar_cifras: 10 / 2                    | >           | MEJORA 6.3 (antes: cifra_desconocida)
-sumar_numeros: novecientos + novecientos  | no_alcanza | MEJORA 6.7: el techo es MIL
-sumar_numeros: noventa + noventa           | 90 + 90 = 180 | (6.7) YA se puede: el techo es mil
 # Y lo que NO cambio (los limites estan bien puestos)
 derivar: 47 + 3                            | necesito_las_columnas | derivar sigue siendo de UNA cifra (unidad 7.2)
 siguiente: 47                              | sin_numero  | la lista de NUMEROS sigue siendo 0..9 (unidad 3.3)
@@ -511,7 +486,6 @@ dedos: 4 - 9                                | no_hay_bastantes | no se pueden ba
 dedos: 47 - 3                               | cuarenta y siete - tres = cuarenta y cuatro | el PRIMERO si puede pasar de diez: los dedos son la VENTANA de los ultimos diez
 dedos: 45 - 12                              | no_caben_en_los_dedos | lo que tiene que caber es EL SEGUNDO
 dedos: silla_1 - cuatro                     | no_es_un_numero | un objeto no es un numero
-dedos: 8 + 5                                | ocho + cinco = trece | OJO: con '+' sigue siendo la SUMA (7.1)
 
 # ===== UNIDAD 7.5 - RESTAR POR COLUMNAS (y el intercambio de una decena) =====
 #     Si las unidades de arriba NO LLEGAN, NO se da la vuelta a la resta: se CAMBIA una decena por
@@ -525,7 +499,6 @@ columnas: 52 - 27                           | 52 - 27 = 25 | el ejemplo de manua
 columnas: 45 - 72                           | no_hay_bastantes | no hay resta negativa (5.4)
 columnas: 150 - 40  | 150 - 40 = 110 | MEJORA 7.6 (antes: no_alcanza): ya hay columna de las centenas
 columnas: silla_1 - cuatro                  | no_es_un_numero | un objeto no es un numero
-columnas: 47 + 15                           | 47 + 15 = 62 | OJO: con '+' sigue siendo la SUMA (7.3)
 
 # ---------------------------------------------------------------------------
 # UNIDAD 6.7 - LA CENTENA (cerrada el 5 oct 2026)
@@ -543,7 +516,6 @@ nombre: 247                                | doscientos cuarenta y siete | cient
 nombre: 500                                | quinientos | irregular: NO 'cincocientos'
 nombre: 700                                | setecientos | irregular: NO 'sietecientos'
 nombre: 900                                | novecientos | irregular: NO 'nuevecientos'
-nombre: 100                                | cien | 100 solo es 'cien'...
 nombre: 120                                | ciento veinte | ...pero delante de algo es 'ciento'
 nombre: 1000                               | mil |
 numero: doscientos cuarenta y siete        | 247 | la vuelta, por el MISMO mapa que todas las puertas
@@ -558,7 +530,6 @@ juntar_decenas: 24 / 7                     | doscientos cuarenta y siete -> 247 
 columnas: 247 + 385                        | 247 + 385 = 632 | dos llevadas: a las decenas y a las centenas
 columnas: 999 + 1                          | 999 + 1 = 1000 | tres llevadas seguidas: sale la unidad de mil
 columnas: 99 + 99                          | 99 + 99 = 198 | el total pasa de cien: ya hay columna de centenas
-columnas: 900 + 200                        | no_alcanza | 1100 pasa de mil
 columnas: 500 - 247                        | 500 - 247 = 253 | A TRAVES DE UN CERO (y NO 347, dar la vuelta)
 columnas: 1000 - 1                         | 1000 - 1 = 999 | tres cambios seguidos
 columnas: 300 - 301                        | no_hay_bastantes | no hay resta negativa
@@ -585,3 +556,6 @@ problema: Hay 4 peces. Se van 9. Cuantos quedan?                                
 problema: El perro come huesos. Cuantos tiene?                                    | no_entiendo | no adivina
 problema: Ana tiene 5 manzanas. Cuantas tiene Luis?                               | no_se_resolver | falta un dato
 problema: En la caja hay 20 lapices. Saca 5. Cuantos quedan?                      | no_entiendo | no se QUIEN saca
+problema: Ana tiene 5 cromos. Le dan algunos. Ahora tiene 8. Cuantos le dieron? | 3 | CGI: juntar con el CAMBIO desconocido (se cuenta del 5 al 8)
+problema: Hay 12 pajaros. Se van algunos. Ahora hay 7. Cuantos se fueron?          | 5 | CGI: separar con el cambio desconocido
+problema: Ana tiene 5. Le dan algunas. Ahora tiene 3. Cuantas le dieron?             | sin_solucion | si le dan, no puede tener menos

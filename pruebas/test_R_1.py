@@ -143,6 +143,8 @@ plantillas = [
     ("{q} tiene {a} cromos. Tiene {b} menos que Luis. Cuantos tiene Luis?", lambda a, b: a + b),
     ("{q} y Luis tienen {a} cromos entre los dos. {q} tiene {b}. Cuantos tiene Luis?", lambda a, b: a - b if b <= a else None),
     ("{q} tenia algunos cromos. Gana {b}. Ahora tiene {a}. Cuantos tenia al principio?", lambda a, b: a - b if b <= a else None),
+    ("{q} tiene {a} cromos. Le dan algunos. Ahora tiene {b}. Cuantos le dieron?", lambda a, b: b - a if b >= a else None),
+    ("Hay {a} pajaros. Se van algunos. Ahora hay {b}. Cuantos se fueron?", lambda a, b: a - b if b <= a else None),
 ]
 probados = malos = imposibles_bien = 0
 for i, (pl, oraculo) in enumerate(plantillas):
@@ -168,6 +170,25 @@ for i, (pl, oraculo) in enumerate(plantillas):
 comprobar("E1 los %d problemas generados dan la respuesta buena (o dicen que no cuando toca)" % probados, malos, 0)
 comprobar("E2 y se recorrio la rejilla (%s): %d problemas" % (_hierro.modo(), probados), probados > 500, True)
 comprobar("E3 y en los imposibles dice que no (%d)" % imposibles_bien, imposibles_bien > 50, True)
+
+# ------------------------------------------------------------------ G: los 11 tipos de CGI
+print("\nG - LOS ONCE TIPOS DE PROBLEMA DE SUMA Y RESTA (Cognitively Guided Instruction)")
+# Carpenter et al.: juntar (3), separar (3), parte-parte-todo (2) y comparar (3).  Uno de cada.
+cgi = [
+    ("juntar, resultado desconocido", "Ana tiene 5 cromos. Le dan 3. Cuantos tiene ahora?", 8),
+    ("juntar, cambio desconocido", "Ana tiene 5 cromos. Le dan algunos. Ahora tiene 8. Cuantos le dieron?", 3),
+    ("juntar, inicio desconocido", "Ana tenia algunos cromos. Le dan 3. Ahora tiene 8. Cuantos tenia al principio?", 5),
+    ("separar, resultado desconocido", "Ana tiene 8 cromos. Pierde 3. Cuantos le quedan?", 5),
+    ("separar, cambio desconocido", "Ana tiene 8 cromos. Pierde algunos. Ahora tiene 5. Cuantos perdio?", 3),
+    ("separar, inicio desconocido", "Ana tenia algunos cromos. Pierde 3. Ahora tiene 5. Cuantos tenia al principio?", 8),
+    ("parte-parte-todo, todo desconocido", "Ana tiene 5 cromos y Luis tiene 3. Cuantos tienen entre los dos?", 8),
+    ("parte-parte-todo, parte desconocida", "Ana y Luis tienen 8 cromos entre los dos. Ana tiene 5. Cuantos tiene Luis?", 3),
+    ("comparar, diferencia desconocida", "Ana tiene 8 cromos y Luis tiene 5. Cuantos mas tiene Ana que Luis?", 3),
+    ("comparar, mayor desconocido", "Luis tiene 5 cromos. Ana tiene 3 mas que Luis. Cuantos tiene Ana?", 8),
+    ("comparar, menor desconocido", "Ana tiene 8 cromos. Tiene 3 mas que Luis. Cuantos tiene Luis?", 5),
+]
+for tipo, texto, valor in cgi:
+    comprobar("G %s -> %d" % (tipo, valor), R(texto).get("valor"), valor)
 
 # ------------------------------------------------------------------ F: una sola verdad
 print("\nF - EL PROBADOR Y EL EXPLICADOR DICEN LO MISMO")

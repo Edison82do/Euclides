@@ -76,11 +76,11 @@ no_son_nombres:
   - con
 
 verbos:
-  ganar: compra, recibe, gana, encuentra, consigue, junta, recoge, coge, pesca, saca
-  dar_a: dan, regalan, traen, dieron, regalaron
-  perder: regala, pierde, gasta, vende, presta, rompe, da, tira, come, usa
-  llegar: llegan, vienen, entran, nacen, aparecen
-  irse: van, escapan, caen, vuelan, rompen, salen, comen
+  ganar: compra, recibe, gana, encuentra, consigue, junta, recoge, coge, pesca, saca, compro, recibio, gano, encontro, consiguio, junto, recogio, cogio, pesco, saco
+  dar_a: dan, regalan, traen, dieron, regalaron, trajeron
+  perder: regala, pierde, gasta, vende, presta, rompe, da, tira, come, usa, regalo, perdio, gasto, vendio, presto, rompio, dio, tiro, comio, uso
+  llegar: llegan, vienen, entran, nacen, aparecen, llegaron, vinieron, entraron, nacieron, aparecieron
+  irse: van, escapan, caen, vuelan, rompen, salen, comen, fueron, escaparon, cayeron, volaron, rompieron, salieron, comieron
 
 formas_hechos:
   - id: tener
@@ -97,6 +97,9 @@ formas_hechos:
     hecho: final
   - id: ahora_tiene_2
     forma: ahora {quien?} tiene {n} {cosa?}
+    hecho: final
+  - id: ahora_hay
+    forma: ahora hay {n} {cosa?}
     hecho: final
   - id: hay
     forma: hay {n} {cosa?} {lugar?}
@@ -128,6 +131,24 @@ formas_hechos:
   - id: se_van_2
     forma: {n} {cosa?} se {irse}
     hecho: pierde
+  - id: gana_algunos
+    forma: {quien?} {ganar} {algunos} {cosa?} {mas?}
+    hecho: gana_desconocido
+  - id: le_dan_algunos
+    forma: le {dar_a} {algunos} {cosa?} {mas?}
+    hecho: gana_desconocido
+  - id: llegan_algunos
+    forma: {llegar} {algunos} {cosa?} {mas?}
+    hecho: gana_desconocido
+  - id: pierde_algunos
+    forma: {quien?} {perder} {algunos} {cosa?}
+    hecho: pierde_desconocido
+  - id: se_come_algunos
+    forma: {quien?} se {perder} {algunos} {cosa?}
+    hecho: pierde_desconocido
+  - id: se_van_algunos
+    forma: se {irse} {algunos} {cosa?}
+    hecho: pierde_desconocido
   - id: mas_que
     forma: {quien?} tiene {n} {cosa?} mas que {otro}
     hecho: tiene_mas_que
@@ -175,6 +196,24 @@ formas_preguntas:
   - id: cuantos_menos
     forma: {cuantos} {cosa?} menos tiene {quien} que {otro}
     pide: diferencia
+  - id: cuantos_le_dieron
+    forma: {cuantos} {cosa?} le {dar_a}
+    pide: cambio
+  - id: cuantos_gano
+    forma: {cuantos} {cosa?} {ganar}
+    pide: cambio
+  - id: cuantos_perdio
+    forma: {cuantos} {cosa?} {perder}
+    pide: cambio
+  - id: cuantos_se_comio
+    forma: {cuantos} {cosa?} se {perder}
+    pide: cambio
+  - id: cuantos_se_fueron
+    forma: {cuantos} {cosa?} se {irse}
+    pide: cambio
+  - id: cuantos_llegaron
+    forma: {cuantos} {cosa?} {llegar}
+    pide: cambio
   - id: cuantos_al_principio
     forma: {cuantos} {cosa?} tenia {quien?} {al_principio}
     pide: inicio

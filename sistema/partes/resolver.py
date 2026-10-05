@@ -251,9 +251,11 @@ def _montar(leidas):
             x["cosa"] = x["cosa"] or g.get("cosa")
         elif hecho == "final":
             h(q)["final"] = n
-        elif hecho in ("gana", "pierde"):
+        elif hecho in ("gana", "pierde", "gana_desconocido", "pierde_desconocido"):
             x = h(q)
-            x["cambios"].append({"signo": "+" if hecho == "gana" else "-", "n": n, "frase": frase})
+            x["cambios"].append({"signo": "+" if hecho.startswith("gana") else "-",
+                                 "n": n if not hecho.endswith("desconocido") else None,
+                                 "frase": frase})
             x["cosa"] = x["cosa"] or g.get("cosa")
         elif hecho in ("tiene_mas_que", "tiene_menos_que"):
             h(q)
@@ -267,7 +269,7 @@ def _montar(leidas):
             ultimo[0] = g["otro"]
     if pregunta is None:
         raise _NoEntiendo("(no encuentro la PREGUNTA: sin pregunta no se que buscar)")
-    if pregunta["pide"] in ("final", "estado", "inicio") and not pregunta["quien"]:
+    if pregunta["pide"] in ("final", "estado", "inicio", "cambio") and not pregunta["quien"]:
         pregunta["quien"] = ultimo[0]
     if pregunta["pide"] in ("total", "diferencia") and not pregunta["quien"]:
         if len(orden) != 2:
@@ -282,7 +284,11 @@ def _montar(leidas):
 def _condicion(nombre, s):
     t = s["tipo"]
     tabla = {
-        "es_un_cambio": lambda: t in ("cambio", "deshacer"),
+        "es_un_cambio": lambda: t in ("cambio", "deshacer", "cambio_desconocido"),
+        "se_sabe_el_cambio": lambda: s.get("n") is not None,
+        "no_se_sabe_el_cambio": lambda: t == "cambio_desconocido",
+        "el_despues_no_es_menor": lambda: s["despues"] >= s["antes"],
+        "el_despues_no_es_mayor": lambda: s["despues"] <= s["antes"],
         "va_hacia_adelante": lambda: t == "cambio",
         "va_hacia_atras": lambda: t == "deshacer",
         "el_monton_crece": lambda: s.get("signo") == "+",
@@ -304,11 +310,22 @@ def _condicion(nombre, s):
     return tabla[nombre]()
 
 
-_DE_APLICACION = ("hay_bastantes", "hay_bastantes_al_deshacer", "la_parte_cabe_en_el_todo")
+_DE_APLICACION = ("hay_bastantes", "hay_bastantes_al_deshacer", "la_parte_cabe_en_el_todo",
+                  "el_despues_no_es_menor", "el_despues_no_es_mayor")
 
 
 def _calcular(op, a, b, saber):
     """La operacion se hace con el METODO del sistema (columnas, y los dedos en cada columna)."""
+    if op == "contar_hasta":
+        # CONTAR DESDE a HASTA b (5.5, contar hacia adelante): los pasos son la respuesta.
+        # La vuelta: desde a, contando esos pasos, se tiene que llegar a b.
+        pasos = contar_hasta(decir(a, saber), decir(b, saber), saber)
+        if pasos is None:
+            raise _NoSe("no se puede contar de %d hasta %d hacia adelante" % (a, b))
+        c = leer(pasos, saber)
+        v = contar_adelante(decir(a, saber), pasos, saber, con_dedos=False)
+        return c, "de %d a %d hay %d pasos" % (a, b, c), "contar (5.5)", \
+            "%d + %d = %s" % (a, c, leer(v.get("resultado"), saber)), v.get("resultado") == decir(b, saber)
     if op == "sumar":
         r = decidir_7_3_columnas(str(a), str(b), saber)
         if r["conclusion"] != "se_puede":
@@ -409,6 +426,17 @@ def _resolver(m, saber):
     pide = p["pide"]
     if pide in ("final", "estado"):
         return _valor_de(p["quien"], m, saber, pasos), pasos
+    if pide == "cambio":
+        x = m["quienes"].get(p["quien"])
+        desconocidos = [c for c in (x or {}).get("cambios", []) if c["n"] is None]
+        if x is None or len(desconocidos) != 1 or len(x["cambios"]) != 1:
+            raise _NoSe("para saber cuanto cambio necesito UN cambio desconocido, el antes y el despues")
+        if x["inicio"] is None or x["final"] is None:
+            raise _NoSe("para saber cuanto cambio necesito saber lo que habia antes Y lo que hay despues")
+        c = desconocidos[0]
+        return _paso({"tipo": "cambio_desconocido", "antes": x["inicio"], "despues": x["final"],
+                      "signo": c["signo"]},
+                     "cuanto cambio %s con '%s'" % (p["quien"], c["frase"]), saber, pasos), pasos
     if pide == "inicio":
         x = m["quienes"].get(p["quien"])
         if x is None or x["final"] is None:
@@ -502,7 +530,7 @@ def explicar_R1_problema(texto, saber=None):
         if x["inicio_desconocido"]:
             partes.append("al principio NO SE SABE")
         for c in x["cambios"]:
-            partes.append("%s%d" % (c["signo"], c["n"]))
+            partes.append("%s%s" % (c["signo"], "?" if c["n"] is None else c["n"]))
         if x["final"] is not None:
             partes.append("al final %d" % x["final"])
         L.append("     %-10s %s%s" % (q, ", ".join(partes) or "(no se dice cuantos)",
@@ -524,7 +552,9 @@ def explicar_R1_problema(texto, saber=None):
                 L.append("        [no]  %-48s porque %s" % (c["nombre"], c["descartado"]))
         if "aplicado" in x:
             L.append("      APLICO: %s  ->  %s" % (x["nombre"], x["que_hace"]))
-            L.append("      CALCULO por columnas (%s): %s" % (x["metodo"], x["cuenta"]))
+            L.append("      CALCULO con %s: %s" % (
+                ("las columnas (%s)" % x["metodo"]) if x["metodo"].startswith("7.") else x["metodo"],
+                x["cuenta"]))
             L.append("      LA VUELTA: %s ... %s" % (x["vuelta"], "SI" if x["vuelta_ok"] else "NO"))
     L.append("")
     if r["conclusion"] != "resuelto":
