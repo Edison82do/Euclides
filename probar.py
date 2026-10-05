@@ -299,6 +299,18 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         calcular: 13 - 2       -> 11   se quita poco: mas corto hacia atras (y lo dice)
         Cada tecnica es una PIEZA con sus condiciones: donde no encaja se descarta con su porque.
 
+  ECUACION  ->  que numero va en el HUECO? (paso E.1; 1.OA.D.8)  -- se puede escribir DIRECTAMENTE
+        8 + ? = 11             -> 3    juntar con el CAMBIO desconocido: cuento de 8 a 11
+        ? + 3 = 11             -> 8    el COMIENZO desconocido: deshago (11 - 3)
+        5 = ? - 3              -> 8    el hueco al otro lado del = da igual
+        11 - ? = 8             -> 3    separar con el cambio desconocido
+        8 + ? = 5              -> imposible     ? + ? = 10 -> dos huecos     8 + 4 = ? + 5 -> E.2
+        Huecos: ?  _  __  o el cuadradito.  Las palabras de alrededor no molestan.
+        Cada ecuacion se cuenta como una HISTORIA y la resuelven las piezas de los problemas (R.1);
+        luego se COMPRUEBA poniendo el numero en el hueco (verdad:, E.0).
+        ecuacion: ... / hueco: ...  -> lo mismo con la orden delante.
+        Y escrito directamente: '8 + 3 = 11' -> verdad,  '8 + 3' -> calcular.
+
   VERDAD  ->  el = : VERDADERO o FALSO? (paso E.0; 1.OA.D.7)
         verdad: 4 + 1 = 5 + 2  -> FALSO (5 y 7.  OJO: 4 + 1 da 5, pero el = no dice 'da')
         verdad: 10 = 8 + 2     -> VERDADERO (el resultado tambien puede ir a la izquierda)
@@ -323,6 +335,7 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
 """
 
 import os
+import re
 import sys
 
 RAIZ = os.path.dirname(os.path.abspath(__file__))
@@ -379,6 +392,9 @@ def preguntar(texto, saber):
     try:
         if t.lower().strip() in ("piezas", "mapa"):
             return "las_piezas", None
+        if t.lower().startswith("ecuacion") or t.lower().startswith("hueco"):
+            r = motor.decidir_ecuacion(t.split(":", 1)[1] if ":" in t else t, saber)
+            return (str(r["valor"]) if r["conclusion"] == "hecho" else r["conclusion"]), None
         if t.lower().startswith("verdad"):
             resto = t.split(":", 1)[1] if ":" in t else t[len("verdad"):]
             r = motor.decidir_igualdad(resto, saber)
@@ -896,11 +912,20 @@ def correr_mis_casos(saber, mostrar_todo=False, archivo=None, flexible=False):
 # ------------------------------------------------------------------ interactivo
 
 def como_problema(texto):
-    """Si se escribe un problema DIRECTAMENTE (con su pregunta '?'), sin poner 'problema:' delante,
-    se toma como problema.  Ninguna otra orden lleva '?' en la pregunta."""
+    """Lo que se escribe DIRECTAMENTE, sin orden delante (Carlos: 'la ecuacion directamente y algunas
+    palabras'):  una ecuacion con hueco (8 + ? = 11) -> ecuacion;  un problema con su pregunta (?) ->
+    problema;  una igualdad sin hueco (8 + 3 = 11) -> verdad;  una cuenta suelta (8 + 3) -> calcular."""
     t = texto.strip()
-    if "?" in t and not t.lower().startswith("problema"):
+    if re.match(r"^[a-z_ ]+:", t.lower()):                 # ya lleva su orden delante
+        return t
+    if "=" in t and any(h in t for h in ("?", "_", "\u25a1")):   # una ECUACION con hueco (E.1)
+        return "ecuacion: " + t
+    if "?" in t:
         return "problema: " + t
+    if re.match(r"^[\d\s+\-=\u2212]+$", t) and "=" in t:            # una igualdad sin hueco (E.0)
+        return "verdad: " + t
+    if re.match(r"^\d+\s*[+\-\u2212]\s*\d+$", t):                   # una cuenta suelta
+        return "calcular: " + t
     return t
 
 

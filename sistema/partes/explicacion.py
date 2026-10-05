@@ -752,6 +752,8 @@ def explicar_pregunta(texto, saber=None):
     try:
         if t.lower().strip() in ("piezas", "mapa"):
             return explicar_piezas(saber)
+        if t.lower().startswith("ecuacion") or t.lower().startswith("hueco"):
+            return explicar_ecuacion(t.split(":", 1)[1] if ":" in t else t, saber)
         if t.lower().startswith("verdad"):
             resto = t.split(":", 1)[1] if ":" in t else t[len("verdad"):]
             return explicar_igualdad(resto, saber)

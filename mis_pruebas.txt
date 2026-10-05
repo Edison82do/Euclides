@@ -50,6 +50,16 @@ verdad: 5 + 2 = 2 + 5             | verdadero  | sin calcular: dar la vuelta
 verdad: 3 + 5 = 8 + 2 = 10        | falso      | la cadena
 verdad: 8 + 4 = 12 + 5            | ??         | ver el razonamiento
 
+# --- E.1 ecuaciones con hueco (se escriben directamente) ---
+8 + ? = 11                        | 3          | cambio desconocido
+? + 3 = 11                        | 8          | comienzo desconocido
+5 = ? - 3                         | 8          | el del estandar
+11 - ? = 8                        | 3
+8 + ? = 5                         | imposible
+? + ? = 10                        | dos_huecos
+8 + 4 = ? + 5                     | balanza    | eso es E.2
+47 + ? = 77                       | ??         | ver el razonamiento
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete
