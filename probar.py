@@ -7,6 +7,7 @@ Formas de usarlo:
   2) python probar.py                      -> modo interactivo
   3) python probar.py "silla,mesa"         -> una pregunta suelta
   4) python probar.py --casos              -> solo tus casos de mis_casos.txt
+  5) python probar.py --archivo mis_pruebas.txt  -> los casos de OTRO archivo (MIS_PRUEBAS.bat)
 
 QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
 
@@ -740,9 +741,33 @@ def preguntar(texto, saber):
         return "no_entendido", None
 
 
-def iguales(esperado, obtenido):
-    """Compara dos respuestas; en las listas el orden no importa."""
+def _en_cifras(texto, saber):
+    """'ocho + cinco = trece' -> '8 + 5 = 13' (solo para comparar en MIS PRUEBAS)."""
+    mapa = dict(saber.get("_nombre_a_valor") or {})
+    mapa["cero"] = 0
+    tok = (texto or "").lower().split()
+    out, i = [], 0
+    while i < len(tok):
+        for j in range(min(len(tok), i + 6), i, -1):
+            trozo = " ".join(tok[i:j])
+            if trozo in mapa:
+                out.append(str(mapa[trozo]))
+                i = j
+                break
+        else:
+            out.append(tok[i])
+            i += 1
+    return " ".join(out)
+
+
+def iguales(esperado, obtenido, saber=None):
+    """Compara dos respuestas; en las listas el orden no importa.
+    Con 'saber' (MIS PRUEBAS) tambien vale escribir con cifras lo que el sistema dice con palabras:
+    '8 + 5 = 13' es lo mismo que 'ocho + cinco = trece'.  En la coleccion grande NO: alli se
+    comprueba tambien en que FORMA responde (cifra o palabra), que es parte de lo que se ensena."""
     if esperado == obtenido:
+        return True
+    if saber is not None and _en_cifras(esperado, saber) == _en_cifras(str(obtenido), saber):
         return True
     for pre in ("grupo:", "tiene:"):
         if esperado.startswith(pre) and obtenido.startswith(pre):
@@ -769,10 +794,14 @@ def leer_casos(ruta):
     return casos
 
 
-def correr_mis_casos(saber, mostrar_todo=False):
-    casos = leer_casos(ARCHIVO_CASOS)
+def correr_mis_casos(saber, mostrar_todo=False, archivo=None, flexible=False):
+    archivo = archivo or ARCHIVO_CASOS
+    if not os.path.exists(archivo):
+        print("No encuentro el archivo %s" % archivo)
+        return 0, 1
+    casos = leer_casos(archivo)
     print("=" * 78)
-    print("MIS CASOS  (%s)" % os.path.basename(ARCHIVO_CASOS))
+    print("MIS CASOS  (%s)" % os.path.basename(archivo))
     print("=" * 78)
     if not casos:
         print("No hay casos todavia.  Abre mis_casos.txt y anade lineas.\n")
@@ -783,10 +812,16 @@ def correr_mis_casos(saber, mostrar_todo=False):
         obtenido, _ = preguntar(c["texto"], saber)
         esperado = normalizar_esperado(c["texto"], c["esperado"])
         etiqueta = c["texto"] if c["texto"] else "(vacio)"
+        if esperado == "??":
+            # '??' = no comprobar, y ENSENAR todo el razonamiento
+            print("  [??]    %-44s -> %s   %s" % (etiqueta, obtenido, c["comentario"]))
+            print(motor.explicar_pregunta(c["texto"], saber))
+            print()
+            continue
         if esperado in ("", "?"):
             print("  [?]     %-44s -> %s   %s" % (etiqueta, obtenido, c["comentario"]))
             continue
-        if iguales(esperado, obtenido):
+        if iguales(esperado, obtenido, saber if flexible else None):
             bien += 1
             print("  [BIEN]  %-44s -> %s" % (etiqueta, obtenido))
         else:
@@ -797,6 +832,8 @@ def correr_mis_casos(saber, mostrar_todo=False):
                 print(motor.explicar_pregunta(c["texto"], saber))
     print()
     print("  mis casos: %d bien, %d fallan" % (bien, fallos))
+    if flexible:
+        print("  (escribe pruebas nuevas con [A] en MIS_PRUEBAS.bat; '??' ensena el razonamiento)")
     print()
     return bien, fallos
 
@@ -842,6 +879,11 @@ def interactivo(saber):
 
 def main(argv):
     saber = cargar_conocimiento()
+
+    if len(argv) >= 3 and argv[1] == "--archivo":
+        ruta = argv[2] if os.path.isabs(argv[2]) else os.path.join(RAIZ, argv[2])
+        bien, fallos = correr_mis_casos(saber, mostrar_todo=True, archivo=ruta, flexible=True)
+        return 1 if fallos else 0
 
     if len(argv) >= 2 and argv[1] == "--casos":
         bien, fallos = correr_mis_casos(saber, mostrar_todo=True)

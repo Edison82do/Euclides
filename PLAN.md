@@ -175,6 +175,29 @@ Carlos** para seguir por ahí o volver a la multiplicación.
 | R.2 | Dos pasos (combinar: la respuesta de uno es dato del siguiente) | — |
 | R.3 | Enseñar un descarte nuevo («esto lo sé, pero aquí no vale porque…») | — |
 
+## ⭐ EL PLAN QUE SIGUE (propuesto el 5 oct 2026, tarde — pendiente del OK de Carlos)
+
+**Nota de Carlos (5 oct):** «no nos concentramos en la parte hablada, porque después los
+problemas más complejos no tendrán enunciados largos sino la **ecuación directamente y algunas
+palabras**». → El centro pasa a ser **la ecuación con hueco**; el lenguaje rústico se queda como
+está y se adapta solo cuando haga falta.
+
+Cada paso con su investigación pedagógica, sus trampas, su prueba de dominio y su commit.
+
+| Paso | Qué | Por qué en este orden | Prueba de dominio |
+|---|---|---|---|
+| **0** | **Deuda**: las condiciones de aplicación que aún miran tamaños con Python, al mecanismo | que NADA del sistema use calculadora antes de crecer | todo verde y la auditoría de aritmética limpia |
+| **E.1** | **Ecuaciones con hueco de suma y resta**: `8 + ? = 13`, `? - 4 = 9`, `13 = ? + 5` | son los 11 tipos de CGI escritos en símbolos: el hueco en cada sitio pide un conocimiento distinto (operar, contar desde, la vuelta) | huecos en las 3 posiciones, con `=` a la izquierda y a la derecha |
+| **E.2** | **El `=` como balanza**: `8 + 4 = ? + 5` | el error más documentado del `=` es leerlo como «pon el resultado» (8+4=12+5) | las trampas `8 + 4 = ? + 5` → 7 (no 12 ni 17) |
+| **E.3** | **Los conocimientos como DATOS**: cada conocimiento del resolvedor declara su situación, sus condiciones y su operación en el `.kn`; el código solo los recorre | para que la multiplicación y la división entren **sin programar el resolvedor** (es R.3: enseñarle algo nuevo = escribirlo) | añadir un conocimiento nuevo solo con datos, y que el resolvedor lo use |
+| **M.1** | **Multiplicar = grupos iguales** (contar de n en n, mecánico: saltos en la lista) | lo que la investigación pone primero: grupos iguales antes que la tabla | `3 grupos de 4`, `3 × 4 = ?` |
+| **M.2** | **Matrices y conmutatividad** (3×4 = 4×3), dobles, ×10 como decenas (6.2) | los hechos derivados de la multiplicación, como derivar en la suma (7.2) | sin memoria: cada hecho sale de otro |
+| **M.3** | **Dividir**: repartir (¿cuántos le tocan a cada uno?) y agrupar (¿cuántos grupos salen?) | las dos estructuras de la división (partitiva y cuotativa) | las dos, y la vuelta con la multiplicación |
+| **E.4** | **Ecuaciones con × y ÷**, y **dos pasos**: `3 × ? + 2 = 14` | combinar: la respuesta de un paso es el dato del siguiente | huecos en todas las posiciones |
+| **E.5** | **La letra como hueco**: `x + 5 = 12` | el puente al álgebra: la letra es un hueco con nombre | lo mismo que E.1–E.4 con letras |
+
+Lo que queda **fuera** a propósito: entender frases largas en lenguaje natural.
+
 ## Fase 3 — lenguaje matemático, métodos y condiciones de aplicación (niveles 6 y 7)
 - Nivel 6: terminología y símbolos (sumando, minuendo, divisor…), **cada palabra con su uso**.
 - Nivel 7: métodos alternativos (descomposición, cálculo por decenas…) y **cuándo conviene cada uno**.

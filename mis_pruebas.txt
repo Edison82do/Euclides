@@ -1,0 +1,30 @@
+# MIS PRUEBAS  -  las pruebas PROPIAS de Carlos  (se corren con MIS_PRUEBAS.bat)
+#
+# UNA LINEA POR PRUEBA:      pregunta | lo que espero | comentario (opcional)
+#
+#   lo que espero = la respuesta exacta  -> sale [BIEN] o [FALLA] (y si falla, todo el razonamiento)
+#   lo que espero = ?                    -> no se comprueba: solo se ve lo que responde
+#   lo que espero = ??                   -> no se comprueba, y se ENSENA todo el razonamiento
+#
+# Las lineas que empiezan por # no cuentan.  Guarda el archivo y vuelve a correr.
+# Todo lo que se puede preguntar esta en la AYUDA (PROBAR.bat y escribe: ayuda).
+# Estas pruebas NO se mezclan con mis_casos.txt (que es la coleccion grande del proyecto).
+# Si una prueba tuya destapa un fallo, dimelo y la paso a la coleccion grande.
+# ---------------------------------------------------------------------------
+
+# --- calcular (mecanicamente, sin calculadora) ---
+dedos: 8 + 5                      | 8 + 5 = 13
+dedos: 12 - 5                     | 12 - 5 = 7
+columnas: 247 + 385               | 247 + 385 = 632
+columnas: 500 - 247               | 500 - 247 = 253    | a traves de un cero
+
+# --- numeros ---
+centena: 204                      | 2 centenas, 0 decenas y 4 unidades
+nombre: 777                       | setecientos setenta y siete
+
+# --- problemas ---
+problema: Ana tiene 8 manzanas. Tiene 3 mas que Luis. Cuantas tiene Luis?   | 5
+problema: Ana tiene 5. Le dan algunas. Ahora tiene 8. Cuantas le dieron?    | 3
+
+# --- para VER como razona (no comprueba nada) ---
+problema: Marta tiene 12 caramelos. Se come 4. Luego compra 10. Cuantos tiene ahora?   | ??
