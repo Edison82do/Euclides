@@ -85,7 +85,11 @@ def main():
                                          time.time() - t))
     if mal:
         fallos.append("probar.py --casos")
-        print(r.stdout + r.stderr)
+        # de los casos solo se ensenan los que FALLAN (con su explicacion); todo lo demas esta en
+        # pruebas/ultima_salida.txt
+        trozos = r.stdout.split("\n  [")
+        print("\n".join("  [" + t for t in trozos[1:] if t.startswith("FALLA")))
+        print(r.stderr)
     log.close()
     print("-" * 72)
     print("TOTAL DEL PROYECTO: %d/%d afirmaciones  +  %s casos   (%d archivos, %.0f s)"

@@ -20,6 +20,7 @@ import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PARTES = os.path.join(RAIZ, "sistema", "partes")
+PIEZAS = os.path.join(RAIZ, "conocimiento", "piezas")     # las piezas tampoco: SIN lista blanca
 
 LISTA_BLANCA = {
     ("__init__.py", "juntar"): "nombres de modulos (texto)",
@@ -60,17 +61,19 @@ def _es_paso(n):
 
 hallazgos = []
 blancas_usadas = set()
-for f in sorted(os.listdir(PARTES)):
+ARCHIVOS = [(PARTES, f) for f in sorted(os.listdir(PARTES))] + \
+    [(PIEZAS, f) for f in sorted(os.listdir(PIEZAS))]
+for carpeta, f in ARCHIVOS:
     if not f.endswith(".py"):
         continue
-    src = open(os.path.join(PARTES, f), encoding="utf-8").read()
+    src = open(os.path.join(carpeta, f), encoding="utf-8").read()
     arbol = ast.parse(src)
     padres = {}
     for p in ast.walk(arbol):
         for c in ast.iter_child_nodes(p):
             padres[c] = p
     for fn in ast.walk(arbol):
-        if not isinstance(fn, ast.FunctionDef):
+        if not isinstance(fn, (ast.FunctionDef, ast.Lambda)):
             continue
         for n in ast.walk(fn):
             if not (isinstance(n, ast.BinOp) and isinstance(n.op, OPS)):
@@ -86,11 +89,12 @@ for f in sorted(os.listdir(PARTES)):
                 p = padres.get(p)
             if dentro:
                 continue
-            if (f, fn.name) in LISTA_BLANCA:
-                blancas_usadas.add((f, fn.name))
+            nombre_fn = getattr(fn, "name", "<lambda>")
+            if carpeta == PARTES and (f, nombre_fn) in LISTA_BLANCA:
+                blancas_usadas.add((f, nombre_fn))
                 continue
             hallazgos.append("%s :: %s (linea %d): %s"
-                             % (f, fn.name, n.lineno, ast.get_source_segment(src, n)[:70]))
+                             % (f, nombre_fn, n.lineno, ast.get_source_segment(src, n)[:70]))
 
 bien = mal = 0
 print("PRUEBA: EL SISTEMA NO USA CALCULADORA")

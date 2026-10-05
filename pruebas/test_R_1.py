@@ -42,7 +42,7 @@ def comprobar(nombre, obtenido, esperado):
 
 
 SABER = motor.cargar_conocimiento()
-N_CONOC = len(SABER["resolver_r1"]["conocimientos"])
+N_CONOC = len([p for p in motor.cargar_piezas()["piezas"].values() if p["responde"] == "paso"])
 
 
 def R(texto):
@@ -99,8 +99,11 @@ comprobar("C3 y en cada paso queda UNO solo", uno, True)
 razones = all(c.get("aplica") or c.get("descartado") for p in r["pasos"] for c in p["candidatos"])
 comprobar("C4 todo descartado lleva su PORQUE (no hay cajas negras)", razones, True)
 comprobar("C5 cada paso se verifica por la vuelta", r["verificado"], True)
-comprobar("C6 y se calcula con el metodo del sistema (columnas)",
-          all(p["metodo"] in ("7.3", "7.5", "7.6") for p in r["pasos"]), True)
+# ANTES (C6): todo se calculaba por columnas (7.3/7.5/7.6).  MEJORA (paso 2, piezas): se usa el
+# metodo MAS CORTO que encaja (hacer diez, los dedos, las columnas), como un nino que ya sabe mas.
+comprobar("C6 y en cada paso se usa el metodo mas corto que encaja (piezas de calculo)",
+          all(p["metodo_pieza"] == next(c["id"] for c in p["metodo_candidatos"] if c.get("aplica"))
+              for p in r["pasos"]), True)
 r = R("Ana tiene 5 manzanas. Luis tiene 3 mas que Ana. Cuantas tienen entre los dos?")
 comprobar("C7 combina comparar y juntar: 5 + 3 = 8, y 5 + 8 = 13",
           (r.get("valor"), aplicados(r)), (13, ["comparacion_hacia_arriba", "juntar"]))

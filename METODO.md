@@ -42,11 +42,21 @@ sistema/motor.py          la fachada (import motor da acceso a todo)
 sistema/partes/           el código, una pieza por nivel:
     nucleo, primitivas, MECANISMO, decision, nivel_2 ... nivel_7, explicacion, resolver
 conocimiento/*.kn         el saber, en texto (reglas, definiciones, formas de lectura)
+conocimiento/piezas/      las PIEZAS: cada conocimiento que se aplica, un archivo (ver §3b)
 pruebas/                  test_*.py + _muestras.py + correr_todas.py
 mis_casos.txt             los casos de Carlos:  pregunta | lo esperado | comentario
 probar.py / PROBAR.bat    el probador (doble clic)
 diario/  informes/  investigacion/
 ```
+
+### 3b. Las piezas (idea de Carlos, 5 oct 2026)
+Cada conocimiento que el sistema **aplica** es una pieza en `conocimiento/piezas/`: `PIEZA = {id,
+nombre, unidad, responde, que_hace, condiciones, usa, rapidez}` + `def hacer(situacion, u)`.
+El motor (`sistema/partes/piezas.py`) no sabe matemáticas: carga, prueba todas, descarta con su
+porqué y aplica (un paso: todas iguales; un cálculo: la más rápida que encaja). **Un conocimiento
+nuevo = una pieza nueva; el motor no se toca.** Una pieza solo usa el mecanismo y lo que declara
+en «usa». Las condiciones se escriben una vez en `_condiciones.py`; las preguntas y su forma de
+elegir, en `_objetivos.py`. `piezas` en el probador enseña el mapa.
 
 **Git**: un commit por unidad cerrada (y antes de cualquier cambio grande). `git log --oneline`.
 

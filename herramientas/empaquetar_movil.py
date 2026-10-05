@@ -48,6 +48,9 @@ import tempfile
 # El motor: desde el 5 oct 2026 son VARIOS archivos (sistema/motor.py + sistema/partes/*.py)
 SISTEMA = {sistema!r}
 
+# Las PIEZAS de conocimiento (conocimiento/piezas/*.py), desde el 5 oct 2026
+PIEZAS = {piezas!r}
+
 PROBAR = {probar!r}
 
 MIS_CASOS = {casos!r}
@@ -57,7 +60,10 @@ ARCHIVOS_KN = {kn!r}
 
 def extraer(destino):
     os.makedirs(os.path.join(destino, "sistema", "partes"), exist_ok=True)
-    os.makedirs(os.path.join(destino, "conocimiento"), exist_ok=True)
+    os.makedirs(os.path.join(destino, "conocimiento", "piezas"), exist_ok=True)
+    for nombre, contenido in PIEZAS.items():
+        with open(os.path.join(destino, "conocimiento", "piezas", nombre), "w", encoding="utf-8") as f:
+            f.write(contenido)
 
     for rel, contenido in SISTEMA.items():
         with open(os.path.join(destino, "sistema", *rel.split("/")), "w", encoding="utf-8") as f:
@@ -128,7 +134,9 @@ def main():
         if nombre.endswith(".kn"):
             kn[nombre] = leer(os.path.join(dir_kn, nombre))
 
-    codigo = PLANTILLA.format(sistema=sistema, probar=probar, casos=casos, kn=kn)
+    dir_pz = os.path.join(RAIZ, "conocimiento", "piezas")
+    piezas = {n: leer(os.path.join(dir_pz, n)) for n in sorted(os.listdir(dir_pz)) if n.endswith(".py")}
+    codigo = PLANTILLA.format(sistema=sistema, piezas=piezas, probar=probar, casos=casos, kn=kn)
     # que compile es la primera prueba
     compile(codigo, "euclides_movil.py", "exec")
 

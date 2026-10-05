@@ -1,0 +1,18 @@
+# -*- coding: utf-8 -*-
+"""
+LAS PREGUNTAS a las que responden las piezas, y COMO se elige entre las que encajan.
+
+  todas_iguales  -> se hacen TODAS las que encajan y tienen que dar lo mismo (si no, AMBIGUO).
+                    Es lo que se pide a un paso de un problema: no se elige a dedo.
+  la_mas_rapida  -> se hace la que encaje y sea mas rapida ("rapidez" mas baja); las demas que
+                    tambien servian se dicen.  Es lo que se pide a un METODO de calculo: un nino
+                    que sabe hacer diez no cuenta con los dedos 8 + 5.
+"""
+OBJETIVOS = {
+    "paso": {"elige": "todas_iguales",
+             "que_es": "un paso de un problema: que conocimiento encaja en la situacion"},
+    "sumar": {"elige": "la_mas_rapida", "que_es": "hacer una suma, sin calculadora"},
+    "restar": {"elige": "la_mas_rapida", "que_es": "hacer una resta, sin calculadora"},
+    "contar_hasta": {"elige": "la_mas_rapida",
+                     "que_es": "cuantos pasos hay de un numero a otro (el hueco, 5.5)"},
+}

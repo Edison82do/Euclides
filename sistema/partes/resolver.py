@@ -281,111 +281,34 @@ def _montar(leidas):
 
 # ------------------------------------------------------------------ 3-4. APLICAR, DESCARTAR, CALCULAR
 
-def _condicion(nombre, s):
-    t = s["tipo"]
-    tabla = {
-        "es_un_cambio": lambda: t in ("cambio", "deshacer", "cambio_desconocido"),
-        "se_sabe_el_cambio": lambda: s.get("n") is not None,
-        "no_se_sabe_el_cambio": lambda: t == "cambio_desconocido",
-        "el_despues_no_es_menor": lambda: s["despues"] >= s["antes"],
-        "el_despues_no_es_mayor": lambda: s["despues"] <= s["antes"],
-        "va_hacia_adelante": lambda: t == "cambio",
-        "va_hacia_atras": lambda: t == "deshacer",
-        "el_monton_crece": lambda: s.get("signo") == "+",
-        "el_monton_disminuye": lambda: s.get("signo") == "-",
-        "hay_bastantes": lambda: s["n"] <= s["antes"],
-        "hay_bastantes_al_deshacer": lambda: s["n"] <= s["despues"],
-        "se_piden_los_dos_juntos": lambda: t == "juntar",
-        "son_la_misma_cosa": lambda: (not s.get("cosa_a") or not s.get("cosa_b")
-                                      or s["cosa_a"] == s["cosa_b"]),
-        "se_pide_el_hueco": lambda: t == "comparar",
-        "hay_una_comparacion": lambda: t == "comparacion",
-        "el_que_falta_tiene_menos": lambda: s.get("falta") == "menor",
-        "el_que_falta_tiene_mas": lambda: s.get("falta") == "mayor",
-        "hay_un_todo_y_una_parte": lambda: t == "parte",
-        "la_parte_cabe_en_el_todo": lambda: s["parte"] <= s["todo"],
-    }
-    if nombre not in tabla:
-        raise ValueError("condicion desconocida en resolver_r1.kn: %s" % nombre)
-    return tabla[nombre]()
-
-
-_DE_APLICACION = ("hay_bastantes", "hay_bastantes_al_deshacer", "la_parte_cabe_en_el_todo",
-                  "el_despues_no_es_menor", "el_despues_no_es_mayor")
-
-
-def _calcular(op, a, b, saber):
-    """La operacion se hace con el METODO del sistema (columnas, y los dedos en cada columna)."""
-    if op == "contar_hasta":
-        # CONTAR DESDE a HASTA b (5.5, contar hacia adelante): los pasos son la respuesta.
-        # La vuelta: desde a, contando esos pasos, se tiene que llegar a b.
-        pasos = contar_hasta(decir(a, saber), decir(b, saber), saber)
-        if pasos is None:
-            raise _NoSe("no se puede contar de %d hasta %d hacia adelante" % (a, b))
-        c = leer(pasos, saber)
-        v = contar_adelante(decir(a, saber), pasos, saber, con_dedos=False)
-        return c, "de %d a %d hay %d pasos" % (a, b, c), "contar (5.5)", \
-            "%d + %d = %s" % (a, c, leer(v.get("resultado"), saber)), v.get("resultado") == decir(b, saber)
-    if op == "sumar":
-        r = decidir_7_3_columnas(str(a), str(b), saber)
-        if r["conclusion"] != "se_puede":
-            raise _NoSe("%d + %d: %s" % (a, b, r["conclusion"]))
-        c = r["total_valor"]
-        v = decidir_7_5_columnas(str(c), str(b), saber)          # la vuelta
-        ok = v["conclusion"] == "se_puede" and v["resta"] == a
-        return c, "%d + %d = %d" % (a, b, c), ("7.6" if r.get("unidad") == "7.6" else "7.3"), \
-            "%d - %d = %s" % (c, b, v.get("resta")), ok
-    r = decidir_7_5_columnas(str(a), str(b), saber)
-    if r["conclusion"] != "se_puede":
-        raise _NoSe("%d - %d: %s" % (a, b, r["conclusion"]))
-    c = r["resta"]
-    v = decidir_7_3_columnas(str(c), str(b), saber)              # la vuelta
-    ok = v["conclusion"] == "se_puede" and v["total_valor"] == a
-    # OJO: en la 7.5, r["unidad"] es la COLUMNA de las unidades (un dict), no el nombre de la unidad
-    return c, "%d - %d = %d" % (a, b, c), ("7.6" if r.get("unidad") == "7.6" else "7.5"), \
-        "%d + %d = %s" % (c, b, v.get("total_valor")), ok
-
-
 def _paso(situacion, que_busca, saber, pasos):
-    """Prueba TODOS los conocimientos con esta situacion; descarta con razon; aplica el que queda."""
-    tabla = []
-    validos = []
-    for k in saber["resolver_r1"]["conocimientos"]:
-        fila = {"id": k["id"], "nombre": k["nombre"], "unidad": k["unidad"]}
-        for c in k["condiciones"]:
-            nombre, _, porque = c.partition("|")
-            nombre, porque = nombre.strip(), porque.strip()
-            if not _condicion(nombre, situacion):
-                fila["descartado"] = porque
-                fila["falla_en"] = nombre
-                fila["pasadas"] = k["condiciones"].index(c)
-                break
-        else:
-            fila["aplica"] = True
-            validos.append(k)
-        tabla.append(fila)
-    paso = {"que_busca": que_busca, "situacion": situacion, "candidatos": tabla}
+    """Un paso: el MOTOR DE PIEZAS prueba todas las piezas que responden a 'paso' (las de
+    conocimiento/piezas/), descarta con razon y aplica la que queda.  Este archivo ya no sabe que
+    conocimientos hay: los saca de la carpeta."""
+    r = aplicar("paso", situacion, saber)
+    paso = {"que_busca": que_busca, "situacion": situacion, "candidatos": r["candidatos"]}
     pasos.append(paso)
-    if not validos:
-        cerca = [f for f in tabla if f.get("falla_en") in _DE_APLICACION]
-        if cerca:
-            paso["imposible"] = cerca[0]
-            raise _NoSe("IMPOSIBLE: %s" % cerca[0]["descartado"])
-        raise _NoSe("ningun conocimiento que tengo encaja en: %s" % que_busca)
-    resultados = []
-    for k in validos:
-        x, y = [situacion[c.strip()] for c in k["con"].split(",")]
-        val, cuenta, metodo, vuelta, ok = _calcular(k["operacion"], x, y, saber)
-        resultados.append((k, val, cuenta, metodo, vuelta, ok))
-    if len({r[1] for r in resultados}) > 1:
-        paso["ambiguo"] = [(r[0]["id"], r[1]) for r in resultados]
-        raise _NoSe("AMBIGUO: %s" % ", ".join("%s da %d" % (i, v) for i, v in paso["ambiguo"]))
-    k, val, cuenta, metodo, vuelta, ok = resultados[0]
-    paso.update({"aplicado": k["id"], "nombre": k["nombre"], "unidad": k["unidad"],
-                 "operacion": k["operacion"], "que_hace": k["que_hace"], "cuenta": cuenta,
-                 "metodo": metodo, "vuelta": vuelta, "vuelta_ok": ok, "valor": val,
-                 "tambien": [r[0]["id"] for r in resultados[1:]]})
-    return val
+    if r["conclusion"] == "imposible":
+        paso["imposible"] = r["porque"]
+        raise _NoSe("IMPOSIBLE: %s" % r["porque"])
+    if r["conclusion"] == "ambiguo":
+        paso["ambiguo"] = r["porque"]
+        raise _NoSe("AMBIGUO: %s" % r["porque"])
+    if r["conclusion"] != "hecho":
+        raise _NoSe(r["porque"] if r["conclusion"] == "no_salio"
+                    else "ningun conocimiento que tengo encaja en: %s" % que_busca)
+    pieza = r["pieza"]
+    sub = r["resultado"]                       # lo que devolvio u.usar(...): el metodo elegido
+    calc = sub["resultado"]
+    paso.update({"aplicado": pieza["id"], "nombre": pieza["nombre"], "unidad": pieza["unidad"],
+                 "operacion": pieza["usa"][0] if pieza["usa"] else None,
+                 "que_hace": pieza["que_hace"], "cuenta": calc["cuenta"],
+                 "metodo": calc["metodo"], "metodo_pieza": sub["pieza"]["id"],
+                 "metodo_candidatos": sub["candidatos"],
+                 "metodo_tambien_servian": sub.get("tambien_servian", []),
+                 "vuelta": calc["vuelta"], "vuelta_ok": calc["vuelta_ok"], "valor": r["valor"],
+                 "tambien": r["tambien"]})
+    return r["valor"]
 
 
 def _valor_de(q, m, saber, pasos, pila=()):
@@ -552,9 +475,13 @@ def explicar_R1_problema(texto, saber=None):
                 L.append("        [no]  %-48s porque %s" % (c["nombre"], c["descartado"]))
         if "aplicado" in x:
             L.append("      APLICO: %s  ->  %s" % (x["nombre"], x["que_hace"]))
-            L.append("      CALCULO con %s: %s" % (
-                ("las columnas (%s)" % x["metodo"]) if x["metodo"].startswith("7.") else x["metodo"],
-                x["cuenta"]))
+            L.append("      CALCULO con %s: %s" % (x["metodo"], x["cuenta"]))
+            otros = [c for c in x["metodo_candidatos"] if not c.get("aplica")]
+            if x["metodo_tambien_servian"]:
+                L.append("        (el metodo mas corto que encaja; tambien servian: %s)"
+                         % ", ".join(x["metodo_tambien_servian"]))
+            for c in otros:
+                L.append("        (metodo descartado: %s, porque %s)" % (c["nombre"], c["descartado"]))
             L.append("      LA VUELTA: %s ... %s" % (x["vuelta"], "SI" if x["vuelta_ok"] else "NO"))
     L.append("")
     if r["conclusion"] != "resuelto":

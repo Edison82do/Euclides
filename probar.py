@@ -279,6 +279,13 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         los dedos en cada columna) y se verifica por la vuelta.  Lee con FORMAS escritas en
         conocimiento/enunciados.kn: si una frase no encaja, dice NO ENTIENDO (no adivina).
 
+  PIEZAS  ->  el MAPA DEL CONOCIMIENTO: que piezas tiene y que usa cada una
+        piezas                 -> las piezas de conocimiento/piezas/, por la pregunta que responden
+        Cada conocimiento que usa el resolvedor es una PIEZA: un archivo con lo que es, CUANDO
+        sirve (sus condiciones, con el porque del descarte), lo que USA y como se hace.  El motor
+        solo las carga, las prueba todas, descarta y aplica.  Una pieza nueva = un archivo nuevo.
+        Para calcular elige el METODO MAS CORTO que encaja: hacer diez, los dedos, las columnas.
+
   Los atributos van entre parentesis como nombre=valor, separados por comas;
   las cosas entre si van separadas por punto y coma.
   Si repites un nombre en una escena 0.1, es la MISMA entidad senalada otra vez.
@@ -339,6 +346,8 @@ def preguntar(texto, saber):
     """Devuelve (respuesta normalizada, resultado completo).  Nunca revienta."""
     t = texto.strip()
     try:
+        if t.lower().strip() in ("piezas", "mapa"):
+            return "las_piezas", None
         if t.lower().startswith("problema"):
             resto = t[len("problema"):].strip()
             if resto.startswith(":"):
@@ -911,7 +920,7 @@ def main(argv):
         return 0
 
     if len(argv) >= 2:
-        print(motor.explicar_pregunta(" ".join(argv[1:]), saber))
+        print(motor.explicar_pregunta(como_problema(" ".join(argv[1:])), saber))
         return 0
 
     interactivo(saber)

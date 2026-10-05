@@ -559,3 +559,4 @@ problema: En la caja hay 20 lapices. Saca 5. Cuantos quedan?                    
 problema: Ana tiene 5 cromos. Le dan algunos. Ahora tiene 8. Cuantos le dieron? | 3 | CGI: juntar con el CAMBIO desconocido (se cuenta del 5 al 8)
 problema: Hay 12 pajaros. Se van algunos. Ahora hay 7. Cuantos se fueron?          | 5 | CGI: separar con el cambio desconocido
 problema: Ana tiene 5. Le dan algunas. Ahora tiene 3. Cuantas le dieron?             | sin_solucion | si le dan, no puede tener menos
+piezas                                     | las_piezas | el mapa del conocimiento (paso 2, 5 oct 2026)

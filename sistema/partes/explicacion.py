@@ -750,6 +750,8 @@ def explicar_pregunta(texto, saber=None):
         saber = cargar_conocimiento()
     t = texto.strip()
     try:
+        if t.lower().strip() in ("piezas", "mapa"):
+            return explicar_piezas(saber)
         if t.lower().startswith("problema"):
             resto = t[len("problema"):].strip()
             if resto.startswith(":"):
