@@ -72,34 +72,32 @@ check("A20 con palabras", r["conclusion"] == "se_puede" and r["total_valor"] == 
 # ---------------------------------------------------------------------------
 # B. LA PRUEBA DE HIERRO: EL RANGO ENTERO  (todas las parejas con suma <= 100)
 # ---------------------------------------------------------------------------
-n_parejas = 0
-for a in range(0, 101):
-    for b in range(0, 101):
-        if a + b > 100:
-            continue
-        n_parejas += 1
-        r = motor.decidir_7_3_columnas(str(a), str(b), SABER)
-        check("B %d+%d: se puede" % (a, b), r["conclusion"] == "se_puede",
-              "%d+%d -> %s" % (a, b, r["conclusion"]))
-        check("B %d+%d: el total" % (a, b), r["total_valor"] == a + b,
-              "%d+%d -> %s" % (a, b, r["total_valor"]))
-        # las columnas cuadran
-        check("B %d+%d: las columnas cuadran" % (a, b),
-              r["suma_decenas"] * 10 + r["anota_unidades"] == a + b)
-        check("B %d+%d: las unidades son la unidad del total" % (a, b),
-              r["anota_unidades"] == (a + b) % 10)
-        check("B %d+%d: las decenas son las del total" % (a, b),
-              r["suma_decenas"] == (a + b) // 10)
-        # el llevado es una decena entera y nunca pasa de 1
-        check("B %d+%d: el llevado es una decena" % (a, b),
-              r["suma_unidades"] == r["anota_unidades"] + r["se_lleva"] * 10)
-        check("B %d+%d: se lleva 0 o 1" % (a, b), r["se_lleva"] in (0, 1), r["se_lleva"])
-        # y si hay que llevarse, olvidarse da OTRO numero
-        if r["se_lleva"]:
-            check("B %d+%d: olvidar el llevado daria falso" % (a, b),
-                  r["sin_llevarse_daria_mal"] is True)
-        # la vuelta
-        check("B %d+%d: la vuelta" % (a, b), r["verificacion"] is True)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _hierro  # noqa: E402
+PAREJAS = _hierro.parejas(100, lambda a, b: a + b <= 100,
+                          extra=[(0, 100), (100, 0), (50, 50), (99, 1), (1, 99), (45, 55)])
+n_parejas = len(PAREJAS)
+malas = {"se puede": [], "el total": [], "las columnas cuadran": [], "el llevado es una decena": [],
+         "se lleva 0 o 1": [], "olvidar el llevado daria falso": [], "la vuelta": []}
+for a, b in PAREJAS:
+    r = motor.decidir_7_3_columnas(str(a), str(b), SABER)
+    if r["conclusion"] != "se_puede":
+        malas["se puede"].append((a, b))
+        continue
+    if r["total_valor"] != a + b:
+        malas["el total"].append((a, b, r["total_valor"]))
+    if r["suma_decenas"] * 10 + r["anota_unidades"] != a + b:
+        malas["las columnas cuadran"].append((a, b))
+    if r["suma_unidades"] != r["anota_unidades"] + r["se_lleva"] * 10:
+        malas["el llevado es una decena"].append((a, b))
+    if r["se_lleva"] not in (0, 1):
+        malas["se lleva 0 o 1"].append((a, b))
+    if r["se_lleva"] and r["sin_llevarse_daria_mal"] is not True:
+        malas["olvidar el llevado daria falso"].append((a, b))
+    if r["verificacion"] is not True:
+        malas["la vuelta"].append((a, b))
+for k, v in malas.items():
+    check("B HIERRO (%d parejas, %s): %s" % (n_parejas, _hierro.modo(), k), not v, v[:3])
 
 # Y por encima de MIL, lo dice  (UNIDAD 6.7: el techo subio de cien a mil;
 # antes esta lista era 60+50, 99+9, 100+1 y 55+55, que ahora SI se pueden)
@@ -174,7 +172,7 @@ for f in fallos[:20]:
 if len(fallos) > 20:
     print("  ... y %d mas" % (len(fallos) - 20))
 print("-" * 60)
-print("  %d de %d bien, %d fallan  (%d parejas del rango entero)"
+print("  %d de %d bien, %d fallan  (%d parejas recorridas)"
       % (len(pruebas) - len(fallos), len(pruebas), len(fallos), n_parejas))
 print("UNIDAD 7.3: %d/%d" % (len(pruebas) - len(fallos), len(pruebas)))
 if fallos:

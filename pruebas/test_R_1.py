@@ -22,7 +22,9 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(AQUI)
 sys.path.insert(0, os.path.join(RAIZ, "sistema"))
 sys.path.insert(0, RAIZ)
+sys.path.insert(0, AQUI)
 import motor  # noqa: E402
+import _hierro  # noqa: E402
 import probar  # noqa: E402
 
 BIEN = 0
@@ -144,8 +146,8 @@ plantillas = [
 ]
 probados = malos = imposibles_bien = 0
 for i, (pl, oraculo) in enumerate(plantillas):
-    for a in range(0, 501, 23):
-        for b in range(0, 501, 29):
+    for a in range(0, 501, 23 if _hierro.HIERRO else 61):
+        for b in range(0, 501, 29 if _hierro.HIERRO else 67):
             esperado = oraculo(a, b)
             if esperado is not None and esperado > 1000:
                 continue
@@ -164,8 +166,8 @@ for i, (pl, oraculo) in enumerate(plantillas):
                     print("    %s -> %s %s (esperaba %s)" % (pl.format(q="Ana", a=a, b=b), r["conclusion"],
                                                           r.get("valor"), esperado))
 comprobar("E1 los %d problemas generados dan la respuesta buena (o dicen que no cuando toca)" % probados, malos, 0)
-comprobar("E2 son miles (no se esta esquivando)", probados > 2000, True)
-comprobar("E3 y en los imposibles dice que no (%d)" % imposibles_bien, imposibles_bien > 100, True)
+comprobar("E2 y se recorrio la rejilla (%s): %d problemas" % (_hierro.modo(), probados), probados > 500, True)
+comprobar("E3 y en los imposibles dice que no (%d)" % imposibles_bien, imposibles_bien > 50, True)
 
 # ------------------------------------------------------------------ F: una sola verdad
 print("\nF - EL PROBADOR Y EL EXPLICADOR DICEN LO MISMO")

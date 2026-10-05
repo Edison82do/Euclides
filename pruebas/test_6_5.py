@@ -20,6 +20,8 @@ RAIZ = os.path.dirname(AQUI)
 sys.path.insert(0, os.path.join(RAIZ, "sistema"))
 
 import motor  # noqa: E402
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _hierro  # noqa: E402
 
 SABER = motor.cargar_conocimiento()
 
@@ -63,23 +65,27 @@ check("A12 su cuenta", r["cuenta"] == "4 decenas y 7 unidades son 47", r["cuenta
 # ---------------------------------------------------------------------------
 # B. LA PRUEBA DE HIERRO: EL RANGO ENTERO (las 101 cantidades)
 # ---------------------------------------------------------------------------
-for n in range(0, 101):
+_H = _hierro.Agregado()
+NUMEROS = _hierro.numeros(0, 100)
+for n in NUMEROS:
     r = motor.decidir_6_5_partir(str(n), SABER)
-    check("B %d: se parte" % n, r["conclusion"] == "se_puede", r["conclusion"])
-    check("B %d: decenas" % n, r["decenas"] == n // 10, "%d -> %d" % (n, r["decenas"]))
-    check("B %d: unidades" % n, r["unidades"] == n % 10, "%d -> %d" % (n, r["unidades"]))
-    check("B %d: el valor de las decenas" % n, r["valor_de_las_decenas"] == (n // 10) * 10)
+    _H.check("B %d: se parte" % n, r["conclusion"] == "se_puede", r["conclusion"])
+    _H.check("B %d: decenas" % n, r["decenas"] == n // 10, "%d -> %d" % (n, r["decenas"]))
+    _H.check("B %d: unidades" % n, r["unidades"] == n % 10, "%d -> %d" % (n, r["unidades"]))
+    _H.check("B %d: el valor de las decenas" % n, r["valor_de_las_decenas"] == (n // 10) * 10)
     # juntarlo otra vez da el numero (la vuelta)
-    check("B %d: se recompone" % n, r["decenas"] * 10 + r["unidades"] == n)
+    _H.check("B %d: se recompone" % n, r["decenas"] * 10 + r["unidades"] == n)
     esperada = ("%d decenas y %d unidades son %d" % (n // 10, n % 10, n) if n >= 10
                 else "solo unidades: son %d" % n)
-    check("B %d: la cuenta cuadra" % n, r["cuenta_de_la_particion"] == esperada,
+    _H.check("B %d: la cuenta cuadra" % n, r["cuenta_de_la_particion"] == esperada,
           r["cuenta_de_la_particion"])
     # y por la puerta de juntar_decenas, con las MISMAS partes, sale el mismo numero
     j = motor.decidir_6_5_juntar_decenas(str(r["decenas"]), str(r["unidades"]), SABER)
-    check("B %d: juntando sus partes da el mismo" % n, j["conclusion"] == "se_puede" and j["total"] == n,
+    _H.check("B %d: juntando sus partes da el mismo" % n, j["conclusion"] == "se_puede" and j["total"] == n,
           "%d -> %s" % (n, j.get("total")))
-    check("B %d: y se llama igual" % n, j["palabra"] == NOMBRE[n], "%s / %s" % (j["palabra"], NOMBRE[n]))
+    _H.check("B %d: y se llama igual" % n, j["palabra"] == NOMBRE[n], "%s / %s" % (j["palabra"], NOMBRE[n]))
+
+_H.volcar(check, "B HIERRO (%d numeros, %s):" % (len(NUMEROS), _hierro.modo()))
 
 # Fuera de la tabla
 # ANTES (6.5): partir 101 y 200 -> fuera_de_la_tabla.

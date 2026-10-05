@@ -129,8 +129,30 @@ def cargar_archivo_kn(ruta):
     return datos
 
 
+_CACHE_SABER = {}
+
+
 def cargar_conocimiento(directorio=DIR_CONOCIMIENTO):
-    """Carga todos los .kn del directorio. Devuelve {id: conocimiento}."""
+    """Carga todos los .kn del directorio. Devuelve {id: conocimiento}.
+
+    Se lee UNA vez y se guarda: muchas funciones se llaman sin 'saber' y antes cada llamada volvia a
+    leer los 68 archivos del disco (en una prueba, 1.632 aperturas = 3,4 s).  Si cualquier .kn
+    cambia (fecha o tamano), se vuelve a leer, asi que editar un .kn sigue funcionando al momento."""
+    try:
+        firma = tuple(sorted((e.name, e.stat().st_mtime_ns, e.stat().st_size)
+                             for e in os.scandir(directorio) if e.name.endswith(".kn")))
+    except OSError:
+        firma = None
+    guardado = _CACHE_SABER.get(directorio)
+    if firma is not None and guardado and guardado[0] == firma:
+        return guardado[1]
+    saber = _cargar_de_disco(directorio)
+    if firma is not None:
+        _CACHE_SABER[directorio] = (firma, saber)
+    return saber
+
+
+def _cargar_de_disco(directorio):
     saber = {}
     for nombre in sorted(os.listdir(directorio)):
         if not nombre.endswith(".kn"):
@@ -312,16 +334,19 @@ def entidades_reales(escena):
     para que la misma entrada de siempre el mismo resultado.
     """
     entidades = []
+    por_base = {}     # (solo para no recorrer TODAS las entidades por cada mencion: mismo resultado)
     for o in escena:
         base = o["id"]
-        for e in entidades:
-            if e["base"] == base and not _se_contradicen(e["atributos"], o["atributos"]):
+        for e in por_base.get(base, ()):
+            if not _se_contradicen(e["atributos"], o["atributos"]):
                 for k, v in o["atributos"].items():
                     e["atributos"].setdefault(k, v)
                 e["menciones"] += 1
                 break
         else:
-            entidades.append({"base": base, "atributos": dict(o["atributos"]), "menciones": 1})
+            nueva = {"base": base, "atributos": dict(o["atributos"]), "menciones": 1}
+            entidades.append(nueva)
+            por_base.setdefault(base, []).append(nueva)
 
     cuantas = {}
     for e in entidades:

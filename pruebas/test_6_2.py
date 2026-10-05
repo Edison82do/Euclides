@@ -19,6 +19,8 @@ RAIZ = os.path.dirname(AQUI)
 sys.path.insert(0, os.path.join(RAIZ, "sistema"))
 
 import motor  # noqa: E402
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _hierro  # noqa: E402
 
 SABER = motor.cargar_conocimiento()
 
@@ -75,29 +77,33 @@ check("A19 100 -> palabra cien", r100["palabra_total"] == "cien", r100["palabra_
 # ---------------------------------------------------------------------------
 # B. LA PRUEBA DE HIERRO: EL RANGO ENTERO  (las 101 cantidades)
 # ---------------------------------------------------------------------------
-for n in range(0, 1001):  # 6.7: el rango entero sube a MIL
+_H = _hierro.Agregado()
+NUMEROS = _hierro.numeros(0, 1000)
+for n in NUMEROS:  # 6.7: el rango sube a MIL
     r = motor.decidir_6_2_agrupar(escena_de_n(n), SABER)
     if n == 0:
         # El vacio es CERO, no "no hay decena" (unidad 3.2).  No hay decenas NI unidades.
-        check("B 0: el vacio es cero", r["conclusion"] == "se_puede" and r["como_se_dice"] == "cero",
+        _H.check("B 0: el vacio es cero", r["conclusion"] == "se_puede" and r["como_se_dice"] == "cero",
               "%s / %s" % (r["conclusion"], r.get("como_se_dice")))
         continue
     if n < 10:
-        check("B %d: menos de diez no hay decena" % n, r["conclusion"] == "no_hay_decena",
+        _H.check("B %d: menos de diez no hay decena" % n, r["conclusion"] == "no_hay_decena",
               "%d -> %s" % (n, r["conclusion"]))
         continue
-    check("B %d: se puede" % n, r["conclusion"] == "se_puede", "%d -> %s" % (n, r["conclusion"]))
-    check("B %d: decenas correctas" % n, r["decenas"] == n // 10, "%d -> %d" % (n, r["decenas"]))
-    check("B %d: unidades correctas" % n, r["unidades"] == n % 10, "%d -> %d" % (n, r["unidades"]))
-    check("B %d: las unidades nunca llegan a diez" % n, r["unidades"] < 10, r["unidades"])
-    check("B %d: el reparto cuadra" % n, r["decenas"] * 10 + r["unidades"] == n)
-    check("B %d: el orden da igual" % n, r["el_orden_da_igual"] is True)
-    check("B %d: el numero de montones" % n, len(r["montones"]) == n // 10, len(r["montones"]))
-    check("B %d: los montones son de diez" % n, all(len(m) == 10 for m in r["montones"]))
-    check("B %d: los sueltos son las unidades" % n, len(r["sueltos"]) == n % 10)
-    check("B %d: cada objeto esta UNA vez" % n,
+    _H.check("B %d: se puede" % n, r["conclusion"] == "se_puede", "%d -> %s" % (n, r["conclusion"]))
+    _H.check("B %d: decenas correctas" % n, r["decenas"] == n // 10, "%d -> %d" % (n, r["decenas"]))
+    _H.check("B %d: unidades correctas" % n, r["unidades"] == n % 10, "%d -> %d" % (n, r["unidades"]))
+    _H.check("B %d: las unidades nunca llegan a diez" % n, r["unidades"] < 10, r["unidades"])
+    _H.check("B %d: el reparto cuadra" % n, r["decenas"] * 10 + r["unidades"] == n)
+    _H.check("B %d: el orden da igual" % n, r["el_orden_da_igual"] is True)
+    _H.check("B %d: el numero de montones" % n, len(r["montones"]) == n // 10, len(r["montones"]))
+    _H.check("B %d: los montones son de diez" % n, all(len(m) == 10 for m in r["montones"]))
+    _H.check("B %d: los sueltos son las unidades" % n, len(r["sueltos"]) == n % 10)
+    _H.check("B %d: cada objeto esta UNA vez" % n,
           sorted([x["id"] for m in r["montones"] for x in m] + [x["id"] for x in r["sueltos"]])
           == sorted(x["id"] for x in escena_de_n(n)))
+
+_H.volcar(check, "B HIERRO (%d cantidades, %s):" % (len(NUMEROS), _hierro.modo()))
 
 # El techo de verdad
 # UNIDAD 6.7: el techo subio de cien a MIL; 101 ya se puede.

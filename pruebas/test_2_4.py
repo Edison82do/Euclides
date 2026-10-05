@@ -23,6 +23,8 @@ import sys
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "sistema"))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _hierro  # noqa: E402
 
 from motor import (cargar_conocimiento, decidir_2_3_cuantos, decidir_2_4_dame,  # noqa: E402
                    decidir_2_4_tiene, escena_0_2, explicar_pregunta)
@@ -143,17 +145,22 @@ def correr_coherencia(saber):
     # UNIDAD 6.7: la secuencia llega a MIL, asi que el monton tiene que llegar tambien.
     # (Antes de la 6.1 era de diez; con la 6.1, de cien; ahora, de mil.)
     monton = escena_0_2(",".join("cosa%d" % i for i in range(1, 1001)))
-    bien = 0
-    for palabra in secuencia:
+    # UNA afirmacion ("para toda N, dame N y contar lo cogido da N"), recorrida sobre las
+    # cantidades de _hierro (todas con --hierro).  Antes contaba 1000 pruebas e imprimia 1000 lineas.
+    cantidades = _hierro.numeros(1, len(secuencia))
+    malas = []
+    for n in cantidades:
+        palabra = secuencia[n - 1]
         r = decidir_2_4_dame(monton, palabra, saber)
         rc = decidir_2_3_cuantos(escena_0_2(",".join(r["cogidos"])), saber)
-        ok = r["conclusion"] == "cogido" and rc.get("cantidad") == palabra
-        bien += ok
-        print("%-6s dame:%-7s -> coge %2d -> cuantos: %s   (deja %d)"
-              % ("OK" if ok else "FALLA", palabra, len(r.get("cogidos", [])),
-                 rc.get("cantidad"), len(r.get("dejados", []))))
-    print("-- %d/%d correctos\n" % (bien, len(secuencia)))
-    return bien, len(secuencia)
+        if not (r["conclusion"] == "cogido" and rc.get("cantidad") == palabra):
+            malas.append(palabra)
+    ok = not malas
+    print("%-6s dame N y contar lo cogido da N  (%d cantidades, %s)%s"
+          % ("OK" if ok else "FALLA", len(cantidades), _hierro.modo(),
+             "" if ok else "  fallan: %s" % malas[:5]))
+    print()
+    return (1 if ok else 0), 1
 
 
 def correr_robustez(saber):

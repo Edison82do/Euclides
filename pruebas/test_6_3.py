@@ -20,6 +20,8 @@ RAIZ = os.path.dirname(AQUI)
 sys.path.insert(0, os.path.join(RAIZ, "sistema"))
 
 import motor  # noqa: E402
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import _hierro  # noqa: E402
 
 SABER = motor.cargar_conocimiento()
 
@@ -77,29 +79,33 @@ check("A14 el sitio tambien con palabra", s["conclusion"] == "se_puede" and s["d
 # ---------------------------------------------------------------------------
 # B. LA PRUEBA DE HIERRO: EL RANGO ENTERO (las 101 cifras)
 # ---------------------------------------------------------------------------
-for n in range(0, 101):
+_H = _hierro.Agregado()
+NUMEROS = _hierro.numeros(0, 100)
+for n in NUMEROS:
     # 1) cifra -> palabra
     r = motor.decidir_3_1_palabra(str(n), SABER)
-    check("B %d: cifra -> palabra" % n,
+    _H.check("B %d: cifra -> palabra" % n,
           r["conclusion"] == "palabra" and r["palabra"] == NOMBRE[n],
           "%d -> %s / %s" % (n, r["conclusion"], r.get("palabra")))
     # 2) palabra -> cifra (la vuelta)
     r = motor.decidir_3_1_cifra(NOMBRE[n], SABER)
-    check("B %d: palabra -> cifra (la vuelta)" % n,
+    _H.check("B %d: palabra -> cifra (la vuelta)" % n,
           r["conclusion"] == "cifra" and r["cifra"] == str(n),
           "%s -> %s / %s" % (NOMBRE[n], r["conclusion"], r.get("cifra")))
     # 3) el sitio
     s = motor.decidir_6_3_sitio(str(n), SABER)
-    check("B %d: el sitio se puede" % n, s["conclusion"] == "se_puede", s["conclusion"])
-    check("B %d: decenas" % n, s["decenas"] == n // 10, "%d -> %d" % (n, s["decenas"]))
-    check("B %d: unidades" % n, s["unidades"] == n % 10, "%d -> %d" % (n, s["unidades"]))
-    check("B %d: el numero se recompone" % n, s["decenas"] * 10 + s["unidades"] == n)
+    _H.check("B %d: el sitio se puede" % n, s["conclusion"] == "se_puede", s["conclusion"])
+    _H.check("B %d: decenas" % n, s["decenas"] == n // 10, "%d -> %d" % (n, s["decenas"]))
+    _H.check("B %d: unidades" % n, s["unidades"] == n % 10, "%d -> %d" % (n, s["unidades"]))
+    _H.check("B %d: el numero se recompone" % n, s["decenas"] * 10 + s["unidades"] == n)
     if n >= 1:
-        check("B %d: fila" % n, s["fila"] == (n - 1) // 10, "%d -> %d" % (n, s["fila"]))
-        check("B %d: columna" % n, s["columna"] == (n - 1) % 10 + 1, "%d -> %d" % (n, s["columna"]))
+        _H.check("B %d: fila" % n, s["fila"] == (n - 1) // 10, "%d -> %d" % (n, s["fila"]))
+        _H.check("B %d: columna" % n, s["columna"] == (n - 1) % 10 + 1, "%d -> %d" % (n, s["columna"]))
         # la fila y la columna tienen que dar el numero  (fila*10 + columna = n)
-        check("B %d: fila*10 + columna cuadra" % n, s["fila"] * 10 + s["columna"] == n,
+        _H.check("B %d: fila*10 + columna cuadra" % n, s["fila"] * 10 + s["columna"] == n,
               "%d -> %d" % (n, s["fila"] * 10 + s["columna"]))
+
+_H.volcar(check, "B HIERRO (%d cifras, %s):" % (len(NUMEROS), _hierro.modo()))
 
 # Fuera de la tabla
 # ANTES (6.3): 101, 200 y 999 -> fuera_de_la_tabla ("mi tabla llega al cien").

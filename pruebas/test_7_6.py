@@ -23,7 +23,10 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(AQUI)
 sys.path.insert(0, os.path.join(RAIZ, "sistema"))
 sys.path.insert(0, RAIZ)
+sys.path.insert(0, AQUI)
 import motor  # noqa: E402
+import _hierro  # noqa: E402
+import random  # noqa: E402
 import probar  # noqa: E402
 
 BIEN = 0
@@ -89,34 +92,30 @@ comprobar("C5 la regla que decide se puede rastrear", col("900", "+", "200", SAB
 
 # ------------------------------------------------------------------ D: lo de antes no cambia
 print("\nD - LO QUE LA 7.3 Y LA 7.5 YA HACIAN SALE IGUAL (hasta cien)")
-cambios = 0
-for a in range(0, 101):
-    for b in range(0, 101 - a):
-        if motor.decidir_7_3_columnas(str(a), str(b), SABER).get("unidad") == "7.6":
-            cambios += 1
-comprobar("D1 ninguna suma con total <= 100 se va a la 7.6", cambios, 0)
-cambios = 0
-for a in range(0, 101):
-    for b in range(0, a + 1, 3):
-        if motor.decidir_7_5_columnas(str(a), str(b), SABER).get("unidad") == "7.6":
-            cambios += 1
-comprobar("D2 ninguna resta con el de arriba <= 100 se va a la 7.6", cambios, 0)
+SUMAS_100 = _hierro.parejas(100, lambda a, b: a + b <= 100, extra=[(0, 100), (100, 0), (50, 50)])
+RESTAS_100 = _hierro.parejas(100, lambda a, b: b <= a, extra=[(100, 1), (100, 100)])
+cambios = sum(1 for a, b in SUMAS_100
+              if motor.decidir_7_3_columnas(str(a), str(b), SABER).get("unidad") == "7.6")
+comprobar("D1 ninguna suma con total <= 100 se va a la 7.6 (%d parejas)" % len(SUMAS_100), cambios, 0)
+cambios = sum(1 for a, b in RESTAS_100
+              if motor.decidir_7_5_columnas(str(a), str(b), SABER).get("unidad") == "7.6")
+comprobar("D2 ninguna resta con el de arriba <= 100 se va a la 7.6 (%d parejas)" % len(RESTAS_100), cambios, 0)
 # y la 7.6 dice LO MISMO que la 7.3 / 7.5 donde las dos saben
 dif = 0
-for a in range(0, 101, 3):
-    for b in range(0, 101 - a, 4):
-        if col(str(a), "+", str(b), SABER)["total_valor"] != motor.decidir_7_3_columnas(str(a), str(b), SABER)["total_valor"]:
-            dif += 1
-    for b in range(0, a + 1, 4):
-        if col(str(a), "-", str(b), SABER)["total_valor"] != motor.decidir_7_5_columnas(str(a), str(b), SABER)["resta"]:
-            dif += 1
+for a, b in SUMAS_100:
+    if col(str(a), "+", str(b), SABER)["total_valor"] != motor.decidir_7_3_columnas(str(a), str(b), SABER)["total_valor"]:
+        dif += 1
+for a, b in RESTAS_100:
+    if col(str(a), "-", str(b), SABER)["total_valor"] != motor.decidir_7_5_columnas(str(a), str(b), SABER)["resta"]:
+        dif += 1
 comprobar("D3 donde las dos saben, la 7.6 y la 7.3/7.5 dan lo mismo", dif, 0)
 
 # ------------------------------------------------------------------ E: la prueba de hierro
 print("\nE - LA PRUEBA DE HIERRO (hasta mil)")
 probadas = malas = sin_vuelta = caja_negra = lleva_mas_de_uno = 0
-for a in range(0, 1001, 7):
-    for b in range(0, 1001 - a, 9):
+for a, b in _hierro.parejas(1000, lambda a, b: a + b <= 1000, cuantas_al_azar=500,
+                            extra=[(999, 1), (500, 500), (1, 999), (455, 545)]):
+    if True:
         r = col(str(a), "+", str(b), SABER)
         probadas += 1
         if r["conclusion"] != "se_puede" or r["total_valor"] != a + b:
@@ -131,13 +130,19 @@ comprobar("E1 las %d sumas dan bien" % probadas, malas, 0)
 comprobar("E2 todas se comprueban por la vuelta", sin_vuelta, 0)
 comprobar("E3 ninguna columna sin metodo (cero cajas negras)", caja_negra, 0)
 comprobar("E4 lo que se lleva nunca pasa de 1", lleva_mas_de_uno, 0)
-comprobar("E5 y son miles (no se esta esquivando)", probadas > 7000, True)
+comprobar("E5 y se recorrio el rango (%s): %d sumas" % (_hierro.modo(), probadas), probadas > 1000, True)
 probadas = malas = sin_vuelta = caja_negra = por_cero = 0
-con_ceros = [n for n in range(100, 1001) if n % 10 == 0 or (n // 10) % 10 == 0]
-arribas = sorted(set(list(range(0, 1001, 7)) + con_ceros))
-for a in arribas:
-    paso = 1 if a in con_ceros else 9
-    for b in range(0, a + 1, paso if a % 100 == 0 else max(paso, 5)):
+# las restas: las parejas de siempre + TODAS las de arriba con un CERO dentro (100, 205, 1000...)
+# contra una muestra de abajo, que es donde vive el cambio a traves de un cero
+con_ceros = [n for n in range(100, 1001) if "0" in str(n)]
+azar = random.Random(7)
+RESTAS = set(_hierro.parejas(1000, lambda a, b: b <= a, cuantas_al_azar=500))
+for a in con_ceros:
+    abajos = range(0, a + 1) if _hierro.HIERRO else \
+        {0, 1, 9, 10, 11, 99, 100, a - 1, a} | {azar.randint(0, a) for _ in range(4)}
+    RESTAS |= {(a, b) for b in abajos if 0 <= b <= a}
+for a, b in sorted(RESTAS):
+    if True:
         r = col(str(a), "-", str(b), SABER)
         probadas += 1
         if r["conclusion"] != "se_puede" or r["total_valor"] != a - b:
@@ -151,7 +156,7 @@ for a in arribas:
 comprobar("E6 las %d restas dan bien" % probadas, malas, 0)
 comprobar("E7 todas se comprueban por la vuelta", sin_vuelta, 0)
 comprobar("E8 ninguna columna sin metodo (cero cajas negras)", caja_negra, 0)
-comprobar("E9 y hay muchisimas A TRAVES DE UN CERO (%d)" % por_cero, por_cero > 1000, True)
+comprobar("E9 y hay muchisimas A TRAVES DE UN CERO (%d)" % por_cero, por_cero > 300, True)
 
 # ------------------------------------------------------------------ F: una sola verdad
 print("\nF - UNA SOLA VERDAD (todas las puertas que suman o restan)")

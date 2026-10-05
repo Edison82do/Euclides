@@ -23,7 +23,12 @@ import sys
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(AQUI)
 sys.path.insert(0, os.path.join(RAIZ, "sistema"))
+sys.path.insert(0, AQUI)
 import motor  # noqa: E402
+import _hierro  # noqa: E402
+
+# Las parejas (a, b) con b <= a <= 100: TODAS con --hierro; fronteras + muestra fija, si no.
+PAREJAS = _hierro.parejas(100, lambda a, b: b <= a, extra=[(100, 1), (100, 99), (10, 1), (72, 45), (43, 17)])
 
 BIEN = 0
 MAL = 0
@@ -108,8 +113,8 @@ comprobar("D3 la verificacion sale SI", r["verificacion"], True)
 # ------------------------------------------------------------------ E: coherencia
 print("\nE - COHERENCIA CON LO QUE YA SABIA (si no, hay dos verdades)")
 malas_e = 0
-for a in range(1, 101):
-    for b in range(0, a + 1):
+for a, b in PAREJAS:
+    if a >= 1:
         rc = motor.decidir_7_5_columnas(str(a), str(b), SABER)
         rn = motor.decidir_5_4_restar_numeros(str(a), str(b), SABER)
         if rc["resta"] != rn.get("resultado_valor"):
@@ -117,7 +122,7 @@ for a in range(1, 101):
             if malas_e < 4:
                 print("    %d - %d: columnas=%s restar_numeros=%s"
                       % (a, b, rc["resta"], rn.get("resultado_valor")))
-comprobar("E1 las columnas y restar_numeros (5.4) dan lo MISMO en todas las parejas", malas_e, 0)
+comprobar("E1 las columnas y restar_numeros (5.4) dan lo MISMO (%d parejas)" % len(PAREJAS), malas_e, 0)
 
 malas_e2 = 0
 for a in range(1, 11):
@@ -129,13 +134,13 @@ for a in range(1, 11):
 comprobar("E2 y con los dedos (7.4) tambien, cuando caben", malas_e2, 0)
 
 # ------------------------------------------------------------------ F: LA PRUEBA DE HIERRO
-print("\nF - LA PRUEBA DE HIERRO (todas las parejas hasta cien)")
+print("\nF - LA PRUEBA DE HIERRO (parejas hasta cien: %s)" % _hierro.modo())
 probadas = 0
 malas = 0
 sin_vuelta = 0
 sin_intercambio = 0
-for a in range(0, 101):
-    for b in range(0, a + 1):
+for a, b in PAREJAS:
+    if True:
         r = motor.decidir_7_5_columnas(str(a), str(b), SABER)
         probadas += 1
         if r["conclusion"] != "se_puede":
@@ -156,9 +161,10 @@ for a in range(0, 101):
         if r["hay_intercambio"]:
             sin_intercambio += 1
 comprobar("F1 las %d parejas dan lo mismo por columnas que restando" % probadas, malas, 0)
-comprobar("F2 y son 5151 (a de 0 a 100, b de 0 a a)", probadas, 5151)
+comprobar("F2 y se recorrieron todas las previstas (%s)" % _hierro.modo(), probadas, len(PAREJAS))
 comprobar("F3 ninguna se queda sin poder comprobarse por la vuelta", sin_vuelta, 0)
-comprobar("F4 y hay intercambio en muchisimas (no se esta esquivando)", sin_intercambio > 2000, True)
+comprobar("F4 y hay intercambio en muchisimas (no se esta esquivando)",
+          sin_intercambio > len(PAREJAS) // 3, True)
 
 print("\n" + "=" * 78)
 print("UNIDAD 7.5: %d/%d correctos" % (BIEN, BIEN + MAL))
