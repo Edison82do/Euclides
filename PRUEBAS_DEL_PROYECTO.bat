@@ -17,7 +17,7 @@ if "%PYCMD%"=="" (
 
 echo.
 echo   [R] rapido  (unos segundos: fronteras + muestra fija)
-echo   [H] hierro  (el rango entero, numero a numero: TARDA, mas de media hora)
+echo   [H] hierro  (el rango entero, numero a numero: TARDA: unos 15-30 minutos)
 choice /c RH /n /m "  Cual? "
 if errorlevel 2 (
   %PYCMD% pruebas\correr_todas.py --hierro
