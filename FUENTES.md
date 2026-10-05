@@ -52,7 +52,12 @@
   tanteo) → *Numbers-in-Numbers* (parte y todo a la vez; «start unknown» contando; 1.OA.3) →
   *Deriver* («7 + 7 es 14, así que 7 + 8 es 15»; 1.OA.6). Euclides ya tiene *Deriver* (casi dobles).
 
+- **Pensamiento relacional** (Carpenter et al. 2003, 2005; Kızıltoprak y Yavuzsoy Köse 2017, en
+  «Relational thinking: the bridge between arithmetic and algebra»): tres niveles — calcular los dos
+  lados → calcular y ver la relación → ver la relación sin calcular (57 + 22 = 58 + 21). → E.0, E.2.
+
 ## Enlaces
+- Relational thinking (ERIC): https://files.eric.ed.gov/fulltext/EJ1156327.pdf
 - NCETM Spine 1: https://www.ncetm.org.uk/teaching-for-mastery/mastery-materials/primary-mastery-professional-development/number-addition-and-subtraction/
 - NCETM 1.5: https://www.ncetm.org.uk/classroom-resources/primm-105-additive-structures-introduction-to-aggregation-and-partitioning/
 - NCETM 1.7: https://www.ncetm.org.uk/classroom-resources/primm-107-addition-and-subtraction-strategies-within-10/

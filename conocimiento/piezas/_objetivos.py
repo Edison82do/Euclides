@@ -13,6 +13,8 @@ OBJETIVOS = {
              "que_es": "un paso de un problema: que conocimiento encaja en la situacion"},
     "sumar": {"elige": "la_mas_rapida", "que_es": "hacer una suma, sin calculadora"},
     "restar": {"elige": "la_mas_rapida", "que_es": "hacer una resta, sin calculadora"},
+    "igualdad": {"elige": "la_mas_rapida",
+                 "que_es": "el = : los lados son el mismo numero? (verdadero o falso)"},
     "contar_hasta": {"elige": "la_mas_rapida",
                      "que_es": "cuantos pasos hay de un numero a otro (el hueco, 5.5)"},
 }

@@ -48,7 +48,7 @@ print("\nA - LAS PIEZAS Y SU MAPA")
 comprobar("A1 cargan sin problemas", BASE["problemas"], [])
 comprobar("A2 hay piezas de pasos y de calculo",
           sorted({p["responde"] for p in BASE["piezas"].values()}),
-          ["contar_hasta", "paso", "restar", "sumar"])
+          ["contar_hasta", "igualdad", "paso", "restar", "sumar"])
 mapa = motor.mapa_del_conocimiento(BASE)
 
 

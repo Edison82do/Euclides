@@ -42,6 +42,14 @@ calcular: 13 - 2                  | 11    | se quita poco: hacia atras
 calcular sin memoria: 13 - 5      | 8     | hacia atras es mas corto (5 pasos, no 8)
 Habia 52 pajaros. Se van 48. Cuantos quedan?   | 4
 
+# --- E.0 el = : verdadero o falso ---
+verdad: 4 + 1 = 5 + 2             | falso      | 5 y 7: el = no dice 'da'
+verdad: 10 = 8 + 2                | verdadero  | el resultado a la izquierda
+verdad: 7 = 7                     | verdadero  | sin calcular
+verdad: 5 + 2 = 2 + 5             | verdadero  | sin calcular: dar la vuelta
+verdad: 3 + 5 = 8 + 2 = 10        | falso      | la cadena
+verdad: 8 + 4 = 12 + 5            | ??         | ver el razonamiento
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete

@@ -33,7 +33,7 @@ dos partes definen lo mismo (serian dos verdades: la que gane dependeria del ord
 import importlib
 
 ORDEN = ["nucleo", "primitivas", "mecanismo", "decision", "nivel_2", "nivel_3", "nivel_4", "nivel_5",
-         "nivel_6", "nivel_7", "explicacion", "piezas", "memoria", "resolver"]
+         "nivel_6", "nivel_7", "explicacion", "piezas", "memoria", "igualdad", "resolver"]
 
 _IGNORAR = {"os", "sys", "__builtins__", "__cached__", "__doc__", "__file__", "__loader__",
             "__name__", "__package__", "__spec__"}

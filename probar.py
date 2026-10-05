@@ -299,6 +299,15 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         calcular: 13 - 2       -> 11   se quita poco: mas corto hacia atras (y lo dice)
         Cada tecnica es una PIEZA con sus condiciones: donde no encaja se descarta con su porque.
 
+  VERDAD  ->  el = : VERDADERO o FALSO? (paso E.0; 1.OA.D.7)
+        verdad: 4 + 1 = 5 + 2  -> FALSO (5 y 7.  OJO: 4 + 1 da 5, pero el = no dice 'da')
+        verdad: 10 = 8 + 2     -> VERDADERO (el resultado tambien puede ir a la izquierda)
+        verdad: 7 = 7          -> VERDADERO sin calcular (escrito igual)
+        verdad: 5 + 2 = 2 + 5  -> VERDADERO sin calcular (los mismos numeros al reves, P.5)
+        verdad: 3 + 5 = 8 + 2 = 10  -> FALSO (en una cadena todos los lados valen lo mismo)
+        verdadero o falso: ... -> lo mismo
+        El = SIEMPRE significa 'es el mismo numero que' (Progression de Common Core).
+
   MEMORIA  ->  hechos que se saben de memoria, GANADOS (paso 3)
         aprender: sumas        -> practica las 100 sumas de dos numeros de una cifra y las guarda
         aprender: restas       -> sus restas (la familia de cada suma: 8+5=13 -> 13-5=8)
@@ -370,6 +379,12 @@ def preguntar(texto, saber):
     try:
         if t.lower().strip() in ("piezas", "mapa"):
             return "las_piezas", None
+        if t.lower().startswith("verdad"):
+            resto = t.split(":", 1)[1] if ":" in t else t[len("verdad"):]
+            r = motor.decidir_igualdad(resto, saber)
+            if r["conclusion"] == "no_entiendo":
+                return "no_entiendo", None
+            return (r["valor"] if r["conclusion"] == "hecho" else "no_se_puede"), None
         if t.lower().startswith("calcular"):
             salida = motor.explicar_calculo(t[len("calcular"):].strip(), saber)
             if salida.startswith("NO ENTIENDO"):

@@ -66,6 +66,13 @@ CONDICIONES = {
     "la_suma_esta_en_la_memoria": lambda s, u: u.recuerdo("%d + %d" % (s["a"], s["b"])) is not None,
     "la_resta_esta_en_la_memoria": lambda s, u: u.recuerdo("%d - %d" % (s["a"], s["b"])) is not None,
     "el_segundo_no_es_menor": lambda s, u: not u.viene_despues(u.decir(s["a"]), u.decir(s["b"])),
+    # ---- el = (paso E.0): situacion {"lados": [{"texto", "n"} o {"texto", "a", "op", "b"}, ...]}
+    "hay_dos_lados_o_mas": lambda s, u: len(s.get("lados", ())) >= 2,
+    "todos_los_lados_estan_escritos_igual": lambda s, u: len(s.get("lados", ())) >= 2
+    and all(l["texto"] == s["lados"][0]["texto"] for l in s["lados"]),
+    "son_los_mismos_numeros_al_reves": lambda s, u: len(s.get("lados", ())) == 2
+    and all(l.get("op") == "+" for l in s["lados"])
+    and s["lados"][0]["a"] == s["lados"][1]["b"] and s["lados"][0]["b"] == s["lados"][1]["a"],
     # ---- dar la vuelta (paso P.5)
     "el_primero_es_menor": lambda s, u: u.viene_despues(u.decir(s["b"]), u.decir(s["a"])),
     "el_primero_es_corto": lambda s, u: _decenas_justas(s["a"], u)

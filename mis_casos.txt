@@ -589,3 +589,15 @@ calcular: 995 - 990                        | 5 | cerca del techo
 calcular: 13 - 2                           | 11 | se quita poco: hacia atras
 calcular: 13 - 13                          | 0 | no falta nada
 problema: Habia 52 pajaros. Se van 48. Cuantos quedan? | 4 | el problema cuenta hacia arriba solo
+# ---------------------------------------------------------------------------
+# PASO E.0 - EL = : VERDADERO O FALSO (1.OA.D.7)
+# ---------------------------------------------------------------------------
+verdad: 6 = 6                              | verdadero | escrito igual
+verdad: 7 = 8 - 1                          | verdadero | ejemplo del estandar
+verdad: 5 + 2 = 2 + 5                      | verdadero | sin calcular (P.5)
+verdad: 4 + 1 = 5 + 2                      | falso | 5 no es 7
+verdad: 10 = 8 + 2                         | verdadero | el resultado a la izquierda
+verdad: 3 + 5 = 8 + 2 = 10                 | falso | la cadena
+verdad: 8 + 4 = 12 + 5                     | falso | escribir lo que da y seguir
+verdad: 3 - 5 = 2                          | no_se_puede | un lado no es ningun numero
+verdad: 4 + 1                              | no_entiendo | sin = no hay igualdad
