@@ -343,7 +343,8 @@ def decidir_5_3_sumar_numeros(texto_a, texto_b, saber=None):
             r["tabla"] = tabla
             return r
         return col   # no_alcanza (se pasa de cien)
-    total = va + vb
+    # con UNA cifra el metodo son los DEDOS (7.1) o derivar (7.2): el total sale de ahi
+    total = _suma_con_metodo(va, vb, saber)["total"]
     r["conclusion"] = "suma"
     r["valor_a"], r["valor_b"] = va, vb
     r["total_valor"] = total
@@ -577,8 +578,10 @@ def decidir_5_4_restar_numeros(texto_a, texto_b, saber=None):
         return r
     r["conclusion"] = "resta"
     r["valor_a"], r["valor_b"] = va, vb
-    r["resultado_valor"] = va - vb
-    r["resultado"] = _palabra_de(va - vb, saber["secuencia_de_conteo"]["palabras"])
+    # con UNA cifra el metodo son los DEDOS hacia atras (7.4)
+    rr = _resta_con_metodo(va, vb, saber)
+    r["resultado_valor"] = rr["queda"]
+    r["resultado"] = rr["palabra_queda"]
     r["cifra_a"], r["cifra_b"] = tabla.get(pa), tabla.get(pb)
     r["cifra_resultado"] = tabla.get(r["resultado"])
     r["expresion"] = "%s - %s = %s" % (r["cifra_a"], r["cifra_b"],
@@ -807,7 +810,9 @@ def decidir_5_5_diferencia_numeros(texto_a, texto_b, saber=None):
         r["diferencia_valor"] = col["resta"]
         r["por_columnas"] = col
     else:
-        r["diferencia_valor"] = abs(va - vb)
+        # el HUECO se cuenta: desde el pequeno hasta el grande (contar hacia adelante, 5.5)
+        r["diferencia_valor"] = leer(contar_hasta(decir(min(va, vb), saber),
+                                                  decir(max(va, vb), saber), saber), saber)
     r["diferencia"] = _palabra_de(r["diferencia_valor"], r["secuencia"]) if r["diferencia_valor"] else "cero"
     r["mayor"], r["menor"] = (pa, pb) if va >= vb else (pb, pa)
     r["cifra_mayor"] = tabla.get(r["mayor"]) or str(max(va, vb))

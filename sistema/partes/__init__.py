@@ -7,6 +7,7 @@ por NIVELES para que cada unidad nueva se escriba en su sitio y se pueda leer si
 
     nucleo.py       lectura de los .kn, escenas, atributos            (0.1, 0.2)
     primitivas.py   las condiciones de las reglas + la tabla PRIMITIVAS
+    mecanismo.py    COMO CALCULA SIN CALCULADORA: recitar, levantar dedos, leer cifras
     decision.py     aplicar las reglas en orden; unidades 0.x, 1.0, 2.1
     nivel_2.py      conteo                                            (2.2 - 2.6)
     nivel_3.py      numeros                                           (3.1 - 3.4)
@@ -29,7 +30,7 @@ dos partes definen lo mismo (serian dos verdades: la que gane dependeria del ord
 
 import importlib
 
-ORDEN = ["nucleo", "primitivas", "decision", "nivel_2", "nivel_3", "nivel_4", "nivel_5",
+ORDEN = ["nucleo", "primitivas", "mecanismo", "decision", "nivel_2", "nivel_3", "nivel_4", "nivel_5",
          "nivel_6", "nivel_7", "explicacion", "resolver"]
 
 _IGNORAR = {"os", "sys", "__builtins__", "__cached__", "__doc__", "__file__", "__loader__",

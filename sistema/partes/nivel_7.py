@@ -42,14 +42,21 @@ def decidir_7_1_dedos(texto_a, texto_b, saber=None):
     if r["conclusion"] != "se_puede":
         return r
     # LA PIZARRA: lo que se ha anotado, y los pasos uno a uno.
+    # EL MECANISMO (mecanismo.py): se levantan los dedos del segundo recitando uno, dos...; y por
+    # cada dedo que se baja se dice la palabra SIGUIENTE de la lista.  Ninguna suma de Python.
     r["anotado"] = pa
+    c = contar_adelante(pa, pb, saber)
+    if c["conclusion"] != "se_puede":
+        r["conclusion"] = c["conclusion"]
+        return r
     r["los_pasos"] = []
-    for k in range(1, vb + 1):
-        valor = va + k
-        r["los_pasos"].append({"dedo": k, "quedan": vb - k, "valor": valor,
-                               "palabra": _palabra_de(valor, secuencia)})
-    r["total_valor"] = va + vb
-    r["total"] = _palabra_de(va + vb, secuencia)
+    for k, p in enumerate(c["pasos"]):
+        r["los_pasos"].append({"dedo": leer(p["dedo_numero"], saber),
+                               "dedo_nombre": p["dedo"],
+                               "quedan": len(c["pasos"][k + 1:]),     # los dedos que siguen arriba
+                               "valor": leer(p["dice"], saber), "palabra": p["dice"]})
+    r["total"] = c["resultado"]
+    r["total_valor"] = leer(r["total"], saber)
     r["expresion"] = "%s + %s = %s" % (pa, pb, r["total"])
     tabla = _tabla(saber)
     r["cifra_a"], r["cifra_b"] = tabla.get(pa), tabla.get(pb)
@@ -60,14 +67,18 @@ def decidir_7_1_dedos(texto_a, texto_b, saber=None):
                                                   r["cifra_total"] or r["total"])
     else:
         r["expresion_cifras"] = r["expresion"]
-    # LAS CUENTAS DEL AHORRO: contar hacia adelante da VB pasos; contar todo daria A+B.
-    r["pasos_dados"] = vb
-    r["pasos_contando_todo"] = va + vb
+    # LAS CUENTAS DEL AHORRO: contar hacia adelante son tantos pasos como dedos bajados; contar
+    # todo desde el uno llega al total (tantos pasos como su sitio); y los que me ahorro son los
+    # de antes del primero (su sitio).
+    r["pasos_dados"] = len(c["pasos"])
+    r["pasos_contando_todo"] = r["total_valor"]
     r["pasos_ahorrados"] = va
-    r["la_suma_cuadra"] = (r["total_valor"] == va + vb)
-    # LA COMPROBACION: al total se le quita el segundo y tiene que volver a salir el primero.
+    # LA COMPROBACION, TAMBIEN MECANICA: desde el total se cuentan los dedos del segundo HACIA
+    # ATRAS (7.4) y tiene que salir el primero.
+    vuelta = contar_atras(r["total"], pb, saber)
+    r["la_suma_cuadra"] = vuelta.get("resultado") == pa
     r["expresion_inversa"] = "%s - %s = %s" % (r["total"], pb, pa)
-    r["verificacion"] = (r["total_valor"] - vb == va)
+    r["verificacion"] = r["la_suma_cuadra"]
     return r
 
 
@@ -191,18 +202,23 @@ def decidir_7_2_derivar(texto_a, texto_b, saber=None):
     r["valor_a"], r["valor_b"] = va, vb
     if r["conclusion"] != "se_puede":
         return r
-    faltan = 10 - va          # lo que le falta al primero para llegar a DIEZ
+    # EL MECANISMO: cuantos le faltan al primero para DIEZ (contar de el hasta diez); se PARTE el
+    # segundo quitandole esos (contar hacia atras); y desde diez se sigue con lo que sobra.
+    faltan_p = contar_hasta(pa, "diez", saber)
+    sobra_p = contar_atras(pb, faltan_p, saber)["resultado"]
+    total_p = contar_adelante("diez", sobra_p, saber)["resultado"]
+    faltan, sobra = leer(faltan_p, saber), leer(sobra_p, saber)
     r["faltan_para_diez"] = faltan
-    r["sobra_del_segundo"] = vb - faltan
+    r["sobra_del_segundo"] = sobra
     r["parte_para_diez"] = faltan
-    r["parte_que_sobra"] = vb - faltan
+    r["parte_que_sobra"] = sobra
     r["primera_cuenta"] = "10" if faltan else "0"
+    r["total_valor"] = leer(total_p, saber)
+    r["total"] = total_p
     r["paso_1"] = "%d + %d = 10" % (va, faltan)
-    r["paso_2"] = "10 + %d = %d" % (vb - faltan, va + vb)
-    r["total_valor"] = va + vb
-    r["total"] = _palabra_de(va + vb, secuencia)
+    r["paso_2"] = "10 + %d = %d" % (sobra, r["total_valor"])
     r["expresion"] = "%s + %s = %s" % (pa, pb, r["total"])
-    r["suma_de_tres"] = "%d + %d + %d" % (va, faltan, vb - faltan)
+    r["suma_de_tres"] = "%d + %d + %d" % (va, faltan, sobra)
     tabla = _tabla(saber)
     r["cifra_a"], r["cifra_b"] = tabla.get(pa), tabla.get(pb)
     r["cifra_total"] = tabla.get(r["total"])
@@ -211,8 +227,10 @@ def decidir_7_2_derivar(texto_a, texto_b, saber=None):
                                                   r["cifra_total"] or r["total"])
     else:
         r["expresion_cifras"] = r["expresion"]
-    r["las_partes_cuadran"] = (faltan + (vb - faltan) == vb)
-    r["verificacion"] = (va + faltan == 10 and 10 + (vb - faltan) == va + vb)
+    # comprobaciones con el mismo mecanismo: las dos partes juntas dan el segundo, y el primero
+    # con su parte llega justo a diez
+    r["las_partes_cuadran"] = contar_adelante(faltan_p, sobra_p, saber).get("resultado") == pb
+    r["verificacion"] = contar_adelante(pa, faltan_p, saber).get("resultado") == "diez"
     # LA OTRA VIA: los dedos tienen que decir lo mismo (decision de Carlos: que pruebe las dos).
     otra = decidir_7_1_dedos(texto_a, texto_b, saber)
     r["la_otra_via"] = otra
@@ -311,7 +329,7 @@ def explicar_7_2_derivar(texto_a, texto_b, saber=None):
 
 # ------------------------------------------------- sumar por columnas (7.3)
 
-def decidir_7_3_columnas(texto_a, texto_b, saber=None):
+def decidir_7_3_columnas(texto_a, texto_b, saber=None, verificar=True):
     """
     Unidad 7.3: SUMAR POR COLUMNAS.  Unidad con unidad, decena con decena, y el llevarse.
 
@@ -323,7 +341,7 @@ def decidir_7_3_columnas(texto_a, texto_b, saber=None):
         saber = cargar_conocimiento()
     # UNIDAD 7.6: si el total pasa de cien, hace falta la columna de las CENTENAS.
     if _va_a_la_7_6("+", texto_a, texto_b, saber):
-        return decidir_7_6_columnas(texto_a, "+", texto_b, saber)
+        return decidir_7_6_columnas(texto_a, "+", texto_b, saber, verificar=verificar)
     secuencia = saber["secuencia_de_conteo"]["palabras"]
     pa, ca = nombre_de_numero(texto_a, saber)
     pb, cb = nombre_de_numero(texto_b, saber)
@@ -335,14 +353,20 @@ def decidir_7_3_columnas(texto_a, texto_b, saber=None):
     r["valor_a"], r["valor_b"] = va, vb
     if r["conclusion"] != "se_puede":
         return r
-    # --- LAS DOS COLUMNAS -------------------------------------------------
-    ua, ub = va % 10, vb % 10
-    da, db = va // 10, vb // 10
-    suma_unidades = ua + ub
-    se_lleva = suma_unidades // 10        # 0 o 1 (nunca mas: 9+9=18)
-    anota_unidades = suma_unidades % 10
-    suma_decenas = da + db + se_lleva
-    total = va + vb
+    # --- LAS DOS COLUMNAS (todo con el MECANISMO: dedos, y leer y escribir cifras) ------------
+    ca_, cb_ = cifras_de(va), cifras_de(vb)          # LEER: 47 -> [7, 4]
+    ua, ub = ca_[0], cb_[0]
+    da, db = escribir_cifras(ca_[1:]), escribir_cifras(cb_[1:])    # lo que queda son DECENAS
+    col_u = _suma_con_metodo(ua, ub, saber)          # la columna de las unidades, con los dedos
+    suma_unidades = col_u["total"]
+    pasa = viene_despues(col_u["palabra_total"], "nueve", saber)    # PASA DE NUEVE?
+    se_lleva = 1 if pasa else 0
+    # lo que se anota es lo que hay que contar DESDE DIEZ hasta la suma (12 -> dos)
+    anota_unidades = leer(contar_hasta("diez", col_u["palabra_total"], saber), saber) if pasa \
+        else suma_unidades
+    col_d = _dos_pasos(da, db, 1, saber) if se_lleva else _suma_con_metodo(da, db, saber)
+    suma_decenas = col_d["total"]
+    total = escribir_cifras([anota_unidades] + cifras_de(suma_decenas))   # ESCRIBIR: 6 y 2 -> 62
     r["unidades_a"], r["unidades_b"] = ua, ub
     r["decenas_a"], r["decenas_b"] = da, db
     r["suma_unidades"] = suma_unidades
@@ -358,14 +382,21 @@ def decidir_7_3_columnas(texto_a, texto_b, saber=None):
     r["tabla"] = _tabla(saber)
     r["expresion"] = "%s + %s = %s" % (pa, pb, r["total"])
     r["expresion_cifras"] = "%d + %d = %d" % (va, vb, total)
-    # COMPROBACIONES
-    r["recompone"] = (suma_decenas * 10 + anota_unidades == total)
-    r["el_llevado_es_una_decena"] = (suma_unidades == anota_unidades + se_lleva * 10)
+    # COMPROBACIONES (con el mecanismo, no con Python)
+    # - juntar otra vez decenas y unidades (6.5) da el total
+    jd = decidir_6_5_juntar_decenas(str(suma_decenas), str(anota_unidades), saber)
+    r["recompone"] = jd.get("total") == total
+    # - lo que se lleva es una decena: desde diez, contando lo anotado, sale la suma de la columna
+    r["el_llevado_es_una_decena"] = (not se_lleva) or \
+        contar_adelante("diez", decir(anota_unidades, saber), saber).get("resultado") == col_u["palabra_total"]
     r["lleva_como_mucho_uno"] = se_lleva <= 1   # 9+9=18 -> se lleva 1, nunca 2
-    r["sin_llevarse_daria_mal"] = (se_lleva > 0 and da + db != suma_decenas)
-    # la verificacion de siempre: por la vuelta (partir el total, unidad 5.1)
-    r["parejas_del_total"] = [(k, total - k) for k in range(0, total // 2 + 1)]
-    r["verificacion"] = sorted((va, vb)) in [sorted(p) for p in r["parejas_del_total"]]
+    r["sin_llevarse_daria_mal"] = bool(se_lleva) and \
+        _suma_con_metodo(da, db, saber)["total"] != suma_decenas
+    # - LA VUELTA: restando por columnas (7.5) el segundo, tiene que salir el primero
+    if verificar:
+        v = decidir_7_5_columnas(str(total), str(vb), saber, verificar=False)
+        r["verificacion"] = v["conclusion"] == "se_puede" and v["resta"] == va
+        r["verificacion_texto"] = "%d - %d = %s" % (total, vb, v.get("resta"))
     return r
 
 
@@ -401,7 +432,7 @@ def explicar_7_3_columnas(texto_a, texto_b, saber=None):
                   % (va, r["decenas_a"], r["unidades_a"], vb, r["decenas_b"], r["unidades_b"]))
     lineas.append("")
     lineas.append("  PASO 1 - COLUMNA DE LAS UNIDADES (se empieza por la derecha):")
-    su = _suma_con_metodo(va % 10, vb % 10, saber)
+    su = _suma_con_metodo(cifras_de(va)[0], cifras_de(vb)[0], saber)
     lineas.append("    la suma es %s, y NO se sabe de memoria: %s" % (r["cuenta_unidades"],
                                                                       su["como"] or "con el metodo"))
     lineas.append("    (el metodo: %s -- unidad 7.1/7.2.  Se hace con el mecanismo, no con una"
@@ -512,9 +543,14 @@ def decidir_7_4_resta_dedos(texto_a, texto_b, saber=None):
     r["dedos"] = _cuantos_dedos(saber)
     if r["conclusion"] != "se_puede":
         return r
-    quedan = va - vb
+    # EL MECANISMO: se baja un dedo por cada uno del segundo, diciendo la palabra ANTERIOR.
+    c = contar_atras(pa, pb, saber)
+    if c["conclusion"] != "se_puede":
+        r["conclusion"] = c["conclusion"]
+        return r
+    r["resta"] = c["resultado"]
+    quedan = leer(r["resta"], saber)
     r["quedan"] = quedan
-    r["resta"] = _palabra_de(quedan, secuencia) if quedan else "cero"
     r["expresion"] = "%s - %s = %s" % (pa, pb, r["resta"])
     tabla = _tabla(saber)
     r["cifra_a"], r["cifra_b"] = tabla.get(pa, str(va) if va is not None else None), \
@@ -523,15 +559,25 @@ def decidir_7_4_resta_dedos(texto_a, texto_b, saber=None):
     r["expresion_cifras"] = "%s - %s = %s" % (r["cifra_a"], r["cifra_b"], r["cifra_resta"])
     # LA VENTANA DE LOS DEDOS: los diez dedos son los ULTIMOS DIEZ numeros, y el ultimo es el
     # minuendo.  Si el minuendo es 12, la ventana es del 3 al 12.  Si es 9, del 1 al 9.
-    r["desde"] = max(1, va - (r["dedos"] - 1))
-    r["dedos_levantados"] = va - r["desde"] + 1
+    # (Mecanico: se ponen los dedos en las ultimas palabras que acaban en el primero, hacia atras,
+    #  hasta que se acaban los dedos o se llega al uno.)
+    ventana = []
+    w = pa
+    for _dedo in DEDOS_CON_NOMBRE:
+        if w is None or w == "cero":
+            break
+        ventana.append(w)
+        w = anterior(w, saber)
+    r["desde"] = leer(ventana[-1], saber) if ventana else 1
+    r["dedos_levantados"] = len(ventana)
     r["ventana"] = (r["desde"], va)
-    r["cabe_entero"] = (r["desde"] == 1)
+    r["cabe_entero"] = (not ventana) or ventana[-1] == "uno"
     # EL PASO A PASO: los dedos que se van bajando, con el numero que va quedando
-    r["bajadas"] = [{"bajo": i, "quedan": va - i} for i in range(1, vb + 1)]
-    r["pasos_dados"] = vb
+    r["bajadas"] = [{"bajo": leer(p["dedo_numero"], saber), "quedan": leer(p["dice"], saber)}
+                    for p in c["pasos"]]
+    r["pasos_dados"] = len(c["pasos"])
     # LA VUELTA: la suma deshace la resta (unidad 7.1)
-    vuelta = decidir_7_1_dedos(str(quedan), str(vb), saber)
+    vuelta = decidir_7_1_dedos(r["resta"], pb, saber)
     r["vuelta"] = vuelta
     r["verificacion"] = (vuelta["conclusion"] == "se_puede" and vuelta["total_valor"] == va)
     r["verificacion_texto"] = ("%s + %s = %s" % (r["resta"], pb, pa))
@@ -616,37 +662,26 @@ def _dec_u(d, u):
 def _resta_con_metodo(a, b, saber):
     """
     Hace una resta (de una columna) y devuelve COMO se hizo, para poder ENSENARLO.
-    NO se sabe de memoria y NO se usa calculadora: se usa el mecanismo de la unidad 7.4 (los dedos,
-    contando hacia atras).  Si el minuendo no cabe en los dedos (12, que sale despues de cambiar la
-    decena), se ANOTA en la pizarra y se bajan los dedos del sustraendo -- igual que en la suma
-    (7.1), donde el primero tambien se anota.
+    El resultado SALE del mecanismo de la 7.4 (dedos hacia atras): no se sabe de memoria y no se
+    calcula con Python.  Si no hay mecanismo que valga, NO se inventa: se dice.
     """
-    secuencia = saber["secuencia_de_conteo"]["palabras"]
-    pa = _palabra_de(a, secuencia) if a else "cero"
-    pb = _palabra_de(b, secuencia) if b else "cero"
-    queda = a - b
+    pa, pb = decir(a, saber), decir(b, saber)
+    ded = decidir_7_4_resta_dedos(pa, pb, saber)
+    if ded["conclusion"] != "se_puede":
+        raise ValueError("no tengo mecanismo para %s - %s (%s)" % (a, b, ded["conclusion"]))
+    queda = ded["quedan"]
     d = {"a": a, "b": b, "queda": queda, "palabra_a": pa, "palabra_b": pb,
-         "palabra_queda": _palabra_de(queda, secuencia) if queda else "cero"}
-    ded = decidir_7_4_resta_dedos(str(a), str(b), saber)
-    if ded["conclusion"] == "se_puede":
-        d["metodo"] = "dedos (7.4)"
-        d["ventana"] = ded.get("ventana")
-        if ded.get("cabe_entero"):
-            d["como"] = ("se levantan %s y se bajan %d dedos: quedan %s"
-                         % (pa, b, d["palabra_queda"]))
-        else:
-            d["como"] = ("los dedos van del %d al %d (el ultimo es %s), y se bajan %d: quedan %s"
-                         % (ded["desde"], a, pa, b, d["palabra_queda"]))
+         "palabra_queda": ded["resta"], "metodo": "dedos (7.4)", "ventana": ded.get("ventana")}
+    if ded.get("cabe_entero"):
+        d["como"] = ("se levantan %s y se bajan %d dedos: quedan %s" % (pa, b, d["palabra_queda"]))
     else:
-        # No deberia pasar en una columna (lo que se baja siempre es de una cifra), pero si pasa,
-        # el sistema lo DICE en vez de inventarse el resultado.
-        d["metodo"] = None
-        d["como"] = "no cabe en los dedos, y el sistema no tiene otro mecanismo para esto"
+        d["como"] = ("los dedos van del %d al %d (el ultimo es %s), y se bajan %d: quedan %s"
+                     % (ded["desde"], a, pa, b, d["palabra_queda"]))
     d["cuenta"] = "%d - %d = %d" % (a, b, queda)
     return d
 
 
-def decidir_7_5_columnas(texto_a, texto_b, saber=None):
+def decidir_7_5_columnas(texto_a, texto_b, saber=None, verificar=True):
     """
     Unidad 7.5: RESTAR POR COLUMNAS.  Columna a columna, y si las unidades de arriba no llegan, se
     CAMBIA una decena por diez unidades (el intercambio, que NO es un prestamo).
@@ -658,7 +693,7 @@ def decidir_7_5_columnas(texto_a, texto_b, saber=None):
         saber = cargar_conocimiento()
     # UNIDAD 7.6: si el de arriba pasa de cien, hace falta la columna de las CENTENAS.
     if _va_a_la_7_6("-", texto_a, texto_b, saber):
-        return decidir_7_6_columnas(texto_a, "-", texto_b, saber)
+        return decidir_7_6_columnas(texto_a, "-", texto_b, saber, verificar=verificar)
     secuencia = saber["secuencia_de_conteo"]["palabras"]
     pa, ca = nombre_de_numero(texto_a, saber)
     pb, cb = nombre_de_numero(texto_b, saber)
@@ -677,13 +712,17 @@ def decidir_7_5_columnas(texto_a, texto_b, saber=None):
     if r["conclusion"] != "se_puede":
         return r
     # PASO 0 - partir cada numero (unidad 6.5)
-    r["dec_a"], r["uni_a"] = divmod(va, 10)
-    r["dec_b"], r["uni_b"] = divmod(vb, 10)
+    # (LEER las cifras: la ultima son las unidades y lo de delante son las decenas)
+    ca_, cb_ = cifras_de(va), cifras_de(vb)
+    r["dec_a"], r["uni_a"] = escribir_cifras(ca_[1:]), ca_[0]
+    r["dec_b"], r["uni_b"] = escribir_cifras(cb_[1:]), cb_[0]
     # PASO 1 - la columna de las unidades, y el INTERCAMBIO si no llega
     r["hay_intercambio"] = r["uni_a"] < r["uni_b"]
     if r["hay_intercambio"]:
-        r["dec_a_despues"] = r["dec_a"] - 1
-        r["uni_a_despues"] = r["uni_a"] + 10
+        # EL INTERCAMBIO, mecanico: la decena de arriba baja una (la palabra ANTERIOR) y las
+        # unidades pasan a ser "diez y lo que habia" (contar desde diez)
+        r["dec_a_despues"] = leer(anterior(decir(r["dec_a"], saber), saber), saber)
+        r["uni_a_despues"] = leer(contar_adelante("diez", decir(r["uni_a"], saber), saber)["resultado"], saber)
         unidad = _resta_con_metodo(r["uni_a_despues"], r["uni_b"], saber)
         decena = _resta_con_metodo(r["dec_a_despues"], r["dec_b"], saber)
     else:
@@ -695,8 +734,10 @@ def decidir_7_5_columnas(texto_a, texto_b, saber=None):
     r["resta_unidades"] = unidad["cuenta"]
     r["resta_decenas"] = decena["cuenta"]
     # Y LA COMPROBACION DEL INTERCAMBIO: sigue valiendo lo mismo
-    r["intercambio_vale_igual"] = (r["dec_a_despues"] * 10 + r["uni_a_despues"]) == va
-    r["resta"] = unidad["queda"] + decena["queda"] * 10
+    # (y se comprueba JUNTANDO otra vez, con la 6.5, que no con una multiplicacion)
+    r["intercambio_vale_igual"] = decidir_6_5_juntar_decenas(
+        str(r["dec_a_despues"]), str(r["uni_a_despues"]), saber).get("total") == va
+    r["resta"] = escribir_cifras([unidad["queda"]] + cifras_de(decena["queda"]))
     r["resultado"] = _palabra_de(r["resta"], secuencia) if r["resta"] else "cero"
     r["expresion"] = "%s - %s = %s" % (pa, pb, r["resultado"])
     tabla = _tabla(saber)
@@ -704,7 +745,7 @@ def decidir_7_5_columnas(texto_a, texto_b, saber=None):
     r["cifra_resultado"] = tabla.get(r["resultado"], str(r["resta"]))
     r["expresion_cifras"] = "%s - %s = %s" % (r["cifra_a"], r["cifra_b"], r["cifra_resultado"])
     # LA VUELTA: la suma deshace la resta (con las columnas de la 7.3)
-    vuelta = decidir_7_3_columnas(str(r["resta"]), str(vb), saber)
+    vuelta = decidir_7_3_columnas(str(r["resta"]), str(vb), saber, verificar=False)
     r["vuelta"] = vuelta
     r["verificacion"] = (vuelta["conclusion"] == "se_puede" and vuelta["total_valor"] == va)
     r["verificacion_texto"] = "sumando sale otra vez el de arriba"
@@ -900,8 +941,15 @@ def decidir_7_6_columnas(texto_a, op, texto_b, saber=None, verificar=True):
         for i in range(n):
             p1 = _suma_con_metodo(arriba[i], abajo[i], saber)
             p2 = _suma_con_metodo(p1["total"], lleva, saber) if lleva else None
-            s = p2["total"] if p2 else p1["total"]
-            anota, nueva = s % 10, s // 10        # PARTIR (6.5): s son 'nueva' decenas y 'anota'
+            hecho = p2 if p2 else p1
+            s = hecho["total"]
+            # PASA DE NUEVE? (viene despues de 'nueve' en la lista).  Si pasa, se anota lo que hay
+            # que contar desde 'diez' hasta la suma, y se lleva UNO.  Mecanico, sin dividir.
+            if viene_despues(hecho["palabra_total"], "nueve", saber):
+                anota = leer(contar_hasta("diez", hecho["palabra_total"], saber), saber)
+                nueva = 1
+            else:
+                anota, nueva = s, 0
             pasos.append({"columna": _NOMBRE_COLUMNA[i], "a": arriba[i], "b": abajo[i],
                           "paso_1": p1, "paso_2": p2, "lleva_de_antes": lleva,
                           "suma": s, "anota": anota, "se_lleva": nueva})
@@ -923,11 +971,12 @@ def decidir_7_6_columnas(texto_a, op, texto_b, saber=None, verificar=True):
                 while j < n and arr[j] == 0:
                     j += 1
                 for k in range(j, i, -1):     # y se baja escalon a escalon (a traves de los ceros)
-                    arr[k] -= 1
-                    arr[k - 1] += 10
+                    arr[k] = leer(anterior(decir(arr[k], saber), saber), saber)          # una menos
+                    arr[k - 1] = leer(contar_adelante("diez", decir(arr[k - 1], saber),
+                                                      saber)["resultado"], saber)   # diez mas
                     cambios.append({"de": _UNA_DE_LA_COLUMNA[k], "por": "diez %s" % _NOMBRE_COLUMNA[k - 1],
                                     "queda": list(arr),
-                                    "sigue_valiendo": _juntar_ordenes(arr) == va})
+                                    "sigue_valiendo": _deshacer_cambios(arr, saber) == list(arriba)})
             rr = _resta_con_metodo(arr[i], abajo[i], saber)
             pasos.append({"columna": _NOMBRE_COLUMNA[i], "a": arr[i], "b": abajo[i],
                           "cambios": cambios, "resta": rr, "queda": rr["queda"],
@@ -935,9 +984,11 @@ def decidir_7_6_columnas(texto_a, op, texto_b, saber=None, verificar=True):
             cifras_resultado.append(rr["queda"])
         r["arriba_despues"] = arr
         # EL ERROR TIPICO nº1: dar la vuelta en cada columna (restar el pequeno del grande)
-        r["si_diera_la_vuelta"] = _juntar_ordenes([abs(a - b) for a, b in zip(arriba, abajo)])
+        r["si_diera_la_vuelta"] = escribir_cifras(
+            [leer(contar_hasta(decir(min(a, b), saber), decir(max(a, b), saber), saber), saber)
+             for a, b in zip(arriba, abajo)])
     r["pasos"] = pasos
-    total = _juntar_ordenes(cifras_resultado)
+    total = escribir_cifras(cifras_resultado)
     r["total_valor"] = total
     r["resta"] = total
     r["total"] = _nombre_o_cero(total, saber)
@@ -962,13 +1013,16 @@ def decidir_7_6_columnas(texto_a, op, texto_b, saber=None, verificar=True):
     return r
 
 
-def _juntar_ordenes(cifras):
-    """Lo contrario de partir: unidades + decenas + centenas... (6.5 y 6.7, juntar)."""
-    total, peso = 0, 1
-    for c in cifras:
-        total += c * peso
-        peso *= 10
-    return total
+def _deshacer_cambios(arr, saber):
+    """Para COMPROBAR que un cambio no cambia el numero: se deshace (diez de una columna vuelven
+    a ser UNA de la siguiente) y tienen que salir las cifras de antes.  Todo contando."""
+    copia = list(arr)
+    for i in range(len(copia)):
+        if viene_despues(decir(copia[i], saber), "nueve", saber):
+            copia[i] = leer(contar_hasta("diez", decir(copia[i], saber), saber), saber)
+            if i + 1 < len(copia):
+                copia[i + 1] = leer(siguiente(decir(copia[i + 1], saber), saber), saber)
+    return copia
 
 
 def _como_columna(p):

@@ -58,13 +58,13 @@ def construir_nombre_hasta_cien(n, saber):
         return tabla["decenas"][n]
     for f in tabla["formaciones"]:
         if f["desde"] <= n <= f["hasta"]:
-            unidad = tabla["memorizadas"].get(n % 10)
+            unidad = tabla["memorizadas"].get(cifras_de(n)[0])      # la ultima cifra
             if not unidad:
                 return None
             if f.get("junta") == "pegado":
                 return "%s%s" % (f["prefijo"], unidad)
             if f.get("junta") == "con_y":
-                decena = tabla["decenas"].get(n - (n % 10))
+                decena = tabla["decenas"].get(escribir_cifras([0] + cifras_de(n)[1:]))  # 47 -> 40
                 if not decena:
                     return None
                 return "%s y %s" % (decena, unidad)
@@ -91,7 +91,7 @@ def construir_nombre_hasta_mil(n, saber):
         return construir_nombre_hasta_cien(n, saber)
     if n == 1000:
         return _centenas(saber).get("mil") or "mil"
-    cent, resto = divmod(n, 100)
+    cent, resto = escribir_cifras(cifras_de(n)[2:]), escribir_cifras(cifras_de(n)[:2])  # 247 -> 2 y 47
     cientos = _centenas(saber)
     if resto == 0:
         return cientos["cientos_solos"].get(cent)
@@ -145,13 +145,14 @@ def de_donde_sale_el_nombre(n, saber):
         return {"tipo": "decena", "palabra": tabla["decenas"][n]}
     for f in tabla["formaciones"]:
         if f["desde"] <= n <= f["hasta"]:
-            unidad_valor = n % 10
+            unidad_valor = cifras_de(n)[0]
             piezas = {"unidad": tabla["memorizadas"].get(unidad_valor), "unidad_valor": unidad_valor}
             if f.get("junta") == "pegado":
                 piezas["prefijo"] = f["prefijo"]
             elif f.get("junta") == "con_y":
-                piezas["decena"] = tabla["decenas"].get(n - unidad_valor)
-                piezas["decena_valor"] = n - unidad_valor
+                dec_ = escribir_cifras([0] + cifras_de(n)[1:])
+                piezas["decena"] = tabla["decenas"].get(dec_)
+                piezas["decena_valor"] = dec_
             return {"tipo": f["nombre"], "junta": f.get("junta"), "piezas": piezas,
                     "desde": f["desde"], "hasta": f["hasta"]}
     return None
@@ -159,7 +160,7 @@ def de_donde_sale_el_nombre(n, saber):
 
 def _la_decena_que_le_toca(n):
     """La decena a la que pertenece un numero (para hablar del error de decena)."""
-    return (n // 10) * 10
+    return escribir_cifras([0] + cifras_de(n)[1:])
 
 
 def explicar_6_1_nombre(texto, saber=None):
@@ -184,7 +185,7 @@ def explicar_6_1_nombre(texto, saber=None):
     palabra = d["palabra"]
     if n > 100:
         # UNIDAD 6.7: el CIENTO se sabe de memoria (son nueve) y el resto se construye como antes.
-        cent, resto = divmod(n, 100)
+        cent, resto = escribir_cifras(cifras_de(n)[2:]), escribir_cifras(cifras_de(n)[:2])
         cientos = _centenas(saber)
         lineas.append("")
         if n == 1000:
@@ -323,13 +324,26 @@ def decidir_6_2_agrupar(escena, saber=None):
         r["cuantos_objetos"] = len(escena)
         return r
     total = len(escena)
-    decenas = total // 10
-    unidades = total % 10
+
+    def _agrupar(objetos):
+        """MECANICO: se van cogiendo los objetos uno a uno, uno por dedo; cuando se acaban los
+        diez dedos, ese monton es UNA decena y se empieza otro.  Lo que queda en la mano, sueltos."""
+        montones, mano = [], []
+        for o in objetos:
+            mano.append(o)
+            if len(mano) == len(DEDOS_CON_NOMBRE):   # la mano llena: diez
+                montones.append(mano)
+                mano = []
+        return montones, mano
+
+    montones, sueltos = _agrupar(escena)
+    decenas = len(montones)
+    unidades = len(sueltos)
     r["cuantos_objetos"] = total
     r["decenas"] = decenas
     r["unidades"] = unidades
-    r["montones"] = [escena[i * 10:(i + 1) * 10] for i in range(decenas)]
-    r["sueltos"] = escena[decenas * 10:]
+    r["montones"] = montones
+    r["sueltos"] = sueltos
     r["palabra_total"] = _palabra_de(total, secuencia)
     r["cifra_total"] = _tabla(saber).get(r["palabra_total"])
     r["decenas_en_palabra"] = _palabra_de(decenas, secuencia) if decenas else "cero"
@@ -347,13 +361,15 @@ def decidir_6_2_agrupar(escena, saber=None):
     else:
         r["como_se_dice"] = "%s unidad%s" % (r["unidades_en_palabra"], "" if unidades == 1 else "es")
     # COMPROBACION 1: los montones y los sueltos tienen que ser TODOS los objetos, ni uno mas ni uno menos.
-    r["reparto_cuadra"] = (decenas * 10 + unidades == total)
+    r["reparto_cuadra"] = (sum(len(m) for m in montones) + len(sueltos) == total
+                           and all(len(m) == len(DEDOS_CON_NOMBRE) for m in montones))
     # COMPROBACION 2 (la de Oak): el ORDEN de los objetos NO cambia el valor.  Se agrupa al reves.
     al_reves = list(reversed(escena))
-    r["decenas_al_reves"] = len(al_reves) // 10
-    r["unidades_al_reves"] = len(al_reves) % 10
+    m2, s2 = _agrupar(al_reves)
+    r["decenas_al_reves"] = len(m2)
+    r["unidades_al_reves"] = len(s2)
     r["el_orden_da_igual"] = (r["decenas_al_reves"] == decenas and r["unidades_al_reves"] == unidades)
-    r["ordeno_bien"] = unidades < 10 and decenas * 10 == total - unidades
+    r["ordeno_bien"] = len(sueltos) < len(DEDOS_CON_NOMBRE)
     return r
 
 
@@ -418,7 +434,7 @@ def explicar_6_2_agrupar(escena, saber=None):
                   % (r["cuantos_objetos"], r["decenas"]))
     lineas.append("  y %d suelta(s)." % r["unidades"])
     lineas.append("  Y sera el paso a multiplicar: %d veces una decena son %d (eso es la unidad 5.6,"
-                  " que aun no esta)." % (r["decenas"], r["decenas"] * 10))
+                  " que aun no esta)." % (r["decenas"], escribir_cifras([0] + cifras_de(r["decenas"]))))
     return "\n".join(lineas)
 
 
@@ -453,13 +469,19 @@ def decidir_6_3_sitio(texto, saber=None):
         return ce
     if r["conclusion"] != "se_puede":
         return r
-    d, u = valor // 10, valor % 10
+    cif = cifras_de(valor)                      # LEER: la ultima cifra son las unidades
+    d, u = escribir_cifras(cif[1:]), cif[0]
     r["decenas"] = d
     r["unidades"] = u
     # EL SITIO EN LA TABLA (la tabla de 100 es 1..100: fila 0 = 1..10, fila 9 = 91..100).
     if valor >= 1:
-        r["fila"] = (valor - 1) // 10
-        r["columna"] = (valor - 1) % 10 + 1
+        # la tabla va del 1 al 100 en filas de diez: una decena exacta cierra la fila de ANTES
+        # (el 10 es el ultimo de la fila 0) y va en la columna 10
+        if u == 0:
+            r["fila"] = leer(anterior(decir(d, saber), saber), saber)
+            r["columna"] = 10
+        else:
+            r["fila"], r["columna"] = d, u
         r["esta_en_la_tabla"] = True
     else:
         r["fila"] = None
@@ -533,7 +555,8 @@ def explicar_6_3_sitio(texto, saber=None):
                                                 r["dato"], r["palabra"]))
     lineas.append("  Y EL SITIO ES EL VALOR, no es lo mismo que la cantidad:")
     lineas.append("    en %d, el %d son %s; pero en %d el mismo %d serian %s decenas."
-                  % (v, v % 10, r["unidad_en_palabra"], v % 10 * 10 + v // 10, v % 10,
+                  % (v, cifras_de(v)[0], r["unidad_en_palabra"],
+                     escribir_cifras(list(reversed(cifras_de(v)))), cifras_de(v)[0],
                      r["unidad_en_palabra"]))
     if r["es_una_decena"]:
         lineas.append("")
@@ -541,7 +564,7 @@ def explicar_6_3_sitio(texto, saber=None):
         lineas.append("  dice '%s', sin 'y cero'." % r["palabra"])
     lineas.append("")
     lineas.append("  COMPROBACION: %d son %d decenas y %d unidades  ... %s"
-                  % (v, r["decenas"], r["unidades"], "SI" if r["decenas"] * 10 + r["unidades"] == v else "NO"))
+                  % (v, r["decenas"], r["unidades"], "SI" if decidir_6_5_juntar_decenas(str(r["decenas"]), str(r["unidades"]), saber).get("total") == v else "NO"))
     lineas.append("")
     lineas.append("RESULTADO: %s %s (fila %d, columna %d)"
                   % (r["dato"], "-> '%s'" % r["palabra"], r["fila"], r["columna"]))
@@ -603,9 +626,10 @@ def decidir_6_5_partir(texto, saber=None):
         return ce
     if r["conclusion"] != "se_puede":
         return r
-    d, u = valor // 10, valor % 10
+    cif = cifras_de(valor)                    # LEER la cifra: la ultima son las unidades
+    d, u = escribir_cifras(cif[1:]), cif[0]   # y lo de delante son las decenas
     r["decenas"], r["unidades"] = d, u
-    r["valor_de_las_decenas"] = d * 10
+    r["valor_de_las_decenas"] = escribir_cifras([0] + cif[1:])   # el 4 de 47 vale 40
     r["tabla"] = _tabla(saber)
     r["palabra_del_total"] = _palabra_de(valor, secuencia) if valor else "cero"
     # COMO SE DICE: "cuatro decenas y siete unidades" / "cuarenta y siete"
@@ -618,8 +642,8 @@ def decidir_6_5_partir(texto, saber=None):
     r["valor_posicional"] = ("%d vale %d (no %d)" % (d, r["valor_de_las_decenas"], d)
                              if d else "el 0 de las decenas no vale nada")
     # EL ERROR TIPICO DE OAK: sumar las cifras como si valieran lo mismo
-    r["si_sumara_las_cifras"] = d + u
-    r["seria_el_error"] = (d + u != valor)
+    r["si_sumara_las_cifras"] = _suma_con_metodo(d, u, saber)["total"]
+    r["seria_el_error"] = (r["si_sumara_las_cifras"] != valor)
     return r
 
 
@@ -653,7 +677,7 @@ def explicar_6_5_partir(texto, saber=None):
                       % (v, r["palabra_del_total"]))
     else:
         lineas.append("    DECENAS:   %d   ->  y NO vale %d: vale %d  (porque son %d decenas)"
-                      % (d, d, d * 10, d))
+                      % (d, d, r["valor_de_las_decenas"], d))
         lineas.append("    UNIDADES:  %d   ->  y esto SI vale %d" % (u, u))
     lineas.append("")
     lineas.append("  LA CUENTA ES:  %s" % r["cuenta_de_la_particion"])
@@ -674,7 +698,7 @@ def explicar_6_5_partir(texto, saber=None):
     lineas.append("")
     lineas.append("  COMPROBACION (juntarlo otra vez tiene que dar el numero):")
     lineas.append("    %d decenas y %d unidades son %d ... %s"
-                  % (d, u, v, "SI" if d * 10 + u == v else "NO"))
+                  % (d, u, v, "SI" if decidir_6_5_juntar_decenas(str(d), str(u), saber).get("total") == v else "NO"))
     lineas.append("")
     lineas.append("RESULTADO: %s decenas + %s unidades = %d"
                   % (d, u, v))
@@ -707,7 +731,12 @@ def decidir_6_5_juntar_decenas(decenas, unidades, saber=None):
     r["decenas"], r["unidades"] = d, u
     if r["conclusion"] != "se_puede":
         return r
-    total = d * 10 + u
+    # JUNTAR, mecanico: las decenas se escriben con un cero detras de su cifra (4 decenas -> 40,
+    # la palabra 'cuarenta') y desde ahi se cuentan las unidades una a una.  (Asi 3 decenas y 12
+    # unidades dan cuarenta y dos: contando, se pasa solo de una decena a la siguiente.)
+    base = escribir_cifras([0] + cifras_de(d))
+    c = contar_adelante(decir(base, saber), decir(u, saber), saber, con_dedos=False)
+    total = leer(c["resultado"], saber)
     r["total"] = total
     r["palabra"] = _palabra_de(total, secuencia) if total else "cero"
     r["cuenta"] = "%d decenas y %d unidades son %d" % (d, u, total)
@@ -735,7 +764,7 @@ def explicar_6_5_juntar_decenas(decenas, unidades, saber=None):
     d, u = r["decenas"], r["unidades"]
     lineas.append("")
     lineas.append("  CADA DECENA SON DIEZ (unidad 6.2), asi que %d decenas son %d"
-                  % (d, d * 10))
+                  % (d, escribir_cifras([0] + cifras_de(d))))
     lineas.append("  Y las unidades valen lo que dicen: %d" % u)
     lineas.append("")
     lineas.append("  SE JUNTAN:  %s" % r["cuenta"])
@@ -754,37 +783,31 @@ def explicar_6_5_juntar_decenas(decenas, unidades, saber=None):
 
 def _suma_con_metodo(a, b, saber):
     """
-    Hace una suma de DOS numeros DE UNA CIFRA y devuelve como se hizo, para poder ENSENARLO.
-    NO se sabe de memoria y NO se usa calculadora: se usa el metodo que ya esta ensenado
-    (los dedos, 7.1; y derivar, 7.2, cuando cruza el diez).
-
+    Hace una suma pequena (la de una columna) y devuelve COMO se hizo, para poder ENSENARLO.
+    El total SALE del metodo ensenado: los dedos (7.1) o, si no caben, derivar (7.2).  Ninguna
+    suma de Python.  Si no hay metodo que valga, NO se inventa: se dice.
     Lo cazo Carlos: la suma por columnas decia "7 + 5 = 12" a secas, y no decia de donde salia.
     """
-    secuencia = saber["secuencia_de_conteo"]["palabras"]
-    pa = _palabra_de(a, secuencia) if a else "cero"
-    pb = _palabra_de(b, secuencia) if b else "cero"
-    total = a + b
-    d = {"a": a, "b": b, "total": total,
-         "palabra_a": pa, "palabra_b": pb,
-         "palabra_total": _palabra_de(total, secuencia) if total else "cero"}
-    # El mecanismo: si los dedos no llegan (el segundo pasa de diez) o si derivar sirve, se elige.
-    ded = decidir_7_1_dedos(str(a), str(b), saber)
-    der = decidir_7_2_derivar(str(a), str(b), saber)
+    pa, pb = decir(a, saber), decir(b, saber)
+    ded = decidir_7_1_dedos(pa, pb, saber)
+    d = {"a": a, "b": b, "palabra_a": pa, "palabra_b": pb}
     if ded["conclusion"] == "se_puede":
         d["metodo"] = "dedos (7.1)"
         d["detalle"] = ded
+        d["palabra_total"] = ded["total"]
         d["como"] = ("se anota el %s y se cuentan %d dedos hacia adelante desde el %s"
                      % (pa, b, pa))
-    elif der["conclusion"] == "se_puede":
+    else:
+        der = decidir_7_2_derivar(pa, pb, saber)
+        if der["conclusion"] != "se_puede":
+            raise ValueError("no tengo metodo para %s + %s" % (a, b))
         d["metodo"] = "derivar (7.2)"
         d["detalle"] = der
+        d["palabra_total"] = der["total"]
         d["como"] = ("al %s le faltan %d para diez, y se parte el %s en %d y %d"
                      % (pa, der["faltan_para_diez"], pb, der["parte_para_diez"],
                         der["parte_que_sobra"]))
-    else:
-        d["metodo"] = None
-        d["detalle"] = None
-        d["como"] = None
+    d["total"] = leer(d["palabra_total"], saber)
     return d
 
 
@@ -817,17 +840,8 @@ def _orden(i, cuantas):
 
 
 def _partir_por_ordenes(valor):
-    """Las cifras de un numero, de la derecha a la izquierda: [unidades, decenas, centenas, ...].
-    Es PARTIR (6.5) repetido: quito las unidades, lo que queda son decenas; quito las decenas, lo
-    que queda son centenas.  Cada paso es 'cuantas decenas hay' -- lo que ya sabe la 6.5."""
-    cifras = []
-    resto = valor
-    while True:
-        resto, c = divmod(resto, 10)
-        cifras.append(c)
-        if resto == 0:
-            break
-    return cifras
+    """Las cifras de un numero, de la derecha a la izquierda (se LEEN de la cifra escrita)."""
+    return cifras_de(valor)
 
 
 def _nombre_o_cero(n, saber):
@@ -854,7 +868,7 @@ def decidir_6_7_centena(texto, saber=None):
     r["texto_dado"], r["palabra"], r["venia_en_cifra"], r["valor"] = texto, palabra, venia, valor
     if r["conclusion"] != "se_puede":
         return r
-    cifras = _partir_por_ordenes(valor)
+    cifras = cifras_de(valor)        # LEER la cifra simbolo a simbolo (unidades primero)
     while len(cifras) < 3:
         cifras.append(0)        # 47 -> 0 centenas, 4 decenas, 7 unidades
     r["cifras"] = cifras
@@ -862,23 +876,22 @@ def decidir_6_7_centena(texto, saber=None):
     r["unidades_de_mil"] = cifras[3] if len(cifras) > 3 else 0
     # LO QUE VALE CADA CIFRA (por su SITIO).  Se dice con nombres, no con 'x 100' (regla 6).
     valores = []
-    peso = 1
     for i, c in enumerate(cifras):
-        valores.append({"orden": _ORDENES[i][1], "cifra": c, "vale": c * peso,
+        vale = escribir_cifras([0] * i + [c])      # la cifra con sus ceros detras: 2 -> 200
+        valores.append({"orden": _ORDENES[i][1], "cifra": c, "vale": vale,
                         "dicho": _orden(i, c),
-                        "vale_en_palabra": _nombre_o_cero(c * peso, saber)})
-        peso = peso * 10
+                        "vale_en_palabra": _nombre_o_cero(vale, saber)})
     r["valores"] = valores
     partes = [_orden(i, c) for i, c in reversed(list(enumerate(cifras)))]
     r["dato"] = ", ".join(partes[:-1]) + " y " + partes[-1]
     r["como_se_parte"] = " + ".join(partes) + " = %d" % valor
     r["palabra"] = _nombre_o_cero(valor, saber)
     # EL ERROR TIPICO (NZ Maths): "204 no tiene decenas".  Si las tiene: las de las centenas tambien.
-    r["decenas_en_total"] = valor // 10
-    r["centenas_en_total"] = valor // 100
+    r["decenas_en_total"] = escribir_cifras(cifras[1:])     # todo lo de delante de las unidades
+    r["centenas_en_total"] = escribir_cifras(cifras[2:])
     r["ceros_de_relleno"] = [v["orden"] for v in valores[:-1] if v["cifra"] == 0 and valor >= 10]
     # COMPROBACIONES (sin cajas negras: juntar otra vez tiene que dar el numero)
-    r["recompone"] = sum(v["vale"] for v in valores) == valor
+    r["recompone"] = escribir_cifras(cifras) == valor     # se vuelven a escribir juntas
     r["nombre_coincide"] = (_valor_de_numero(r["palabra"], saber) == valor) if valor else True
     return r
 
@@ -911,7 +924,7 @@ def explicar_6_7_escalera(saber=None):
     for k in range(1, 10):
         solo = cent["cientos_solos"].get(k)
         con = cent["cientos"].get(k)
-        extra = "" if solo == con else "   (pero %d solo es '%s')" % (k * 100, solo)
+        extra = "" if solo == con else "   (pero %d solo es '%s')" % (escribir_cifras([0, 0, k]), solo)
         irr = "   <- IRREGULAR" if con in (cent.get("irregulares") or []) else ""
         lineas.append("    %d centenas -> %s ...%s%s" % (k, con, extra, irr))
     lineas.append("    y 10 centenas -> %s" % (cent.get("mil") or "mil"))
