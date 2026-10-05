@@ -82,7 +82,7 @@ try:
     comprobar("C1 8 + ? = 5: imposible (si llega algo no puede haber menos)", v, "imposible")
     comprobar("C2 ? - 9 = 3 -> 12 (deshacer: 3 + 9)", E("? - 9 = 3")[0], 12)
     comprobar("C3 ? + ? = 10: dos huecos, se dice", E("? + ? = 10")[0], "dos_huecos")
-    comprobar("C4 8 + 4 = ? + 5: la balanza (E.2), todavia no", E("8 + 4 = ? + 5")[0], "balanza")
+    comprobar("C4 8 + 4 = ? + 5: la balanza (desde E.2 se resuelve: 7)", E("8 + 4 = ? + 5")[0], 7)
     comprobar("C5 8 + 3 = 11: no hay hueco", E("8 + 3 = 11")[0], "sin_hueco")
     comprobar("C6 los huecos ?, _, __ y el cuadradito", [E(x)[0] for x in
               ("8 + ? = 11", "8 + _ = 11", "8 + __ = 11", "8 + □ = 11")], [3, 3, 3, 3])

@@ -57,8 +57,15 @@ verdad: 8 + 4 = 12 + 5            | ??         | ver el razonamiento
 11 - ? = 8                        | 3
 8 + ? = 5                         | imposible
 ? + ? = 10                        | dos_huecos
-8 + 4 = ? + 5                     | balanza    | eso es E.2
 47 + ? = 77                       | ??         | ver el razonamiento
+
+# --- E.2 el = como balanza ---
+8 + 4 = ? + 5                     | 7          | no 12 ni 17
+57 + 22 = ? + 21                  | 58         | sin calcular los lados
+8 + 4 = 8 + ?                     | 4          | el mismo numero en los dos platos
+15 - 7 = ? - 6                    | 14         | calculando un plato
+8 + 4 = ? + 13                    | imposible  | el otro plato ya pesa mas
+8 + 4 = ? + 5                     | ??         | ver las respuestas equivocadas de siempre
 
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades

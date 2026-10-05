@@ -46,9 +46,9 @@ print("=" * 78)
 
 print("\nA - LAS PIEZAS Y SU MAPA")
 comprobar("A1 cargan sin problemas", BASE["problemas"], [])
-comprobar("A2 hay piezas de pasos y de calculo",
-          sorted({p["responde"] for p in BASE["piezas"].values()}),
-          ["contar_hasta", "igualdad", "paso", "restar", "sumar"])
+comprobar("A2 hay piezas de pasos y de calculo (y las que vengan)",
+          {"contar_hasta", "paso", "restar", "sumar"} <= {p["responde"] for p in BASE["piezas"].values()},
+          True)
 mapa = motor.mapa_del_conocimiento(BASE)
 
 

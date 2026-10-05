@@ -138,9 +138,7 @@ def decidir_ecuacion(texto, saber=None):
                  "Eso es de mas adelante (NCETM 1.31: problemas con dos desconocidos)")
         return r
     if m.get("balanza"):
-        r.update(conclusion="balanza", porque="hay cuentas a los DOS lados del =: eso es la BALANZA "
-                 "(paso E.2), todavia no lo se")
-        return r
+        return _resolver_balanza(e, r, saber)
     if "error" in m:
         r.update(conclusion="no_entiendo", porque=m["error"])
         return r
@@ -173,6 +171,8 @@ def explicar_ecuacion(texto, saber=None):
         L.append("")
         L.append("RESULTADO: %s" % r["conclusion"])
         return "\n".join(L)
+    if r.get("balanza"):
+        return _explicar_balanza(r)
     L.append("  1. LEER: es %s." % r["tipo"])
     L.append("     Contado como una historia: %s" % r["historia"])
     if r["izquierda"]:
@@ -200,3 +200,80 @@ def explicar_ecuacion(texto, saber=None):
     L.append("")
     L.append("RESULTADO: %d" % r["valor"])
     return "\n".join(L)
+
+
+def _resolver_balanza(e, r, saber):
+    """E.2: cuentas a los DOS lados del =.  Pregunta a las piezas de 'balanza'."""
+    izq, der = e["lados"]
+    con_hueco, completo = (izq, der) if _huecos(izq) else (der, izq)
+    r["balanza"] = True
+    r["tipo"] = "una BALANZA: hay cuentas a los dos lados del =, y los dos platos pesan lo mismo"
+    b = aplicar("balanza", {"completo": completo, "con_hueco": con_hueco}, saber)
+    r["paso"] = b
+    if b["conclusion"] != "hecho":
+        r.update(conclusion="imposible", porque=b.get("porque"))
+        return r
+    v = b["valor"]
+    r["valor"] = v
+    con_numero = " = ".join(_escribir_lado(l, str(v)) for l in e["lados"])
+    r["comprobacion"] = con_numero
+    r["comprobacion_ok"] = decidir_igualdad(con_numero, saber).get("valor") == "verdadero"
+    # LAS DOS RESPUESTAS EQUIVOCADAS FAMOSAS (Falkner, Levi y Carpenter): poner lo que 'da' el plato
+    # completo (12), o sumar todo lo que se ve (17).  Se prueban en el hueco con E.0.
+    trampas = []
+    vc = aplicar("sumar" if completo["op"] == "+" else "restar",
+                 {"a": completo["a"], "b": completo["b"]}, saber)
+    if vc["conclusion"] == "hecho":
+        candidatos = [(vc["valor"], "poner lo que da %s (leer el = como 'da')" % _escribir_lado(completo))]
+        k = con_hueco["a"] if con_hueco["b"] == "?" else con_hueco["b"]
+        if completo["op"] == "+" and con_hueco["op"] == "+":
+            todo = aplicar("sumar", {"a": vc["valor"], "b": k}, saber)
+            if todo["conclusion"] == "hecho":
+                candidatos.append((todo["valor"], "sumar todo lo que se ve"))
+        for n, porque in candidatos:
+            if n == v:
+                continue
+            t = " = ".join(_escribir_lado(l, str(n)) for l in e["lados"])
+            ok = decidir_igualdad(t, saber).get("valor")
+            trampas.append("%d NO (%s): %s es %s" % (n, porque, t, (ok or "imposible").upper()))
+    r["trampas"] = trampas
+    r["conclusion"] = "hecho" if r["comprobacion_ok"] else "no_cuadra"
+    return r
+
+
+def _explicar_balanza(r):
+    L = ["PREGUNTA (E.2): que numero va en el hueco?   %s" % r["ecuacion"], ""]
+    L.append("  1. LEER: es %s." % r["tipo"])
+    L.append("     (el = no dice 'da': dice que los DOS lados son el mismo numero, E.0)")
+    L.append("")
+    L.append("  2. PRUEBO TODO LO QUE SE:")
+    b = r["paso"]
+    elegida = b.get("pieza", {}).get("id")
+    for f in b["candidatos"]:
+        if f.get("descartado"):
+            L.append("        [no]  %-52s porque %s" % (f["nombre"], f["descartado"]))
+        elif f.get("no_salio"):
+            L.append("        [no]  %-52s no salio: %s" % (f["nombre"], f["no_salio"]))
+        elif f["id"] == elegida:
+            L.append("        [SI]  %-52s <- el mas corto que encaja: ESTE" % f["nombre"])
+        else:
+            L.append("        [si]  %-52s tambien servia (es mas largo)" % f["nombre"])
+    L.append("")
+    if r["conclusion"] == "imposible":
+        L.append("  NO HAY NUMERO QUE VAYA EN EL HUECO: %s" % r.get("porque"))
+        L.append("")
+        L.append("RESULTADO: imposible")
+        return "\n".join(L)
+    L.append("  3. %s" % b["resultado"]["cuenta"])
+    L.append("")
+    L.append("  4. COMPRUEBO (E.0): pongo el %d en el hueco -> %s ... %s"
+             % (r["valor"], r["comprobacion"], "VERDADERO" if r["comprobacion_ok"] else "FALSO"))
+    if r.get("trampas"):
+        L.append("")
+        L.append("  5. LAS RESPUESTAS EQUIVOCADAS DE SIEMPRE, y por que no:")
+        for t in r["trampas"]:
+            L.append("        %s" % t)
+    L.append("")
+    L.append("RESULTADO: %d" % r["valor"])
+    return "\n".join(L)
+

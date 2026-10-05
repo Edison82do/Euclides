@@ -612,5 +612,14 @@ ecuacion: ? - 3 = 8                        | 11 | separar, comienzo desconocido
 ecuacion: 5 = ? - 3                        | 8 | el = al reves
 ecuacion: 8 + ? = 5                        | imposible | si llega algo no hay menos
 ecuacion: ? + ? = 10                       | dos_huecos | de mas adelante
-ecuacion: 8 + 4 = ? + 5                    | balanza | E.2
+ecuacion: 8 + 4 = ? + 5                    | 7 | la balanza (E.2)
 ecuacion: 8 + 3 = 11                       | sin_hueco | para eso esta verdad:
+# ---------------------------------------------------------------------------
+# PASO E.2 - EL = COMO BALANZA (Falkner, Levi y Carpenter; NCETM 1.29)
+# ---------------------------------------------------------------------------
+ecuacion: 57 + 22 = ? + 21                 | 58 | compensando, sin calcular
+ecuacion: 8 + 4 = 8 + ?                    | 4 | el mismo numero
+ecuacion: ? + 4 = 8 + 5                    | 9 | el hueco a la izquierda
+ecuacion: 15 - 7 = ? - 6                   | 14 | calculando un plato
+ecuacion: 8 + 4 = 15 - ?                   | 3 | operaciones distintas
+ecuacion: 8 + 4 = ? + 13                   | imposible | el otro plato pesa mas

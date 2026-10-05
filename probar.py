@@ -304,12 +304,20 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         ? + 3 = 11             -> 8    el COMIENZO desconocido: deshago (11 - 3)
         5 = ? - 3              -> 8    el hueco al otro lado del = da igual
         11 - ? = 8             -> 3    separar con el cambio desconocido
-        8 + ? = 5              -> imposible     ? + ? = 10 -> dos huecos     8 + 4 = ? + 5 -> E.2
+        8 + ? = 5              -> imposible     ? + ? = 10 -> dos huecos
         Huecos: ?  _  __  o el cuadradito.  Las palabras de alrededor no molestan.
         Cada ecuacion se cuenta como una HISTORIA y la resuelven las piezas de los problemas (R.1);
         luego se COMPRUEBA poniendo el numero en el hueco (verdad:, E.0).
         ecuacion: ... / hueco: ...  -> lo mismo con la orden delante.
         Y escrito directamente: '8 + 3 = 11' -> verdad,  '8 + 3' -> calcular.
+
+  BALANZA  ->  cuentas a los DOS lados del = (paso E.2): los dos platos pesan lo mismo
+        8 + 4 = ? + 5          -> 7    compensar: 5 es uno mas que 4, el hueco uno menos que 8
+                                       (y dice por que NO 12 ni 17, las respuestas de siempre)
+        57 + 22 = ? + 21       -> 58   sin calcular los lados
+        8 + 4 = 8 + ?          -> 4    el mismo numero en los dos platos
+        15 - 7 = ? - 6         -> 14   calculando un plato (8) y luego E.1
+        8 + 4 = ? + 13         -> imposible (el otro plato ya pesa mas)
 
   VERDAD  ->  el = : VERDADERO o FALSO? (paso E.0; 1.OA.D.7)
         verdad: 4 + 1 = 5 + 2  -> FALSO (5 y 7.  OJO: 4 + 1 da 5, pero el = no dice 'da')

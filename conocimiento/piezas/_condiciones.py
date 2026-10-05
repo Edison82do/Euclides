@@ -27,6 +27,29 @@ def _acaba_en_nueve(n, u):
     return len(c) == 2 and c[0] == 9 and c[1] != 9
 
 
+def _conocido(s):
+    h = s["con_hueco"]
+    return h["a"] if h["b"] == "?" else h["b"]
+
+
+def _comparten(s):
+    if "completo" not in s:
+        return False
+    c, h = s["completo"], s["con_hueco"]
+    if c["op"] != h["op"]:
+        return False
+    if c["op"] == "+":
+        return _conocido(s) in (c["a"], c["b"])
+    return (h["b"] == "?" and h["a"] == c["a"]) or (h["a"] == "?" and h["b"] == c["b"])
+
+
+def _cerca(k, p, u):
+    """De k a p (o de p a k) caben los pasos en los dedos."""
+    a, b = (p, k) if u.viene_despues(u.decir(k), u.decir(p)) else (k, p)
+    d = u.contar_hasta(u.decir(a), u.decir(b))
+    return d is not None and u.levantar_dedos(d) is not None
+
+
 def _menor(s, u):
     return s["b"] if u.viene_despues(u.decir(s["a"]), u.decir(s["b"])) else s["a"]
 
@@ -66,6 +89,13 @@ CONDICIONES = {
     "la_suma_esta_en_la_memoria": lambda s, u: u.recuerdo("%d + %d" % (s["a"], s["b"])) is not None,
     "la_resta_esta_en_la_memoria": lambda s, u: u.recuerdo("%d - %d" % (s["a"], s["b"])) is not None,
     "el_segundo_no_es_menor": lambda s, u: not u.viene_despues(u.decir(s["a"]), u.decir(s["b"])),
+    # ---- la balanza (paso E.2): situacion {"completo": {a, op, b}, "con_hueco": {a, op, b} con un "?"}
+    "hay_un_plato_completo": lambda s, u: "completo" in s and "con_hueco" in s,
+    "comparten_un_numero": lambda s, u: _comparten(s),
+    "los_dos_lados_son_sumas": lambda s, u: "completo" in s and s["completo"]["op"] == "+"
+    and s["con_hueco"]["op"] == "+",
+    "hay_una_pareja_cerca": lambda s, u: any(_cerca(_conocido(s), p, u)
+                                             for p in (s["completo"]["a"], s["completo"]["b"])),
     # ---- el = (paso E.0): situacion {"lados": [{"texto", "n"} o {"texto", "a", "op", "b"}, ...]}
     "hay_dos_lados_o_mas": lambda s, u: len(s.get("lados", ())) >= 2,
     "todos_los_lados_estan_escritos_igual": lambda s, u: len(s.get("lados", ())) >= 2
