@@ -41,26 +41,28 @@ def cargar_memoria(ruta=None):
     ruta = ruta or ruta_memoria()
     if not os.path.exists(ruta):
         return {}
-    st = os.stat(ruta)
-    firma = (st.st_mtime_ns, st.st_size)
-    g = _CACHE_MEMORIA.get(ruta)
-    if g and g[0] == firma:
-        return g[1]
-    hechos = {}
     with open(ruta, encoding="utf-8") as f:
-        for linea in f:
-            s = linea.strip()
-            if not s or s.startswith("#"):
-                continue
-            partes = [p.strip() for p in s.split("|")]
-            cuenta, _, valor = partes[0].partition("=")
-            try:
-                hechos[cuenta.strip()] = {"valor": int(valor.strip()),
-                                          "como": partes[1] if len(partes) > 1 else "?",
-                                          "comprobado": partes[2] if len(partes) > 2 else "?",
-                                          "fecha": partes[3] if len(partes) > 3 else "?"}
-            except ValueError:
-                continue
+        texto = f.read()
+    # la firma es el TEXTO entero (la hora del archivo no basta: un cambio en el mismo instante y
+    # del mismo largo, como 13 -> 14, no se veria)
+    g = _CACHE_MEMORIA.get(ruta)
+    if g and g[0] == texto:
+        return g[1]
+    firma = texto
+    hechos = {}
+    for linea in texto.splitlines():
+        s = linea.strip()
+        if not s or s.startswith("#"):
+            continue
+        partes = [p.strip() for p in s.split("|")]
+        cuenta, _, valor = partes[0].partition("=")
+        try:
+            hechos[cuenta.strip()] = {"valor": int(valor.strip()),
+                                      "como": partes[1] if len(partes) > 1 else "?",
+                                      "comprobado": partes[2] if len(partes) > 2 else "?",
+                                      "fecha": partes[3] if len(partes) > 3 else "?"}
+        except ValueError:
+            continue
     _CACHE_MEMORIA[ruta] = (firma, hechos)
     return hechos
 

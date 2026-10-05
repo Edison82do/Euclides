@@ -286,6 +286,14 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         solo las carga, las prueba todas, descarta y aplica.  Una pieza nueva = un archivo nuevo.
         Para calcular elige el METODO MAS CORTO que encaja: hacer diez, los dedos, las columnas.
 
+  CALCULAR  ->  una cuenta suelta: TODOS los metodos que tengo, cual encaja y cual uso (paso 4)
+        calcular: 47 + 30      -> 77   de diez en diez: 57, 67, 77 (la cifra de las decenas sube)
+        calcular: 29 + 14      -> 43   compensar: al 29 le doy uno del 14 -> 30 + 13
+        calcular: 52 - 29      -> 23   compensar: quito 30 (uno de mas) y devuelvo uno
+        calcular sin memoria: 6 + 7  -> 13   casi dobles: 6 + 6 = 12 (de memoria) y uno mas
+        calcular: 8 + 5        -> 13   de memoria (si ya lo aprendi; si no, haciendo diez)
+        Cada tecnica es una PIEZA con sus condiciones: donde no encaja se descarta con su porque.
+
   MEMORIA  ->  hechos que se saben de memoria, GANADOS (paso 3)
         aprender: sumas        -> practica las 100 sumas de dos numeros de una cifra y las guarda
         aprender: restas       -> sus restas (la familia de cada suma: 8+5=13 -> 13-5=8)
@@ -357,6 +365,11 @@ def preguntar(texto, saber):
     try:
         if t.lower().strip() in ("piezas", "mapa"):
             return "las_piezas", None
+        if t.lower().startswith("calcular"):
+            salida = motor.explicar_calculo(t[len("calcular"):].strip(), saber)
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
         if t.lower().strip() == "memoria":
             return "%d hechos" % len(motor.cargar_memoria()), None
         if t.lower().startswith("problema"):

@@ -752,6 +752,8 @@ def explicar_pregunta(texto, saber=None):
     try:
         if t.lower().strip() in ("piezas", "mapa"):
             return explicar_piezas(saber)
+        if t.lower().startswith("calcular"):
+            return explicar_calculo(t[len("calcular"):].strip(), saber)
         if t.lower().strip() == "memoria":
             return explicar_memoria(saber)
         if t.lower().startswith("aprender"):

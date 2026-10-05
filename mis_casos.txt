@@ -560,3 +560,15 @@ problema: Ana tiene 5 cromos. Le dan algunos. Ahora tiene 8. Cuantos le dieron? 
 problema: Hay 12 pajaros. Se van algunos. Ahora hay 7. Cuantos se fueron?          | 5 | CGI: separar con el cambio desconocido
 problema: Ana tiene 5. Le dan algunas. Ahora tiene 3. Cuantas le dieron?             | sin_solucion | si le dan, no puede tener menos
 piezas                                     | las_piezas | el mapa del conocimiento (paso 2, 5 oct 2026)
+# ---------------------------------------------------------------------------
+# PASO 4 - LAS TECNICAS PARA IR MAS RAPIDO (5 oct 2026): cada una es una pieza
+# ---------------------------------------------------------------------------
+calcular: 47 + 30                          | 77 | de diez en diez: 57, 67, 77
+calcular: 95 + 30                          | 125 | de diez en diez, pasando por la centena
+calcular: 29 + 14                          | 43 | compensar: 30 + 13
+calcular: 14 + 29                          | 43 | compensar en el otro orden
+calcular: 52 - 29                          | 23 | compensar: quito 30 y devuelvo uno
+calcular: 105 - 30                         | 75 | de diez en diez hacia atras, a traves de un cero
+calcular: 77 - 80                          | imposible | no hay restas negativas
+calcular: 99 + 14                          | 113 | 99 no se compensa con decenas: columnas
+calcular: hola                             | no_entiendo | sin cuenta no hay nada que calcular

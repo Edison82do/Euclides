@@ -28,6 +28,7 @@ cada pregunta (conocimiento/piezas/_objetivos.py).  Una pieza nueva NO toca este
 import importlib.util
 import os
 import sys  # noqa: F401
+import time
 
 
 class NoSalio(Exception):
@@ -62,10 +63,14 @@ def cargar_piezas(directorio=None):
     """Carga todas las piezas de la carpeta (una vez; si un archivo cambia, se vuelve a cargar).
     Devuelve {"piezas", "condiciones", "de_aplicacion", "objetivos", "problemas"}."""
     directorio = directorio or dir_piezas()
+    guardado = _CACHE_PIEZAS.get(directorio)
+    # mirar los archivos (en un disco compartido es lento) como mucho una vez por segundo
+    if guardado and time.monotonic() - guardado[2] < 1.0:
+        return guardado[1]
     firma = tuple(sorted((e.name, e.stat().st_mtime_ns, e.stat().st_size)
                          for e in os.scandir(directorio) if e.name.endswith(".py")))
-    guardado = _CACHE_PIEZAS.get(directorio)
     if guardado and guardado[0] == firma:
+        _CACHE_PIEZAS[directorio] = (firma, guardado[1], time.monotonic())
         return guardado[1]
     base = {"piezas": {}, "condiciones": {}, "de_aplicacion": set(), "objetivos": {},
             "problemas": [], "directorio": directorio}
@@ -117,7 +122,7 @@ def cargar_piezas(directorio=None):
         if p["responde"] not in base["objetivos"]:
             base["problemas"].append("%s: responde a '%s', que no esta en _objetivos.py"
                                      % (p["id"], p["responde"]))
-    _CACHE_PIEZAS[directorio] = (firma, base)
+    _CACHE_PIEZAS[directorio] = (firma, base, time.monotonic())
     return base
 
 
@@ -140,6 +145,8 @@ class _Lo_que_puede_usar:
         self.cifras_de = cifras_de
         self.escribir_cifras = escribir_cifras
         self.sumar_por_columnas = lambda a, b: sumar_por_columnas(a, b, s)
+        self.subir_una_decena = lambda v: subir_una_decena(v, s)
+        self.bajar_una_decena = lambda v: bajar_una_decena(v, s)
         # la MEMORIA de hechos (memoria.py): mirar si algo se sabe de memoria
         self.recuerdo = lambda clave: cargar_memoria().get(clave)
 
@@ -244,3 +251,54 @@ def explicar_piezas(saber=None):
         L.append("")
     L.append("RESULTADO: %d piezas" % len(base["piezas"]))
     return "\n".join(L)
+
+
+def explicar_calculo(texto, saber=None):
+    """
+    'calcular: 47 + 30'  /  'calcular sin memoria: 6 + 7'  (paso 4).
+    Ensena TODOS los metodos que tengo para esa cuenta: cual encaja, cual no (y por que), y cual
+    uso -- el mas corto que encaja y que sale.
+    """
+    import re
+    if saber is None:
+        saber = cargar_conocimiento()
+    t = texto.strip().lower()
+    sin_memoria = "sin memoria" in t
+    m = re.search(r"(\d+)\s*([+-])\s*(\d+)", t)
+    if not m:
+        return ("NO ENTIENDO ESTO: dame una suma o una resta.\n"
+                "   se escribe asi:  calcular: 47 + 30     o     calcular sin memoria: 6 + 7")
+    a, op, b = int(m.group(1)), m.group(2), int(m.group(3))
+    if decir(a, saber) is None or decir(b, saber) is None:
+        return "NO ENTIENDO ESTO: solo se contar hasta mil."
+    pregunta = "sumar" if op == "+" else "restar"
+    sit = {"a": a, "b": b}
+    if sin_memoria:
+        sit["sin_memoria"] = True
+    r = aplicar(pregunta, sit, saber)
+    L = ["PREGUNTA: %d %s %d%s  (sin calculadora: pruebo TODOS los metodos que tengo)"
+         % (a, op, b, "   SIN MEMORIA" if sin_memoria else ""), ""]
+    elegida = r.get("pieza", {}).get("id")
+    for f in r["candidatos"]:
+        if f.get("descartado"):
+            L.append("    [no]  %-34s porque %s" % (f["nombre"], f["descartado"]))
+        elif f.get("no_salio"):
+            L.append("    [no]  %-34s encajaba, pero NO SALIO: %s" % (f["nombre"], f["no_salio"]))
+        elif f["id"] == elegida:
+            L.append("    [SI]  %-34s <- el mas corto que encaja: ESTE" % f["nombre"])
+        else:
+            L.append("    [si]  %-34s tambien servia (es mas largo)" % f["nombre"])
+    L.append("")
+    if r["conclusion"] != "hecho":
+        L.append("  NO SE PUEDE: %s" % r.get("porque", r["conclusion"]))
+        L.append("")
+        L.append("RESULTADO: %s" % r["conclusion"])
+        return "\n".join(L)
+    res = r["resultado"]
+    L.append("  METODO: %s" % res["metodo"])
+    L.append("  CUENTA: %s" % res["cuenta"])
+    L.append("  LA VUELTA: %s ... %s" % (res.get("vuelta"), "SI" if res.get("vuelta_ok") else "NO"))
+    L.append("")
+    L.append("RESULTADO: %d" % r["valor"])
+    return "\n".join(L)
+

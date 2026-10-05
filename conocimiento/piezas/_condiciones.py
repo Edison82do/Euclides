@@ -15,6 +15,22 @@ def _tipo(s):
     return s.get("tipo")
 
 
+def _decenas_justas(n, u):
+    """30, 40 ... 90: dos cifras y la de las unidades es un cero (se LEEN las cifras)."""
+    c = u.cifras_de(n)
+    return len(c) == 2 and c[0] == 0
+
+
+def _acaba_en_nueve(n, u):
+    """19, 29 ... 89: dos cifras, acaba en nueve, y la decena siguiente sigue siendo de dos cifras."""
+    c = u.cifras_de(n)
+    return len(c) == 2 and c[0] == 9 and c[1] != 9
+
+
+def _menor(s, u):
+    return s["b"] if u.viene_despues(u.decir(s["a"]), u.decir(s["b"])) else s["a"]
+
+
 CONDICIONES = {
     # ---- los pasos de un problema (resolvedor, R.1)
     "es_un_cambio": lambda s, u: _tipo(s) in ("cambio", "deshacer", "cambio_desconocido"),
@@ -50,6 +66,16 @@ CONDICIONES = {
     "la_suma_esta_en_la_memoria": lambda s, u: u.recuerdo("%d + %d" % (s["a"], s["b"])) is not None,
     "la_resta_esta_en_la_memoria": lambda s, u: u.recuerdo("%d - %d" % (s["a"], s["b"])) is not None,
     "el_segundo_no_es_menor": lambda s, u: not u.viene_despues(u.decir(s["a"]), u.decir(s["b"])),
+    # ---- las tecnicas para ir mas rapido (paso 4)
+    "el_segundo_son_decenas_justas": lambda s, u: _decenas_justas(s["b"], u),
+    "son_casi_dobles": lambda s, u: u.siguiente(u.decir(s["a"])) == u.decir(s["b"])
+    or u.siguiente(u.decir(s["b"])) == u.decir(s["a"]),
+    "el_doble_lo_se_de_memoria": lambda s, u: u.recuerdo("%d + %d" % (_menor(s, u), _menor(s, u))) is not None,
+    "ninguno_es_cero": lambda s, u: s["a"] != 0 and s["b"] != 0,
+    "uno_acaba_en_nueve": lambda s, u: _acaba_en_nueve(s["a"], u) or _acaba_en_nueve(s["b"], u),
+    "el_de_abajo_acaba_en_nueve": lambda s, u: _acaba_en_nueve(s["b"], u),
+    "el_de_arriba_llega_a_la_decena": lambda s, u: not u.viene_despues(
+        u.siguiente(u.decir(s["b"])), u.decir(s["a"])),
 }
 
 DE_APLICACION = {"hay_bastantes", "hay_bastantes_al_deshacer", "la_parte_cabe_en_el_todo",

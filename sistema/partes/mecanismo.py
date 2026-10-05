@@ -155,6 +155,39 @@ def escribir_cifras(cifras):
     return int(texto) if texto else 0
 
 
+def subir_una_decena(valor, saber):
+    """SALTAR DE DIEZ EN DIEZ (paso 4): 47 -> 57.  Es ESCRIBIR, no contar: la cifra de las decenas
+    pasa a la siguiente; si era un nueve se vuelve cero y la de al lado sube (como en el
+    cuentakilometros).  None si se sale de la lista."""
+    cif = cifras_de(valor)
+    i = 1
+    while True:
+        while len(cif) <= i:
+            cif.append(0)
+        if cif[i] != 9:
+            cif[i] = leer(siguiente(decir(cif[i], saber), saber), saber)
+            break
+        cif[i] = 0
+        i = i + 1
+    total = escribir_cifras(cif)
+    return total if decir(total, saber) is not None else None
+
+
+def bajar_una_decena(valor, saber):
+    """Lo contrario: 77 -> 67.  Si la cifra de las decenas es un cero, se vuelve nueve y la de al
+    lado baja (como al restar a traves de un cero).  None si no hay una decena que quitar."""
+    cif = cifras_de(valor)
+    i = 1
+    while True:
+        if len(cif) <= i:
+            return None
+        if cif[i] != 0:
+            cif[i] = leer(anterior(decir(cif[i], saber), saber), saber)
+            return escribir_cifras(cif)
+        cif[i] = 9
+        i = i + 1
+
+
 # ------------------------------------------------- piezas compuestas (todas con lo de arriba)
 
 def coleccion_de(palabra, saber):

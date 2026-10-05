@@ -20,6 +20,13 @@ dedos: 12 - 5                     | 12 - 5 = 7
 columnas: 247 + 385               | 247 + 385 = 632
 columnas: 500 - 247               | 500 - 247 = 253    | a traves de un cero
 
+# --- tecnicas para ir mas rapido (paso 4): ves TODOS los metodos y cual elige ---
+calcular: 47 + 30                 | 77    | de diez en diez
+calcular: 29 + 14                 | 43    | compensar
+calcular: 52 - 29                 | 23    | compensar
+calcular sin memoria: 6 + 7       | 13    | casi dobles
+calcular: 8 + 5                   | ??    | de memoria
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete

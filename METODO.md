@@ -67,6 +67,14 @@ comprobar**: un recuerdo que no cuadra no se usa y el motor pasa al método sigu
 `sin_memoria` se pide el camino largo. Por ahora: las 100 sumas de dos números de una cifra y sus
 100 restas (Common Core 2.OA.B.2). Las pruebas usan memoria **vacía** salvo `test_memoria.py`.
 
+### 3d. Las técnicas (paso 4, 5 oct 2026)
+Cada técnica es **una pieza más** con su rapidez: memoria 1 · de diez en diez 5 · compensar 6 ·
+casi dobles 8 · hacer diez 10 · dedos 20 · columnas 40. El motor usa la más corta que encaja y
+sale. Los **hechos derivados** (casi dobles) solo encajan si el hecho del que salen ya se sabe de
+memoria. Una pieza puede usar **otra pieza por su nombre** (compensar usa de diez en diez), nunca
+la pregunta entera a la que ella misma responde (sería una vuelta en el mapa). `calcular: 47 + 30`
+enseña todos los métodos, cuál encaja y cuál se usa.
+
 **Git**: un commit por unidad cerrada (y antes de cualquier cambio grande). `git log --oneline`.
 
 ## 4. El mecanismo: cómo calcula sin calculadora (`sistema/partes/mecanismo.py`)
@@ -151,3 +159,8 @@ Las formas: *X tiene N*, *hay N*, *X gana/compra/le dan N*, *X pierde/regala/se 
 - **Una palabra, un sentido** (pasó con «grupo» y con «uno»).
 - **Nunca recortar la salida de una prueba** para darla por buena: el runner enseña entero lo que falla.
 - **`silla,silla,silla` es UNA silla**: el nombre es el identificador.
+- **La hora de un archivo no basta para saber si cambió**: `8 + 5 = 13` -> `14` en el mismo instante y
+  con el mismo largo no se veía (la memoria guardada en caché daba el recuerdo viejo). La memoria
+  compara el TEXTO entero.
+- **Mirar archivos en el disco compartido es lento**: las piezas se revisan como mucho una vez por
+  segundo (una prueba pasó de 50 s a 3 s).

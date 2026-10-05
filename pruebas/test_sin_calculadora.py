@@ -35,6 +35,7 @@ LISTA_BLANCA = {
     ("resolver.py", "compilar"): "construir los patrones de lectura (texto)",
     ("resolver.py", "_montar"): "mensajes de 'no entiendo' (texto)",
     ("resolver.py", "quien_es"): "mensajes de 'no entiendo' (texto)",
+    ("piezas.py", "cargar_piezas"): "el RELOJ: mirar los archivos como mucho una vez por segundo",
 }
 OPS = (ast.Add, ast.Sub, ast.Mult, ast.FloorDiv, ast.Mod, ast.Div, ast.Pow)
 
