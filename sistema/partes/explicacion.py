@@ -752,6 +752,17 @@ def explicar_pregunta(texto, saber=None):
     try:
         if t.lower().strip() in ("piezas", "mapa"):
             return explicar_piezas(saber)
+        if t.lower().strip() == "memoria":
+            return explicar_memoria(saber)
+        if t.lower().startswith("aprender"):
+            resto = t[len("aprender"):].strip().lstrip(":").strip()
+            return explicar_aprender(resto, saber)
+        if t.lower().startswith("olvidar"):
+            resto = t[len("olvidar"):].strip().lstrip(":").strip().lower()
+            if resto != "todo":
+                return "NO ENTIENDO ESTO: se escribe  olvidar: todo   (borra la memoria de hechos)"
+            olvidar_todo()
+            return "PREGUNTA: olvidar todo lo que se de memoria\n\nRESULTADO: olvidado (vuelvo a calcularlo todo)"
         if t.lower().startswith("problema"):
             resto = t[len("problema"):].strip()
             if resto.startswith(":"):

@@ -286,6 +286,15 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         solo las carga, las prueba todas, descarta y aplica.  Una pieza nueva = un archivo nuevo.
         Para calcular elige el METODO MAS CORTO que encaja: hacer diez, los dedos, las columnas.
 
+  MEMORIA  ->  hechos que se saben de memoria, GANADOS (paso 3)
+        aprender: sumas        -> practica las 100 sumas de dos numeros de una cifra y las guarda
+        aprender: restas       -> sus restas (la familia de cada suma: 8+5=13 -> 13-5=8)
+        memoria                -> que se de memoria y COMO lo aprendi
+        olvidar: todo          -> borra la memoria (vuelve a calcularlo todo)
+        Un hecho solo entra si lo CALCULE sin memoria, lo COMPROBE por la vuelta y, si hay otro
+        metodo, por un SEGUNDO camino.  Al recordarlo lo vuelvo a comprobar: si no cuadra, no lo uso.
+        (Common Core 2.OA.B.2: al final de 2.o, 'know from memory all sums of two one-digit numbers'.)
+
   Los atributos van entre parentesis como nombre=valor, separados por comas;
   las cosas entre si van separadas por punto y coma.
   Si repites un nombre en una escena 0.1, es la MISMA entidad senalada otra vez.
@@ -348,6 +357,8 @@ def preguntar(texto, saber):
     try:
         if t.lower().strip() in ("piezas", "mapa"):
             return "las_piezas", None
+        if t.lower().strip() == "memoria":
+            return "%d hechos" % len(motor.cargar_memoria()), None
         if t.lower().startswith("problema"):
             resto = t[len("problema"):].strip()
             if resto.startswith(":"):

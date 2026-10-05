@@ -19,6 +19,9 @@ import tempfile
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(AQUI)
 sys.path.insert(0, os.path.join(RAIZ, "sistema"))
+# Estas pruebas miran los METODOS de calculo: con una memoria vacia, para que lo aprendido
+# no cambie que pieza gana (la memoria tiene su propia prueba: test_memoria.py).
+os.environ["EUCLIDES_MEMORIA"] = os.path.join(tempfile.mkdtemp(), "hechos.txt")
 import motor  # noqa: E402
 
 BIEN = MAL = 0

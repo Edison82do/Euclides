@@ -17,6 +17,7 @@ por NIVELES para que cada unidad nueva se escriba en su sitio y se pueda leer si
     nivel_7.py      metodos de calculo                                (7.1 - 7.6)
     explicacion.py  los explicadores (lo que se le ensena a quien pregunta)
     piezas.py       el MOTOR DE PIEZAS: carga conocimiento/piezas/, prueba, descarta, aplica
+    memoria.py      la MEMORIA de hechos, GANADA: aprender, recordar, olvidar (paso 3)
     resolver.py     el RESOLVEDOR: leer, montar la situacion, pedir pasos a las piezas (R.1)
 
 COMO FUNCIONA (y por que asi):
@@ -32,7 +33,7 @@ dos partes definen lo mismo (serian dos verdades: la que gane dependeria del ord
 import importlib
 
 ORDEN = ["nucleo", "primitivas", "mecanismo", "decision", "nivel_2", "nivel_3", "nivel_4", "nivel_5",
-         "nivel_6", "nivel_7", "explicacion", "piezas", "resolver"]
+         "nivel_6", "nivel_7", "explicacion", "piezas", "memoria", "resolver"]
 
 _IGNORAR = {"os", "sys", "__builtins__", "__cached__", "__doc__", "__file__", "__loader__",
             "__name__", "__package__", "__spec__"}

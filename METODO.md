@@ -58,6 +58,15 @@ nuevo = una pieza nueva; el motor no se toca.** Una pieza solo usa el mecanismo 
 en «usa». Las condiciones se escriben una vez en `_condiciones.py`; las preguntas y su forma de
 elegir, en `_objetivos.py`. `piezas` en el probador enseña el mapa.
 
+### 3c. La memoria de hechos (paso 3, 5 oct 2026)
+Lo que se sabe de memoria vive en `conocimiento/memoria/hechos.txt` y **se gana**: `aprender: sumas`
+(y `aprender: restas`) calcula cada hecho **sin memoria**, lo comprueba por la vuelta **y por un
+segundo método**, y solo entonces lo guarda con **cómo** y **cuándo** lo aprendió. Nadie lo escribe
+a mano. Las piezas `recordar_suma`/`recordar_resta` (rapidez 1) lo usan, pero **vuelven a
+comprobar**: un recuerdo que no cuadra no se usa y el motor pasa al método siguiente. Con
+`sin_memoria` se pide el camino largo. Por ahora: las 100 sumas de dos números de una cifra y sus
+100 restas (Common Core 2.OA.B.2). Las pruebas usan memoria **vacía** salvo `test_memoria.py`.
+
 **Git**: un commit por unidad cerrada (y antes de cualquier cambio grande). `git log --oneline`.
 
 ## 4. El mecanismo: cómo calcula sin calculadora (`sistema/partes/mecanismo.py`)

@@ -53,7 +53,10 @@ def main():
             r = subprocess.run([sys.executable, os.path.join(DIR_PRUEBAS, nombre)], cwd=RAIZ,
                                capture_output=True, text=True, env=entorno)
         else:
+            antes = dict(os.environ)
             r = _correr_aqui(os.path.join(DIR_PRUEBAS, nombre))
+            os.environ.clear()
+            os.environ.update(antes)
         seg = time.time() - t
         log.write("\n" + "#" * 72 + "\n# %s\n" % nombre + "#" * 72 + "\n" + r.stdout + r.stderr)
         mal = r.returncode != 0

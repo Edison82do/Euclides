@@ -140,6 +140,8 @@ class _Lo_que_puede_usar:
         self.cifras_de = cifras_de
         self.escribir_cifras = escribir_cifras
         self.sumar_por_columnas = lambda a, b: sumar_por_columnas(a, b, s)
+        # la MEMORIA de hechos (memoria.py): mirar si algo se sabe de memoria
+        self.recuerdo = lambda clave: cargar_memoria().get(clave)
 
     def usar(self, nombre, **situacion):
         if nombre not in self._pieza["usa"]:
@@ -190,19 +192,19 @@ def aplicar(pregunta, situacion, saber=None, base=None):
         r["porque"] = cerca[0]["descartado"] if cerca else \
             "ninguna pieza que tengo responde a '%s' en esta situacion" % pregunta
         return r
-    if politica == "la_mas_rapida":
-        a_hacer = validas[:1]                 # las demas tambien servian: se dice, no se hacen
-        r["tambien_servian"] = [p["id"] for p, _ in validas[1:]]
-    else:
-        a_hacer = validas                     # todas, y tienen que dar lo mismo
     hechos, fallos = [], []
-    for p, fila in a_hacer:
+    for k, (p, fila) in enumerate(validas):
         try:
             res = p["hacer"](situacion, _Lo_que_puede_usar(p, base, saber))
             hechos.append((p, res))
         except (NoSalio, ValueError) as e:      # una pieza dice que no le sale con ValueError
             fila["no_salio"] = str(e)
             fallos.append(str(e))
+            continue
+        if politica == "la_mas_rapida":
+            # la mas rapida que SALE; las demas tambien servian: se dice, no se hacen
+            r["tambien_servian"] = [q["id"] for q, _ in validas[k + 1:]]
+            break
     if not hechos:
         r["conclusion"] = "no_salio"
         r["porque"] = fallos[0]

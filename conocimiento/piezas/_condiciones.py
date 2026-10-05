@@ -45,6 +45,10 @@ CONDICIONES = {
         u.contar_adelante(u.decir(s["a"]), u.decir(s["b"]))["resultado"], "diez"),
     "el_total_tiene_nombre": lambda s, u: u.sumar_por_columnas(s["a"], s["b"]) is not None,
     "el_de_abajo_no_es_mayor": lambda s, u: not u.viene_despues(u.decir(s["b"]), u.decir(s["a"])),
+    # ---- la memoria (paso 3)
+    "se_permite_recordar": lambda s, u: not s.get("sin_memoria"),
+    "la_suma_esta_en_la_memoria": lambda s, u: u.recuerdo("%d + %d" % (s["a"], s["b"])) is not None,
+    "la_resta_esta_en_la_memoria": lambda s, u: u.recuerdo("%d - %d" % (s["a"], s["b"])) is not None,
     "el_segundo_no_es_menor": lambda s, u: not u.viene_despues(u.decir(s["a"]), u.decir(s["b"])),
 }
 
