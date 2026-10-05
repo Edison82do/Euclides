@@ -1,34 +1,30 @@
 # -*- coding: utf-8 -*-
 """
-LAS PRUEBAS DE HIERRO, en dos velocidades.
+LAS MUESTRAS: que numeros recorren las pruebas grandes.
 
-  python pruebas/correr_todas.py            -> RAPIDO (por defecto, unos segundos)
-  python pruebas/correr_todas.py --hierro   -> COMPLETO: el rango entero, numero a numero
+DECISION DE CARLOS (5 oct 2026): NO se prueban todas las combinaciones de numeros.  Con una buena
+muestra basta.  (El modo "--hierro", que recorria el rango entero, se quito.)
 
-POR QUE DOS VELOCIDADES (decision del 5 oct 2026):
+POR QUE UNA MUESTRA BASTA:
   El mecanismo del sistema (contar, dedos, columnas) hace LO MISMO con 347 que con 348: lo que
   cambia su camino son las FRONTERAS (el cero, el nueve, el diez, pasar de una decena a otra,
   llevarse, cambiar a traves de un cero, el techo).  Asi que la muestra rapida coge TODAS las
   fronteras + todos los numeros pequenos + una muestra fija al azar (siempre la misma, para que
-  un fallo se pueda repetir).  El rango entero sigue disponible con --hierro, y se corre despues
-  de cualquier cambio en el mecanismo.
+  un fallo se pueda repetir).
 
-UNA PRUEBA = UNA AFIRMACION.  Una prueba de hierro es UNA afirmacion sobre todo el rango
+UNA PRUEBA = UNA AFIRMACION.  Una prueba con muestra es UNA afirmacion sobre todo el rango
 ("todas las sumas dan bien"), y cuenta como UNA, diga cuantos casos ha recorrido.  Antes se
 contaba cada caso por separado y salian 57.000 "pruebas" que eran, en verdad, unas 1.000.
 """
 import os
 import random
 
-HIERRO = os.environ.get("EUCLIDES_HIERRO") == "1"
 
 _FRONTERA_UNIDADES = (0, 1, 2, 5, 8, 9)
 
 
 def numeros(desde, hasta, extra=()):
     """Los numeros a recorrer entre desde y hasta (incluidos)."""
-    if HIERRO:
-        return list(range(desde, hasta + 1))
     s = set(range(desde, min(hasta, 20) + 1))                       # los pequenos, todos
     for n in range(desde, hasta + 1):
         c = str(n)
@@ -47,8 +43,6 @@ def parejas(hasta_a, cond, cuantas_al_azar=300, extra=()):
     """Parejas (a, b) con a, b en 0..hasta_a que cumplen cond(a, b).
     Rapido: todas las combinaciones de numeros de FRONTERA (cifras 0, 1 y 9, y del 0 al 12)
     + 'cuantas_al_azar' parejas al azar (siempre las mismas)."""
-    if HIERRO:
-        return [(a, b) for a in range(0, hasta_a + 1) for b in range(0, hasta_a + 1) if cond(a, b)]
     base = set(range(0, min(hasta_a, 12) + 1))
     base |= {n for n in range(0, hasta_a + 1) if all(x in "019" for x in str(n))}
     base |= {5, 50, 55, 500, 555} & set(range(0, hasta_a + 1))
@@ -66,7 +60,7 @@ def parejas(hasta_a, cond, cuantas_al_azar=300, extra=()):
 
 
 def modo():
-    return "COMPLETO (--hierro)" if HIERRO else "RAPIDO (fronteras + muestra fija)"
+    return "muestra: fronteras + azar fijo"
 
 
 class Agregado:

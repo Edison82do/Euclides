@@ -6,6 +6,8 @@
 #   lo que espero = ?                    -> no se comprueba: solo se ve lo que responde
 #   lo que espero = ??                   -> no se comprueba, y se ENSENA todo el razonamiento
 #
+# Un PROBLEMA se puede escribir tal cual, con su pregunta (sin poner 'problema:' delante).
+# Y para escribir un problema y ver el proceso SIN guardarlo: en MIS_PRUEBAS.bat, la opcion [P].
 # Las lineas que empiezan por # no cuentan.  Guarda el archivo y vuelve a correr.
 # Todo lo que se puede preguntar esta en la AYUDA (PROBAR.bat y escribe: ayuda).
 # Estas pruebas NO se mezclan con mis_casos.txt (que es la coleccion grande del proyecto).
@@ -28,3 +30,4 @@ problema: Ana tiene 5. Le dan algunas. Ahora tiene 8. Cuantas le dieron?    | 3
 
 # --- para VER como razona (no comprueba nada) ---
 problema: Marta tiene 12 caramelos. Se come 4. Luego compra 10. Cuantos tiene ahora?   | ??
+Hay 12 pajaros. Se van algunos. Ahora hay 7. Cuantos se fueron?   | 5   | escrito directamente

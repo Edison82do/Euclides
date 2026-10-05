@@ -24,7 +24,7 @@ sys.path.insert(0, os.path.join(RAIZ, "sistema"))
 sys.path.insert(0, RAIZ)
 sys.path.insert(0, AQUI)
 import motor  # noqa: E402
-import _hierro  # noqa: E402
+import _muestras  # noqa: E402
 import probar  # noqa: E402
 
 BIEN = 0
@@ -148,8 +148,8 @@ plantillas = [
 ]
 probados = malos = imposibles_bien = 0
 for i, (pl, oraculo) in enumerate(plantillas):
-    for a in range(0, 501, 23 if _hierro.HIERRO else 61):
-        for b in range(0, 501, 29 if _hierro.HIERRO else 67):
+    for a in range(0, 501, 23 if False else 61):
+        for b in range(0, 501, 29 if False else 67):
             esperado = oraculo(a, b)
             if esperado is not None and esperado > 1000:
                 continue
@@ -168,7 +168,7 @@ for i, (pl, oraculo) in enumerate(plantillas):
                     print("    %s -> %s %s (esperaba %s)" % (pl.format(q="Ana", a=a, b=b), r["conclusion"],
                                                           r.get("valor"), esperado))
 comprobar("E1 los %d problemas generados dan la respuesta buena (o dicen que no cuando toca)" % probados, malos, 0)
-comprobar("E2 y se recorrio la rejilla (%s): %d problemas" % (_hierro.modo(), probados), probados > 500, True)
+comprobar("E2 y se recorrio la rejilla (%s): %d problemas" % (_muestras.modo(), probados), probados > 500, True)
 comprobar("E3 y en los imposibles dice que no (%d)" % imposibles_bien, imposibles_bien > 50, True)
 
 # ------------------------------------------------------------------ G: los 11 tipos de CGI

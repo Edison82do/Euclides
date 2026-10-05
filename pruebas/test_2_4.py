@@ -24,7 +24,7 @@ import sys
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RAIZ, "sistema"))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import _hierro  # noqa: E402
+import _muestras  # noqa: E402
 
 from motor import (cargar_conocimiento, decidir_2_3_cuantos, decidir_2_4_dame,  # noqa: E402
                    decidir_2_4_tiene, escena_0_2, explicar_pregunta)
@@ -146,8 +146,8 @@ def correr_coherencia(saber):
     # (Antes de la 6.1 era de diez; con la 6.1, de cien; ahora, de mil.)
     monton = escena_0_2(",".join("cosa%d" % i for i in range(1, 1001)))
     # UNA afirmacion ("para toda N, dame N y contar lo cogido da N"), recorrida sobre las
-    # cantidades de _hierro (todas con --hierro).  Antes contaba 1000 pruebas e imprimia 1000 lineas.
-    cantidades = _hierro.numeros(1, len(secuencia))
+    # cantidades de la muestra (_muestras.py).  Antes contaba 1000 pruebas e imprimia 1000 lineas.
+    cantidades = _muestras.numeros(1, len(secuencia))
     malas = []
     for n in cantidades:
         palabra = secuencia[n - 1]
@@ -157,7 +157,7 @@ def correr_coherencia(saber):
             malas.append(palabra)
     ok = not malas
     print("%-6s dame N y contar lo cogido da N  (%d cantidades, %s)%s"
-          % ("OK" if ok else "FALLA", len(cantidades), _hierro.modo(),
+          % ("OK" if ok else "FALLA", len(cantidades), _muestras.modo(),
              "" if ok else "  fallan: %s" % malas[:5]))
     print()
     return (1 if ok else 0), 1

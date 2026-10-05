@@ -19,11 +19,18 @@ if "%PYCMD%"=="" (
 cls
 %PYCMD% probar.py --archivo mis_pruebas.txt
 echo.
+echo   [P] escribir un PROBLEMA (o cualquier pregunta) y ver TODO el proceso de solucion
 echo   [A] abrir mis_pruebas.txt para escribir pruebas
 echo   [R] repetir las pruebas
 echo   [S] salir
-choice /c ARS /n /m "  Que hago? "
-if errorlevel 3 exit /b 0
-if errorlevel 2 goto correr
+choice /c PARS /n /m "  Que hago? "
+if errorlevel 4 exit /b 0
+if errorlevel 3 goto correr
+if errorlevel 2 goto editar
+cls
+echo   Escribe el problema con su pregunta y pulsa Enter.  Para volver aqui escribe: salir
+%PYCMD% probar.py
+goto correr
+:editar
 start /wait notepad "%~dp0mis_pruebas.txt"
 goto correr

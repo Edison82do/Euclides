@@ -25,7 +25,7 @@ sys.path.insert(0, os.path.join(RAIZ, "sistema"))
 sys.path.insert(0, RAIZ)
 sys.path.insert(0, AQUI)
 import motor  # noqa: E402
-import _hierro  # noqa: E402
+import _muestras  # noqa: E402
 import random  # noqa: E402
 import probar  # noqa: E402
 
@@ -92,8 +92,8 @@ comprobar("C5 la regla que decide se puede rastrear", col("900", "+", "200", SAB
 
 # ------------------------------------------------------------------ D: lo de antes no cambia
 print("\nD - LO QUE LA 7.3 Y LA 7.5 YA HACIAN SALE IGUAL (hasta cien)")
-SUMAS_100 = _hierro.parejas(100, lambda a, b: a + b <= 100, extra=[(0, 100), (100, 0), (50, 50)])
-RESTAS_100 = _hierro.parejas(100, lambda a, b: b <= a, extra=[(100, 1), (100, 100)])
+SUMAS_100 = _muestras.parejas(100, lambda a, b: a + b <= 100, extra=[(0, 100), (100, 0), (50, 50)])
+RESTAS_100 = _muestras.parejas(100, lambda a, b: b <= a, extra=[(100, 1), (100, 100)])
 cambios = sum(1 for a, b in SUMAS_100
               if motor.decidir_7_3_columnas(str(a), str(b), SABER).get("unidad") == "7.6")
 comprobar("D1 ninguna suma con total <= 100 se va a la 7.6 (%d parejas)" % len(SUMAS_100), cambios, 0)
@@ -113,7 +113,7 @@ comprobar("D3 donde las dos saben, la 7.6 y la 7.3/7.5 dan lo mismo", dif, 0)
 # ------------------------------------------------------------------ E: la prueba de hierro
 print("\nE - LA PRUEBA DE HIERRO (hasta mil)")
 probadas = malas = sin_vuelta = caja_negra = lleva_mas_de_uno = 0
-for a, b in _hierro.parejas(1000, lambda a, b: a + b <= 1000, cuantas_al_azar=500,
+for a, b in _muestras.parejas(1000, lambda a, b: a + b <= 1000, cuantas_al_azar=500,
                             extra=[(999, 1), (500, 500), (1, 999), (455, 545)]):
     if True:
         r = col(str(a), "+", str(b), SABER)
@@ -130,15 +130,15 @@ comprobar("E1 las %d sumas dan bien" % probadas, malas, 0)
 comprobar("E2 todas se comprueban por la vuelta", sin_vuelta, 0)
 comprobar("E3 ninguna columna sin metodo (cero cajas negras)", caja_negra, 0)
 comprobar("E4 lo que se lleva nunca pasa de 1", lleva_mas_de_uno, 0)
-comprobar("E5 y se recorrio el rango (%s): %d sumas" % (_hierro.modo(), probadas), probadas > 1000, True)
+comprobar("E5 y se recorrio el rango (%s): %d sumas" % (_muestras.modo(), probadas), probadas > 1000, True)
 probadas = malas = sin_vuelta = caja_negra = por_cero = 0
 # las restas: las parejas de siempre + TODAS las de arriba con un CERO dentro (100, 205, 1000...)
 # contra una muestra de abajo, que es donde vive el cambio a traves de un cero
 con_ceros = [n for n in range(100, 1001) if "0" in str(n)]
 azar = random.Random(7)
-RESTAS = set(_hierro.parejas(1000, lambda a, b: b <= a, cuantas_al_azar=500))
+RESTAS = set(_muestras.parejas(1000, lambda a, b: b <= a, cuantas_al_azar=500))
 for a in con_ceros:
-    abajos = range(0, a + 1) if _hierro.HIERRO else \
+    abajos = range(0, a + 1) if False else \
         {0, 1, 9, 10, 11, 99, 100, a - 1, a} | {azar.randint(0, a) for _ in range(4)}
     RESTAS |= {(a, b) for b in abajos if 0 <= b <= a}
 for a, b in sorted(RESTAS):

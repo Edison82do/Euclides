@@ -21,7 +21,7 @@ sys.path.insert(0, os.path.join(RAIZ, "sistema"))
 
 import motor  # noqa: E402
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import _hierro  # noqa: E402
+import _muestras  # noqa: E402
 
 SABER = motor.cargar_conocimiento()
 
@@ -79,8 +79,8 @@ check("A14 el sitio tambien con palabra", s["conclusion"] == "se_puede" and s["d
 # ---------------------------------------------------------------------------
 # B. LA PRUEBA DE HIERRO: EL RANGO ENTERO (las 101 cifras)
 # ---------------------------------------------------------------------------
-_H = _hierro.Agregado()
-NUMEROS = _hierro.numeros(0, 100)
+_H = _muestras.Agregado()
+NUMEROS = _muestras.numeros(0, 100)
 for n in NUMEROS:
     # 1) cifra -> palabra
     r = motor.decidir_3_1_palabra(str(n), SABER)
@@ -105,7 +105,7 @@ for n in NUMEROS:
         _H.check("B %d: fila*10 + columna cuadra" % n, s["fila"] * 10 + s["columna"] == n,
               "%d -> %d" % (n, s["fila"] * 10 + s["columna"]))
 
-_H.volcar(check, "B HIERRO (%d cifras, %s):" % (len(NUMEROS), _hierro.modo()))
+_H.volcar(check, "B HIERRO (%d cifras, %s):" % (len(NUMEROS), _muestras.modo()))
 
 # Fuera de la tabla
 # ANTES (6.3): 101, 200 y 999 -> fuera_de_la_tabla ("mi tabla llega al cien").

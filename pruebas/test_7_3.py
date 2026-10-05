@@ -73,8 +73,8 @@ check("A20 con palabras", r["conclusion"] == "se_puede" and r["total_valor"] == 
 # B. LA PRUEBA DE HIERRO: EL RANGO ENTERO  (todas las parejas con suma <= 100)
 # ---------------------------------------------------------------------------
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import _hierro  # noqa: E402
-PAREJAS = _hierro.parejas(100, lambda a, b: a + b <= 100,
+import _muestras  # noqa: E402
+PAREJAS = _muestras.parejas(100, lambda a, b: a + b <= 100,
                           extra=[(0, 100), (100, 0), (50, 50), (99, 1), (1, 99), (45, 55)])
 n_parejas = len(PAREJAS)
 malas = {"se puede": [], "el total": [], "las columnas cuadran": [], "el llevado es una decena": [],
@@ -97,7 +97,7 @@ for a, b in PAREJAS:
     if r["verificacion"] is not True:
         malas["la vuelta"].append((a, b))
 for k, v in malas.items():
-    check("B HIERRO (%d parejas, %s): %s" % (n_parejas, _hierro.modo(), k), not v, v[:3])
+    check("B HIERRO (%d parejas, %s): %s" % (n_parejas, _muestras.modo(), k), not v, v[:3])
 
 # Y por encima de MIL, lo dice  (UNIDAD 6.7: el techo subio de cien a mil;
 # antes esta lista era 60+50, 99+9, 100+1 y 55+55, que ahora SI se pueden)

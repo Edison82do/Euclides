@@ -3,10 +3,9 @@
 Corre TODAS las pruebas del proyecto, de una vez.
 
 Uso:
-  python pruebas/correr_todas.py            RAPIDO: las pruebas de hierro recorren las FRONTERAS
-                                            y una muestra fija (unos segundos)
-  python pruebas/correr_todas.py --hierro   COMPLETO: el rango entero, numero a numero (tarda
-                                            bastante; se corre tras tocar el MECANISMO)
+  python pruebas/correr_todas.py            todas las pruebas (unos segundos).  Las pruebas grandes
+                                            recorren una MUESTRA: las fronteras y unos cuantos al azar
+                                            fijo (decision de Carlos: no todas las combinaciones)
   python pruebas/correr_todas.py --todo     ademas de lo de siempre, imprime la salida entera de
                                             cada archivo
   python pruebas/correr_todas.py --separados  cada archivo en su propio proceso (mas lento)
@@ -19,7 +18,7 @@ fallo escondido detras de un filtro).  La salida entera de TODO queda siempre en
 pruebas/ultima_salida.txt, para leerla cuando haga falta.
 
 UNA PRUEBA = UNA AFIRMACION.  Una prueba de hierro cuenta como UNA, recorra 10 casos o 50.000
-(ver _hierro.py).  Un archivo que no dice su total, o que dice 8/10, es un FALLO.
+(ver _muestras.py).  Un archivo que no dice su total, o que dice 8/10, es un FALLO.
 """
 
 import os
@@ -34,15 +33,13 @@ SALIDA = os.path.join(DIR_PRUEBAS, "ultima_salida.txt")
 
 
 def main():
-    hierro = "--hierro" in sys.argv
     todo = "--todo" in sys.argv
-    entorno = dict(os.environ, EUCLIDES_HIERRO="1" if hierro else "0", PYTHONDONTWRITEBYTECODE="1")
+    entorno = dict(os.environ, PYTHONDONTWRITEBYTECODE="1")
     archivos = sorted(f for f in os.listdir(DIR_PRUEBAS) if f.startswith("test_") and f.endswith(".py"))
     if not archivos:
         print("no hay pruebas todavia")
         return 1
-    print("MODO: %s" % ("COMPLETO (--hierro): el rango entero" if hierro
-                        else "RAPIDO: fronteras + muestra fija  (el rango entero con --hierro)"))
+    print("PRUEBAS DE EUCLIDES  (las grandes recorren una muestra: fronteras + azar fijo)")
     print("-" * 72)
     fallos = []
     bien_total = total_total = 0

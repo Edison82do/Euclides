@@ -37,7 +37,7 @@ sistema/motor.py          la fachada (import motor da acceso a todo)
 sistema/partes/           el código, una pieza por nivel:
     nucleo, primitivas, MECANISMO, decision, nivel_2 ... nivel_7, explicacion, resolver
 conocimiento/*.kn         el saber, en texto (reglas, definiciones, formas de lectura)
-pruebas/                  test_*.py + _hierro.py + correr_todas.py
+pruebas/                  test_*.py + _muestras.py + correr_todas.py
 mis_casos.txt             los casos de Carlos:  pregunta | lo esperado | comentario
 probar.py / PROBAR.bat    el probador (doble clic)
 diario/  informes/  investigacion/
@@ -99,13 +99,14 @@ Las formas: *X tiene N*, *hay N*, *X gana/compra/le dan N*, *X pierde/regala/se 
 
 ## 7. Las pruebas
 
-- `python pruebas/correr_todas.py` → **rápido** (~10 s): las pruebas de hierro recorren las
-  **fronteras** (0, 1, 9, 10, 99, 100, 999, 1000, los cambios de decena, los ceros intercalados) y
-  una **muestra fija**. Una línea por archivo; la salida entera de lo que falle; todo en
-  `pruebas/ultima_salida.txt`.
-- `python pruebas/correr_todas.py --hierro` → **el rango entero**. Se corre después de tocar el
-  mecanismo (tarda: la 7.6 completa son un millón de cuentas).
-- **Una prueba = una afirmación.** Una prueba de hierro cuenta como una.
+- `python pruebas/correr_todas.py` (o `PRUEBAS_DEL_PROYECTO.bat`) → ~10 s. Las pruebas grandes
+  recorren una **muestra**: las **fronteras** (0, 1, 9, 10, 99, 100, 999, 1000, los cambios de
+  decena, los ceros intercalados) y unos cuantos **al azar fijo**. Una línea por archivo; la
+  salida entera de lo que falle; todo en `pruebas/ultima_salida.txt`.
+- **No se prueban todas las combinaciones** (decisión de Carlos, 5 oct 2026): con una buena
+  muestra basta. (El rango entero de la 7.6 se comprobó UNA vez, el 5 oct: 1.003.002 cuentas, 0
+  fallos; no hace falta repetirlo.)
+- **Una prueba = una afirmación.** Una prueba con muestra cuenta como una.
 - Cuando una prueba falla hay **tres** posibilidades: el motor está roto, la prueba está obsoleta
   por mejora, o el valor esperado está mal escrito. Antes de tocar el motor, mirar qué hace.
   Una prueba obsoleta se actualiza **caso por caso**, dejando escrito el caso viejo al lado.

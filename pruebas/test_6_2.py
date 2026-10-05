@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.join(RAIZ, "sistema"))
 
 import motor  # noqa: E402
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import _hierro  # noqa: E402
+import _muestras  # noqa: E402
 
 SABER = motor.cargar_conocimiento()
 
@@ -77,8 +77,8 @@ check("A19 100 -> palabra cien", r100["palabra_total"] == "cien", r100["palabra_
 # ---------------------------------------------------------------------------
 # B. LA PRUEBA DE HIERRO: EL RANGO ENTERO  (las 101 cantidades)
 # ---------------------------------------------------------------------------
-_H = _hierro.Agregado()
-NUMEROS = _hierro.numeros(0, 1000)
+_H = _muestras.Agregado()
+NUMEROS = _muestras.numeros(0, 1000)
 for n in NUMEROS:  # 6.7: el rango sube a MIL
     r = motor.decidir_6_2_agrupar(escena_de_n(n), SABER)
     if n == 0:
@@ -103,7 +103,7 @@ for n in NUMEROS:  # 6.7: el rango sube a MIL
           sorted([x["id"] for m in r["montones"] for x in m] + [x["id"] for x in r["sueltos"]])
           == sorted(x["id"] for x in escena_de_n(n)))
 
-_H.volcar(check, "B HIERRO (%d cantidades, %s):" % (len(NUMEROS), _hierro.modo()))
+_H.volcar(check, "B HIERRO (%d cantidades, %s):" % (len(NUMEROS), _muestras.modo()))
 
 # El techo de verdad
 # UNIDAD 6.7: el techo subio de cien a MIL; 101 ya se puede.

@@ -15,15 +15,7 @@ if "%PYCMD%"=="" (
   exit /b 1
 )
 
-echo.
-echo   [R] rapido  (unos segundos: fronteras + muestra fija)
-echo   [H] hierro  (el rango entero, numero a numero: TARDA: unos 15-30 minutos)
-choice /c RH /n /m "  Cual? "
-if errorlevel 2 (
-  %PYCMD% pruebas\correr_todas.py --hierro
-) else (
-  %PYCMD% pruebas\correr_todas.py
-)
+%PYCMD% pruebas\correr_todas.py
 echo.
 echo   La salida entera de cada archivo queda en pruebas\ultima_salida.txt
 pause

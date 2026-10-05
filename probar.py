@@ -809,6 +809,8 @@ def correr_mis_casos(saber, mostrar_todo=False, archivo=None, flexible=False):
 
     bien = fallos = 0
     for c in casos:
+        if flexible:
+            c["texto"] = como_problema(c["texto"])
         obtenido, _ = preguntar(c["texto"], saber)
         esperado = normalizar_esperado(c["texto"], c["esperado"])
         etiqueta = c["texto"] if c["texto"] else "(vacio)"
@@ -840,6 +842,15 @@ def correr_mis_casos(saber, mostrar_todo=False, archivo=None, flexible=False):
 
 # ------------------------------------------------------------------ interactivo
 
+def como_problema(texto):
+    """Si se escribe un problema DIRECTAMENTE (con su pregunta '?'), sin poner 'problema:' delante,
+    se toma como problema.  Ninguna otra orden lleva '?' en la pregunta."""
+    t = texto.strip()
+    if "?" in t and not t.lower().startswith("problema"):
+        return "problema: " + t
+    return t
+
+
 def interactivo(saber):
     print()
     print("=" * 78)
@@ -848,6 +859,10 @@ def interactivo(saber):
     # OJO: aqui NO se corren los casos.  Antes se corrian al arrancar y lo unico que hacian era
     # llenar la pantalla de ejemplos antes de dejar escribir.  Ahora se piden con 'casos'.
     print("  escribe lo que quieras probar y pulsa Enter.")
+    print("  UN PROBLEMA se puede escribir directamente, con su pregunta:")
+    print("      Ana tiene 8 manzanas. Tiene 3 mas que Luis. Cuantas tiene Luis?")
+    print("  y se ve TODO el proceso: como lo lee, que prueba, que descarta y por que, la cuenta")
+    print("  y la comprobacion.")
     print("  'ayuda'  -> todo lo que sabe hacer, por unidades")
     print("  'casos'  -> tus casos de mis_casos.txt (se comprueban todos)")
     print("  'salir'  -> terminar")
@@ -867,7 +882,7 @@ def interactivo(saber):
             correr_mis_casos(saber)
             continue
         try:
-            print(motor.explicar_pregunta(entrada, saber))
+            print(motor.explicar_pregunta(como_problema(entrada), saber))
         except Exception as e:  # nunca un traceback delante de quien prueba
             print("NO ENTIENDO ESTO (%s)." % e)
             print("El sistema no adivina: si no entiende, lo dice.")

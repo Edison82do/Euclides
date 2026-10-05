@@ -21,7 +21,7 @@ sys.path.insert(0, os.path.join(RAIZ, "sistema"))
 
 import motor  # noqa: E402
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import _hierro  # noqa: E402
+import _muestras  # noqa: E402
 
 SABER = motor.cargar_conocimiento()
 
@@ -65,8 +65,8 @@ check("A12 su cuenta", r["cuenta"] == "4 decenas y 7 unidades son 47", r["cuenta
 # ---------------------------------------------------------------------------
 # B. LA PRUEBA DE HIERRO: EL RANGO ENTERO (las 101 cantidades)
 # ---------------------------------------------------------------------------
-_H = _hierro.Agregado()
-NUMEROS = _hierro.numeros(0, 100)
+_H = _muestras.Agregado()
+NUMEROS = _muestras.numeros(0, 100)
 for n in NUMEROS:
     r = motor.decidir_6_5_partir(str(n), SABER)
     _H.check("B %d: se parte" % n, r["conclusion"] == "se_puede", r["conclusion"])
@@ -85,7 +85,7 @@ for n in NUMEROS:
           "%d -> %s" % (n, j.get("total")))
     _H.check("B %d: y se llama igual" % n, j["palabra"] == NOMBRE[n], "%s / %s" % (j["palabra"], NOMBRE[n]))
 
-_H.volcar(check, "B HIERRO (%d numeros, %s):" % (len(NUMEROS), _hierro.modo()))
+_H.volcar(check, "B HIERRO (%d numeros, %s):" % (len(NUMEROS), _muestras.modo()))
 
 # Fuera de la tabla
 # ANTES (6.5): partir 101 y 200 -> fuera_de_la_tabla.

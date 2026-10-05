@@ -25,10 +25,10 @@ RAIZ = os.path.dirname(AQUI)
 sys.path.insert(0, os.path.join(RAIZ, "sistema"))
 sys.path.insert(0, AQUI)
 import motor  # noqa: E402
-import _hierro  # noqa: E402
+import _muestras  # noqa: E402
 
-# Las parejas (a, b) con b <= a <= 100: TODAS con --hierro; fronteras + muestra fija, si no.
-PAREJAS = _hierro.parejas(100, lambda a, b: b <= a, extra=[(100, 1), (100, 99), (10, 1), (72, 45), (43, 17)])
+# Las parejas (a, b) con b <= a <= 100: fronteras + muestra fija.
+PAREJAS = _muestras.parejas(100, lambda a, b: b <= a, extra=[(100, 1), (100, 99), (10, 1), (72, 45), (43, 17)])
 
 BIEN = 0
 MAL = 0
@@ -134,7 +134,7 @@ for a in range(1, 11):
 comprobar("E2 y con los dedos (7.4) tambien, cuando caben", malas_e2, 0)
 
 # ------------------------------------------------------------------ F: LA PRUEBA DE HIERRO
-print("\nF - LA PRUEBA DE HIERRO (parejas hasta cien: %s)" % _hierro.modo())
+print("\nF - LA PRUEBA DE HIERRO (parejas hasta cien: %s)" % _muestras.modo())
 probadas = 0
 malas = 0
 sin_vuelta = 0
@@ -161,7 +161,7 @@ for a, b in PAREJAS:
         if r["hay_intercambio"]:
             sin_intercambio += 1
 comprobar("F1 las %d parejas dan lo mismo por columnas que restando" % probadas, malas, 0)
-comprobar("F2 y se recorrieron todas las previstas (%s)" % _hierro.modo(), probadas, len(PAREJAS))
+comprobar("F2 y se recorrieron todas las previstas (%s)" % _muestras.modo(), probadas, len(PAREJAS))
 comprobar("F3 ninguna se queda sin poder comprobarse por la vuelta", sin_vuelta, 0)
 comprobar("F4 y hay intercambio en muchisimas (no se esta esquivando)",
           sin_intercambio > len(PAREJAS) // 3, True)
