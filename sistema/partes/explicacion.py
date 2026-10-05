@@ -750,6 +750,14 @@ def explicar_pregunta(texto, saber=None):
         saber = cargar_conocimiento()
     t = texto.strip()
     try:
+        if t.lower().startswith("problema"):
+            resto = t[len("problema"):].strip()
+            if resto.startswith(":"):
+                resto = resto[1:].strip()
+            if not resto:
+                return ("NO ENTIENDO ESTO: dame el enunciado.\n"
+                        "   se escribe asi:  problema: Ana tiene 5 manzanas. Le dan 3. Cuantas tiene ahora?")
+            return explicar_R1_problema(resto, saber)
         if t.lower().startswith("cifra_de"):
             resto = t[len("cifra_de"):].strip()
             if resto.startswith(":"):

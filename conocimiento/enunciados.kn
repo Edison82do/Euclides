@@ -1,0 +1,189 @@
+id: enunciados
+nombre: Como se leen los enunciados de problemas (lenguaje rustico de suma y resta)
+tipo: lenguaje
+categoria: FIJADO
+definicion: |
+  REGLA 4 DEL PROYECTO: no se adivina el lenguaje.  Cada frase del enunciado tiene que encajar
+  ENTERA en una de las FORMAS de abajo.  Si no encaja, el sistema dice NO ENTIENDO y senala la frase.
+  Una negativa honesta es informacion; una invencion es basura.
+
+  ANTES DE MIRAR LAS FORMAS (y todo esto se ensena en la traza):
+    1. minusculas, sin tildes, sin signos de pregunta ni de exclamacion.
+    2. se parte en frases por el punto, la interrogacion, el punto y coma y la coma.
+    3. los numeros dichos con palabras se LEEN con la secuencia (6.1 y 6.7): cuarenta y siete -> 47.
+       Y un / una valen 1 (ver uno, abajo).
+    4. si una frase no encaja entera, se prueba a partirla por " y " en dos frases que encajen
+       las dos (Juan tiene 7 y Pedro tiene 4).  Si tampoco, NO ENTIENDO.
+
+  LOS CONECTORES (luego, despues, entonces...) al principio de una frase se quitan: solo dicen
+  que algo pasa DESPUES, y eso ya lo dice el orden de las frases.
+
+  QUIEN ES "LE" / "SE": el ULTIMO que se nombro.  Si no se ha nombrado a nadie, no se entiende.
+  Y si la frase no dice quien (tiene 3 mas que Luis), es tambien el ultimo que se nombro.
+  PERO si el ultimo es un LUGAR (en la caja hay 20) y la frase es de alguien que hace algo
+  (saca 5, compra 3), NO se entiende: no se quien lo hace, y la caja no saca ni compra nada.
+
+  OJO: LEER NO ES ELEGIR LA OPERACION.  Las formas dicen QUE PASA (alguien tiene, alguien gana,
+  algo se va, uno tiene mas que otro); la operacion la decide el RESOLVEDOR despues, probando
+  todo lo que sabe y descartando con razones (nota de Carlos del 3 oct 2026).  Por eso "mas"
+  puede acabar siendo una resta.
+
+uno:
+  - un
+  - una
+
+conectores:
+  - luego
+  - despues
+  - entonces
+  - mas tarde
+  - y luego
+  - y despues
+  - pero
+
+articulos:
+  - el
+  - la
+  - los
+  - las
+
+no_son_nombres:
+  - mas
+  - menos
+  - que
+  - ahora
+  - en
+  - total
+  - entre
+  - juntos
+  - juntas
+  - hay
+  - le
+  - se
+  - y
+  - cuantos
+  - cuantas
+  - tiene
+  - tienen
+  - tenia
+  - quedan
+  - al
+  - principio
+  - antes
+  - algunos
+  - algunas
+  - de
+  - con
+
+verbos:
+  ganar: compra, recibe, gana, encuentra, consigue, junta, recoge, coge, pesca, saca
+  dar_a: dan, regalan, traen, dieron, regalaron
+  perder: regala, pierde, gasta, vende, presta, rompe, da, tira, come, usa
+  llegar: llegan, vienen, entran, nacen, aparecen
+  irse: van, escapan, caen, vuelan, rompen, salen, comen
+
+formas_hechos:
+  - id: tener
+    forma: {quien?} tiene {n} {cosa?}
+    hecho: estado
+  - id: tenia
+    forma: {quien?} tenia {n} {cosa?}
+    hecho: estado
+  - id: tenia_algunos
+    forma: {quien?} tenia {algunos} {cosa?}
+    hecho: inicio_desconocido
+  - id: ahora_tiene
+    forma: {quien?} ahora tiene {n} {cosa?}
+    hecho: final
+  - id: ahora_tiene_2
+    forma: ahora {quien?} tiene {n} {cosa?}
+    hecho: final
+  - id: hay
+    forma: hay {n} {cosa?} {lugar?}
+    hecho: estado_lugar
+  - id: en_hay
+    forma: {lugar} hay {n} {cosa?}
+    hecho: estado_lugar
+  - id: gana
+    forma: {quien?} {ganar} {n} {cosa?} {mas?}
+    hecho: gana
+  - id: le_dan
+    forma: le {dar_a} {n} {cosa?} {mas?}
+    hecho: gana
+  - id: pierde
+    forma: {quien?} {perder} {n} {cosa?}
+    hecho: pierde
+  - id: se_come
+    forma: {quien?} se {perder} {n} {cosa?}
+    hecho: pierde
+  - id: llegan
+    forma: {llegar} {n} {cosa?} {mas?}
+    hecho: gana
+  - id: llegan_2
+    forma: {n} {cosa?} {mas?} {llegar}
+    hecho: gana
+  - id: se_van
+    forma: se {irse} {n} {cosa?}
+    hecho: pierde
+  - id: se_van_2
+    forma: {n} {cosa?} se {irse}
+    hecho: pierde
+  - id: mas_que
+    forma: {quien?} tiene {n} {cosa?} mas que {otro}
+    hecho: tiene_mas_que
+  - id: menos_que
+    forma: {quien?} tiene {n} {cosa?} menos que {otro}
+    hecho: tiene_menos_que
+  - id: entre_los_dos
+    forma: {quien} y {otro} tienen {n} {cosa?} {juntos?}
+    hecho: total
+
+formas_preguntas:
+  - id: cuantos_ahora
+    forma: {cuantos} {cosa?} tiene {quien?} ahora
+    pide: final
+  - id: cuantos_ahora_2
+    forma: {cuantos} {cosa?} tiene ahora {quien?}
+    pide: final
+  - id: cuantos_quedan
+    forma: {cuantos} {cosa?} le quedan
+    pide: final
+  - id: cuantos_quedan_2
+    forma: {cuantos} {cosa?} quedan
+    pide: final
+  - id: cuantos_hay_ahora
+    forma: {cuantos} {cosa?} hay ahora
+    pide: final
+  - id: cuantos_tiene
+    forma: {cuantos} {cosa?} tiene {quien}
+    pide: estado
+  - id: cuantos_tiene_el
+    forma: {cuantos} {cosa?} tiene
+    pide: estado
+  - id: cuantos_juntos
+    forma: {cuantos} {cosa?} tienen {juntos}
+    pide: total
+  - id: cuantos_juntos_2
+    forma: {cuantos} {cosa?} tienen {quien} y {otro} {juntos?}
+    pide: total
+  - id: cuantos_hay_en_total
+    forma: {cuantos} {cosa?} hay {juntos}
+    pide: total
+  - id: cuantos_mas
+    forma: {cuantos} {cosa?} mas tiene {quien} que {otro}
+    pide: diferencia
+  - id: cuantos_menos
+    forma: {cuantos} {cosa?} menos tiene {quien} que {otro}
+    pide: diferencia
+  - id: cuantos_al_principio
+    forma: {cuantos} {cosa?} tenia {quien?} {al_principio}
+    pide: inicio
+  - id: cuantos_habia
+    forma: {cuantos} {cosa?} habia {al_principio}
+    pide: inicio
+
+huecos:
+  cuantos: cuantos, cuantas
+  algunos: algunos, algunas, unos, unas
+  juntos: entre los dos, entre las dos, juntos, juntas, en total
+  al_principio: al principio, antes

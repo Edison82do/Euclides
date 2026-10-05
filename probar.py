@@ -262,6 +262,22 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         diferencia_numeros: con varias cifras usan ESTE metodo (antes restar_numeros: 50 - 27
         decia 'None - None', y sumar_numeros: 900 + 900 reventaba).
 
+  R.1  RESOLVER UN PROBLEMA  ->  aplicar TODO lo que sabe, y DESCARTAR con razones
+        problema: Ana tiene 5 manzanas. Le dan 3 mas. Cuantas tiene ahora?          -> 8
+        problema: Hay 8 pajaros. Se van 3. Cuantos quedan?                          -> 5
+        problema: Juan tiene 7 y Pedro tiene 4. Cuantas mas tiene Juan que Pedro?   -> 3
+        problema: Ana tiene 8 manzanas. Tiene 3 mas que Luis. Cuantas tiene Luis?   -> 5
+                  (dice MAS y es una RESTA: el que falta es el que tiene menos)
+        problema: Marta tiene 12. Se come 4. Luego compra 10. Cuantos tiene ahora?  -> 18 (dos pasos)
+        problema: Hay 4 peces. Se van 9. Cuantos quedan?                            -> sin_solucion
+        problema: El perro come huesos. Cuantos tiene?                              -> no_entiendo
+        ES LA NOTA DE CARLOS DEL 3 OCT: no es que sepa que hacer; es que APLIQUE lo que sabe y
+        combinaciones, CON DESCARTE.  En cada paso prueba TODOS sus conocimientos (anadir, quitar,
+        juntar, la diferencia, la parte que falta, las vueltas...) y ensena por que descarta cada
+        uno.  La operacion NUNCA se elige por la palabra.  Cada cuenta se hace por columnas (con
+        los dedos en cada columna) y se verifica por la vuelta.  Lee con FORMAS escritas en
+        conocimiento/enunciados.kn: si una frase no encaja, dice NO ENTIENDO (no adivina).
+
   Los atributos van entre parentesis como nombre=valor, separados por comas;
   las cosas entre si van separadas por punto y coma.
   Si repites un nombre en una escena 0.1, es la MISMA entidad senalada otra vez.
@@ -322,6 +338,14 @@ def preguntar(texto, saber):
     """Devuelve (respuesta normalizada, resultado completo).  Nunca revienta."""
     t = texto.strip()
     try:
+        if t.lower().startswith("problema"):
+            resto = t[len("problema"):].strip()
+            if resto.startswith(":"):
+                resto = resto[1:].strip()
+            if not resto:
+                return "no_entendido", None
+            r = motor.decidir_R1_problema(resto, saber)
+            return (str(r["valor"]) if r["conclusion"] == "resuelto" else r["conclusion"]), r
         if t.lower().startswith("cifra_de"):
             resto = t[len("cifra_de"):].strip()
             if resto.startswith(":"):

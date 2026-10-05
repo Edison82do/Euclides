@@ -66,6 +66,7 @@ DEBE_ESTAR = [
     "5.1", "5.2", "5.3", "5.4", "5.5",   # operaciones
     "6.1", "6.2", "6.3", "6.5", "6.7",   # la secuencia, las decenas, la tabla, partir, la centena
     "7.1", "7.2", "7.3", "7.4", "7.5", "7.6",   # dedos, derivar, columnas (suma, resta, centenas)
+    "R.1",                        # el resolvedor
 ]
 for u in DEBE_ESTAR:
     check("B la ayuda menciona la unidad %s" % u, u in AYUDA)
@@ -83,7 +84,7 @@ ORDENES = [
     "restar_numeros", "diferencia", "diferencia_numeros", "dedos", "derivar",
     "nombre", "numero", "decenas", "agrupar", "sitio", "tabla", "partir",
     "juntar_decenas", "columnas", "pertenece", "casos", "ayuda", "salir", "listas",
-    "centena",
+    "centena", "problema",
 ]
 for o in ORDENES:
     check("C la ayuda menciona la orden '%s'" % o, o in AYUDA)

@@ -567,3 +567,21 @@ sumar_numeros: 247 + 385                   | 247 + 385 = 632 | sumar numeros usa
 restar_numeros: 50 - 27                    | 50 - 27 = 23 | ANTES salia 'None - None = veintitres' (fallo arreglado el 5 oct)
 restar_numeros: 500 - 247                  | 500 - 247 = 253 | con dos o tres cifras, por columnas
 diferencia_numeros: 30 / 47                | diecisiete | el hueco, medido restando por columnas
+
+# ---------------------------------------------------------------------------
+# UNIDAD R.1 - EL RESOLVEDOR (abierta el 5 oct 2026, pendiente del OK de Carlos)
+# ---------------------------------------------------------------------------
+problema: Ana tiene 5 manzanas. Le dan 3 mas. Cuantas tiene ahora?                | 8 | anadir (5.2)
+problema: Hay 8 pajaros en el arbol. Se van 3. Cuantos quedan?                    | 5 | quitar (5.4)
+problema: Ana tiene cinco manzanas y Luis tiene tres. Cuantas tienen entre los dos? | 8 | juntar (5.2)
+problema: Juan tiene 7 canicas y Pedro tiene 4. Cuantas canicas mas tiene Juan que Pedro? | 3 | la diferencia (5.5)
+problema: Ana tiene 8 manzanas. Tiene 3 mas que Luis. Cuantas tiene Luis?         | 5 | TRAMPA: dice MAS y es RESTA
+problema: Luis tiene 3 menos que Ana. Luis tiene 7. Cuantas tiene Ana?            | 10 | TRAMPA: dice MENOS y es SUMA
+problema: Ana y Luis tienen 9 lapices entre los dos. Ana tiene 4. Cuantos tiene Luis? | 5 | la parte que falta (5.1)
+problema: Pablo tenia algunas canicas. Gana 5. Ahora tiene 12. Cuantas tenia al principio? | 7 | la vuelta de anadir
+problema: Marta tiene 12 caramelos. Se come 4. Luego compra 10. Cuantos caramelos tiene ahora? | 18 | COMBINAR: dos pasos
+problema: Ana tiene 247 cromos. Le regalan 385. Cuantos tiene ahora?             | 632 | con la 7.6
+problema: Hay 4 peces. Se van 9. Cuantos quedan?                                  | sin_solucion | no se puede quitar mas de lo que hay
+problema: El perro come huesos. Cuantos tiene?                                    | no_entiendo | no adivina
+problema: Ana tiene 5 manzanas. Cuantas tiene Luis?                               | no_se_resolver | falta un dato
+problema: En la caja hay 20 lapices. Saca 5. Cuantos quedan?                      | no_entiendo | no se QUIEN saca
