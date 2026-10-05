@@ -27,6 +27,11 @@ estructurado, conectado y se acumula**, sin probabilidad y sin datos masivos.
 6. **Las decisiones van en archivos de datos** (`conocimiento/*.kn`), no dispersas por el código.
 7. **Nada de cajas negras**: toda respuesta se rastrea a una regla escrita y a un dato escrito.
 8. **SIN CALCULADORA** (decisión de Carlos, 4 oct: «mecánicamente hasta nuevo aviso»). Ver §4.
+   **Matiz del 5 oct (Carlos):** «en el camino el ser humano memoriza algunos datos y utiliza técnicas
+   para agilizar la solución; eso es válido aquí, según va avanzando el aprendizaje». O sea: se
+   permite MEMORIA y TÉCNICAS, pero **ganadas**: un hecho solo se memoriza después de haberlo
+   calculado con el mecanismo y verificado (y guarda de dónde salió); una técnica es un
+   conocimiento más, con sus condiciones de aplicación. Nunca una tabla escrita a mano.
 9. **Pedagogía investigada antes de cada avance**, con la fuente citada. Ver §5.
 10. **Todo paso a paso**: unidades pequeñas, cada una con su prueba, su diario y su guía.
 
