@@ -45,7 +45,8 @@ import runpy
 import sys
 import tempfile
 
-MOTOR = {motor!r}
+# El motor: desde el 5 oct 2026 son VARIOS archivos (sistema/motor.py + sistema/partes/*.py)
+SISTEMA = {sistema!r}
 
 PROBAR = {probar!r}
 
@@ -55,11 +56,12 @@ ARCHIVOS_KN = {kn!r}
 
 
 def extraer(destino):
-    os.makedirs(os.path.join(destino, "sistema"), exist_ok=True)
+    os.makedirs(os.path.join(destino, "sistema", "partes"), exist_ok=True)
     os.makedirs(os.path.join(destino, "conocimiento"), exist_ok=True)
 
-    with open(os.path.join(destino, "sistema", "motor.py"), "w", encoding="utf-8") as f:
-        f.write(MOTOR)
+    for rel, contenido in SISTEMA.items():
+        with open(os.path.join(destino, "sistema", *rel.split("/")), "w", encoding="utf-8") as f:
+            f.write(contenido)
     with open(os.path.join(destino, "probar.py"), "w", encoding="utf-8") as f:
         f.write(PROBAR)
     with open(os.path.join(destino, "mis_casos.txt"), "w", encoding="utf-8") as f:
@@ -109,7 +111,14 @@ def leer(ruta):
 
 
 def main():
-    motor = leer(os.path.join(RAIZ, "sistema", "motor.py"))
+    dir_sis = os.path.join(RAIZ, "sistema")
+    sistema = {}
+    for base, dirs, ficheros in os.walk(dir_sis):
+        dirs[:] = [d for d in dirs if d != "__pycache__"]
+        for nombre in sorted(ficheros):
+            if nombre.endswith(".py"):
+                completo = os.path.join(base, nombre)
+                sistema[os.path.relpath(completo, dir_sis).replace(os.sep, "/")] = leer(completo)
     probar = leer(os.path.join(RAIZ, "probar.py"))
     casos = leer(os.path.join(RAIZ, "mis_casos.txt"))
 
@@ -119,7 +128,7 @@ def main():
         if nombre.endswith(".kn"):
             kn[nombre] = leer(os.path.join(dir_kn, nombre))
 
-    codigo = PLANTILLA.format(motor=motor, probar=probar, casos=casos, kn=kn)
+    codigo = PLANTILLA.format(sistema=sistema, probar=probar, casos=casos, kn=kn)
     # que compile es la primera prueba
     compile(codigo, "euclides_movil.py", "exec")
 
@@ -132,7 +141,7 @@ def main():
     ruta_zip = os.path.join(DIR_MOVIL, "Euclides_codigo.zip")
     with zipfile.ZipFile(ruta_zip, "w", zipfile.ZIP_DEFLATED) as z:
         for base, _, ficheros in os.walk(RAIZ):
-            if os.path.join(RAIZ, "movil") in base:
+            if os.path.join(RAIZ, "movil") in base or os.path.join(RAIZ, ".git") in base:
                 continue
             for nombre in ficheros:
                 if nombre.endswith((".pyc",)):
