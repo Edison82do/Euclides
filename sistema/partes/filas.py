@@ -13,7 +13,6 @@ columnas: es la misma coleccion (la propiedad, 3 x 4 = 4 x 3, es de mas adelante
 import re
 
 _ORDEN_FILAS = re.compile(r"^(\d+)\s+(filas?|columnas?)\s+de\s+(\d+)\s*$")
-_POR = re.compile(r"^\d+\s*[x×*]\s*\d+$")
 
 
 def _repetir(n, veces, saber):
@@ -46,9 +45,6 @@ def decidir_filas(texto, saber=None):
     if saber is None:
         saber = cargar_conocimiento()
     t = " ".join(texto.lower().split())
-    if _POR.match(t):
-        return {"conclusion": "todavia_no", "porque": "todavia no se multiplicar (eso es el paso M.1); "
-                "pero si me lo dices como filas lo hago: '3 filas de 4'"}
     fc = leer_filas(t)
     if fc is None:
         return {"conclusion": "no_entiendo"}

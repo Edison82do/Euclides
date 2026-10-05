@@ -644,4 +644,16 @@ ecuacion: 47 + ? = 77                      | 30 | saltando de diez
 1 fila de 5                                | 5 | una sola fila
 0 filas de 4                               | 0 | no hay nada
 3 columnas de 4                            | 12 | columnas
-3 x 4                                      | todavia_no | M.1
+3 x 4                                      | 12 | desde M.1: 3 grupos de 4
+# ---------------------------------------------------------------------------
+# PASO M.1 - MULTIPLICAR = GRUPOS IGUALES (3.OA.A.1; NCETM 2.2)
+# ---------------------------------------------------------------------------
+5 x 7                                      | 35 | el ejemplo del estandar
+4 x 0                                      | 0 | grupos de cero
+0 x 4                                      | 0 | cero grupos
+1 x 9                                      | 9 | un grupo
+5 x 2                                      | 10 | saltando de 2
+3 grupos de 4                              | 12 | con palabras
+grupos de 2, 3 y 4                         | 9 | desiguales: suma
+40 x 30                                    | no_se_puede | pasa de mil
+ecuacion: 3 x ? = 12                       | todavia_no | dividir, M.3

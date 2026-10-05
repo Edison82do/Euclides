@@ -82,8 +82,17 @@ par: 846                          | par        | mira la ultima cifra
 5 filas de 5                      | 25         | saltando de 5 en 5
 4 filas de 2                      | 8
 3 columnas de 4                   | 12
-3 x 4                             | todavia_no | todavia no multiplica
+3 x 4                             | 12         | desde M.1 ya multiplica
 3 filas de 4                      | ??         | ver el dibujo
+
+# --- M.1 multiplicar = grupos iguales ---
+5 x 7                             | 35         | 5 grupos de 7
+4 x 0                             | 0          | grupos vacios
+3 grupos de 4                     | 12
+grupos de 2, 3 y 4                | 9          | desiguales: es una suma
+25 x 30                           | 750
+3 x ? = 12                        | todavia_no | eso es dividir (M.3)
+3 x 4                             | ??         | ver el razonamiento
 
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades

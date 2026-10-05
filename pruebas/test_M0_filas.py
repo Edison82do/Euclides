@@ -59,7 +59,8 @@ try:
     comprobar("C2 0 filas de 4 -> 0 (no hay nada)", F("0 filas de 4")["valor"], 0)
     r = F("3 columnas de 4")
     comprobar("C3 3 columnas de 4 -> 4 filas de 3 en el dibujo", (r["filas"], r["columnas"], r["valor"]), (4, 3, 12))
-    comprobar("C4 3 x 4: todavia no se multiplicar", F("3 x 4")["conclusion"], "todavia_no")
+    comprobar("C4 3 x 4 ya no es de filas: desde M.1 es multiplicar (3 grupos de 4)",
+              motor.decidir_multiplicar("3 x 4", SABER)["valor"], 12)
     r = F("7 filas de 8")
     comprobar("C5 7 filas de 8: pasa del estandar (5 x 5), se hace y se avisa", (r["valor"], r["pasa_del_estandar"]), (56, True))
     comprobar("C6 11 filas de 2: no dibujo mas de 10", F("11 filas de 2")["conclusion"], "no_entiendo")

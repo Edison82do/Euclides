@@ -311,12 +311,22 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         ecuacion: ... / hueco: ...  -> lo mismo con la orden delante.
         Y escrito directamente: '8 + 3 = 11' -> verdad,  '8 + 3' -> calcular.
 
+  MULTIPLICAR  ->  a x b son a GRUPOS IGUALES de b (paso M.1; 3.OA.A.1, NCETM 2.2)
+        3 x 4                  -> 12   3 grupos de 4: los dibuja, 4 + 4 + 4, y 3 x 4 = 12
+        5 x 7                  -> 35   (el ejemplo del estandar: 5 grupos de 7)
+        4 x 0 / 0 x 4          -> 0    grupos vacios / ningun grupo
+        5 x 2                  -> 10   grupos de 2: saltando 2, 4, 6, 8, 10
+        3 grupos de 4          -> 12   lo mismo, dicho con palabras   (tambien 3 * 4, 3 × 4)
+        grupos de 2, 3 y 4     -> 9    NO son iguales: no es una multiplicacion, es una suma
+        40 x 30                -> no se puede (pasa de mil)
+        3 x ? = 12             -> todavia no (eso es dividir, M.3, y E.4)
+
   FILAS  ->  filas y columnas como SUMAS IGUALES (paso M.0; 2.OA.C.4): el puente a multiplicar
         3 filas de 4           -> 12   lo DIBUJA, escribe 4 + 4 + 4 y lo suma grupo a grupo;
                                        y lo cuenta tambien por columnas (3 + 3 + 3 + 3): da lo mismo
         5 filas de 5           -> 25   cada fila es de 5: salta 5, 10, 15, 20, 25 (lo de N.1)
         3 columnas de 4        -> 12   (4 filas de 3 en el dibujo)
-        3 x 4                  -> todavia no se multiplicar (M.1)
+        (3 x 4 es MULTIPLICAR: ver MULTIPLICAR)
         El estandar llega a 5 x 5; dibuja hasta 10 filas y 10 columnas.
 
   SALTOS Y PAR  ->  contar de n en n; par o impar (paso N.1; 2.NBT.A.2, 2.OA.C.3, NCETM 2.1)
@@ -418,8 +428,10 @@ def preguntar(texto, saber):
     try:
         if t.lower().strip() in ("piezas", "mapa"):
             return "las_piezas", None
-        if re.match(r"^(filas:\s*)?\d+\s+(filas?|columnas?)\s+de\s+\d+", t.lower()) or \
-                re.match(r"^\d+\s*[x\u00d7*]\s*\d+$", t.lower()):
+        if motor.es_multiplicacion(t):
+            r = motor.decidir_multiplicar(t, saber)
+            return (str(r["valor"]) if r["conclusion"] in ("hecho", "desiguales") else r["conclusion"]), None
+        if re.match(r"^(filas:\s*)?\d+\s+(filas?|columnas?)\s+de\s+\d+", t.lower()):
             r = motor.decidir_filas(re.sub(r"^filas:\s*", "", t.lower()), saber)
             return (str(r["valor"]) if r["conclusion"] == "hecho" else r["conclusion"]), None
         if re.match(r"^de\s+\d+\s+en\s+\d+", t.lower()):

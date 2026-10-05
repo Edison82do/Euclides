@@ -120,6 +120,9 @@ def _montar_ecuacion(lados):
 def decidir_ecuacion(texto, saber=None):
     if saber is None:
         saber = cargar_conocimiento()
+    if re.search(r"\d\s*[x\u00d7*]\s*[\d?_]|[?_]\s*[x\u00d7*]\s*\d", texto.lower()):
+        return {"conclusion": "todavia_no", "porque": "ecuaciones con x: eso es el paso E.4 (y el hueco "
+                "en una multiplicacion es dividir, M.3). Para multiplicar escribe solo: 3 x 4"}
     e = leer_ecuacion(texto)
     if "error" in e:
         return {"conclusion": "no_entiendo", "porque": e["error"]}
@@ -162,6 +165,8 @@ def decidir_ecuacion(texto, saber=None):
 
 def explicar_ecuacion(texto, saber=None):
     r = decidir_ecuacion(texto, saber)
+    if r["conclusion"] == "todavia_no":
+        return "PREGUNTA (E.1): %s\n\n  TODAVIA NO: %s\n\nRESULTADO: todavia_no" % (texto.strip(), r["porque"])
     if r["conclusion"] == "no_entiendo":
         return ("NO ENTIENDO ESTO: %s.\n"
                 "   se escribe asi:  8 + ? = 11     (o  ecuacion: 5 = ? - 3)" % r.get("porque", ""))

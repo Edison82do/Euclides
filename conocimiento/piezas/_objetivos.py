@@ -13,6 +13,8 @@ OBJETIVOS = {
              "que_es": "un paso de un problema: que conocimiento encaja en la situacion"},
     "sumar": {"elige": "la_mas_rapida", "que_es": "hacer una suma, sin calculadora"},
     "restar": {"elige": "la_mas_rapida", "que_es": "hacer una resta, sin calculadora"},
+    "multiplicar": {"elige": "la_mas_rapida",
+                    "que_es": "a x b: a grupos iguales de b (3.OA.A.1, NCETM 2.2)"},
     "suma_de_iguales": {"elige": "la_mas_rapida",
                         "que_es": "juntar varios grupos IGUALES (filas y columnas, 2.OA.C.4)"},
     "paridad": {"elige": "la_mas_rapida",

@@ -61,7 +61,12 @@
   **2.NBT.B.8** (sumar o restar 10 o 100 mentalmente), **2.OA.C.3** (par o impar emparejando o de 2
   en 2), **2.OA.C.4** (filas y columnas, hasta 5 × 5, con sumas). → N.1, M.0.
 
+- **NCETM 2.2** (*Structures: multiplication representing equal groups*): grupos iguales o
+  desiguales; decir cuántos grupos y cuántos en cada uno; suma repetida; multiplicación; grupos de
+  cero y de uno. **Common Core 3.OA.A.1**: 5 × 7 = 5 grupos de 7. → M.1.
+
 ## Enlaces
+- NCETM 2.2: https://www.ncetm.org.uk/classroom-resources/primm-202-structures-multiplication-representing-equal-groups/
 - NCETM 2.1: https://www.ncetm.org.uk/classroom-resources/primm-201-counting-unitising-and-coins/
 - Common Core 2.OA: https://www.thecorestandards.org/Math/Content/2/OA/
 - Common Core 2.NBT: https://www.thecorestandards.org/Math/Content/2/NBT/
