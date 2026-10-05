@@ -58,6 +58,11 @@ nuevo = una pieza nueva; el motor no se toca.** Una pieza solo usa el mecanismo 
 en «usa». Las condiciones se escriben una vez en `_condiciones.py`; las preguntas y su forma de
 elegir, en `_objetivos.py`. `piezas` en el probador enseña el mapa.
 
+### 3b-bis. Velocidad pedagógica (decisión de Carlos, 5 oct 2026)
+Cada paso: **plan escrito primero** en su diario (pedagogía con fuentes, piezas, trampas, prueba de
+dominio) → construir y probar → **Carlos lo prueba con su `.bat`** → solo entonces el siguiente
+(Steinberg: una estrategia tarda de 2 a 4 lecciones en asentarse). El orden está en `PLAN.md`.
+
 ### 3c. La memoria de hechos (paso 3, 5 oct 2026)
 Lo que se sabe de memoria vive en `conocimiento/memoria/hechos.txt` y **se gana**: `aprender: sumas`
 (y `aprender: restas`) calcula cada hecho **sin memoria**, lo comprueba por la vuelta **y por un

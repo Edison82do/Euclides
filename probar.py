@@ -292,6 +292,8 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         calcular: 52 - 29      -> 23   compensar: quito 30 (uno de mas) y devuelvo uno
         calcular sin memoria: 6 + 7  -> 13   casi dobles: 6 + 6 = 12 (de memoria) y uno mas
         calcular: 8 + 5        -> 13   de memoria (si ya lo aprendi; si no, haciendo diez)
+        calcular: 3 + 47       -> 50   DAR LA VUELTA (P.5): 47 + 3, empiezo por el grande
+        calcular: 30 + 47      -> 77   la vuelta y de diez en diez: 47 + 30
         Cada tecnica es una PIEZA con sus condiciones: donde no encaja se descarta con su porque.
 
   MEMORIA  ->  hechos que se saben de memoria, GANADOS (paso 3)

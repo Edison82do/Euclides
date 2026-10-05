@@ -66,6 +66,10 @@ CONDICIONES = {
     "la_suma_esta_en_la_memoria": lambda s, u: u.recuerdo("%d + %d" % (s["a"], s["b"])) is not None,
     "la_resta_esta_en_la_memoria": lambda s, u: u.recuerdo("%d - %d" % (s["a"], s["b"])) is not None,
     "el_segundo_no_es_menor": lambda s, u: not u.viene_despues(u.decir(s["a"]), u.decir(s["b"])),
+    # ---- dar la vuelta (paso P.5)
+    "el_primero_es_menor": lambda s, u: u.viene_despues(u.decir(s["b"]), u.decir(s["a"])),
+    "el_primero_es_corto": lambda s, u: _decenas_justas(s["a"], u)
+    or u.levantar_dedos(u.decir(s["a"])) is not None,
     # ---- las tecnicas para ir mas rapido (paso 4)
     "el_segundo_son_decenas_justas": lambda s, u: _decenas_justas(s["b"], u),
     "son_casi_dobles": lambda s, u: u.siguiente(u.decir(s["a"])) == u.decir(s["b"])

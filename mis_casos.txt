@@ -572,3 +572,11 @@ calcular: 105 - 30                         | 75 | de diez en diez hacia atras, a
 calcular: 77 - 80                          | imposible | no hay restas negativas
 calcular: 99 + 14                          | 113 | 99 no se compensa con decenas: columnas
 calcular: hola                             | no_entiendo | sin cuenta no hay nada que calcular
+# ---------------------------------------------------------------------------
+# PASO P.5 - DAR LA VUELTA (1.OA.B.3): el orden no importa al juntar
+# ---------------------------------------------------------------------------
+calcular: 3 + 47                           | 50 | 47 + 3 con los dedos
+calcular: 30 + 47                          | 77 | 47 + 30 de diez en diez
+calcular: 5 + 995                          | 1000 | 995 + 5 con los dedos
+calcular: 15 + 47                          | 62 | el 15 no es corto: columnas
+problema: Ana tiene 3 canicas. Le dan 47. Cuantas tiene ahora? | 50 | el problema da la vuelta solo

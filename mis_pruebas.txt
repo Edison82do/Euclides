@@ -27,6 +27,13 @@ calcular: 52 - 29                 | 23    | compensar
 calcular sin memoria: 6 + 7       | 13    | casi dobles
 calcular: 8 + 5                   | ??    | de memoria
 
+# --- P.5 dar la vuelta (el orden no importa al juntar) ---
+calcular: 3 + 47                  | 50    | empieza por el 47 y cuenta 3
+calcular: 30 + 47                 | 77    | 47 + 30 de diez en diez
+calcular: 47 + 3                  | 50    | ya empieza por el grande: no da la vuelta
+calcular: 15 + 47                 | 62    | el 15 no es corto: columnas
+Ana tiene 3 canicas. Le dan 47. Cuantas tiene ahora?   | 50
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete
