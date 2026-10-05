@@ -12,6 +12,12 @@
 - Se aprende **en contexto**: juntar dos montones da lo mismo empiece por donde empiece.
   **OJO (trampa):** vale para **juntar** (sumar); **NO** para quitar: 8 − 3 no es 3 − 8.
 
+- **(Añadido al revisar las fuentes de Hermes)** NCETM, segmento 1.7 (Year 1): *«Addition is
+  commutative: when the order of the addends is changed, the sum remains the same.»*  Y la
+  Progression de Common Core (CC & OA): *«students might also use the commutative property to
+  shorten tasks, by counting on from the larger addend even if it is second»*: es justo la pieza.
+  Clements & Sarama: es el nivel *Counting Strategies +/-* de su trayectoria.
+
 **Lo que se construye.**
 - Una pieza `sumar_dando_la_vuelta` (responde a «sumar»): si el primero es el **menor** y el primero
   es **corto** (cabe en los dedos, o son decenas justas), le da la vuelta y usa un método corto:

@@ -59,7 +59,8 @@ en «usa». Las condiciones se escriben una vez en `_condiciones.py`; las pregun
 elegir, en `_objetivos.py`. `piezas` en el probador enseña el mapa.
 
 ### 3b-bis. Velocidad pedagógica (decisión de Carlos, 5 oct 2026)
-Cada paso: **plan escrito primero** en su diario (pedagogía con fuentes, piezas, trampas, prueba de
+Cada paso: **plan escrito primero** en su diario (pedagogía con fuentes — **mirando antes `FUENTES.md`**,
+las de Hermes incluidas: NCETM, Clements & Sarama, Gelman & Gallistel, Progressions...; piezas, trampas, prueba de
 dominio) → construir y probar → **Carlos lo prueba con su `.bat`** → solo entonces el siguiente
 (Steinberg: una estrategia tarda de 2 a 4 lecciones en asentarse). El orden está en `PLAN.md`.
 
