@@ -209,15 +209,17 @@ def decidir_5_1_descomponer(escena, saber=None):
         # OJO: la cifra del DIEZ no existe (son dos simbolos, Sistema Decimal).  Si el todo es diez,
         # el sistema da la palabra y dice que la cifra no la tiene (igual que en la 3.4).
         r["total_cifra"] = tabla.get(r["total"])
-        r["parejas"] = [(k, n - k) for k in range(0, n // 2 + 1)]
-        r["parejas_palabras"] = [(_palabra_de(k, secuencia), _palabra_de(n - k, secuencia))
-                                 for k, _ in r["parejas"]]
+        r["parejas"] = parejas_que_suman(n, saber)        # mecanismo.py
+        r["parejas_palabras"] = [(_palabra_de(k, secuencia), _palabra_de(m, secuencia))
+                                 for k, m in r["parejas"]]
         r["parejas_cifras"] = [(tabla.get(_palabra_de(k, secuencia)),
-                                tabla.get(_palabra_de(n - k, secuencia)))
-                               for k, _ in r["parejas"]]
+                                tabla.get(_palabra_de(m, secuencia)))
+                               for k, m in r["parejas"]]
         r["cuantas_maneras"] = len(r["parejas"])
         # VERIFICACION: recomponer cada pareja tiene que devolver el todo (la vuelta verifica la ida)
-        r["verificacion"] = all(k + (n - k) == n for k, _ in r["parejas"])
+        r["verificacion"] = all(leer(contar_adelante(decir(k, saber), decir(m, saber), saber,
+                                                     con_dedos=False)["resultado"], saber) == n
+                                for k, m in r["parejas"])
     return r
 
 
@@ -234,7 +236,7 @@ def decidir_5_1_componer(escena_a, escena_b, saber=None):
     r["segunda"] = b
     r["secuencia"] = secuencia
     if r["conclusion"] == "junto":
-        n = len(a) + len(b)
+        n = contar_todo(a, b)              # se juntan y se cuentan TODOS
         tabla = _tabla(saber)
         r["parte_a"] = _palabra_de(len(a), secuencia)
         r["parte_b"] = _palabra_de(len(b), secuencia)
@@ -243,6 +245,7 @@ def decidir_5_1_componer(escena_a, escena_b, saber=None):
         r["cifra_a"] = tabla.get(r["parte_a"])
         r["cifra_b"] = tabla.get(r["parte_b"])
         # VERIFICACION por la vuelta: partir el todo tiene que dar las mismas dos partes
-        r["verificacion"] = (len(a) + len(b) == n)
+        r["verificacion"] = (len(a), len(b)) in parejas_que_suman(n, saber) or \
+            (len(b), len(a)) in parejas_que_suman(n, saber)
         r["las_dos_partes"] = sorted([len(a), len(b)])
     return r

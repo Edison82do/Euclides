@@ -410,7 +410,7 @@ def p_hay_algo(escena, cuenta):
 
 def p_juntar_pasa_de_diez(escena, cuenta):
     n = len(cuenta["secuencia"])
-    return len(escena) + len(cuenta.get("otra") or []) > n
+    return contar_todo(escena, cuenta.get("otra") or []) > n     # se juntan y se cuentan
 
 
 def p_siempre(escena, cuenta):
@@ -467,7 +467,9 @@ def p_junta_pasa_de_cien(escena, cuenta):
     d, u = cuenta.get("decenas"), cuenta.get("unidades")
     if d is None or u is None:
         return False
-    return d * 10 + u > 100
+    s = _saber_de(cuenta)
+    t = juntar_decenas(d, u, s)
+    return t is None or viene_despues(decir(t, s), "cien", s)
 
 
 def p_alguna_pasa_de_cien(escena, cuenta):
@@ -595,12 +597,31 @@ def nombre_de_numero(texto, saber):
     return t, False
 
 
+_SABER_DE_LA_SECUENCIA = {}
+
+
+def _saber_de(cuenta):
+    """El 'saber' que necesita el mecanismo.  Si la cuenta no lo trae, se arma con su secuencia."""
+    if cuenta.get("_saber"):
+        return cuenta["_saber"]
+    sec = cuenta.get("secuencia") or []
+    clave = id(sec)
+    if clave not in _SABER_DE_LA_SECUENCIA:
+        _SABER_DE_LA_SECUENCIA[clave] = {"secuencia_de_conteo": {"palabras": list(sec)}}
+    return _SABER_DE_LA_SECUENCIA[clave]
+
+
 def p_la_suma_no_cruza_de_diez(escena, cuenta):
-    """Si los dos ya suman diez o menos, no hay nada que cruzar: no hace falta derivar."""
+    """Si los dos ya suman diez o menos, no hay nada que cruzar: no hace falta derivar.
+    (Mecanico: se cuenta con los dedos y se mira si la palabra viene despues de 'diez'.)"""
     a, b = cuenta.get("valor_a"), cuenta.get("valor_b")
     if a is None or b is None:
         return False
-    return a + b <= 10
+    s = _saber_de(cuenta)
+    c = contar_adelante(decir(a, s), decir(b, s), s)
+    if c["conclusion"] != "se_puede":
+        return False
+    return not viene_despues(c["resultado"], "diez", s)
 
 
 def p_primer_numero_es_de_dos_cifras(escena, cuenta):
@@ -632,7 +653,8 @@ def p_total_pasa_de_cien(escena, cuenta):
     a, b = cuenta.get("valor_a"), cuenta.get("valor_b")
     if a is None or b is None:
         return False
-    return a + b > len(cuenta.get("secuencia") or [])
+    # Mecanico: se suma por columnas y se mira si el total tiene palabra en la lista.
+    return sumar_por_columnas(a, b, _saber_de(cuenta)) is None
 
 
 # ------------------------------------------------- la centena (6.7) y las columnas de tres (7.6)
@@ -664,7 +686,7 @@ def p_junta_pasa_del_techo(escena, cuenta):
     d, u = cuenta.get("decenas"), cuenta.get("unidades")
     if d is None or u is None:
         return False
-    return d * 10 + u > _techo(cuenta)
+    return juntar_decenas(d, u, _saber_de(cuenta)) is None     # no hay palabra: se sale
 
 
 def p_alguna_pasa_del_techo(escena, cuenta):

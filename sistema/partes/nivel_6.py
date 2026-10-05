@@ -361,7 +361,7 @@ def decidir_6_2_agrupar(escena, saber=None):
     else:
         r["como_se_dice"] = "%s unidad%s" % (r["unidades_en_palabra"], "" if unidades == 1 else "es")
     # COMPROBACION 1: los montones y los sueltos tienen que ser TODOS los objetos, ni uno mas ni uno menos.
-    r["reparto_cuadra"] = (sum(len(m) for m in montones) + len(sueltos) == total
+    r["reparto_cuadra"] = (contar_todo(*(montones + [sueltos])) == total
                            and all(len(m) == len(DEDOS_CON_NOMBRE) for m in montones))
     # COMPROBACION 2 (la de Oak): el ORDEN de los objetos NO cambia el valor.  Se agrupa al reves.
     al_reves = list(reversed(escena))
@@ -538,17 +538,15 @@ def explicar_6_3_sitio(texto, saber=None):
                       % (r["unidad_en_palabra"], r["unidades"], r["columna"]))
     lineas.append("")
     lineas.append("  LA TABLA DE 100 (la fila del numero marcada):")
+    filas = _filas_de_la_tabla(saber)
     f = r["fila"]
-    for fila in sorted(set([max(0, f - 1), f, min(9, f + 1)])):
-        celdas = []
-        for col in range(1, 11):
-            n = fila * 10 + col
-            if n == v:
-                celdas.append("[%3d]" % n)
-            else:
-                celdas.append(" %3d " % n)
-        marca = "  <-- AQUI" if n == v or (fila * 10 + 10 >= v > fila * 10) else ""
-        lineas.append("    fila %d: %s%s" % (fila, "".join(celdas), marca))
+    for k, fila in enumerate(filas):
+        if k != f and anterior(decir(k, saber), saber) != decir(f, saber) \
+                and siguiente(decir(k, saber), saber) != decir(f, saber):
+            continue                                   # solo la fila del numero y sus vecinas
+        celdas = ["[%3d]" % n if n == v else " %3d " % n for n in fila]
+        marca = "  <-- AQUI" if v in fila else ""
+        lineas.append("    fila %d: %s%s" % (k, "".join(celdas), marca))
     lineas.append("")
     lineas.append("  COMO SE LEE (esto es leer una cifra de dos digitos):")
     lineas.append("    %s  ->  %s  ->  '%s'" % (texto if r["venia_en_cifra"] else r["palabra"],
@@ -571,6 +569,21 @@ def explicar_6_3_sitio(texto, saber=None):
     return "\n".join(lineas)
 
 
+def _filas_de_la_tabla(saber):
+    """La tabla de 100: se RECITA del uno al cien y se corta en filas de diez (una mano llena)."""
+    filas, fila = [], []
+    p = "uno"
+    while p is not None:
+        fila.append(leer(p, saber))
+        if len(fila) == len(DEDOS_CON_NOMBRE):
+            filas.append(fila)
+            fila = []
+        if p == "cien":
+            break
+        p = siguiente(p, saber)
+    return filas
+
+
 def explicar_6_3_tabla(saber=None):
     """La tabla de 100 entera, para verla."""
     if saber is None:
@@ -578,12 +591,8 @@ def explicar_6_3_tabla(saber=None):
     lineas = ["PREGUNTA (6.3): ensename la TABLA DE 100",
               "  (la fila son las DECENAS; la columna son las UNIDADES)",
               ""]
-    for fila in range(0, 10):
-        celdas = []
-        for col in range(1, 11):
-            n = fila * 10 + col
-            celdas.append(" %3d " % n)
-        lineas.append("  fila %d: %s" % (fila, "".join(celdas)))
+    for k, fila in enumerate(_filas_de_la_tabla(saber)):
+        lineas.append("  fila %d: %s" % (k, "".join(" %3d " % n for n in fila)))
     lineas.append("")
     lineas.append("  COMO SE RECORRE:")
     lineas.append("    - dentro de una fila, DE UNO EN UNO (47 -> 48: todavia en la fila 4)")
@@ -692,7 +701,7 @@ def explicar_6_5_partir(texto, saber=None):
                       % (r["si_sumara_las_cifras"], v))
     else:
         lineas.append("    aqui las cifras suman %d y el numero es %d: justo por eso hay que mirar"
-                      % (d + u, v))
+                      % (r["si_sumara_las_cifras"], v))
         lineas.append("    EL SITIO, no la cifra.  La misma cifra vale cosas distintas segun donde este.")
     lineas.append("    En 73 el 7 vale SETENTA; en el 7 solo, vale SIETE.  El sitio es el valor.")
     lineas.append("")
@@ -734,9 +743,7 @@ def decidir_6_5_juntar_decenas(decenas, unidades, saber=None):
     # JUNTAR, mecanico: las decenas se escriben con un cero detras de su cifra (4 decenas -> 40,
     # la palabra 'cuarenta') y desde ahi se cuentan las unidades una a una.  (Asi 3 decenas y 12
     # unidades dan cuarenta y dos: contando, se pasa solo de una decena a la siguiente.)
-    base = escribir_cifras([0] + cifras_de(d))
-    c = contar_adelante(decir(base, saber), decir(u, saber), saber, con_dedos=False)
-    total = leer(c["resultado"], saber)
+    total = juntar_decenas(d, u, saber)          # mecanismo.py
     r["total"] = total
     r["palabra"] = _palabra_de(total, secuencia) if total else "cero"
     r["cuenta"] = "%d decenas y %d unidades son %d" % (d, u, total)
@@ -877,7 +884,7 @@ def decidir_6_7_centena(texto, saber=None):
     # LO QUE VALE CADA CIFRA (por su SITIO).  Se dice con nombres, no con 'x 100' (regla 6).
     valores = []
     for i, c in enumerate(cifras):
-        vale = escribir_cifras([0] * i + [c])      # la cifra con sus ceros detras: 2 -> 200
+        vale = escribir_cifras(_rellenar([], i) + [c])   # la cifra con sus ceros detras: 2 -> 200
         valores.append({"orden": _ORDENES[i][1], "cifra": c, "vale": vale,
                         "dicho": _orden(i, c),
                         "vale_en_palabra": _nombre_o_cero(vale, saber)})

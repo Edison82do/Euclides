@@ -153,3 +153,87 @@ def escribir_cifras(cifras):
     """Lo contrario: las cifras por sitio (unidades primero) se ESCRIBEN una al lado de otra."""
     texto = "".join(str(c) for c in reversed(cifras)).lstrip("0")
     return int(texto) if texto else 0
+
+
+# ------------------------------------------------- piezas compuestas (todas con lo de arriba)
+
+def coleccion_de(palabra, saber):
+    """Una coleccion de tantas marcas como dice la palabra: se recita desde 'uno' poniendo una
+    marca por palabra (como hacer palotes).  Para cuando una regla necesita 'un monton de N'."""
+    marcas = []
+    if palabra in (None, "cero"):
+        return marcas
+    m = "uno"
+    while m is not None:
+        marcas.append({"id": m})
+        if m == palabra:
+            return marcas
+        m = siguiente(m, saber)
+    return marcas
+
+
+def contar_todo(*colecciones):
+    """Se juntan las colecciones y se cuentan TODAS juntas (la estrategia 'contar todo', 5.2)."""
+    junta = []
+    for c in colecciones:
+        junta.extend(c)
+    return len(junta)
+
+
+def _rellenar(cifras, n):
+    cifras = list(cifras)
+    while len(cifras) < n:
+        cifras.append(0)
+    return cifras
+
+
+def sumar_por_columnas(a, b, saber):
+    """La suma por columnas, sin explicacion (para las CONDICIONES: 'se pasaria del techo?').
+    Cada columna con los dedos; si pasa de nueve se anota lo que hay desde 'diez' y se lleva uno.
+    Devuelve el total, o None si no hay palabra para el (se sale de la lista)."""
+    ca, cb = cifras_de(a), cifras_de(b)
+    n = max(len(ca), len(cb))
+    ca, cb = _rellenar(ca, n), _rellenar(cb, n)
+    lleva = False
+    res = []
+    for x, y in zip(ca, cb):
+        s = contar_adelante(decir(x, saber), decir(y, saber), saber)["resultado"]
+        if lleva:
+            s = siguiente(s, saber)
+        if viene_despues(s, "nueve", saber):
+            res.append(leer(contar_hasta("diez", s, saber), saber))
+            lleva = True
+        else:
+            res.append(leer(s, saber))
+            lleva = False
+    if lleva:
+        res.append(1)
+    total = escribir_cifras(res)
+    return total if decir(total, saber) is not None else None
+
+
+def juntar_decenas(d, u, saber):
+    """d decenas y u unidades: la cifra de las decenas con un cero detras (4 -> 40) y desde ahi se
+    cuentan las unidades una a una.  Devuelve el numero, o None si se sale de la lista."""
+    base = escribir_cifras([0] + cifras_de(d))
+    if decir(base, saber) is None:
+        return None
+    c = contar_adelante(decir(base, saber), decir(u, saber), saber, con_dedos=False)
+    return leer(c["resultado"], saber) if c["conclusion"] == "se_puede" else None
+
+
+def parejas_que_suman(total, saber):
+    """Todas las maneras de partir 'total' en DOS (sin repetir el orden), mecanicas: una parte va
+    subiendo desde cero, la otra es lo que queda contando hacia atras; se para cuando se cruzan."""
+    pt = decir(total, saber)
+    out = []
+    k = "cero"
+    while k is not None:
+        m = contar_atras(pt, k, saber, con_dedos=False).get("resultado")
+        if m is None or viene_despues(k, m, saber):
+            break
+        out.append((leer(k, saber), leer(m, saber)))
+        if k == m:
+            break
+        k = siguiente(k, saber)
+    return out

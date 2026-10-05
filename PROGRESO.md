@@ -505,3 +505,4 @@ E:\Euclides\
 | 2026-10-05 | **Cálculo mecánico de verdad** (`mecanismo.py`): recitar, dedos con nombre, leer/escribir cifras. Antes el total salía de un `a + b` de Python | Verde sin tocar pruebas; rango entero de la 7.6: **1.003.002 cuentas, 0 fallos** |
 | 2026-10-05 | **Pruebas optimizadas**: una prueba = una afirmación; rápido + `--hierro` | **1500/1500 afirmaciones + 374/374 casos, 10 s** (antes «57409», 83 s) |
 | 2026-10-05 | **R.1: los 11 tipos de CGI** (faltaban los de cambio desconocido) | `test_R_1` G: 11/11 |
+| 2026-10-05 | **Paso 1 del plan: ni las condiciones usan calculadora** | `sumar_por_columnas`, `juntar_decenas`, `parejas_que_suman`, `coleccion_de`, `contar_todo` en `mecanismo.py`; 5.1/5.2/5.4/5.5 con objetos ahora juntan, sacan y emparejan objetos de verdad; la tabla de 100 se recita. **`test_sin_calculadora.py`** lee el código y vigila. **1502/1502 + 374/374, verde** |

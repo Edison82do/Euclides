@@ -266,8 +266,8 @@ def explicar_7_2_derivar(texto_a, texto_b, saber=None):
     if r["conclusion"] == "no_hace_falta":
         lineas.append("RESULTADO: no_hace_falta")
         lineas.append("  %s y %s ya suman %s, y NO cruzan el diez: no hay nada que hacer."
-                      % (r["palabra_a"], r["palabra_b"], _palabra_de(r["valor_a"] + r["valor_b"],
-                                                                     r["secuencia"])))
+                      % (r["palabra_a"], r["palabra_b"], contar_adelante(r["palabra_a"], r["palabra_b"],
+                                                                         saber)["resultado"]))
         lineas.append("  Derivar sirve para cuando la suma PASA de diez (7 + 5, 8 + 4, 9 + 9).")
         return "\n".join(lineas)
     if r["hay_cifras"] if "hay_cifras" in r else False:
@@ -346,7 +346,7 @@ def decidir_7_3_columnas(texto_a, texto_b, saber=None, verificar=True):
     pa, ca = nombre_de_numero(texto_a, saber)
     pb, cb = nombre_de_numero(texto_b, saber)
     va, vb = _valor_de_numero(pa, saber), _valor_de_numero(pb, saber)
-    cuenta = {"valor_a": va, "valor_b": vb, "secuencia": secuencia}
+    cuenta = {"valor_a": va, "valor_b": vb, "secuencia": secuencia, "_saber": saber}
     r = _aplicar_reglas(saber["reglas_7_3"]["reglas_columnas"], None, None, saber, cuenta=cuenta)
     r["texto_a"], r["texto_b"] = texto_a, texto_b
     r["palabra_a"], r["palabra_b"] = pa, pb
@@ -528,9 +528,9 @@ def decidir_7_4_resta_dedos(texto_a, texto_b, saber=None):
     vb = _valor_de_cantidad(pb, saber)
     # Se le pasa la cuenta en el MISMO formato que la unidad 5.4, para REUTILIZAR su primitiva
     # ('no se puede quitar mas de lo que hay') y no escribir una segunda verdad.
-    escena_54 = [{"id": i + 1} for i in range(va)] if va is not None else []
+    escena_54 = coleccion_de(pa, saber) if va is not None else []
     cuenta = {"secuencia": secuencia, "valor_a": va, "valor_b": vb, "pedido_valor": vb,
-              "otra": [None] * (vb or 0),
+              "otra": coleccion_de(pb, saber) if vb is not None else [],
               # La primitiva 'segundo_pasa_de_diez' es la de la 7.1 y necesita saber cuantos dedos
               # hay: hay que pasarle '_saber', igual que hace la 7.1.  Si no, revienta.
               "_saber": saber}
@@ -699,10 +699,10 @@ def decidir_7_5_columnas(texto_a, texto_b, saber=None, verificar=True):
     pb, cb = nombre_de_numero(texto_b, saber)
     va = _valor_de_cantidad(pa, saber)
     vb = _valor_de_cantidad(pb, saber)
-    escena_54 = [{"id": i + 1} for i in range(va)] if va is not None else []
+    escena_54 = coleccion_de(pa, saber) if va is not None else []
     cuenta = {"secuencia": secuencia, "valor_a": va, "valor_b": vb, "pedido_valor": vb,
               "texto_a": texto_a, "texto_b": texto_b,
-              "otra": [None] * (vb or 0)}
+              "otra": coleccion_de(pb, saber) if vb is not None else []}
     r = _aplicar_reglas(saber["reglas_7_5"]["reglas_columnas_resta"], escena_54, None, saber,
                         cuenta=cuenta)
     r["secuencia"] = secuencia
@@ -902,7 +902,13 @@ def _va_a_la_7_6(op, texto_a, texto_b, saber):
             return True
     if va is None or vb is None:
         return False
-    return (va + vb > 100) if op == "+" else (va > 100)
+    cien = "cien"
+    if op == "-":
+        return viene_despues(decir(va, saber), cien, saber)
+    if viene_despues(decir(va, saber), cien, saber) or viene_despues(decir(vb, saber), cien, saber):
+        return True
+    t = sumar_por_columnas(va, vb, saber)          # mecanico: el total pasa de cien?
+    return t is None or viene_despues(decir(t, saber), cien, saber)
 
 
 def decidir_7_6_columnas(texto_a, op, texto_b, saber=None, verificar=True):
@@ -931,8 +937,8 @@ def decidir_7_6_columnas(texto_a, op, texto_b, saber=None, verificar=True):
     arriba = _partir_por_ordenes(va)          # 6.7: las cifras por sitio, de derecha a izquierda
     abajo = _partir_por_ordenes(vb)
     n = max(len(arriba), len(abajo))
-    arriba += [0] * (n - len(arriba))
-    abajo += [0] * (n - len(abajo))
+    arriba = _rellenar(arriba, n)          # 47 debajo de 247 -> [7, 4, 0]
+    abajo = _rellenar(abajo, n)
     r["arriba"], r["abajo"] = list(arriba), list(abajo)
     pasos = []
     if op == "+":

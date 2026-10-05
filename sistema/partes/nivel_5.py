@@ -76,7 +76,7 @@ def explicar_5_1_componer(escena_a, escena_b, saber=None):
         lineas.append("  Juntandolas pasaria de diez, y mi lista de contar llega a diez.")
         lineas.append("  Lo digo en vez de inventarme el total.")
         return "\n".join(lineas)
-    n = len(r["primera"]) + len(r["segunda"])
+    n = contar_todo(r["primera"], r["segunda"])
     lineas.append("")
     lineas.append("  LAS DOS PARTES:")
     lineas.append("    primera: %d -> %s" % (len(r["primera"]), r["parte_a"]))
@@ -112,7 +112,7 @@ def _suma_base(escena_a, escena_b, saber, clave, ok):
     r["secuencia"] = secuencia
     if r["conclusion"] == ok:
         tabla = _tabla(saber)
-        n = len(a) + len(b)
+        n = contar_todo(a, b)              # CONTAR TODO: se juntan y se cuentan (5.2)
         r["sumando_a"] = _palabra_de(len(a), secuencia)
         r["sumando_b"] = _palabra_de(len(b), secuencia)
         r["suma"] = _palabra_de(n, secuencia)
@@ -126,7 +126,7 @@ def _suma_base(escena_a, escena_b, saber, clave, ok):
             r["total_sin_cifra"] = True
         # LA VERIFICACION (la vuelta, unidad 5.1): partiendo la SUMA tiene que aparecer la pareja
         # de los sumandos.  Si no apareciera, el sistema no elegiria: lo diria.
-        parejas = [(k, n - k) for k in range(0, n // 2 + 1)]
+        parejas = parejas_que_suman(n, saber)
         r["parejas_de_la_suma"] = parejas
         r["verificacion"] = sorted((len(a), len(b))) in [sorted(p) for p in parejas]
     return r
@@ -221,7 +221,7 @@ def explicar_5_2_sumar(escena_a, escena_b, saber=None):
     lineas.extend(_leyenda_de_los_signos())
     lineas.append("")
     lineas.append("  LA CUENTA:")
-    lineas.extend(_puente_mejor("*" * (len(r["primera"]) + len(r["segunda"])), r["suma"],
+    lineas.extend(_puente_mejor("*" * contar_todo(r["primera"], r["segunda"]), r["suma"],
                                 r["cifra_suma"]))
     lineas.append("")
     lineas.extend(_bloque_verificacion(r, saber))
@@ -353,7 +353,7 @@ def decidir_5_3_sumar_numeros(texto_a, texto_b, saber=None):
     r["cifra_b"] = tabla.get(pb)
     r["cifra_suma"] = tabla.get(r["suma"])
     # Las tres representaciones y la verificacion por la vuelta (unidad 5.1)
-    r["parejas_de_la_suma"] = [(k, total - k) for k in range(0, total // 2 + 1)]
+    r["parejas_de_la_suma"] = parejas_que_suman(total, saber)
     r["verificacion"] = sorted((va, vb)) in [sorted(p) for p in r["parejas_de_la_suma"]]
     r["expresion"] = ("%s + %s = %s" % (r["cifra_a"], r["cifra_b"], r["cifra_suma"])
                       if r["cifra_suma"] is not None
@@ -382,15 +382,14 @@ def decidir_5_3_descomponer_numero(texto_n, saber=None):
     r["conclusion"] = "parejas"
     r["valor"] = v
     r["cifra_n"] = tabla.get(pn)
-    r["parejas"] = [(k, v - k) for k in range(0, v // 2 + 1)]
-    r["parejas_palabras"] = [(_palabra_de(k, saber["secuencia_de_conteo"]["palabras"]),
-                              _palabra_de(v - k, saber["secuencia_de_conteo"]["palabras"]))
-                             for k, _ in r["parejas"]]
-    r["parejas_cifras"] = [(tabla.get(_palabra_de(k, saber["secuencia_de_conteo"]["palabras"])),
-                            tabla.get(_palabra_de(v - k, saber["secuencia_de_conteo"]["palabras"])))
-                           for k, _ in r["parejas"]]
+    r["parejas"] = parejas_que_suman(v, saber)
+    r["parejas_palabras"] = [(decir(k, saber), decir(m, saber)) for k, m in r["parejas"]]
+    r["parejas_cifras"] = [(tabla.get(decir(k, saber)), tabla.get(decir(m, saber)))
+                           for k, m in r["parejas"]]
     r["cuantas_maneras"] = len(r["parejas"])
-    r["verificacion"] = all(k + (v - k) == v for k, _ in r["parejas"])
+    r["verificacion"] = all(leer(contar_adelante(decir(k, saber), decir(m, saber), saber,
+                                                 con_dedos=False)["resultado"], saber) == v
+                            for k, m in r["parejas"])
     return r
 
 
@@ -504,15 +503,21 @@ def decidir_5_4_quitar(escena, pedido, saber=None):
     r["secuencia"] = secuencia
     if r["conclusion"] == "quedan":
         tabla = _tabla(saber)
-        quedan = len(reales) - valor
+        # QUITAR, mecanico: se van sacando del monton tantos como dice la palabra (recitando
+        # uno, dos... uno por objeto que se va), y lo que queda se cuenta.
+        restantes = list(reales)
+        se_van = []
+        for _marca in coleccion_de(palabra, saber):
+            se_van.insert(0, restantes.pop())
+        quedan = len(restantes)
         r["minuendo"] = _palabra_de(len(reales), secuencia)
         r["sustraendo"] = palabra
         r["resultado"] = _palabra_de(quedan, secuencia)
         r["cifra_minuendo"] = tabla.get(r["minuendo"])
         r["cifra_sustraendo"] = tabla.get(r["sustraendo"])
         r["cifra_resultado"] = tabla.get(r["resultado"])
-        r["los_que_quedan"] = [o["id"] for o in reales[:quedan]]
-        r["los_que_se_van"] = [o["id"] for o in reales[quedan:]]
+        r["los_que_quedan"] = [o["id"] for o in restantes]
+        r["los_que_se_van"] = [o["id"] for o in se_van]
         # Si alguna cifra no existe (el DIEZ son dos simbolos), se usa su palabra.  Se mezclan
         # cifra y palabra SOLO en ese caso, y el sistema lo dice.
         r["expresion"] = "%s - %s = %s" % (r["cifra_minuendo"] or r["minuendo"],
@@ -523,7 +528,7 @@ def decidir_5_4_quitar(escena, pedido, saber=None):
         # minuendo.  Dos comprobaciones: la aritmetica (siempre se puede) y la de verdad, con la
         # SUMA de la unidad 5.2/5.3 (que no siempre llega: la secuencia de NUMEROS acaba en nueve,
         # asi que con el DIEZ de minuendo la suma de numeros no lo alcanza; entonces se dice).
-        r["verificacion"] = (quedan + valor == len(reales))
+        r["verificacion"] = (contar_todo(restantes, se_van) == len(reales))   # juntar lo de antes
         vuelta = decidir_5_3_sumar_numeros(r["resultado"], r["sustraendo"], saber)
         r["vuelta"] = vuelta
         if vuelta["conclusion"] == "suma":
@@ -743,7 +748,7 @@ def decidir_5_5_diferencia(escena_a, escena_b, saber=None):
     r["emparejadas"] = [(a[i]["id"], b[i]["id"]) for i in range(n)]
     r["sobra_primera"] = [o["id"] for o in a[n:]]
     r["sobra_segunda"] = [o["id"] for o in b[n:]]
-    r["diferencia_valor"] = abs(len(a) - len(b))
+    r["diferencia_valor"] = len(r["sobra_primera"]) or len(r["sobra_segunda"])   # los SIN pareja
     r["el_que_va_primero"] = a[0]["id"] if a else "(vacio)"
     r["el_que_va_segundo"] = b[0]["id"] if b else "(vacio)"
     r["tantos_la_primera"] = _palabra_de(len(a), secuencia)
@@ -782,7 +787,9 @@ def decidir_5_5_diferencia(escena_a, escena_b, saber=None):
         else:
             r["expresion_inversa"] = None
             r["verificacion_con_la_suma"] = None
-        r["verificacion"] = (r["diferencia_valor"] + min(len(a), len(b)) == max(len(a), len(b)))
+        # la vuelta: los emparejados mas los que sobran tienen que ser el monton grande entero
+        r["verificacion"] = (contar_todo(r["emparejadas"], r["sobra_primera"] or r["sobra_segunda"])
+                             == max(len(a), len(b)))
     return r
 
 

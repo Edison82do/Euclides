@@ -66,9 +66,12 @@ través de un cero, juntar decenas, el hueco entre dos números (contar desde el
 grande). **En el camino de la respuesta no hay ni un `a + b` de Python.** Python solo lee
 posiciones, y hace de **testigo externo** en las pruebas.
 
-Pendiente honesto: algunas **condiciones de aplicación** (p. ej. «el total pasa de mil») todavía
-miran el tamaño con aritmética de Python antes de intentar la cuenta. No dan ninguna respuesta,
-pero conviene pasarlas al mecanismo.
+**Desde el 5 oct (paso 1 del plan) tampoco las condiciones de aplicación usan cuentas de Python**
+(«¿el total pasa de mil?» se responde sumando por columnas y mirando si el total tiene palabra en
+la lista). Lo vigila `pruebas/test_sin_calculadora.py`: lee el código de todas las piezas y se
+pone en rojo si aparece un `a + b` fuera del mecanismo (con una lista blanca, cada sitio con su
+porqué: unir textos, leer archivos, dibujar la cuenta). Lo que sí se usa es **comparar** dos
+números (`>`, `<`), que es lo de la 4.2: el que viene después en la lista es el mayor.
 
 ## 5. El sistema pedagógico (lo que se investigó y cómo se aplica)
 
