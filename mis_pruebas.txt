@@ -77,6 +77,14 @@ par: 7                            | impar
 par: 846                          | par        | mira la ultima cifra
 47 + ? = 77                       | ??         | ahora salta de diez en diez
 
+# --- M.0 filas y columnas como sumas iguales ---
+3 filas de 4                      | 12         | 4 + 4 + 4
+5 filas de 5                      | 25         | saltando de 5 en 5
+4 filas de 2                      | 8
+3 columnas de 4                   | 12
+3 x 4                             | todavia_no | todavia no multiplica
+3 filas de 4                      | ??         | ver el dibujo
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete

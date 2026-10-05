@@ -753,6 +753,9 @@ def explicar_pregunta(texto, saber=None):
     try:
         if t.lower().strip() in ("piezas", "mapa"):
             return explicar_piezas(saber)
+        if re.match(r"^(filas:\s*)?\d+\s+(filas?|columnas?)\s+de\s+\d+", t.lower()) or \
+                re.match(r"^\d+\s*[x\u00d7*]\s*\d+$", t.lower()):
+            return explicar_filas(re.sub(r"^filas:\s*", "", t.lower()), saber)
         if re.match(r"^de\s+\d+\s+en\s+\d+", t.lower()):
             return explicar_saltos(t, saber)
         if t.lower().startswith("par:") or t.lower().startswith("par "):

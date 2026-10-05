@@ -13,6 +13,8 @@ OBJETIVOS = {
              "que_es": "un paso de un problema: que conocimiento encaja en la situacion"},
     "sumar": {"elige": "la_mas_rapida", "que_es": "hacer una suma, sin calculadora"},
     "restar": {"elige": "la_mas_rapida", "que_es": "hacer una resta, sin calculadora"},
+    "suma_de_iguales": {"elige": "la_mas_rapida",
+                        "que_es": "juntar varios grupos IGUALES (filas y columnas, 2.OA.C.4)"},
     "paridad": {"elige": "la_mas_rapida",
                 "que_es": "par o impar? (se emparejan de dos en dos y no sobra ninguno?)"},
     "balanza": {"elige": "la_mas_rapida",

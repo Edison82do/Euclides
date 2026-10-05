@@ -635,3 +635,13 @@ par: 7                                     | impar | sobra uno
 par: 20                                    | par | diez parejas
 par: 999                                   | impar | la ultima cifra
 ecuacion: 47 + ? = 77                      | 30 | saltando de diez
+# ---------------------------------------------------------------------------
+# PASO M.0 - FILAS Y COLUMNAS COMO SUMAS IGUALES (2.OA.C.4)
+# ---------------------------------------------------------------------------
+3 filas de 4                               | 12 | 4 + 4 + 4
+5 filas de 5                               | 25 | saltando
+2 filas de 10                              | 20 | de diez en diez
+1 fila de 5                                | 5 | una sola fila
+0 filas de 4                               | 0 | no hay nada
+3 columnas de 4                            | 12 | columnas
+3 x 4                                      | todavia_no | M.1

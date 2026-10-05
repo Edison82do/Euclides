@@ -102,6 +102,9 @@ CONDICIONES = {
     "la_suma_esta_en_la_memoria": lambda s, u: u.recuerdo("%d + %d" % (s["a"], s["b"])) is not None,
     "la_resta_esta_en_la_memoria": lambda s, u: u.recuerdo("%d - %d" % (s["a"], s["b"])) is not None,
     "el_segundo_no_es_menor": lambda s, u: not u.viene_despues(u.decir(s["a"]), u.decir(s["b"])),
+    # ---- suma de iguales (paso M.0): situacion {"veces": .., "n": ..}
+    "cada_grupo_se_salta": lambda s, u: u.decir(s["n"]) in ("dos", "cinco", "diez"),
+    "los_grupos_tienen_nombre": lambda s, u: u.decir(s["veces"]) is not None,
     # ---- par e impar; saltar de diez (paso N.1)
     "es_de_veinte_o_menos": lambda s, u: not u.viene_despues(u.decir(s["n"]), "veinte"),
     "pasa_de_veinte": lambda s, u: u.viene_despues(u.decir(s["n"]), "veinte"),
