@@ -56,7 +56,15 @@
   «Relational thinking: the bridge between arithmetic and algebra»): tres niveles — calcular los dos
   lados → calcular y ver la relación → ver la relación sin calcular (57 + 22 = 58 + 21). → E.0, E.2.
 
+- **NCETM 2.1** (*Counting, unitising and coins*, Year 1): «we can count efficiently by counting in
+  groups of two / ten / five».  **Common Core 2.NBT.A.2** (contar de 5, 10 y 100 en 100),
+  **2.NBT.B.8** (sumar o restar 10 o 100 mentalmente), **2.OA.C.3** (par o impar emparejando o de 2
+  en 2), **2.OA.C.4** (filas y columnas, hasta 5 × 5, con sumas). → N.1, M.0.
+
 ## Enlaces
+- NCETM 2.1: https://www.ncetm.org.uk/classroom-resources/primm-201-counting-unitising-and-coins/
+- Common Core 2.OA: https://www.thecorestandards.org/Math/Content/2/OA/
+- Common Core 2.NBT: https://www.thecorestandards.org/Math/Content/2/NBT/
 - Relational thinking (ERIC): https://files.eric.ed.gov/fulltext/EJ1156327.pdf
 - NCETM Spine 1: https://www.ncetm.org.uk/teaching-for-mastery/mastery-materials/primary-mastery-professional-development/number-addition-and-subtraction/
 - NCETM 1.5: https://www.ncetm.org.uk/classroom-resources/primm-105-additive-structures-introduction-to-aggregation-and-partitioning/

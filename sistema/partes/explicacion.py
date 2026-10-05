@@ -8,6 +8,7 @@ definidas en otras partes sin importarlas).  Ver sistema/partes/__init__.py.
 """
 
 import os  # noqa: F401
+import re  # noqa: F401
 import sys  # noqa: F401
 
 # ---------------------------------------------------------------- explicacion
@@ -752,6 +753,10 @@ def explicar_pregunta(texto, saber=None):
     try:
         if t.lower().strip() in ("piezas", "mapa"):
             return explicar_piezas(saber)
+        if re.match(r"^de\s+\d+\s+en\s+\d+", t.lower()):
+            return explicar_saltos(t, saber)
+        if t.lower().startswith("par:") or t.lower().startswith("par "):
+            return explicar_paridad(t[3:].lstrip(":").strip(), saber)
         if t.lower().startswith("ecuacion") or t.lower().startswith("hueco"):
             return explicar_ecuacion(t.split(":", 1)[1] if ":" in t else t, saber)
         if t.lower().startswith("verdad"):

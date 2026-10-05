@@ -67,6 +67,16 @@ verdad: 8 + 4 = 12 + 5            | ??         | ver el razonamiento
 8 + 4 = ? + 13                    | imposible  | el otro plato ya pesa mas
 8 + 4 = ? + 5                     | ??         | ver las respuestas equivocadas de siempre
 
+# --- N.1 contar de n en n; par o impar ---
+de 5 en 5 hasta 50                | 5, 10, 15, 20, 25, 30, 35, 40, 45, 50
+de 10 en 10 desde 47 hasta 97     | 57, 67, 77, 87, 97
+de 100 en 100 desde 250           | 350, 450, 550, 650, 750, 850, 950
+de 5 en 5 desde 3 hasta 50        | ??         | el 50 no se toca
+par: 14                           | par        | 14 = 7 + 7
+par: 7                            | impar
+par: 846                          | par        | mira la ultima cifra
+47 + ? = 77                       | ??         | ahora salta de diez en diez
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete

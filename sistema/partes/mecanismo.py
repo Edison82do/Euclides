@@ -159,8 +159,32 @@ def subir_una_decena(valor, saber):
     """SALTAR DE DIEZ EN DIEZ (paso 4): 47 -> 57.  Es ESCRIBIR, no contar: la cifra de las decenas
     pasa a la siguiente; si era un nueve se vuelve cero y la de al lado sube (como en el
     cuentakilometros).  None si se sale de la lista."""
+    return _subir_en_el_sitio(valor, 1, saber)
+
+
+def subir_una_centena(valor, saber):
+    """SALTAR DE CIEN EN CIEN (paso N.1; 2.NBT.B.8): 250 -> 350, escribiendo la cifra de las centenas."""
+    return _subir_en_el_sitio(valor, 2, saber)
+
+
+def saltar(desde, de, saber):
+    """Un SALTO de 'de' (dos, cinco, diez, cien) desde 'desde' (paso N.1; 2.NBT.A.2).
+    De dos y de cinco: se recita en voz baja con los dedos y se dice el ultimo.  De diez y de cien:
+    se ESCRIBE la cifra del sitio (sin contar diez ni cien pasos).  None si se sale de la lista."""
+    if de == "diez":
+        return subir_una_decena(desde, saber)
+    if de == "cien":
+        return subir_una_centena(desde, saber)
+    p = decir(desde, saber)
+    for _ in levantar_dedos(de, saber) or []:
+        p = siguiente(p, saber)
+        if p is None:
+            return None
+    return leer(p, saber)
+
+
+def _subir_en_el_sitio(valor, i, saber):
     cif = cifras_de(valor)
-    i = 1
     while True:
         while len(cif) <= i:
             cif.append(0)

@@ -27,6 +27,19 @@ def _acaba_en_nueve(n, u):
     return len(c) == 2 and c[0] == 9 and c[1] != 9
 
 
+def _saltos_de_diez(a, b, u):
+    """Cuantos saltos de diez hay de a hasta b (como mucho nueve), o None si no se llega."""
+    v, saltos = a, "cero"
+    while v != b:
+        if saltos == "nueve":
+            return None
+        v = u.subir_una_decena(v)
+        if v is None or u.viene_despues(u.decir(v), u.decir(b)):
+            return None
+        saltos = u.siguiente(saltos)
+    return saltos
+
+
 def _conocido(s):
     h = s["con_hueco"]
     return h["a"] if h["b"] == "?" else h["b"]
@@ -89,6 +102,10 @@ CONDICIONES = {
     "la_suma_esta_en_la_memoria": lambda s, u: u.recuerdo("%d + %d" % (s["a"], s["b"])) is not None,
     "la_resta_esta_en_la_memoria": lambda s, u: u.recuerdo("%d - %d" % (s["a"], s["b"])) is not None,
     "el_segundo_no_es_menor": lambda s, u: not u.viene_despues(u.decir(s["a"]), u.decir(s["b"])),
+    # ---- par e impar; saltar de diez (paso N.1)
+    "es_de_veinte_o_menos": lambda s, u: not u.viene_despues(u.decir(s["n"]), "veinte"),
+    "pasa_de_veinte": lambda s, u: u.viene_despues(u.decir(s["n"]), "veinte"),
+    "se_llega_saltando_de_diez": lambda s, u: _saltos_de_diez(s["a"], s["b"], u) is not None,
     # ---- la balanza (paso E.2): situacion {"completo": {a, op, b}, "con_hueco": {a, op, b} con un "?"}
     "hay_un_plato_completo": lambda s, u: "completo" in s and "con_hueco" in s,
     "comparten_un_numero": lambda s, u: _comparten(s),

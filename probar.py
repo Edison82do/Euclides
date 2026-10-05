@@ -311,6 +311,16 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         ecuacion: ... / hueco: ...  -> lo mismo con la orden delante.
         Y escrito directamente: '8 + 3 = 11' -> verdad,  '8 + 3' -> calcular.
 
+  SALTOS Y PAR  ->  contar de n en n; par o impar (paso N.1; 2.NBT.A.2, 2.OA.C.3, NCETM 2.1)
+        de 2 en 2 hasta 20     -> 2, 4, 6 ... 20
+        de 5 en 5 desde 3 hasta 50  -> 8, 13 ... 48  (y dice que el 50 no se toca)
+        de 10 en 10 desde 47 hasta 97  -> 57, 67, 77, 87, 97  (se ESCRIBE la cifra de las decenas)
+        de 100 en 100 desde 250  -> 350 ... 950  (se para antes de pasar de mil)
+        par: 14                -> PAR (hago parejas: 7 parejas, 14 = 7 + 7, un doble)
+        par: 7                 -> IMPAR (tres parejas y uno suelto)
+        par: 846               -> PAR (diez se empareja entero: solo miro las unidades)
+        Y 47 + ? = 77 ya no cuenta 30 pasos: salta 57, 67, 77 -> 30.
+
   BALANZA  ->  cuentas a los DOS lados del = (paso E.2): los dos platos pesan lo mismo
         8 + 4 = ? + 5          -> 7    compensar: 5 es uno mas que 4, el hueco uno menos que 8
                                        (y dice por que NO 12 ni 17, las respuestas de siempre)
@@ -400,6 +410,16 @@ def preguntar(texto, saber):
     try:
         if t.lower().strip() in ("piezas", "mapa"):
             return "las_piezas", None
+        if re.match(r"^de\s+\d+\s+en\s+\d+", t.lower()):
+            salida = motor.explicar_saltos(t, saber)
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
+        if t.lower().startswith("par:") or t.lower().startswith("par "):
+            salida = motor.explicar_paridad(t[3:].lstrip(":").strip(), saber)
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip().lower(), None
         if t.lower().startswith("ecuacion") or t.lower().startswith("hueco"):
             r = motor.decidir_ecuacion(t.split(":", 1)[1] if ":" in t else t, saber)
             return (str(r["valor"]) if r["conclusion"] == "hecho" else r["conclusion"]), None

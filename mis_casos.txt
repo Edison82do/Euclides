@@ -623,3 +623,15 @@ ecuacion: ? + 4 = 8 + 5                    | 9 | el hueco a la izquierda
 ecuacion: 15 - 7 = ? - 6                   | 14 | calculando un plato
 ecuacion: 8 + 4 = 15 - ?                   | 3 | operaciones distintas
 ecuacion: 8 + 4 = ? + 13                   | imposible | el otro plato pesa mas
+# ---------------------------------------------------------------------------
+# PASO N.1 - CONTAR DE n EN n (2.NBT.A.2); PAR O IMPAR (2.OA.C.3)
+# ---------------------------------------------------------------------------
+de 2 en 2 hasta 10                         | 2, 4, 6, 8, 10 | de dos en dos
+de 10 en 10 desde 47 hasta 97              | 57, 67, 77, 87, 97 | se escribe la cifra
+de 100 en 100 desde 750                    | 850, 950 | se para antes de mil
+de 3 en 3 hasta 30                         | no_entiendo | no esta en el estandar
+par: 0                                     | par | cero parejas
+par: 7                                     | impar | sobra uno
+par: 20                                    | par | diez parejas
+par: 999                                   | impar | la ultima cifra
+ecuacion: 47 + ? = 77                      | 30 | saltando de diez

@@ -147,6 +147,7 @@ class _Lo_que_puede_usar:
         self.sumar_por_columnas = lambda a, b: sumar_por_columnas(a, b, s)
         self.subir_una_decena = lambda v: subir_una_decena(v, s)
         self.bajar_una_decena = lambda v: bajar_una_decena(v, s)
+        self.saltar = lambda desde, de: saltar(desde, de, s)
         # la MEMORIA de hechos (memoria.py): mirar si algo se sabe de memoria
         self.recuerdo = lambda clave: cargar_memoria().get(clave)
 

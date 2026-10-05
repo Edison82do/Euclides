@@ -84,7 +84,7 @@ ORDENES = [
     "restar_numeros", "diferencia", "diferencia_numeros", "dedos", "derivar",
     "nombre", "numero", "decenas", "agrupar", "sitio", "tabla", "partir",
     "juntar_decenas", "columnas", "pertenece", "casos", "ayuda", "salir", "listas",
-    "centena", "problema", "piezas", "memoria", "aprender", "olvidar", "calcular", "verdad", "ecuacion", "hueco",
+    "centena", "problema", "piezas", "memoria", "aprender", "olvidar", "calcular", "verdad", "ecuacion", "hueco", "de 5 en 5", "par:",
 ]
 for o in ORDENES:
     check("C la ayuda menciona la orden '%s'" % o, o in AYUDA)
