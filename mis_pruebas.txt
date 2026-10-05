@@ -34,6 +34,14 @@ calcular: 47 + 3                  | 50    | ya empieza por el grande: no da la v
 calcular: 15 + 47                 | 62    | el 15 no es corto: columnas
 Ana tiene 3 canicas. Le dan 47. Cuantas tiene ahora?   | 50
 
+# --- P.6 restar pensando en sumar (contar hacia arriba) ---
+calcular sin memoria: 13 - 8      | 5     | del 8 al 13: 9, 10, 11, 12, 13
+calcular: 52 - 48                 | 4     | 49, 50, 51, 52
+calcular: 100 - 95                | 5     | sin cambiar centenas
+calcular: 13 - 2                  | 11    | se quita poco: hacia atras
+calcular sin memoria: 13 - 5      | 8     | hacia atras es mas corto (5 pasos, no 8)
+Habia 52 pajaros. Se van 48. Cuantos quedan?   | 4
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete

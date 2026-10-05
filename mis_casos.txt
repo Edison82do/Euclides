@@ -580,3 +580,12 @@ calcular: 30 + 47                          | 77 | 47 + 30 de diez en diez
 calcular: 5 + 995                          | 1000 | 995 + 5 con los dedos
 calcular: 15 + 47                          | 62 | el 15 no es corto: columnas
 problema: Ana tiene 3 canicas. Le dan 47. Cuantas tiene ahora? | 50 | el problema da la vuelta solo
+# ---------------------------------------------------------------------------
+# PASO P.6 - RESTAR PENSANDO EN SUMAR (1.OA.B.4): contar hacia arriba si estan cerca
+# ---------------------------------------------------------------------------
+calcular: 52 - 48                          | 4 | 49, 50, 51, 52
+calcular: 100 - 95                         | 5 | sin cambiar centenas por decenas
+calcular: 995 - 990                        | 5 | cerca del techo
+calcular: 13 - 2                           | 11 | se quita poco: hacia atras
+calcular: 13 - 13                          | 0 | no falta nada
+problema: Habia 52 pajaros. Se van 48. Cuantos quedan? | 4 | el problema cuenta hacia arriba solo

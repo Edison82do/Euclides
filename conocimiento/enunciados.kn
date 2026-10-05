@@ -104,6 +104,9 @@ formas_hechos:
   - id: hay
     forma: hay {n} {cosa?} {lugar?}
     hecho: estado_lugar
+  - id: habia
+    forma: habia {n} {cosa?} {lugar?}
+    hecho: estado_lugar
   - id: en_hay
     forma: {lugar} hay {n} {cosa?}
     hecho: estado_lugar

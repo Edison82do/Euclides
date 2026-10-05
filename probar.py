@@ -294,6 +294,9 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         calcular: 8 + 5        -> 13   de memoria (si ya lo aprendi; si no, haciendo diez)
         calcular: 3 + 47       -> 50   DAR LA VUELTA (P.5): 47 + 3, empiezo por el grande
         calcular: 30 + 47      -> 77   la vuelta y de diez en diez: 47 + 30
+        calcular: 52 - 48      -> 4    RESTAR PENSANDO EN SUMAR (P.6): del 48 al 52 -> 49, 50, 51, 52
+        calcular: 100 - 95     -> 5    96 ... 100 (sin cambiar centenas por decenas)
+        calcular: 13 - 2       -> 11   se quita poco: mas corto hacia atras (y lo dice)
         Cada tecnica es una PIEZA con sus condiciones: donde no encaja se descarta con su porque.
 
   MEMORIA  ->  hechos que se saben de memoria, GANADOS (paso 3)
