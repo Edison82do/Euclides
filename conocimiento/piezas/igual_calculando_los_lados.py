@@ -14,13 +14,18 @@ PIEZA = {
     "condiciones": [
         ("hay_dos_lados_o_mas", "no hay dos lados que comparar"),
     ],
-    "usa": ["sumar", "restar", "multiplicar"],
+    "usa": ["sumar", "restar", "multiplicar", "dividir"],
 }
 
 
 def _vale(lado, u):
     if "n" in lado:
         return lado["n"], "es un numero"
+    if lado["op"] == ":":
+        r = u.usar("dividir", total=lado["a"], divisor=lado["b"])
+        if r["resultado"].get("resto"):
+            raise ValueError("%s no da justo (sobra %d)" % (lado["texto"], r["resultado"]["resto"]))
+        return r["valor"], r["resultado"]["metodo"]
     r = u.usar({"+": "sumar", "-": "restar", "x": "multiplicar"}[lado["op"]], a=lado["a"], b=lado["b"])
     return r["valor"], r["resultado"]["metodo"]
 

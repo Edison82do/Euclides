@@ -656,7 +656,7 @@ ecuacion: 47 + ? = 77                      | 30 | saltando de diez
 3 grupos de 4                              | 12 | con palabras
 grupos de 2, 3 y 4                         | 9 | desiguales: suma
 40 x 30                                    | no_se_puede | pasa de mil
-ecuacion: 3 x ? = 12                       | todavia_no | dividir, M.3
+ecuacion: 3 x ? = 12                       | 4 | desde E.4: repartir 12 entre 3
 # ---------------------------------------------------------------------------
 # PASO M.2 - LAS TABLAS DEL 2, 5 Y 10; CONMUTATIVA; DOBLES Y MITADES (NCETM 2.3-2.5)
 # ---------------------------------------------------------------------------
@@ -682,3 +682,17 @@ repartir 20 entre 4                        | 5 | repartir
 9 : 1                                      | 9 | entre uno
 8 : 0                                      | no_se_puede | entre nadie
 100 : 7                                    | 14 resto 2 | grande
+# ---------------------------------------------------------------------------
+# PASO E.4 - EL HUECO EN x Y : (3.OA.A.4; 3.OA.B.6; NCETM 2.6)
+# ---------------------------------------------------------------------------
+ecuacion: ? x 4 = 12                       | 3 | cuantos grupos: agrupar
+ecuacion: 12 = ? x 3                       | 4 | el = al reves
+ecuacion: 12 : ? = 4                       | 3 | el divisor
+ecuacion: ? : 3 = 4                        | 12 | el dividendo
+ecuacion: 8 x ? = 48                       | 6 | el del estandar
+ecuacion: 3 x ? = 13                       | no_entero | no da justo
+ecuacion: 0 x ? = 5                        | imposible | cero grupos
+ecuacion: 0 x ? = 0                        | cualquiera | cualquier numero
+ecuacion: ? : 0 = 3                        | imposible | entre cero
+ecuacion: ? x ? = 12                       | dos_huecos | dos huecos
+verdad: 12 : 3 = 4                         | verdadero | el = entiende :

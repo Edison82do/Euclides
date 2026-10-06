@@ -91,7 +91,7 @@ par: 846                          | par        | mira la ultima cifra
 3 grupos de 4                     | 12
 grupos de 2, 3 y 4                | 9          | desiguales: es una suma
 25 x 30                           | 750
-3 x ? = 12                        | todavia_no | eso es dividir (M.3)
+3 x ? = 12                        | 4          | desde E.4
 3 x 4                             | ??         | ver el razonamiento
 
 # --- M.2 las tablas del 2, 5 y 10; la conmutativa; dobles y mitades ---
@@ -112,6 +112,15 @@ mitad: 7                          | impar
 15 : 2                            | 7 resto 1  | la mitad
 8 : 0                             | no_se_puede
 12 : 3                            | ??         | ver las dos lecturas y los dibujos
+
+# --- E.4 el hueco en x y : ---
+? x 4 = 12                        | 3          | agrupar
+12 : ? = 4                        | 3          | el divisor
+? : 3 = 4                         | 12         | el dividendo
+5 = ? : 3                         | 15         | el del estandar
+3 x ? = 13                        | no_entero  | no se reparte justo
+0 x ? = 0                         | cualquiera
+3 x ? = 12                        | ??         | ver el razonamiento
 
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades

@@ -339,7 +339,7 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         3 grupos de 4          -> 12   lo mismo, dicho con palabras   (tambien 3 * 4, 3 × 4)
         grupos de 2, 3 y 4     -> 9    NO son iguales: no es una multiplicacion, es una suma
         40 x 30                -> no se puede (pasa de mil)
-        3 x ? = 12             -> todavia no (eso es dividir, M.3, y E.4)
+        (3 x ? = 12: ver ECUACION CON x Y :)
 
   FILAS  ->  filas y columnas como SUMAS IGUALES (paso M.0; 2.OA.C.4): el puente a multiplicar
         3 filas de 4           -> 12   lo DIBUJA, escribe 4 + 4 + 4 y lo suma grupo a grupo;
@@ -358,6 +358,16 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         par: 7                 -> IMPAR (tres parejas y uno suelto)
         par: 846               -> PAR (diez se empareja entero: solo miro las unidades)
         Y 47 + ? = 77 ya no cuenta 30 pasos: salta 57, 67, 77 -> 30.
+
+  ECUACION CON x Y :  ->  el hueco en una multiplicacion o division (paso E.4; 3.OA.A.4)
+        3 x ? = 12             -> 4    cuantos en cada grupo: REPARTIR 12 entre 3
+        ? x 4 = 12             -> 3    cuantos grupos: AGRUPAR 12 en grupos de 4
+        12 : ? = 4             -> 3    el divisor: agrupar 12 en grupos de 4
+        ? : 3 = 4              -> 12   el dividendo: deshacer, 4 x 3
+        5 = ? : 3              -> 15   (el ejemplo del estandar)
+        3 x ? = 13             -> no_entero (13 no se reparte justo entre 3)
+        0 x ? = 0 -> cualquiera     0 x ? = 5 -> imposible     ? x ? = 12 -> dos huecos
+        Se escriben directamente; se comprueban con verdad: (que ya entiende x y :).
 
   BALANZA  ->  cuentas a los DOS lados del = (paso E.2): los dos platos pesan lo mismo
         8 + 4 = ? + 5          -> 7    compensar: 5 es uno mas que 4, el hueco uno menos que 8
@@ -999,10 +1009,12 @@ def como_problema(texto):
     palabras'):  una ecuacion con hueco (8 + ? = 11) -> ecuacion;  un problema con su pregunta (?) ->
     problema;  una igualdad sin hueco (8 + 3 = 11) -> verdad;  una cuenta suelta (8 + 3) -> calcular."""
     t = texto.strip()
-    if re.match(r"^[a-z_ ]+:", t.lower()):                 # ya lleva su orden delante
+    if re.match(r"^(verdad|ecuacion|hueco|problema|calcular)\w*\s*:", t.lower()):   # ya lleva su orden
         return t
-    if "=" in t and any(h in t for h in ("?", "_", "\u25a1")):   # una ECUACION con hueco (E.1)
+    if "=" in t and any(h in t for h in ("?", "_", "\u25a1")):   # una ECUACION con hueco (E.1, E.4)
         return "ecuacion: " + t
+    if re.match(r"^[a-z_ ]+:", t.lower()):                 # otra orden con su nombre delante
+        return t
     if "?" in t:
         return "problema: " + t
     if re.match(r"^[\d\s+\-=\u2212x*\u00d7]+$", t.lower()) and "=" in t:            # una igualdad sin hueco (E.0)

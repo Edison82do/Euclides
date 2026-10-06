@@ -14,7 +14,7 @@ Despues se COMPRUEBA con lo de E.0: se pone el numero en el hueco y se pregunta 
 import re
 
 _HUECOS = ("?", "_", "□")          # ?, _ (o __), el cuadradito
-_TROZO = re.compile(r"[\d\s+\-=?_□−]*=[\d\s+\-=?_□−]*")
+_TROZO = re.compile("[\\d\\s+\\-=?_\u25a1\u2212x*\u00d7:\u00f7/]*=[\\d\\s+\\-=?_\u25a1\u2212x*\u00d7:\u00f7/]*")
 
 
 def _es_hueco(x):
@@ -23,7 +23,8 @@ def _es_hueco(x):
 
 def _leer_lado(x):
     """'8 + ?' -> {"a": 8, "op": "+", "b": "?"};  '11' -> {"n": 11};  '?' -> {"n": "?"}."""
-    x = " ".join(x.replace("+", " + ").replace("-", " - ").split())
+    x = re.sub("\\s*([+\\-x*\u00d7:\u00f7/])\\s*", r" \1 ", x.lower()).strip()
+    x = " ".join(x.split())
     partes = x.split(" ")
     def valor(p):
         if _es_hueco(p):
@@ -32,11 +33,12 @@ def _leer_lado(x):
     if len(partes) == 1:
         v = valor(partes[0])
         return None if v is None else {"n": v}
-    if len(partes) == 3 and partes[1] in "+-":
+    if len(partes) == 3 and partes[1] in ("+", "-", "x", "*", "\u00d7", ":", "\u00f7", "/"):
         a, b = valor(partes[0]), valor(partes[2])
         if a is None or b is None:
             return None
-        return {"a": a, "op": partes[1], "b": b}
+        op = {"*": "x", "\u00d7": "x", "\u00f7": ":", "/": ":"}.get(partes[1], partes[1])
+        return {"a": a, "op": op, "b": b}
     return None
 
 
@@ -49,6 +51,7 @@ def leer_ecuacion(texto):
     if not trozos:
         return {"error": "no veo ninguna ecuacion (hace falta un =)"}
     eq = max(trozos, key=len).strip()
+    eq = re.sub("^[\\s:\u00f7/x*\u00d7+\\-]+|[\\s:\u00f7/x*\u00d7+\\-]+$", "", eq)   # ": 3 x ? = 12" (los dos puntos eran del texto)
     lados_txt = eq.split("=")
     if len(lados_txt) != 2:
         return {"error": "hay %s signos =: aqui va una ecuacion con UN =" % len(lados_txt[1:])}
@@ -120,9 +123,6 @@ def _montar_ecuacion(lados):
 def decidir_ecuacion(texto, saber=None):
     if saber is None:
         saber = cargar_conocimiento()
-    if re.search(r"\d\s*[x\u00d7*]\s*[\d?_]|[?_]\s*[x\u00d7*]\s*\d", texto.lower()):
-        return {"conclusion": "todavia_no", "porque": "ecuaciones con x: eso es el paso E.4 (y el hueco "
-                "en una multiplicacion es dividir: escribe 12 : 3). Para multiplicar escribe solo: 3 x 4"}
     e = leer_ecuacion(texto)
     if "error" in e:
         return {"conclusion": "no_entiendo", "porque": e["error"]}
@@ -130,8 +130,10 @@ def decidir_ecuacion(texto, saber=None):
         for k in ("a", "b", "n"):
             if isinstance(l.get(k), int) and decir(l[k], saber) is None:
                 return {"conclusion": "no_entiendo", "porque": "solo se contar hasta mil"}
-    m = _montar_ecuacion(e["lados"])
     r = {"ecuacion": e["texto"], "lados": e["lados"]}
+    if any(l.get("op") in ("x", ":") for l in e["lados"]):
+        return _resolver_por(e, r, saber)
+    m = _montar_ecuacion(e["lados"])
     if m.get("sin_hueco"):
         r.update(conclusion="sin_hueco", porque="no hay ningun hueco que buscar (para saber si es "
                  "verdad: 'verdad: %s')" % e["texto"])
@@ -165,6 +167,8 @@ def decidir_ecuacion(texto, saber=None):
 
 def explicar_ecuacion(texto, saber=None):
     r = decidir_ecuacion(texto, saber)
+    if r.get("por"):
+        return _explicar_por(r)
     if r["conclusion"] == "todavia_no":
         return "PREGUNTA (E.1): %s\n\n  TODAVIA NO: %s\n\nRESULTADO: todavia_no" % (texto.strip(), r["porque"])
     if r["conclusion"] == "no_entiendo":
@@ -282,3 +286,116 @@ def _explicar_balanza(r):
     L.append("RESULTADO: %d" % r["valor"])
     return "\n".join(L)
 
+
+
+# ---------------------------------------------------------------- E.4: el hueco en x y :
+
+_HISTORIAS_POR = {
+    ("x", "resultado"): ("el PRODUCTO: {a} grupos de {b}, cuantos son?", "multiplicar"),
+    ("x", "b"): ("cuantos hay EN CADA GRUPO: {a} grupos iguales hacen {c} -> REPARTIR {c} entre {a}", "repartir"),
+    ("x", "a"): ("CUANTOS GRUPOS: grupos de {b} hasta hacer {c} -> AGRUPAR {c} en grupos de {b}", "agrupar"),
+    (":", "resultado"): ("el COCIENTE: {a} repartido entre {b} (o en grupos de {b})", "dividir"),
+    (":", "b"): ("el DIVISOR: entre cuantos se reparte {a} para que toquen {c}? -> AGRUPAR {a} en grupos de {c}", "agrupar"),
+    (":", "a"): ("el DIVIDENDO: cuanto habia, si al repartir entre {b} tocan {c}? -> deshacer: {c} x {b}", "multiplicar"),
+}
+
+
+def _resolver_por(e, r, saber):
+    """E.4 (3.OA.A.4): el hueco en una multiplicacion o division.  El SITIO del hueco dice que se
+    busca (NCETM 2.6); se resuelve con multiplicar o dividir (M.1-M.3) y se comprueba con E.0."""
+    r["por"] = True
+    huecos = sum((_huecos(l) for l in e["lados"]), [])
+    if not huecos:
+        r.update(conclusion="sin_hueco", porque="no hay ningun hueco (para saber si es verdad: 'verdad: %s')" % e["texto"])
+        return r
+    if len(huecos) > 1:
+        r.update(conclusion="dos_huecos", porque="hay DOS huecos: muchos numeros sirven (2 y 6, 3 y 4...)")
+        return r
+    con_op = [l for l in e["lados"] if "op" in l]
+    if len(con_op) != 1:
+        r.update(conclusion="todavia_no", porque="cuentas a los DOS lados del = con x o : (la balanza con x): todavia no")
+        return r
+    c_ = con_op[0]
+    otro = [l for l in e["lados"] if l is not c_][0]
+    a, op, b, c = c_["a"], c_["op"], c_["b"], otro["n"]
+    donde = "resultado" if c == "?" else ("b" if b == "?" else "a")
+    frase, como = _HISTORIAS_POR[(op, donde)]
+    tipo = frase.format(a=a, b=b, c=c)
+    if 0 in (a, b) and donde != "resultado":            # con un cero no hay reparto que contar
+        tipo = tipo.split(" -> ")[0]
+    r.update(tipo=tipo, como=como, izquierda=e["lados"].index(c_) == 1)
+
+    def dividir_justo(total, d):
+        p = aplicar("dividir", {"total": total, "divisor": d}, saber)
+        r["paso"] = p
+        if p["conclusion"] != "hecho":
+            return None, "%d : %d no se puede (%s)" % (total, d, p.get("porque"))
+        if p["resultado"].get("resto"):
+            return None, ("%d no se reparte justo: da %d y sobra %d. No hay un numero entero que haga verdad la igualdad"
+                          % (total, p["valor"], p["resultado"]["resto"]))
+        return p["valor"], None
+
+    def multiplicar(x, y):
+        p = aplicar("multiplicar", {"a": x, "b": y}, saber)
+        r["paso"] = p
+        return (p.get("valor"), None) if p["conclusion"] == "hecho" else (None, "me paso de mil")
+
+    if op == "x" and donde == "resultado":
+        v, porque = multiplicar(a, b)
+    elif op == "x":
+        conocido = a if donde == "b" else b
+        if conocido == 0:
+            if c == 0:
+                r.update(conclusion="cualquiera", porque="un factor es cero: el producto es 0 ponga lo que ponga en el "
+                         "hueco. CUALQUIER numero vale")
+            else:
+                r.update(conclusion="imposible", porque="un factor es cero: el producto siempre es 0, nunca %d" % c)
+            return r
+        v, porque = dividir_justo(c, conocido)
+    elif donde == "resultado":
+        v, porque = dividir_justo(a, b)
+    elif donde == "b":
+        if c == 0:
+            if a:
+                r.update(conclusion="imposible", porque="para que toquen 0 habria que repartir entre nadie: no se puede")
+            else:
+                r.update(conclusion="cualquiera", porque="0 repartido entre cualquiera (menos cero) da 0: cualquier "
+                         "numero, menos el cero, vale")
+            return r
+        v, porque = dividir_justo(a, c)
+    else:
+        if b == 0:
+            r.update(conclusion="imposible", porque="dividir entre cero no se puede")
+            return r
+        v, porque = multiplicar(c, b)
+    if v is None:
+        r.update(conclusion="no_entero" if "justo" in (porque or "") else "imposible", porque=porque)
+        return r
+    r["valor"] = v
+    con_numero = " = ".join(_escribir_lado(l, str(v)) for l in e["lados"])
+    r["comprobacion"] = con_numero
+    r["comprobacion_ok"] = decidir_igualdad(con_numero, saber).get("valor") == "verdadero"
+    r["conclusion"] = "hecho" if r["comprobacion_ok"] else "no_cuadra"
+    return r
+
+
+def _explicar_por(r):
+    L = ["PREGUNTA (E.4): que numero va en el hueco?   %s" % r["ecuacion"], ""]
+    if r["conclusion"] in ("sin_hueco", "dos_huecos", "todavia_no"):
+        return "\n".join(L + ["  %s" % r["porque"], "", "RESULTADO: %s" % r["conclusion"]])
+    L.append("  1. LEER: el hueco esta en %s." % r["tipo"])
+    if r.get("izquierda"):
+        L.append("     (el resultado esta a la IZQUIERDA del =: da igual, E.0)")
+    L.append("")
+    if r["conclusion"] != "hecho":
+        L += ["  2. %s" % r.get("porque"), "", "RESULTADO: %s" % r["conclusion"]]
+        return "\n".join(L)
+    p = r["paso"]
+    L.append("  2. %s con %s:" % (r["como"].upper(), p["pieza"]["nombre"]))
+    L.append("        %s" % p["resultado"]["cuenta"].replace("; ", "\n        "))
+    L.append("")
+    L.append("  3. COMPRUEBO (E.0): pongo el %d en el hueco -> %s ... %s"
+             % (r["valor"], r["comprobacion"], "VERDADERO" if r["comprobacion_ok"] else "FALSO"))
+    L.append("")
+    L.append("RESULTADO: %d" % r["valor"])
+    return "\n".join(L)

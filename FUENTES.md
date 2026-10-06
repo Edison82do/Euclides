@@ -73,7 +73,13 @@
   de divisor en divisor; a veces con resto; atajos (tablas, mitad); dividendo 0, igual al divisor,
   divisor 1. **Common Core 3.OA.B.6**: la división como factor desconocido. → M.3.
 
+- **Common Core 3.OA** (3.º): A.3 problemas de × y ÷ (grupos iguales, filas, medidas), A.4 el número
+  desconocido en × y ÷, B.5 propiedades como estrategias, C.7 soltura hasta 100, D.8 dos pasos con la
+  letra como hueco. **NCETM Spine 2, Year 3–4**: 2.7 (tablas del 2, 4 y 8), 2.8 (3, 6 y 9), 2.9 (7),
+  2.10 (multiplicar y dividir; la distributiva). → el plan ajustado (E.4, R.2, M.4–M.6, E.5).
+
 ## Enlaces
+- Common Core 3.OA: https://www.thecorestandards.org/Math/Content/3/OA/
 - NCETM 2.6: https://www.ncetm.org.uk/classroom-resources/primm-206-structures-quotitive-and-partitive-division/
 - NCETM 2.3: https://www.ncetm.org.uk/classroom-resources/primm-203-times-tables-groups-of-2-and-commutativity-part-1/
 - NCETM 2.4: https://www.ncetm.org.uk/classroom-resources/primm-204-times-tables-groups-of-10-and-of-5-and-factors-of-0-and-1/

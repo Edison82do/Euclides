@@ -199,7 +199,29 @@ La investigación (Common Core 1.OA / 2.OA, Carpenter-Franke-Levi, Knuth et al.,
 | 5 | ✅ **HECHO y probado por Carlos (5 oct)** — `diario/2026-10-05-paso-E2-balanza.md`. **E.2 El `=` como balanza** (8 + 4 = ? + 5 → 7, no 12 ni 17) | Knuth et al.; Falkner-Levi-Carpenter | las trampas 12 y 17 descartadas con su porqué |
 | 6 | ✅ **HECHO y probado por Carlos (5 oct)** — `diario/2026-10-05-paso-N1-par-impar-saltos.md`. **N.1 Par e impar; contar de n en n** (2, 5, 10) | 2.OA.C.3; 2.NBT.2 | par = suma de dos iguales (los dobles) |
 | 7 | ✅ **HECHO y probado por Carlos (5 oct)** — `diario/2026-10-05-paso-M0-filas.md`. **M.0 Filas y columnas como sumas iguales** (3 filas de 4 = 4 + 4 + 4) | 2.OA.C.4 | la suma de iguales, por saltos |
-| 8 | ✅ **M.1 HECHO (Carlos: «bien, adelante») y M.2 HECHO y probado; M.3 dividir HECHO (5 oct), falta la prueba de Carlos** — `diario/2026-10-05-paso-M3-dividir.md`. — `diario/2026-10-05-paso-M1-multiplicar.md`. **M.1 Multiplicar = grupos iguales**; luego M.2, M.3, E.4, E.5 (abajo) | 3.OA.A.1 | la tabla de abajo |
+| 8 | ✅ **M.1, M.2 y M.3 HECHOS y probados por Carlos (5 oct)** — multiplicar = grupos iguales; tablas del 2, 5 y 10, conmutativa, dobles y mitades; dividir (repartir y agrupar). Diarios `2026-10-05-paso-M1/M2/M3-*.md` | 3.OA.A.1–2; NCETM 2.2–2.6 | ver los diarios |
+
+
+### ⭐ EL PLAN AJUSTADO (5 oct, noche) — lo que dicta la pedagogía después de dividir
+
+**Decisión de Carlos (5 oct):** «ajusta el plan a lo que la pedagogía dicta»; «hagamos cada cosa, pero
+una a una». El **repaso mezclado** (práctica intercalada) **no** se hace: «eso es para humanos; para
+eso están las pruebas».
+
+Por qué este orden (Common Core 3.º, 3.OA; NCETM Spine 2, Year 3–4): primero el desconocido en una
+multiplicación o división (3.OA.A.4); luego los problemas con × y ÷ (3.OA.A.3); luego el resto de las
+tablas, **derivadas unas de otras** y con la distributiva (NCETM 2.7–2.9, 2.10; 3.OA.B.5, 3.OA.C.7);
+y solo al final los problemas de **dos pasos con la letra como hueco** (3.OA.D.8: el mismo estándar
+trae la letra, así que E.5 va con ellos).
+
+| # | Paso | Estándar / fuente | Prueba de dominio |
+|---|---|---|---|
+| 9 | ✅ **HECHO (5 oct), falta la prueba de Carlos** — `diario/2026-10-05-paso-E4-hueco-por.md`. **E.4 El hueco en × y ÷** (`3 x ? = 12`, `? : 4 = 5`, `12 = ? x 3`) | 3.OA.A.4; 3.OA.B.6 (factor desconocido); NCETM 2.6 | el hueco en las tres posiciones, a los dos lados del `=`; sin número entero → se dice |
+| 10 | **R.2 Problemas de × y ÷ con pocas palabras** (grupos iguales, filas, repartir, agrupar), con el **modelo de barras** | 3.OA.A.3; CGI (estructuras multiplicativas); Singapur (bar model) | cada estructura con su pieza; las trampas de palabras clave |
+| 11 | **M.4 Tablas del 4 y del 8 desde la del 2** (doblar) | NCETM 2.7 | cada producto derivado y comprobado; aprender de memoria |
+| 12 | **M.5 Tablas del 3, 6 y 9** (y sus relaciones) | NCETM 2.8 | ídem |
+| 13 | **M.6 Tabla del 7 y la distributiva** (7 × 6 = 5 × 6 + 2 × 6) | NCETM 2.9, 2.10; 3.OA.B.5; 3.OA.C.7 | todas las tablas hasta 10 × 10 |
+| 14 | **E.5 Dos pasos, con la letra como hueco** | 3.OA.D.8 | problemas de dos pasos con las cuatro operaciones |
 
 ## EL PLAN ANTERIOR (5 oct, tarde) — sustituido por el de arriba en el orden; se conserva como referencia
 

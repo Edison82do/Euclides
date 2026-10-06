@@ -11,7 +11,7 @@ Aqui solo se LEE la frase y se pregunta a las piezas de 'igualdad' (conocimiento
 
 import re
 
-_LADO_OP = re.compile(r"^(\d+)\s*([+\-x*\u00d7])\s*(\d+)$")
+_LADO_OP = re.compile(r"^(\d+)\s*([+\-x*\u00d7:\u00f7/])\s*(\d+)$")
 _LADO_N = re.compile(r"^(\d+)$")
 
 
@@ -25,7 +25,7 @@ def leer_igualdad(texto):
         x = " ".join(trozo.split())
         m = _LADO_OP.match(x)
         if m:
-            op = "x" if m.group(2) in "x*\u00d7" else m.group(2)
+            op = "x" if m.group(2) in "x*\u00d7" else (":" if m.group(2) in ":\u00f7/" else m.group(2))
             lados.append({"texto": "%s %s %s" % (m.group(1), op, m.group(3)),
                           "a": int(m.group(1)), "op": op, "b": int(m.group(3))})
             continue
