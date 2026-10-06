@@ -13,6 +13,8 @@ OBJETIVOS = {
              "que_es": "un paso de un problema: que conocimiento encaja en la situacion"},
     "sumar": {"elige": "la_mas_rapida", "que_es": "hacer una suma, sin calculadora"},
     "restar": {"elige": "la_mas_rapida", "que_es": "hacer una resta, sin calculadora"},
+    "paso_por": {"elige": "todas_iguales",
+                 "que_es": "un problema de grupos iguales: que casilla del esquema falta (R.2)"},
     "dividir": {"elige": "la_mas_rapida",
                 "que_es": "repartir o agrupar: cuantos para cada uno / cuantos grupos (NCETM 2.6)"},
     "multiplicar": {"elige": "la_mas_rapida",

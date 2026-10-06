@@ -115,6 +115,13 @@ CONDICIONES = {
     "el_segundo_no_es_menor": lambda s, u: not u.viene_despues(u.decir(s["a"]), u.decir(s["b"])),
     # ---- multiplicar (paso M.1): situacion {"a": grupos, "b": cuantos en cada grupo}
     "los_grupos_tienen_nombre_x": lambda s, u: u.decir(s["a"]) is not None,
+    # ---- problemas de x y : (paso R.2): el esquema de grupos iguales {"busca", "grupos", "en_cada", "total"}
+    "se_busca_el_total": lambda s, u: s.get("busca") == "total",
+    "se_busca_cuantos_en_cada": lambda s, u: s.get("busca") == "en_cada",
+    "se_busca_cuantos_grupos": lambda s, u: s.get("busca") == "grupos",
+    "se_saben_grupos_y_en_cada": lambda s, u: s.get("grupos") is not None and s.get("en_cada") is not None,
+    "se_saben_total_y_grupos": lambda s, u: s.get("total") is not None and s.get("grupos") is not None,
+    "se_saben_total_y_en_cada": lambda s, u: s.get("total") is not None and s.get("en_cada") is not None,
     # ---- dividir (paso M.3): situacion {"total": .., "divisor": ..}
     "el_divisor_no_es_cero": lambda s, u: s["divisor"] != 0,
     "es_un_caso_especial": lambda s, u: s["total"] == 0 or s["total"] == s["divisor"] or s["divisor"] == 1,

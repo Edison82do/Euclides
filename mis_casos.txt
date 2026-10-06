@@ -696,3 +696,15 @@ ecuacion: 0 x ? = 0                        | cualquiera | cualquier numero
 ecuacion: ? : 0 = 3                        | imposible | entre cero
 ecuacion: ? x ? = 12                       | dos_huecos | dos huecos
 verdad: 12 : 3 = 4                         | verdadero | el = entiende :
+# ---------------------------------------------------------------------------
+# PASO R.2 - PROBLEMAS DE x Y : (3.OA.A.3; CGI; esquema de grupos iguales; barras)
+# ---------------------------------------------------------------------------
+problema: Hay 3 bolsas con 4 caramelos cada una. Cuantos caramelos hay? | 12 | multiplicar
+problema: Reparte 12 caramelos entre 3 ninos. Cuantos le tocan a cada uno? | 4 | repartir
+problema: Mete 12 caramelos en bolsas de 4. Cuantas bolsas salen? | 3 | agrupar
+problema: Hay 12 caramelos. Cada nino tiene 3. Cuantos ninos hay? | 4 | cada y dividir
+problema: Hay 4 cajas. Cada caja tiene 6 lapices. Cuantos lapices hay? | 24 | cada y multiplicar
+problema: En el cine hay 3 filas de 4 sillas. Cuantas sillas hay? | 12 | filas
+problema: Cada caja pesa 5 kilos. Cuanto pesan 4 cajas? | 20 | medida
+problema: Hay 20 lapices en 4 cajas iguales. Cuantos lapices hay en cada caja? | 5 | repartir
+problema: Mete 14 caramelos en bolsas de 4. Cuantas bolsas salen? | 3 resto 2 | sobra

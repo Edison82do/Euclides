@@ -122,6 +122,16 @@ mitad: 7                          | impar
 0 x ? = 0                         | cualquiera
 3 x ? = 12                        | ??         | ver el razonamiento
 
+# --- R.2 problemas de x y : (se escriben directamente) ---
+Hay 3 bolsas con 4 caramelos cada una. Cuantos caramelos hay?     | 12
+Reparte 12 caramelos entre 3 ninos. Cuantos le tocan a cada uno?   | 4
+Mete 12 caramelos en bolsas de 4. Cuantas bolsas salen?            | 3
+Hay 12 caramelos. Cada nino tiene 3. Cuantos ninos hay?            | 4    | 'cada' y dividir
+En el cine hay 3 filas de 4 sillas. Cuantas sillas hay?            | 12
+Cada caja pesa 5 kilos. Cuanto pesan 4 cajas?                      | 20
+Mete 14 caramelos en bolsas de 4. Cuantas bolsas salen?            | 3 resto 2
+Reparte 12 caramelos entre 3 ninos. Cuantos le tocan a cada uno?   | ??   | ver el esquema y la barra
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete

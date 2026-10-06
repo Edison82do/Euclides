@@ -792,6 +792,8 @@ def explicar_pregunta(texto, saber=None):
             if not resto:
                 return ("NO ENTIENDO ESTO: dame el enunciado.\n"
                         "   se escribe asi:  problema: Ana tiene 5 manzanas. Le dan 3. Cuantas tiene ahora?")
+            if es_problema_por(resto, saber):
+                return explicar_R2_problema(resto, saber)
             return explicar_R1_problema(resto, saber)
         if t.lower().startswith("cifra_de"):
             resto = t[len("cifra_de"):].strip()

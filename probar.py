@@ -359,6 +359,16 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         par: 846               -> PAR (diez se empareja entero: solo miro las unidades)
         Y 47 + ? = 77 ya no cuenta 30 pasos: salta 57, 67, 77 -> 30.
 
+  PROBLEMAS DE x Y :  ->  grupos iguales, filas, medidas (paso R.2; 3.OA.A.3)  -- se escriben directamente
+        Hay 3 bolsas con 4 caramelos cada una. Cuantos caramelos hay?    -> 12 caramelos
+        Reparte 12 caramelos entre 3 ninos. Cuantos le tocan a cada uno?  -> 4 caramelos
+        Mete 12 caramelos en bolsas de 4. Cuantas bolsas salen?           -> 3 bolsas
+        Hay 12 caramelos. Cada nino tiene 3. Cuantos ninos hay?           -> 4 ninos  ('cada' y DIVIDIR)
+        En el cine hay 3 filas de 4 sillas. Cuantas sillas hay?           -> 12 sillas
+        Cada caja pesa 5 kilos. Cuanto pesan 4 cajas?                     -> 20 kilos
+        Llena el ESQUEMA de grupos iguales (grupos, en cada uno, total) por los NOMBRES, no por
+        palabras clave; dibuja la BARRA (Singapur) y comprueba.  Los de sumar y restar siguen en R.1.
+
   ECUACION CON x Y :  ->  el hueco en una multiplicacion o division (paso E.4; 3.OA.A.4)
         3 x ? = 12             -> 4    cuantos en cada grupo: REPARTIR 12 entre 3
         ? x 4 = 12             -> 3    cuantos grupos: AGRUPAR 12 en grupos de 4
@@ -507,6 +517,11 @@ def preguntar(texto, saber):
                 resto = resto[1:].strip()
             if not resto:
                 return "no_entendido", None
+            if motor.es_problema_por(resto, saber):
+                r = motor.decidir_R2_problema(resto, saber)
+                if r["conclusion"] != "hecho":
+                    return r["conclusion"], r
+                return "%d%s" % (r["valor"], " resto %d" % r["resto"] if r["resto"] else ""), r
             r = motor.decidir_R1_problema(resto, saber)
             return (str(r["valor"]) if r["conclusion"] == "resuelto" else r["conclusion"]), r
         if t.lower().startswith("cifra_de"):

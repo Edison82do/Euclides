@@ -78,6 +78,10 @@
   letra como hueco. **NCETM Spine 2, Year 3–4**: 2.7 (tablas del 2, 4 y 8), 2.8 (3, 6 y 9), 2.9 (7),
   2.10 (multiplicar y dividir; la distributiva). → el plan ajustado (E.4, R.2, M.4–M.6, E.5).
 
+- **Instrucción por esquemas** para × y ÷ (Jitendra; Xin): el esquema de **grupos iguales** (cuántos
+  grupos, cuántos en cada uno, total); la operación la decide la casilla que falta, no las palabras
+  clave. **Singapur, el modelo de barras**. → R.2.
+
 ## Enlaces
 - Common Core 3.OA: https://www.thecorestandards.org/Math/Content/3/OA/
 - NCETM 2.6: https://www.ncetm.org.uk/classroom-resources/primm-206-structures-quotitive-and-partitive-division/
