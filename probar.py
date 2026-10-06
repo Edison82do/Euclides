@@ -394,6 +394,14 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         Llena el ESQUEMA de grupos iguales (grupos, en cada uno, total) por los NOMBRES, no por
         palabras clave; dibuja la BARRA (Singapur) y comprueba.  Los de sumar y restar siguen en R.1.
 
+  FRACCIONES  ->  la parte y el todo; fracciones unitarias (paso F.1; NCETM 3.1, 3.2; 3.NF.A.1)
+        fraccion: 1/4          -> un cuarto: el entero en 4 partes IGUALES, se toma una  [####|oooo|oooo|oooo]
+        1/4 de 12              -> 3    REPARTIR 12 en 4 partes iguales (M.3)    1/4 de 13 -> no_sale
+        comparar: 1/3 y 1/5    -> 1/3 > 1/5   mas partes, partes MAS PEQUENAS (y en una tira de 15 cuadritos)
+        entero: 1/4 es 3       -> 12   el entero son 4 partes de 3: 3 + 3 + 3 + 3
+        partes: 12 = 4 + 4 + 4 -> 1/3   (5 + 4 + 3 -> desiguales: no son tercios)
+        De medios a doceavos (1/2 a 1/12).
+
   REDONDEAR  ->  a la decena o a la centena MAS CERCANA (paso N.2; 3.NBT.A.1)
         redondear: 37          -> decena 40, centena 0   (las dos)
         redondear: 37 a la decena   -> 40   EN LA RECTA: entre 30 y 40, la mitad es 35, pasa de la mitad
@@ -532,6 +540,11 @@ def preguntar(texto, saber):
         if t.lower().startswith("tabla del") or t.lower().startswith("mitad"):
             salida = (motor.explicar_tabla(t, saber) if t.lower().startswith("tabla")
                       else motor.explicar_mitad(t[len("mitad"):].lstrip(":").strip(), saber))
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
+        if motor.es_orden_fraccion(t):
+            salida = motor.explicar_orden_fraccion(t, saber)
             if salida.startswith("NO ENTIENDO"):
                 return "no_entiendo", None
             return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None

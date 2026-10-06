@@ -109,6 +109,19 @@
   grandes (la llevada olvidada, cifras fuera de sitio), no los pequeños: **razonable no es correcta**.
   La banda (cuánto se pudo mover cada número al redondear) hace que «cerca» no sea a ojo. → E.6.
 
+- **NCETM Spine 3** (fracciones; leído el 6 oct). **3.1**: un todo se divide en partes iguales o
+  desiguales; con una parte igual y cuántas hay se construye el todo. **3.2**: una parte igual es una
+  fracción unitaria y tiene nombre; se aplica a cantidades; «cuanto mayor el denominador, menor la
+  fracción»; el todo se saca sumando la fracción unitaria. **3.3**: las no unitarias son varias
+  unitarias iguales; numerador = denominador es un entero; son números de la recta; mismo denominador →
+  manda el numerador; mismo numerador → manda el denominador (al revés). **3.4**: con el mismo
+  denominador se suman/restan los numeradores; restar de un entero: escribirlo como b/b.
+  **Common Core 3.NF.A.1–3**. → F.1, F.2, F.3.
+- **NCETM por años** (Spines 1 y 2): 4.º = 1.22 (el 1000 y cuatro cifras), 1.23–1.24 (décimas,
+  centésimas), 2.10–2.17 (distributiva, tablas 11 y 12, resto, ×/÷ 10 y 100, multiplicación y división
+  cortas, área y perímetro); 5.º = 1.26 (hasta un millón), 1.27 (negativos), 2.18–2.22 (factores,
+  primos…); 6.º = 1.30, 2.23–2.30. → el plan «Años escolares».
+
 ## Enlaces
 - NCETM 2.9: https://www.ncetm.org.uk/classroom-resources/primm-209-times-tables-7-and-patterns-withinacross-times-tables/
 - NCETM 2.10: https://www.ncetm.org.uk/classroom-resources/primm-210-connecting-multiplication-and-division-and-the-distributive-law/
@@ -140,3 +153,6 @@
 - BBC Bitesize: https://www.bbc.co.uk/bitesize/articles/zncq4xs
 - Utah Core Guide 3.º (NBT): https://schools.utah.gov/curr/mathematics/_mathematics_/_core/_math_core_guides_tab_/CoreGuidesGrade3NumberOperations.pdf
 - Common Core 3.NBT: https://www.thecorestandards.org/Math/Content/3/NBT/
+- NCETM Spine 3 (fracciones): https://ncetm.org.uk/teaching-for-mastery/mastery-materials/primary-mastery-professional-development/fractions/
+- NCETM Spine 1: https://ncetm.org.uk/teaching-for-mastery/mastery-materials/primary-mastery-professional-development/number-addition-and-subtraction/
+- NCETM Spine 2: https://ncetm.org.uk/teaching-for-mastery/mastery-materials/primary-mastery-professional-development/multiplication-and-division/

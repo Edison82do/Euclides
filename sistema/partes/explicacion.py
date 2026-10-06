@@ -759,6 +759,8 @@ def explicar_pregunta(texto, saber=None):
             return explicar_tabla(t, saber)
         if t.lower().startswith("mitad"):
             return explicar_mitad(t[len("mitad"):].lstrip(":").strip(), saber)
+        if es_orden_fraccion(t):
+            return explicar_orden_fraccion(t, saber)
         if es_division(t):
             return explicar_dividir(t, saber)
         if es_multiplicacion(t):

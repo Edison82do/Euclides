@@ -27,6 +27,8 @@ OBJETIVOS = {
                 "que_es": "el = como balanza: que va en el hueco si hay cuentas a los dos lados?"},
     "igualdad": {"elige": "la_mas_rapida",
                  "que_es": "el = : los lados son el mismo numero? (verdadero o falso)"},
+    "comparar_fracciones": {"elige": "todas_iguales",
+                            "que_es": "cual de dos fracciones es mayor (NCETM 3.2, 3.3): la regla y la tira, de acuerdo"},
     "redondear": {"elige": "todas_iguales",
                   "que_es": "a que decena o centena esta mas cerca (3.NBT.A.1): la recta y el atajo, de acuerdo"},
     "contar_hasta": {"elige": "la_mas_rapida",

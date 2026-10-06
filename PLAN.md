@@ -232,7 +232,26 @@ cálculo mental y **estimación, incluido el redondeo**». Una cosa cada vez: pr
 | # | Paso | Estándar / fuente | Prueba de dominio |
 |---|---|---|---|
 | 15 | ✅ **HECHO y probado por Carlos (6 oct)** — **N.2 Redondear a la decena y a la centena** (en la recta: ¿de cuál está más cerca?) — `diario/2026-10-06-paso-N2-redondear.md` | 3.NBT.A.1; Progression NBT | de 0 a 1000 contra el testigo, dos caminos de acuerdo |
-| 16 | ✅ **HECHO (6 oct), falta la prueba de Carlos** — **E.6 ¿Es razonable? Estimar redondeando** — `diario/2026-10-06-paso-E6-razonable.md` (`38 + 47` ≈ 40 + 50 = 90) | 3.OA.D.8 | respuestas buenas y malas: las malas se cazan |
+| 16 | ✅ **HECHO (6 oct), falta la prueba de Carlos (mañana)** — **E.6 ¿Es razonable? Estimar redondeando** — `diario/2026-10-06-paso-E6-razonable.md` (`38 + 47` ≈ 40 + 50 = 90) | 3.OA.D.8 | respuestas buenas y malas: las malas se cazan |
+
+### ⭐ AÑOS ESCOLARES (6 oct, noche) — Carlos: «avanza algunos años, uno por uno, siguiendo la pedagogía»
+
+Orden de NCETM (Spines 1, 2 y 3, por *Year*) y Common Core (3.NF, 4.NBT, 4.OA, 4.NF). Lo que falta de
+**3.º** primero (las fracciones); luego **4.º** (más de mil, tablas del 11 y 12, resto, ×/÷ 10 y 100,
+multiplicación y división cortas, décimas); luego **5.º**. Cada paso: plan en su diario → construir →
+pruebas → commit. Carlos prueba por la mañana.
+
+| # | Paso | Estándar / fuente | Prueba de dominio |
+|---|---|---|---|
+| 17 | ✅ **HECHO (6 oct, noche), falta la prueba de Carlos** — **F.1 La parte y el todo; fracciones unitarias** (`1/4 de 12`, `comparar: 1/3 y 1/5`) — `diario/2026-10-06-paso-F1-fracciones-unitarias.md` | NCETM 3.1, 3.2; 3.NF.A.1 | todas las parejas 1/2..1/12; 1/b de n |
+| 18 | **F.2 Fracciones no unitarias; en la recta; comparar** (`3/4 de 12`, `2/5 y 3/5`, `4/4 = 1`) | NCETM 3.3; 3.NF.A.2, A.3 | |
+| 19 | **F.3 Sumar y restar fracciones dentro de un entero** (`2/7 + 3/7`, `1 - 3/8`) | NCETM 3.4 | |
+| 20 | **N.3 El 1000 y los números de cuatro cifras** (hasta 10 000: componer, comparar, redondear, columnas) | NCETM 1.22; 4.NBT.A | |
+| 21 | **M.7 Tablas del 11 y del 12** | NCETM 2.11 | |
+| 22 | **M.8 División con resto** | NCETM 2.12 | |
+| 23 | **M.9 Multiplicar y dividir por 10 y por 100** | NCETM 2.13 | |
+| 24 | **M.10 Multiplicación corta** (partir → en columna) | NCETM 2.14; 4.NBT.B.5 | |
+| 25 | **M.11 División corta** | NCETM 2.15; 4.NBT.B.6 | |
 
 ## EL PLAN ANTERIOR (5 oct, tarde) — sustituido por el de arriba en el orden; se conserva como referencia
 

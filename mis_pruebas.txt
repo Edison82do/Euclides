@@ -180,6 +180,13 @@ razonable: 38 + 47 = 95           | si, pero mal: es 85
 razonable: 3 x 47 = 141           | si
 razonable: 92 - 38 = 64           | ??         | ver la banda
 
+# --- F.1 fracciones unitarias ---
+fraccion: 1/4                     | un cuarto
+1/4 de 12                         | 3
+comparar: 1/3 y 1/5               | 1/3 > 1/5   | el error tipico: 'cinco es mas'
+entero: 1/4 es 3                  | 12
+partes: 12 = 4 + 4 + 4            | ??          | ver si son partes iguales
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete

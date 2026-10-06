@@ -776,3 +776,14 @@ razonable: 38 + 47 = 95                    | si, pero mal: es 85 | razonable no 
 razonable: 92 - 38 = 64                    | no | banda 40 a 60
 razonable: 3 x 47 = 141                    | si | 3 x 50
 estimar: 12 : 3                            | todavia_no | dividir
+# ---------------------------------------------------------------------------
+# PASO F.1 - LA PARTE Y EL TODO; FRACCIONES UNITARIAS (NCETM 3.1, 3.2; 3.NF.A.1)
+# ---------------------------------------------------------------------------
+fraccion: 1/4                              | un cuarto | el nombre
+1/4 de 12                                  | 3 | repartir
+1/4 de 13                                  | no_sale | sobra 1
+comparar: 1/3 y 1/5                        | 1/3 > 1/5 | mas partes, mas pequenas
+entero: 1/4 es 3                           | 12 | 3 + 3 + 3 + 3
+partes: 12 = 4 + 4 + 4                     | 1/3 | iguales
+partes: 12 = 5 + 4 + 3                     | desiguales | no son tercios
+fraccion: 1/0                              | imposible | cero partes
