@@ -104,6 +104,11 @@
   más sube» es un atajo posterior; la mitad justa sube **por convenio**. Error documentado: redondear
   en cadena (247 → 250 → 300). → N.2.  Es el requisito de la estimación de 3.OA.D.8 (→ E.6).
 
+- **Common Core 3.OA.D.8** (segunda mitad): valorar si la respuesta es **razonable** con cálculo mental
+  y estimación, incluido el redondeo. Estimar = redondear y hacer la cuenta fácil; caza los errores
+  grandes (la llevada olvidada, cifras fuera de sitio), no los pequeños: **razonable no es correcta**.
+  La banda (cuánto se pudo mover cada número al redondear) hace que «cerca» no sea a ojo. → E.6.
+
 ## Enlaces
 - NCETM 2.9: https://www.ncetm.org.uk/classroom-resources/primm-209-times-tables-7-and-patterns-withinacross-times-tables/
 - NCETM 2.10: https://www.ncetm.org.uk/classroom-resources/primm-210-connecting-multiplication-and-division-and-the-distributive-law/

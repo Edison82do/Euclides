@@ -765,3 +765,14 @@ redondear: 995 a la decena                 | 1000 | cambia la centena
 redondear: 49 a la centena                 | 0 | mas cerca de 0
 redondear: 247                             | decena 250, centena 200 | las dos
 redondear: 4567 al millar                  | todavia_no | 3.NBT.A.1 pide decena y centena
+# ---------------------------------------------------------------------------
+# PASO E.6 - ES RAZONABLE? ESTIMAR REDONDEANDO (3.OA.D.8)
+# ---------------------------------------------------------------------------
+estimar: 38 + 47                           | cerca de 90 | 40 + 50
+estimar: 247 + 385                         | cerca de 600 | centenas
+razonable: 38 + 47 = 75                    | no | la llevada olvidada
+razonable: 38 + 47 = 85                    | si | la buena
+razonable: 38 + 47 = 95                    | si, pero mal: es 85 | razonable no es correcta
+razonable: 92 - 38 = 64                    | no | banda 40 a 60
+razonable: 3 x 47 = 141                    | si | 3 x 50
+estimar: 12 : 3                            | todavia_no | dividir

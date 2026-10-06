@@ -173,6 +173,13 @@ redondear: 247 a la centena       | 200        | no 300
 redondear: 995 a la decena        | 1000
 redondear: 247                    | ??         | ver la recta, el atajo y la trampa de la cadena
 
+# --- E.6 es razonable? ---
+estimar: 38 + 47                  | cerca de 90
+razonable: 38 + 47 = 75           | no         | la llevada olvidada
+razonable: 38 + 47 = 95           | si, pero mal: es 85
+razonable: 3 x 47 = 141           | si
+razonable: 92 - 38 = 64           | ??         | ver la banda
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete

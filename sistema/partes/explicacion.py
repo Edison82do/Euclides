@@ -767,6 +767,10 @@ def explicar_pregunta(texto, saber=None):
             return explicar_filas(re.sub(r"^filas:\s*", "", t.lower()), saber)
         if re.match(r"^de\s+\d+\s+en\s+\d+", t.lower()):
             return explicar_saltos(t, saber)
+        if t.lower().startswith("estimar"):
+            return explicar_estimar(t[len("estimar"):].lstrip(":").strip(), saber)
+        if t.lower().startswith("razonable"):
+            return explicar_razonable(t[len("razonable"):].lstrip(":").strip(), saber)
         if t.lower().startswith("redondear"):
             return explicar_redondear(t[len("redondear"):].lstrip(":").strip(), saber)
         if t.lower().startswith("par:") or t.lower().startswith("par "):

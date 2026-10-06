@@ -231,8 +231,8 @@ cálculo mental y **estimación, incluido el redondeo**». Una cosa cada vez: pr
 
 | # | Paso | Estándar / fuente | Prueba de dominio |
 |---|---|---|---|
-| 15 | ✅ **HECHO (6 oct), falta la prueba de Carlos** — **N.2 Redondear a la decena y a la centena** (en la recta: ¿de cuál está más cerca?) — `diario/2026-10-06-paso-N2-redondear.md` | 3.NBT.A.1; Progression NBT | de 0 a 1000 contra el testigo, dos caminos de acuerdo |
-| 16 | **E.6 ¿Es razonable? Estimar redondeando** (`38 + 47` ≈ 40 + 50 = 90) | 3.OA.D.8 | respuestas buenas y malas: las malas se cazan |
+| 15 | ✅ **HECHO y probado por Carlos (6 oct)** — **N.2 Redondear a la decena y a la centena** (en la recta: ¿de cuál está más cerca?) — `diario/2026-10-06-paso-N2-redondear.md` | 3.NBT.A.1; Progression NBT | de 0 a 1000 contra el testigo, dos caminos de acuerdo |
+| 16 | ✅ **HECHO (6 oct), falta la prueba de Carlos** — **E.6 ¿Es razonable? Estimar redondeando** — `diario/2026-10-06-paso-E6-razonable.md` (`38 + 47` ≈ 40 + 50 = 90) | 3.OA.D.8 | respuestas buenas y malas: las malas se cazan |
 
 ## EL PLAN ANTERIOR (5 oct, tarde) — sustituido por el de arriba en el orden; se conserva como referencia
 

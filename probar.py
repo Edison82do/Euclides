@@ -403,6 +403,15 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         redondear: 995 a la decena  -> 1000     redondear: 49 a la centena -> 0
         Los dos caminos se hacen siempre y tienen que coincidir.  Al millar: todavia no.
 
+  ESTIMAR / RAZONABLE  ->  es razonable la respuesta?  estimar redondeando (paso E.6; 3.OA.D.8)
+        estimar: 38 + 47            -> cerca de 90   (40 + 50; la cuenta de verdad, entre 80 y 100)
+        razonable: 38 + 47 = 75     -> no    (fuera de la banda: la llevada olvidada)
+        razonable: 38 + 47 = 95     -> si, pero mal: es 85   (razonable NO es lo mismo que correcta)
+        razonable: 3 x 47 = 141     -> si    (3 x 50 = 150; 47 se movio como mucho 5, 3 veces: 15)
+        LA BANDA: cada numero se mueve como mucho 5 al redondear a la decena (50 a la centena);
+        fuera de la banda la respuesta esta mal SEGURO.  Sumas, restas y un factor de una cifra;
+        dividir, o dos factores grandes: todavia no.
+
   DOS PASOS, CON LA LETRA  ->  ecuaciones con una LETRA en el hueco (paso E.5; 3.OA.D.8)
         3 x 4 - 5 = c          -> c = 7   el orden de siempre: PRIMERO x y :, LUEGO + y -
         2 + 3 x 4 = n          -> 14 (no 20: sin parentesis no se va de izquierda a derecha)
@@ -539,6 +548,13 @@ def preguntar(texto, saber):
             return (str(r["valor"]) if r["conclusion"] == "hecho" else r["conclusion"]), None
         if re.match(r"^de\s+\d+\s+en\s+\d+", t.lower()):
             salida = motor.explicar_saltos(t, saber)
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
+        if t.lower().startswith(("estimar", "razonable")):
+            salida = (motor.explicar_estimar(t[len("estimar"):].lstrip(":").strip(), saber)
+                      if t.lower().startswith("estimar")
+                      else motor.explicar_razonable(t[len("razonable"):].lstrip(":").strip(), saber))
             if salida.startswith("NO ENTIENDO"):
                 return "no_entiendo", None
             return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
