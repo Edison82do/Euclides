@@ -27,6 +27,8 @@ OBJETIVOS = {
                 "que_es": "el = como balanza: que va en el hueco si hay cuentas a los dos lados?"},
     "igualdad": {"elige": "la_mas_rapida",
                  "que_es": "el = : los lados son el mismo numero? (verdadero o falso)"},
+    "redondear": {"elige": "todas_iguales",
+                  "que_es": "a que decena o centena esta mas cerca (3.NBT.A.1): la recta y el atajo, de acuerdo"},
     "contar_hasta": {"elige": "la_mas_rapida",
                      "que_es": "cuantos pasos hay de un numero a otro (el hueco, 5.5)"},
 }

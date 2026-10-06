@@ -221,7 +221,18 @@ trae la letra, así que E.5 va con ellos).
 | 11 | ✅ **HECHO y probado por Carlos (5 oct)** — `diario/2026-10-05-paso-M4-tablas-4-8.md`. **M.4 Tablas del 4 y del 8 desde la del 2** (doblar) | NCETM 2.7 | cada producto derivado y comprobado; aprender de memoria |
 | 12 | ✅ **HECHO y probado por Carlos** — `diario/2026-10-05-paso-M5-tablas-3-6-9.md`. **M.5 Tablas del 3, 6 y 9** (y sus relaciones) | NCETM 2.8 | ídem |
 | 13 | ✅ **probado por Carlos** — `diario/2026-10-06-paso-M6-tabla-7-distributiva.md`. **M.6 Tabla del 7 y la distributiva** (7 × 6 = 5 × 6 + 2 × 6) | NCETM 2.9, 2.10; 3.OA.B.5; 3.OA.C.7 | todas las tablas hasta 10 × 10 |
-| 14 | ✅ **HECHO (6 oct), falta la prueba de Carlos** — `diario/2026-10-06-paso-E5-dos-pasos-letra.md`. **E.5 Dos pasos, con la letra como hueco** (`3 x n + 2 = 14`) | 3.OA.D.8 | problemas de dos pasos con las cuatro operaciones |
+| 14 | ✅ **HECHO y probado por Carlos (6 oct)** — `diario/2026-10-06-paso-E5-dos-pasos-letra.md`. **E.5 Dos pasos, con la letra como hueco** (`3 x n + 2 = 14`) | 3.OA.D.8 | problemas de dos pasos con las cuatro operaciones |
+
+### ⭐ LA CONTINUACIÓN (6 oct) — la estimación, la otra mitad de 3.OA.D.8
+
+Terminado el plan ajustado, lo que queda de 3.OA.D.8 es «valorar si la respuesta es **razonable** con
+cálculo mental y **estimación, incluido el redondeo**». Una cosa cada vez: primero redondear
+(3.NBT.A.1), luego estimar para comprobar.
+
+| # | Paso | Estándar / fuente | Prueba de dominio |
+|---|---|---|---|
+| 15 | ✅ **HECHO (6 oct), falta la prueba de Carlos** — **N.2 Redondear a la decena y a la centena** (en la recta: ¿de cuál está más cerca?) — `diario/2026-10-06-paso-N2-redondear.md` | 3.NBT.A.1; Progression NBT | de 0 a 1000 contra el testigo, dos caminos de acuerdo |
+| 16 | **E.6 ¿Es razonable? Estimar redondeando** (`38 + 47` ≈ 40 + 50 = 90) | 3.OA.D.8 | respuestas buenas y malas: las malas se cazan |
 
 ## EL PLAN ANTERIOR (5 oct, tarde) — sustituido por el de arriba en el orden; se conserva como referencia
 

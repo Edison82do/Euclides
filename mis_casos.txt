@@ -753,3 +753,15 @@ x + 5 = 12                                 | 7 | la x es letra
 20 - 2 x n = 8                             | 6 | deshacer
 n + n = 10                                 | todavia_no | la letra dos veces
 3 x n + 2 = 13                             | no_sale | no hay entero
+# ---------------------------------------------------------------------------
+# PASO N.2 - REDONDEAR A LA DECENA Y A LA CENTENA (3.NBT.A.1)
+# ---------------------------------------------------------------------------
+redondear: 37 a la decena                  | 40 | pasa de la mitad
+redondear: 32 a la decena                  | 30 | no llega
+redondear: 35 a la decena                  | 40 | la mitad: convenio
+redondear: 247 a la centena                | 200 | no 300 por la cadena
+redondear: 250 a la centena                | 300 | la mitad
+redondear: 995 a la decena                 | 1000 | cambia la centena
+redondear: 49 a la centena                 | 0 | mas cerca de 0
+redondear: 247                             | decena 250, centena 200 | las dos
+redondear: 4567 al millar                  | todavia_no | 3.NBT.A.1 pide decena y centena

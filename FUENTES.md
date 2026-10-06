@@ -98,6 +98,12 @@
   (primero × y ÷, luego + y −). **Pólya** (trabajar hacia atras: deshacer). Singapur/Jitendra: un
   esquema y luego otro. → E.5.  La estimacion redondeando (**3.NBT.A.1**) queda para el paso siguiente.
 
+- **Common Core 3.NBT.A.1** (redondear a la decena o centena más cercana usando el valor de posición).
+  La *Progression* de base diez y las guías de los estados (Utah *Core Guide* 3.º): se entiende en la
+  **recta numérica** (entre qué dos está, la mitad del camino, de cuál está más cerca); la regla «5 o
+  más sube» es un atajo posterior; la mitad justa sube **por convenio**. Error documentado: redondear
+  en cadena (247 → 250 → 300). → N.2.  Es el requisito de la estimación de 3.OA.D.8 (→ E.6).
+
 ## Enlaces
 - NCETM 2.9: https://www.ncetm.org.uk/classroom-resources/primm-209-times-tables-7-and-patterns-withinacross-times-tables/
 - NCETM 2.10: https://www.ncetm.org.uk/classroom-resources/primm-210-connecting-multiplication-and-division-and-the-distributive-law/
@@ -127,3 +133,5 @@
 - Number Sense Maths: https://numbersensemaths.com/media/1841/achieving-fluency-in-addition-and-subtraction-facts-article.pdf
 - Oak National: https://www.thenational.academy/teachers/lessons/addition-by-bridging-through-10
 - BBC Bitesize: https://www.bbc.co.uk/bitesize/articles/zncq4xs
+- Utah Core Guide 3.º (NBT): https://schools.utah.gov/curr/mathematics/_mathematics_/_core/_math_core_guides_tab_/CoreGuidesGrade3NumberOperations.pdf
+- Common Core 3.NBT: https://www.thecorestandards.org/Math/Content/3/NBT/

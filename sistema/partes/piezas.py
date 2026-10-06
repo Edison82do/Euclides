@@ -225,6 +225,7 @@ def aplicar(pregunta, situacion, saber=None, base=None):
     r["pieza"], r["resultado"] = hechos[0]
     r["valor"] = r["resultado"]["valor"]
     r["tambien"] = [p["id"] for p, _ in hechos[1:]]
+    r["todos"] = [(p["id"], res) for p, res in hechos]        # lo que dijo cada camino (para explicar)
     return r
 
 

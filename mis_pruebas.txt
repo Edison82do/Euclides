@@ -166,6 +166,13 @@ tabla del 11                      | todavia_no
 x + 5 = 12                        | 7
 Ana tiene 3 bolsas con 4 caramelos cada una. Se come 5. Cuantos le quedan?   | ??   | ver los dos pasos
 
+# --- N.2 redondear ---
+redondear: 37 a la decena         | 40
+redondear: 35 a la decena         | 40         | la mitad: se sube por convenio
+redondear: 247 a la centena       | 200        | no 300
+redondear: 995 a la decena        | 1000
+redondear: 247                    | ??         | ver la recta, el atajo y la trampa de la cadena
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete

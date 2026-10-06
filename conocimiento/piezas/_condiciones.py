@@ -206,6 +206,8 @@ CONDICIONES = {
     "el_de_abajo_acaba_en_nueve": lambda s, u: _acaba_en_nueve(s["b"], u),
     "el_de_arriba_llega_a_la_decena": lambda s, u: not u.viene_despues(
         u.siguiente(u.decir(s["b"])), u.decir(s["a"])),
+    # ---- redondear (paso N.2; 3.NBT.A.1): el numero esta en la lista, y el sitio es decena o centena
+    "se_puede_redondear": lambda s, u: u.decir(s["n"]) is not None and s.get("a") in ("decena", "centena"),
 }
 
 DE_APLICACION = {"el_divisor_no_es_cero", "hay_bastantes", "hay_bastantes_al_deshacer", "la_parte_cabe_en_el_todo",

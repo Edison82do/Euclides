@@ -394,6 +394,15 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         Llena el ESQUEMA de grupos iguales (grupos, en cada uno, total) por los NOMBRES, no por
         palabras clave; dibuja la BARRA (Singapur) y comprueba.  Los de sumar y restar siguen en R.1.
 
+  REDONDEAR  ->  a la decena o a la centena MAS CERCANA (paso N.2; 3.NBT.A.1)
+        redondear: 37          -> decena 40, centena 0   (las dos)
+        redondear: 37 a la decena   -> 40   EN LA RECTA: entre 30 y 40, la mitad es 35, pasa de la mitad
+                                            EL ATAJO: la cifra de las unidades es 7 (de 5 para arriba): sube
+        redondear: 35 a la decena   -> 40   justo en la mitad: se sube por CONVENIO
+        redondear: 247 a la centena -> 200  (no 300: se redondea el numero, no lo ya redondeado)
+        redondear: 995 a la decena  -> 1000     redondear: 49 a la centena -> 0
+        Los dos caminos se hacen siempre y tienen que coincidir.  Al millar: todavia no.
+
   DOS PASOS, CON LA LETRA  ->  ecuaciones con una LETRA en el hueco (paso E.5; 3.OA.D.8)
         3 x 4 - 5 = c          -> c = 7   el orden de siempre: PRIMERO x y :, LUEGO + y -
         2 + 3 x 4 = n          -> 14 (no 20: sin parentesis no se va de izquierda a derecha)
@@ -530,6 +539,11 @@ def preguntar(texto, saber):
             return (str(r["valor"]) if r["conclusion"] == "hecho" else r["conclusion"]), None
         if re.match(r"^de\s+\d+\s+en\s+\d+", t.lower()):
             salida = motor.explicar_saltos(t, saber)
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
+        if t.lower().startswith("redondear"):
+            salida = motor.explicar_redondear(t[len("redondear"):].lstrip(":").strip(), saber)
             if salida.startswith("NO ENTIENDO"):
                 return "no_entiendo", None
             return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
