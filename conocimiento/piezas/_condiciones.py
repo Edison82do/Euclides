@@ -208,6 +208,9 @@ CONDICIONES = {
         u.siguiente(u.decir(s["b"])), u.decir(s["a"])),
     # ---- comparar fracciones (paso F.1; NCETM 3.2): situacion {"a": (arriba, abajo), "b": (arriba, abajo)}
     "son_fracciones_unitarias": lambda s, u: s["a"][0] == 1 and s["b"][0] == 1,
+    "mismo_denominador": lambda s, u: s["a"][1] == s["b"][1],
+    "mismo_numerador": lambda s, u: s["a"][0] == s["b"][0],
+    "comparten_arriba_o_abajo": lambda s, u: s["a"][0] == s["b"][0] or s["a"][1] == s["b"][1],
     # ---- redondear (paso N.2; 3.NBT.A.1): el numero esta en la lista, y el sitio es decena o centena
     "se_puede_redondear": lambda s, u: u.decir(s["n"]) is not None and s.get("a") in ("decena", "centena"),
 }

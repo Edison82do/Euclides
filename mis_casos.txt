@@ -787,3 +787,14 @@ entero: 1/4 es 3                           | 12 | 3 + 3 + 3 + 3
 partes: 12 = 4 + 4 + 4                     | 1/3 | iguales
 partes: 12 = 5 + 4 + 3                     | desiguales | no son tercios
 fraccion: 1/0                              | imposible | cero partes
+# ---------------------------------------------------------------------------
+# PASO F.2 - FRACCIONES NO UNITARIAS; EN LA RECTA; COMPARAR (NCETM 3.3; 3.NF.A.2, A.3)
+# ---------------------------------------------------------------------------
+fraccion: 3/4                              | tres cuartos | 1/4 + 1/4 + 1/4
+fraccion: 4/4                              | un entero | arriba = abajo
+3/4 de 12                                  | 9 | repartir y tomar 3
+entero: 3/4 es 9                           | 12 | una parte es 3
+comparar: 2/5 y 3/5                        | 2/5 < 3/5 | mismo de abajo
+comparar: 2/3 y 2/5                        | 2/3 > 2/5 | mismo de arriba, al reves
+comparar: 2/3 y 3/5                        | todavia_no | 5.o
+fraccion: 5/4                              | todavia_no | 4.o

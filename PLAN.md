@@ -244,7 +244,7 @@ pruebas → commit. Carlos prueba por la mañana.
 | # | Paso | Estándar / fuente | Prueba de dominio |
 |---|---|---|---|
 | 17 | ✅ **HECHO (6 oct, noche), falta la prueba de Carlos** — **F.1 La parte y el todo; fracciones unitarias** (`1/4 de 12`, `comparar: 1/3 y 1/5`) — `diario/2026-10-06-paso-F1-fracciones-unitarias.md` | NCETM 3.1, 3.2; 3.NF.A.1 | todas las parejas 1/2..1/12; 1/b de n |
-| 18 | **F.2 Fracciones no unitarias; en la recta; comparar** (`3/4 de 12`, `2/5 y 3/5`, `4/4 = 1`) | NCETM 3.3; 3.NF.A.2, A.3 | |
+| 18 | ✅ **HECHO (6 oct, noche), falta la prueba de Carlos** — `diario/2026-10-06-paso-F2-fracciones-no-unitarias.md`. **F.2 Fracciones no unitarias; en la recta; comparar** | NCETM 3.3; 3.NF.A.2, A.3 | todas las parejas que comparten arriba o abajo |
 | 19 | **F.3 Sumar y restar fracciones dentro de un entero** (`2/7 + 3/7`, `1 - 3/8`) | NCETM 3.4 | |
 | 20 | **N.3 El 1000 y los números de cuatro cifras** (hasta 10 000: componer, comparar, redondear, columnas) | NCETM 1.22; 4.NBT.A | |
 | 21 | **M.7 Tablas del 11 y del 12** | NCETM 2.11 | |

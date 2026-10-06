@@ -11,7 +11,7 @@ PIEZA = {
     "rapidez": 9,
     "que_hace": "una tira de a x b cuadritos, partida de las dos maneras: se comparan los trozos",
     "condiciones": [
-        ("son_fracciones_unitarias", "no son las dos de 'uno' arriba (unitarias)"),
+        ("comparten_arriba_o_abajo", "arriba y abajo son distintos en las dos (eso es de 5.o: equivalentes)"),
     ],
     "usa": ["multiplicar", "dividir"],
 }
@@ -23,18 +23,27 @@ def hacer(s, u):
         tira = da
     else:
         tira = u.usar("multiplicar", a=da, b=db)["valor"]
-    ta = u.usar("dividir", total=tira, divisor=da)["valor"]
-    tb = u.usar("dividir", total=tira, divisor=db)["valor"]
+    ta = _trozo(u, tira, s["a"])
+    tb = _trozo(u, tira, s["b"])
     if ta == tb:
         valor, dice = "=", "los dos trozos tienen lo mismo"
     elif u.viene_despues(u.decir(ta), u.decir(tb)):
-        valor, dice = ">", "1/%d es mas grande" % da
+        valor, dice = ">", "%d/%d es mas grande" % s["a"]
     else:
-        valor, dice = "<", "1/%d es mas grande" % db
+        valor, dice = "<", "%d/%d es mas grande" % s["b"]
     return {"valor": valor, "metodo": "la tira (F.1)",
-            "cuenta": "una tira de %d cuadritos: 1/%d son %s y 1/%d son %s: %s"
-                      % (tira, da, _cuadritos(ta), db, _cuadritos(tb), dice), "vuelta": "", "vuelta_ok": True}
+            "cuenta": "una tira de %d cuadritos: %d/%d son %s y %d/%d son %s: %s"
+                      % (tira, s["a"][0], da, _cuadritos(ta), s["b"][0], db, _cuadritos(tb), dice),
+            "vuelta": "", "vuelta_ok": True}
 
 
 def _cuadritos(n):
     return "1 cuadrito" if n == 1 else "%d cuadritos" % n
+
+
+def _trozo(u, tira, f):
+    """a/b de la tira: se reparte en b y se toman a partes."""
+    una = u.usar("dividir", total=tira, divisor=f[1])["valor"]
+    if f[0] == 1:
+        return una
+    return u.usar("multiplicar", a=f[0], b=una)["valor"]

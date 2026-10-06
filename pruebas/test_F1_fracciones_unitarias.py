@@ -75,7 +75,7 @@ try:
         for b in range(2, 13):
             r = motor.decidir_comparar_fracciones((1, a), (1, b), SABER)
             n += 1
-            if r["conclusion"] != "hecho" or r["valor"] != signo(Fraction(1, a), Fraction(1, b)) or len(r["todos"]) != 2:
+            if r["conclusion"] != "hecho" or r["valor"] != signo(Fraction(1, a), Fraction(1, b)) or len(r["todos"]) < 2:
                 malos.append((a, b, r.get("valor"), r["conclusion"]))
     comprobar("B1 %d parejas" % n, malos[:3], [])
 

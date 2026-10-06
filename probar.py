@@ -402,6 +402,14 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         partes: 12 = 4 + 4 + 4 -> 1/3   (5 + 4 + 3 -> desiguales: no son tercios)
         De medios a doceavos (1/2 a 1/12).
 
+  FRACCIONES NO UNITARIAS  ->  varias partes; en la recta; comparar (paso F.2; NCETM 3.3; 3.NF.A.2, A.3)
+        fraccion: 3/4          -> tres cuartos = 1/4 + 1/4 + 1/4    (4/4 -> un entero; 3/1 -> 3 enteros)
+        recta: 3/4             -> la recta de 0 a 1 en 4 trozos, la marca a tres trozos del 0
+        3/4 de 12              -> 9    (12 en 4 partes de 3, y se toman 3)     entero: 3/4 es 9 -> 12
+        comparar: 2/5 y 3/5    -> 2/5 < 3/5   mismo de abajo: manda el de arriba
+        comparar: 2/3 y 2/5    -> 2/3 > 2/5   mismo de arriba: manda el de abajo, AL REVES
+        comparar: 2/3 y 3/5    -> todavia_no (sin nada en comun: equivalentes, 5.o)   5/4 -> todavia_no (4.o)
+
   REDONDEAR  ->  a la decena o a la centena MAS CERCANA (paso N.2; 3.NBT.A.1)
         redondear: 37          -> decena 40, centena 0   (las dos)
         redondear: 37 a la decena   -> 40   EN LA RECTA: entre 30 y 40, la mitad es 35, pasa de la mitad

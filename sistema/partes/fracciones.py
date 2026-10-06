@@ -18,6 +18,7 @@ _ORDEN_FRACCION = re.compile(r"^fracci[oó]n:?\s*" + _FR_PATRON + r"$")
 _ORDEN_DE = re.compile(r"^" + _FR_PATRON + r"\s+de\s+(\d+)$")
 _ORDEN_COMPARAR_FR = re.compile(r"^comparar:?\s*" + _FR_PATRON + r"\s*(?:y|,|con|\?)\s*" + _FR_PATRON + r"$")
 _ORDEN_ENTERO = re.compile(r"^entero:?\s*(?:si\s+)?" + _FR_PATRON + r"\s+(?:es|son|=)\s+(\d+)$")
+_ORDEN_RECTA = re.compile(r"^recta:?\s*" + _FR_PATRON + r"$")
 _ORDEN_PARTES = re.compile(r"^partes:?\s*(\d+)\s*=\s*(\d+(?:\s*\+\s*\d+)*)$")
 
 _NOMBRES_FR = {2: ("medio", "medios"), 3: ("tercio", "tercios"), 4: ("cuarto", "cuartos"),
@@ -32,7 +33,7 @@ def _fr_limpio(texto):
 
 def es_orden_fraccion(texto):
     t = _fr_limpio(texto)
-    return any(p.match(t) for p in (_ORDEN_FRACCION, _ORDEN_DE, _ORDEN_COMPARAR_FR, _ORDEN_ENTERO, _ORDEN_PARTES))
+    return any(p.match(t) for p in (_ORDEN_FRACCION, _ORDEN_DE, _ORDEN_COMPARAR_FR, _ORDEN_ENTERO, _ORDEN_PARTES, _ORDEN_RECTA))
 
 
 def nombre_fraccion(a, b, saber):
@@ -66,28 +67,35 @@ def _fr_tira(partes, en_cada, tomadas, saber):
     return "[" + "|".join(trozos) + "]"
 
 
-def _fr_problema(a, b, saber, unitarias=True):
-    """None si la fraccion se puede usar aqui; si no, (conclusion, porque)."""
+def _fr_problema(a, b, saber):
+    """None si la fraccion se puede usar aqui (3.o: de 0 a un entero); si no, (conclusion, porque)."""
     if b == 0:
         return "imposible", "no se puede partir un entero en CERO partes"
     if b not in _NOMBRES_FR and b != 1:
         return "todavia_no", "en 3.o las partes van de medios a doceavos (1/2 a 1/12)"
-    if unitarias and a != 1:
-        return "todavia_no", "%d/%d no es unitaria (uno arriba): las no unitarias son el paso F.2" % (a, b)
+    if b != 1 and a != b and viene_despues(decir(a, saber), decir(b, saber), saber):
+        return "todavia_no", ("%d/%d es MAS de un entero (%d partes de %d): eso es de 4.o (NCETM 3.5)"
+                              % (a, b, a, b))
     return None
 
 
 # ---------------------------------------------------------------- fraccion: 1/4
 
 def explicar_fraccion(a, b, saber):
-    L = ["PREGUNTA (F.1): que es %d/%d?  (NCETM 3.2; 3.NF.A.1)" % (a, b), ""]
-    p = _fr_problema(a, b, saber, unitarias=_FR_SOLO_UNITARIAS)
+    L = ["PREGUNTA (F.1/F.2): que es %d/%d?  (NCETM 3.2, 3.3; 3.NF.A.1)" % (a, b), ""]
+    p = _fr_problema(a, b, saber)
     if p:
         return "\n".join(L + ["  %s: %s" % ("NO SE PUEDE" if p[0] == "imposible" else "TODAVIA NO", p[1]),
                               "", "RESULTADO: %s" % p[0]])
     if b == 1:
-        return "\n".join(L + ["  el entero partido en UNA parte: la parte es el entero entero.", "",
-                              "RESULTADO: un entero"])
+        if a == 1:
+            return "\n".join(L + ["  el entero partido en UNA parte: la parte es el entero entero.", "",
+                                  "RESULTADO: un entero"])
+        return "\n".join(L + ["  %d/1: enteros partidos en UNA parte cada uno, y se toman %d: %d enteros "
+                              "(3.NF.A.3c: los enteros tambien son fracciones)." % (a, a, a), "",
+                              "RESULTADO: %d enteros" % a])
+    if a == 0:
+        return "\n".join(L + ["  %d partes de %d, y no se toma NINGUNA: cero." % (b, b), "", "RESULTADO: cero"])
     nombre = nombre_fraccion(a, b, saber)
     L.append("  %d/%d se lee '%s'." % (a, b, nombre))
     L.append("  el de ABAJO (%d) dice en cuantas partes IGUALES se parte el entero;" % b)
@@ -95,9 +103,45 @@ def explicar_fraccion(a, b, saber):
     L.append("")
     L.append("     %s" % _fr_tira(b, 4, a, saber))
     L.append("")
+    if a != 1:
+        L.append("  %d/%d son %s fracciones de 1/%d: %s  (NCETM 3.3)" % (
+            a, b, decir(a, saber), b, " + ".join("1/%d" % b for _ in _fr_marcas(a, saber))))
     L.append("  %s %s hacen un entero (%s)." % (decir(b, saber), _NOMBRES_FR[b][1],
                                                  " + ".join("1/%d" % b for _ in _fr_marcas(b, saber))))
+    if a == b:
+        L.append("  arriba y abajo el mismo numero: %d/%d es UN ENTERO." % (a, b))
+        nombre = "un entero"
     L += ["", "RESULTADO: %s" % nombre]
+    return "\n".join(L)
+
+
+# ---------------------------------------------------------------- recta: 3/4
+
+def explicar_recta(a, b, saber):
+    L = ["PREGUNTA (F.2): donde esta %d/%d en la recta?  (NCETM 3.3; 3.NF.A.2)" % (a, b), ""]
+    p = _fr_problema(a, b, saber)
+    if p or b == 1:
+        porque = p[1] if p else "%d/1 son %d enteros: en la recta de los enteros" % (a, a)
+        return "\n".join(L + ["  %s" % porque, "", "RESULTADO: %s" % (p[0] if p else "%d" % a)])
+    huecos = "".join("     " for _ in _fr_marcas(b, saber))
+    arriba = "0" + huecos[1:] + "1"
+    linea = "|" + "|".join("----" for _ in _fr_marcas(b, saber)) + "|"
+    hasta = "".join("     " for _ in _fr_marcas(a, saber))
+    L.append("  de 0 a 1 partido en %d trozos IGUALES (cada trozo es 1/%d); %d/%d esta a %s trozos del 0:"
+             % (b, b, a, b, decir(a, saber)))
+    L.append("")
+    L.append("     " + arriba)
+    L.append("     " + linea)
+    L.append("     " + hasta + "^")
+    L.append("     %s%d/%d" % (hasta, a, b))
+    L.append("")
+    if a == b:
+        L.append("  %d/%d cae justo en el 1: es un entero." % (a, b))
+    elif a == 0:
+        L.append("  0/%d cae en el 0." % b)
+    else:
+        L.append("  %d/%d esta entre 0 y 1: es un NUMERO, como los demas, solo que entre dos enteros." % (a, b))
+    L += ["", "RESULTADO: a %s trozos de 1/%d del 0" % (decir(a, saber), b)]
     return "\n".join(L)
 
 
@@ -107,7 +151,7 @@ def decidir_fraccion_de(a, b, n, saber=None):
     if saber is None:
         saber = cargar_conocimiento()
     r = {"a": a, "b": b, "n": n}
-    p = _fr_problema(a, b, saber, unitarias=_FR_SOLO_UNITARIAS)
+    p = _fr_problema(a, b, saber)
     if p:
         r.update(conclusion=p[0], porque=p[1])
         return r
@@ -161,7 +205,7 @@ def decidir_comparar_fracciones(fa, fb, saber=None):
     if saber is None:
         saber = cargar_conocimiento()
     for a, b in (fa, fb):
-        p = _fr_problema(a, b, saber, unitarias=False)
+        p = _fr_problema(a, b, saber)
         if p:
             return {"conclusion": p[0], "porque": p[1]}
     return aplicar("comparar_fracciones", {"a": fa, "b": fb}, saber)
@@ -170,16 +214,17 @@ def decidir_comparar_fracciones(fa, fb, saber=None):
 def explicar_comparar_fracciones(fa, fb, saber):
     r = decidir_comparar_fracciones(fa, fb, saber)
     ta, tb = "%d/%d" % fa, "%d/%d" % fb
-    L = ["PREGUNTA (F.1): cual es mayor, %s o %s?  (NCETM 3.2, 3.3)" % (ta, tb), ""]
+    L = ["PREGUNTA (F.1/F.2): cual es mayor, %s o %s?  (NCETM 3.2, 3.3; 3.NF.A.3d)" % (ta, tb), ""]
     if r["conclusion"] in ("todavia_no", "imposible"):
         return "\n".join(L + ["  %s: %s" % ("NO SE PUEDE" if r["conclusion"] == "imposible" else "TODAVIA NO",
                                             r["porque"]), "", "RESULTADO: %s" % r["conclusion"]])
     if r["conclusion"] != "hecho":
-        return "\n".join(L + ["  %s" % (r.get("porque") or r["conclusion"]), "", "RESULTADO: todavia_no"])
+        return "\n".join(L + ["  TODAVIA NO: arriba y abajo son distintos en las dos; para compararlas hay que "
+                              "buscar fracciones equivalentes (NCETM 3.7, 5.o)", "", "RESULTADO: todavia_no"])
     for pid, res in sorted(r.get("todos", []), key=lambda x: x[1]["metodo"]):
         L.append("    %-28s %s" % (res["metodo"] + ":", res["cuenta"]))
     if len(r.get("todos", [])) > 1:
-        L.append("    -> los dos caminos dicen lo mismo")
+        L.append("    -> %s dicen lo mismo" % ("los dos caminos" if len(r["todos"]) == 2 else "todos los caminos"))
     L += ["", "RESULTADO: %s %s %s" % (ta, r["valor"], tb)]
     return "\n".join(L)
 
@@ -190,7 +235,7 @@ def decidir_entero(a, b, parte, saber=None):
     if saber is None:
         saber = cargar_conocimiento()
     r = {"a": a, "b": b, "parte": parte}
-    p = _fr_problema(a, b, saber, unitarias=_FR_SOLO_UNITARIAS)
+    p = _fr_problema(a, b, saber)
     if p:
         r.update(conclusion=p[0], porque=p[1])
         return r
@@ -282,7 +327,6 @@ def explicar_partes(total, partes, saber):
 
 # ---------------------------------------------------------------- la puerta
 
-_FR_SOLO_UNITARIAS = True        # F.1: solo unitarias.  F.2 lo abre.
 
 
 def explicar_orden_fraccion(texto, saber=None):
@@ -302,9 +346,12 @@ def explicar_orden_fraccion(texto, saber=None):
     m = _ORDEN_ENTERO.match(t)
     if m:
         return explicar_entero(int(m.group(1)), int(m.group(2)), int(m.group(3)), saber)
+    m = _ORDEN_RECTA.match(t)
+    if m:
+        return explicar_recta(int(m.group(1)), int(m.group(2)), saber)
     m = _ORDEN_PARTES.match(t)
     if m:
         partes = [int(x) for x in re.findall(r"\d+", m.group(2))]
         return explicar_partes(int(m.group(1)), partes, saber)
     return ("NO ENTIENDO ESTO: se escribe asi:  fraccion: 1/4    1/4 de 12    comparar: 1/3 y 1/5\n"
-            "                                    entero: 1/4 es 3    partes: 12 = 4 + 4 + 4")
+            "                                    entero: 1/4 es 3    partes: 12 = 4 + 4 + 4    recta: 3/4")
