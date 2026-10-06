@@ -107,8 +107,8 @@ _H.volcar(check, "B HIERRO (%d cantidades, %s):" % (len(NUMEROS), _muestras.modo
 
 # El techo de verdad
 # UNIDAD 6.7: el techo subio de cien a MIL; 101 ya se puede.
-r = motor.decidir_6_2_agrupar(escena_de_n(1001), SABER)
-check("B101: mas de mil -> no_alcanza", r["conclusion"] == "no_alcanza", r["conclusion"])
+r = motor.decidir_6_2_agrupar(escena_de_n(10001), SABER)
+check("B101: mas de diez mil (N.3) -> no_alcanza", r["conclusion"] == "no_alcanza", r["conclusion"])
 
 
 # ---------------------------------------------------------------------------
@@ -130,7 +130,7 @@ t = motor.explicar_6_2_agrupar(escena_de_n(7), SABER)
 check("C11 menos de diez se explica", "no_hay_decena" in t and "hacen falta DIEZ" in t)
 check("C12 no hay media decena", "media decena" in t)
 
-t = motor.explicar_6_2_agrupar(escena_de_n(1001), SABER)  # 6.7: el techo es MIL
+t = motor.explicar_6_2_agrupar(escena_de_n(10001), SABER)  # 6.7: el techo es MIL
 check("C13 el techo se explica", "no_alcanza" in t)
 
 
@@ -141,7 +141,7 @@ check("C13 el techo se explica", "no_alcanza" in t)
 r = motor.decidir_2_3_cuantos(escena_de_n(13), SABER)
 check("D1 cuantos sigue dando la cantidad", r.get("cantidad") == "trece", r.get("cantidad"))
 # ...pero solo llega hasta cien
-r = motor.decidir_2_3_cuantos(escena_de_n(1001), SABER)  # 6.7: el techo es MIL
+r = motor.decidir_2_3_cuantos(escena_de_n(10001), SABER)  # 6.7: el techo es MIL
 check("D2 cuantos sigue teniendo techo", r["conclusion"] == "no_alcanza_la_secuencia", r["conclusion"])
 # Y agrupar NO es contar: con trece, agrupar dice "una decena y tres", no "trece"
 r = motor.decidir_6_2_agrupar(escena_de_n(13), SABER)

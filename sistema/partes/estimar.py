@@ -17,11 +17,13 @@ _CUENTA_ESTIMAR = re.compile(r"^(\d+)\s*([+\-x*:/])\s*(\d+)\s*$")
 _CUENTA_RAZONABLE = re.compile(r"^(\d+)\s*([+\-x*:/])\s*(\d+)\s*=\s*(\d+)\s*$")
 _OP_ESTIMAR = {"+": "+", "-": "-", "x": "x", "*": "x", ":": ":", "/": ":"}
 _PREGUNTA_DE = {"+": "sumar", "-": "restar", "x": "multiplicar"}
-_MOVIMIENTO = {"decena": 5, "centena": 50}
+_MOVIMIENTO = {"decena": 5, "centena": 50, "millar": 500}
 
 
 def _sitio_para_estimar(n):
     """Hasta 99, a la decena; de 100 en adelante, a la centena (se mira cuantas cifras tiene)."""
+    if len(cifras_de(n)) >= 4:
+        return "millar"                                   # N.3: de cuatro cifras, al millar
     return "centena" if len(cifras_de(n)) >= 3 else "decena"
 
 
@@ -38,7 +40,7 @@ def decidir_estimar(a, op, b, saber=None):
         r.update(conclusion="todavia_no", porque="estimar una division todavia no (hacen falta numeros compatibles)")
         return r
     if decir(a, saber) is None or decir(b, saber) is None:
-        r.update(conclusion="todavia_no", porque="los numeros tienen que estar en mi lista (hasta mil)")
+        r.update(conclusion="todavia_no", porque="los numeros tienen que estar en mi lista (hasta %s)" % techo(saber))
         return r
     if op == "-" and viene_despues(decir(b, saber), decir(a, saber), saber):
         r.update(conclusion="imposible", porque="%d es mas que %d: no se puede quitar" % (b, a))
@@ -125,7 +127,7 @@ def _leer_cuenta(texto, patron):
 def _lineas_estimacion(r):
     L = ["  1. REDONDEO cada numero (N.2):"]
     for n, sitio, v in r["redondeos"]:
-        L.append("        %d a la %s -> %d" % (n, sitio, v))
+        L.append("        %d %s %s -> %d" % (n, "al" if sitio == "millar" else "a la", sitio, v))
     L.append("  2. LA CUENTA FACIL: %s = %d" % (r["facil"], r["estimacion"]))
     L.append("  3. LA BANDA: %s." % r["por_que_banda"])
     L.append("        la cuenta de verdad tiene que estar entre %d y %d%s" % (
@@ -166,7 +168,7 @@ def explicar_razonable(texto, saber=None):
     if r["razonable"]:
         L.append("  4. %d cae DENTRO de la banda: es RAZONABLE." % resp)
     elif decir(resp, saber) is None:
-        L.append("  4. %d pasa de mil, y la banda acaba en %d: NO es razonable, seguro que esta mal." % (resp, r["hasta"]))
+        L.append("  4. %d pasa de %s, y la banda acaba en %d: NO es razonable, seguro que esta mal." % (resp, techo(saber), r["hasta"]))
     else:
         L.append("  4. %d cae FUERA de la banda (%d a %d): NO es razonable, seguro que esta mal." % (resp, r["desde"], r["hasta"]))
     L.append("")

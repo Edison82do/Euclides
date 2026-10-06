@@ -119,8 +119,8 @@ for malo, dato in (("101", "1 centena, 0 decenas y 1 unidad"),
     check("B (MEJORA 6.7) %s ya no es fuera_de_la_tabla: %s" % (malo, dato),
           s["conclusion"] == "se_puede" and s.get("de_la_centena") and s.get("dato") == dato,
           (s["conclusion"], s.get("dato")))
-s = motor.decidir_6_3_sitio("1001", SABER)
-check("B (6.7) 1001 pasa de mil: no_alcanza", s["conclusion"] == "no_alcanza", s["conclusion"])
+s = motor.decidir_6_3_sitio("10001", SABER)
+check("B (N.3) 10001 pasa de diez mil: no_alcanza", s["conclusion"] == "no_alcanza", s["conclusion"])
 s = motor.decidir_6_3_sitio("manzana", SABER)
 check("B no es numero", s["conclusion"] == "no_es_un_numero", s["conclusion"])
 s = motor.decidir_6_3_sitio("0", SABER)

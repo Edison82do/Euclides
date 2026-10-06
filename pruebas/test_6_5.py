@@ -96,16 +96,16 @@ for malo, parte in (("101", "1 centena + 0 decenas + 1 unidad = 101"),
     check("B (MEJORA 6.7) partir %s: %s" % (malo, parte),
           r["conclusion"] == "se_puede" and r.get("como_se_parte") == parte,
           (r["conclusion"], r.get("como_se_parte")))
-r = motor.decidir_6_5_partir("1001", SABER)
-check("B (6.7) partir 1001: no_alcanza", r["conclusion"] == "no_alcanza", r["conclusion"])
+r = motor.decidir_6_5_partir("10001", SABER)
+check("B (N.3) partir 10001: no_alcanza", r["conclusion"] == "no_alcanza", r["conclusion"])
 r = motor.decidir_6_5_partir("manzana", SABER)
 check("B no es numero", r["conclusion"] == "no_es_un_numero", r["conclusion"])
 r = motor.decidir_6_5_juntar_decenas("11", "0", SABER)
 # ANTES: 11 decenas pasaba de cien -> fuera_de_la_tabla.  MEJORA 6.7: son 110 (ciento diez).
 check("B (MEJORA 6.7) juntar 11 decenas son ciento diez",
       r["conclusion"] == "se_puede" and r.get("total") == 110, (r["conclusion"], r.get("total")))
-r = motor.decidir_6_5_juntar_decenas("101", "0", SABER)
-check("B (6.7) juntar 101 decenas pasa de mil: no_alcanza", r["conclusion"] == "no_alcanza", r["conclusion"])
+r = motor.decidir_6_5_juntar_decenas("1000", "1", SABER)
+check("B (N.3) juntar 1000 decenas y 1 pasa de diez mil: no_alcanza", r["conclusion"] == "no_alcanza", r["conclusion"])
 
 
 # ---------------------------------------------------------------------------
@@ -154,9 +154,9 @@ t = motor.explicar_6_5_partir("7", SABER)
 check("E7 una cifra sola: cero decenas", "0 decenas y 7 unidades" in t)
 check("E8 y el cero de las decenas no se dice", "NO se dice" in t)
 
-t = motor.explicar_6_5_partir("1001", SABER)
+t = motor.explicar_6_5_partir("10001", SABER)
 # ANTES: el techo era 101 (fuera_de_la_tabla).  MEJORA 6.7: el techo es MIL.
-check("E9 el techo se explica (ahora en MIL)", "no_alcanza" in t and "MIL" in t)
+check("E9 el techo se explica (ahora en DIEZ MIL)", "no_alcanza" in t and "DIEZ MIL" in t)
 
 
 # ---------------------------------------------------------------------------

@@ -136,6 +136,9 @@ CONDICIONES = {
     "la_suma_cruza_el_diez": lambda s, u: u.viene_despues(
         u.contar_adelante(u.decir(s["a"]), u.decir(s["b"]))["resultado"], "diez"),
     "el_total_tiene_nombre": lambda s, u: u.sumar_por_columnas(s["a"], s["b"]) is not None,
+    # ---- centenas justas (paso N.3; NCETM 1.22: 'al sumar o restar multiplos de 100, sale un multiplo de 100')
+    "los_dos_son_centenas_justas": lambda s, u: all(len(u.cifras_de(x)) >= 3 and u.cifras_de(x)[0] == 0
+                                                   and u.cifras_de(x)[1] == 0 for x in (s["a"], s["b"])),
     "el_de_abajo_no_es_mayor": lambda s, u: not u.viene_despues(u.decir(s["b"]), u.decir(s["a"])),
     # ---- la memoria (paso 3)
     "se_permite_recordar": lambda s, u: not s.get("sin_memoria"),
@@ -212,7 +215,7 @@ CONDICIONES = {
     "mismo_numerador": lambda s, u: s["a"][0] == s["b"][0],
     "comparten_arriba_o_abajo": lambda s, u: s["a"][0] == s["b"][0] or s["a"][1] == s["b"][1],
     # ---- redondear (paso N.2; 3.NBT.A.1): el numero esta en la lista, y el sitio es decena o centena
-    "se_puede_redondear": lambda s, u: u.decir(s["n"]) is not None and s.get("a") in ("decena", "centena"),
+    "se_puede_redondear": lambda s, u: u.decir(s["n"]) is not None and s.get("a") in ("decena", "centena", "millar"),
 }
 
 DE_APLICACION = {"el_divisor_no_es_cero", "hay_bastantes", "hay_bastantes_al_deshacer", "la_parte_cabe_en_el_todo",

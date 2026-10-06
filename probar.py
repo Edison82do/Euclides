@@ -416,6 +416,17 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         5/7 - 2/7              -> 3/7       1 - 3/8 -> 5/8 (1 = 8/8)       3/8 + 5/8 -> 1
         Con la vuelta (sumar y restar son inversas).  Pasar de un entero: 4.o.  Distinto abajo: 5.o.
 
+  EL MILLAR  ->  el 1000 y los numeros de cuatro cifras, hasta DIEZ MIL (paso N.3, 4.o; NCETM 1.22; 4.NBT.A)
+        nombre: 2005           -> dos mil cinco   (el millar 'dos mil' + 'cinco'; el cero marca las centenas)
+        numero: dos mil cinco  -> 2005            (no 20005 ni 205)
+        millar: 3045           -> 3000 + 40 + 5   y CUANTAS hay: 3 millares, 30 centenas, 304 decenas
+        millar: 1000           -> 10 centenas = 100 decenas = 1000 unidades; 2 x 500 = 4 x 250 = 5 x 200
+        comparar: 3456 y 3465  -> 3456 < 3465  mirando las CIFRAS: mas cifras gana; si no, la primera distinta
+        redondear: 3456        -> decena 3460, centena 3500, millar 3000      de 1000 en 1000
+        300 + 800              -> 1100   3 centenas + 8 centenas = 11 centenas (las centenas como cosas)
+        columnas: 2345 + 1678  -> 4023   (lo de tres cifras sirve para cuatro)
+        La lista de contar llega ahora a DIEZ MIL.  Mas alla: 5.o (NCETM 1.26).
+
   REDONDEAR  ->  a la decena o a la centena MAS CERCANA (paso N.2; 3.NBT.A.1)
         redondear: 37          -> decena 40, centena 0   (las dos)
         redondear: 37 a la decena   -> 40   EN LA RECTA: entre 30 y 40, la mitad es 35, pasa de la mitad
@@ -554,6 +565,12 @@ def preguntar(texto, saber):
         if t.lower().startswith("tabla del") or t.lower().startswith("mitad"):
             salida = (motor.explicar_tabla(t, saber) if t.lower().startswith("tabla")
                       else motor.explicar_mitad(t[len("mitad"):].lstrip(":").strip(), saber))
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
+        if t.lower().startswith("millar") or motor.es_comparar_numeros(t):
+            salida = (motor.explicar_millar(t, saber) if t.lower().startswith("millar")
+                      else motor.explicar_comparar_numeros(t, saber))
             if salida.startswith("NO ENTIENDO"):
                 return "no_entiendo", None
             return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None

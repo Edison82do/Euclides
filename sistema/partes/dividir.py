@@ -39,7 +39,7 @@ def decidir_dividir(texto, saber=None):
         return {"conclusion": "no_entiendo"}
     total, d = int(m.group(1)), int(m.group(2))
     if decir(total, saber) is None or decir(d, saber) is None:
-        return {"conclusion": "no_entiendo", "porque": "solo se contar hasta mil"}
+        return {"conclusion": "no_entiendo", "porque": "solo se contar hasta %s" % techo(saber)}
     r = aplicar("dividir", {"total": total, "divisor": d}, saber)
     out = {"total": total, "divisor": d, "lectura": lectura, "aplicado": r}
     if r["conclusion"] != "hecho":

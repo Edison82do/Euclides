@@ -84,11 +84,11 @@ comprobar("B10 150 - 40 por 'columnas:' llega a la 7.6", (r.get("unidad"), r["to
 
 # ------------------------------------------------------------------ C: condiciones
 print("\nC - LAS CONDICIONES DE APLICACION")
-comprobar("C1 900 + 200 pasa de mil: no_alcanza", col("900", "+", "200", SABER)["conclusion"], "no_alcanza")
+comprobar("C1 9000 + 2000 pasa de diez mil (N.3): no_alcanza", col("9000", "+", "2000", SABER)["conclusion"], "no_alcanza")
 comprobar("C2 300 - 301: no_hay_bastantes", col("300", "-", "301", SABER)["conclusion"], "no_hay_bastantes")
-comprobar("C3 1500 - 40: no_alcanza (es un numero, pero pasa de mil)", col("1500", "-", "40", SABER)["conclusion"], "no_alcanza")
+comprobar("C3 15000 - 40: no_alcanza (es un numero, pero pasa de diez mil)", col("15000", "-", "40", SABER)["conclusion"], "no_alcanza")
 comprobar("C4 silla - 3: no_es_un_numero", col("silla", "-", "3", SABER)["conclusion"], "no_es_un_numero")
-comprobar("C5 la regla que decide se puede rastrear", col("900", "+", "200", SABER)["regla"], "c6_no_alcanza")
+comprobar("C5 la regla que decide se puede rastrear", col("9000", "+", "2000", SABER)["regla"], "c6_no_alcanza")
 
 # ------------------------------------------------------------------ D: lo de antes no cambia
 print("\nD - LO QUE LA 7.3 Y LA 7.5 YA HACIAN SALE IGUAL (hasta cien)")
@@ -174,8 +174,8 @@ comprobar("F ya no sale 'None - None' (fallo arreglado el 5 oct 2026)", "None" i
 d = motor.decidir_5_5_diferencia_numeros("300", "47", SABER)
 comprobar("F la diferencia de 300 y 47 se mide por columnas: 253", (d["diferencia_valor"], d["expresion"]),
           (253, "300 - 47 = 253"))
-t = motor.explicar_pregunta("sumar_numeros: novecientos + novecientos", SABER)
-comprobar("F 900 + 900 dice no_alcanza (antes reventaba con KeyError)", "RESULTADO: no_alcanza" in t, True)
+t = motor.explicar_pregunta("sumar_numeros: nueve mil + nueve mil", SABER)
+comprobar("F 9000 + 9000 dice no_alcanza (antes reventaba con KeyError)", "RESULTADO: no_alcanza" in t, True)
 
 print("\n" + "=" * 78)
 print("UNIDAD 7.6: %d/%d correctos" % (BIEN, BIEN + MAL))

@@ -86,8 +86,8 @@ def main():
     comprobar("D14 la secuencia de numeros empieza en 'cero'", d["numeros"][0], "cero")
     comprobar("D15 la lista de contar NO tiene el cero", "cero" in d["conteo"], False)
     comprobar("D16 la secuencia de numeros SI tiene el cero", "cero" in d["numeros"], True)
-    comprobar("D17 (6.7) la lista de CONTAR llega a 'mil' (antes acababa en 'cien')",
-              d["conteo"][-1], "mil")
+    comprobar("D17 (N.3) la lista de CONTAR llega a 'diez mil' (antes: cien, luego mil)",
+              d["conteo"][-1], "diez mil")
     comprobar("D18 la secuencia de numeros acaba en 'nueve' (diez no tiene cifra)", d["numeros"][-1], "nueve")
     # UNIDAD 6.1: antes la lista de contar acababa en 'diez' y los numeros eran "el cero + la de
     # contar sin el diez".  Al llegar el conteo a cien, esa relacion SE ROMPE (y debe romperse:

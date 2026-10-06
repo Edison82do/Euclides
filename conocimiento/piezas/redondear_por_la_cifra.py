@@ -16,7 +16,8 @@ PIEZA = {
     "usa": [],
 }
 
-_SITIOS = {"decena": (1, (0,), 0, "diez", "unidades"), "centena": (2, (0, 1), 1, "cien", "decenas")}
+_SITIOS = {"decena": (1, (0,), 0, "diez", "unidades"), "centena": (2, (0, 1), 1, "cien", "decenas"),
+           "millar": (3, (0, 1, 2), 2, "mil", "centenas")}                     # N.3: tambien al millar
 
 
 def hacer(s, u):

@@ -79,8 +79,8 @@ DOMINIO_TIENE = [
     ("D13 TRAMPA: el mismo conjunto NO tiene cinco",
      "casa(color=blanco), casa, perro, casa(forma=cuadrado), carro", "cinco", "no"),
 
-    ("D14 TRAMPA: mas de MIL objetos -> no puede decidirlo (6.7)",
-     ",".join("o%d" % (i + 1) for i in range(1001)), "cinco", "no_alcanza_la_secuencia"),
+    ("D14 TRAMPA: mas de DIEZ MIL objetos -> no puede decidirlo (N.3)",
+     ",".join("o%d" % (i + 1) for i in range(10001)), "cinco", "no_alcanza_la_secuencia"),
 
     ("D14b (MEJORA 6.1): ONCE objetos ya SI se pueden decidir... y tienen ONCE, no cinco",
      ",".join("o%d" % (i + 1) for i in range(11)), "cinco", "no"),
@@ -144,10 +144,13 @@ def correr_coherencia(saber):
     secuencia = saber["secuencia_de_conteo"]["palabras"]
     # UNIDAD 6.7: la secuencia llega a MIL, asi que el monton tiene que llegar tambien.
     # (Antes de la 6.1 era de diez; con la 6.1, de cien; ahora, de mil.)
-    monton = escena_0_2(",".join("cosa%d" % i for i in range(1, 1001)))
+    # PASO N.3: la secuencia llega a DIEZ MIL, y el monton tambien.
+    monton = escena_0_2(",".join("cosa%d" % i for i in range(1, 10001)))
     # UNA afirmacion ("para toda N, dame N y contar lo cogido da N"), recorrida sobre las
     # cantidades de la muestra (_muestras.py).  Antes contaba 1000 pruebas e imprimia 1000 lineas.
-    cantidades = _muestras.numeros(1, len(secuencia))
+    # (N.3: hasta mil la muestra de siempre; de mil a diez mil, las fronteras: recorrer un monton de
+    #  diez mil cosas para cada cantidad seria lento y no ensena nada nuevo.)
+    cantidades = _muestras.numeros(1, 1000) + [1001, 1999, 2005, 5000, 9999, len(secuencia)]
     malas = []
     for n in cantidades:
         palabra = secuencia[n - 1]

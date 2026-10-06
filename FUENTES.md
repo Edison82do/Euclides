@@ -122,6 +122,13 @@
   cortas, área y perímetro); 5.º = 1.26 (hasta un millón), 1.27 (negativos), 2.18–2.22 (factores,
   primos…); 6.º = 1.30, 2.23–2.30. → el plan «Años escolares».
 
+- **NCETM 1.22** (*Composition and calculation: 1,000 and four-digit numbers*, Year 4; leído el 6 oct):
+  diez centenas hacen 1000 (y 100 decenas, 1000 unidades); sumar o restar múltiplos de 100 da múltiplos
+  de 100; los números de más de mil tienen una estructura que permite ordenar, componer y descomponer;
+  redondear; lo de tres cifras sirve para cuatro; 1000 = 2 × 500 = 4 × 250 = 5 × 200.
+  **Common Core 4.NBT.A.1–3** (valor de posición; leer, escribir, forma desarrollada; comparar mirando
+  las cifras de cada sitio; redondear a cualquier sitio). → N.3.
+
 ## Enlaces
 - NCETM 2.9: https://www.ncetm.org.uk/classroom-resources/primm-209-times-tables-7-and-patterns-withinacross-times-tables/
 - NCETM 2.10: https://www.ncetm.org.uk/classroom-resources/primm-210-connecting-multiplication-and-division-and-the-distributive-law/

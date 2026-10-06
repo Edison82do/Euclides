@@ -169,6 +169,9 @@ def _cargar_de_disco(directorio):
     # cambia es que la lista es mas larga.  Ninguna unidad vieja se entera.
     if "secuencia_hasta_cien" in saber and "secuencia_de_conteo" in saber:
         palabras = _secuencia_hasta_mil(saber)
+        # PASO N.3 (4.o, NCETM 1.22): con el millar la lista llega a DIEZ MIL, con la misma regla.
+        if "el_millar" in saber:
+            palabras = _secuencia_hasta_diez_mil(saber)
         if palabras and all(palabras) and len(set(palabras)) == len(palabras):
             saber["secuencia_de_conteo"]["palabras"] = palabras
             saber["secuencia_de_conteo"]["hasta"] = len(palabras)

@@ -32,7 +32,7 @@ def comprobar(nombre, obtenido, esperado):
 
 
 SABER = motor.cargar_conocimiento()
-NUM = numeros(0, 1000)
+NUM = numeros(0, 1000) + [1995, 4999, 9900, 9990, 9995, 9998, 9999, 10000]   # N.3: hasta diez mil
 DE = {"dos": 2, "cinco": 5, "diez": 10, "cien": 100}
 
 print("=" * 78)
@@ -41,8 +41,8 @@ print("=" * 78)
 try:
     print("\nA - EL SALTO (mecanismo)")
     for de, k in DE.items():
-        fallos = [n for n in NUM if motor.saltar(n, de, SABER) != (n + k if n + k <= 1000 else None)]
-        comprobar("A un salto de %d desde cualquier numero (y None si pasa de mil)  (%d casos)" % (k, len(NUM)),
+        fallos = [n for n in NUM if motor.saltar(n, de, SABER) != (n + k if n + k <= 10000 else None)]
+        comprobar("A un salto de %d desde cualquier numero (y None si pasa de diez mil, N.3)  (%d casos)" % (k, len(NUM)),
                   fallos[:3], [])
 
     print("\nB - LAS SERIES")
@@ -54,8 +54,8 @@ try:
     comprobar("B3 de 5 en 5 desde 3: el 50 no se toca (48 -> 53)", (r["llega"], r["serie"][-1], r["despues"]), (False, 48, 53))
     r = motor.contar_de_en("diez", 47, 97, SABER)
     comprobar("B4 de 10 en 10 desde 47 hasta 97", r["serie"], [57, 67, 77, 87, 97])
-    r = motor.contar_de_en("cien", 250, None, SABER)
-    comprobar("B5 de 100 en 100 desde 250: se para antes de pasar de mil", (r["serie"][-1], r["se_sale"]), (950, True))
+    r = motor.contar_de_en("cien", 9250, None, SABER)
+    comprobar("B5 de 100 en 100 desde 9250: se para antes de pasar de diez mil (N.3)", (r["serie"][-1], r["se_sale"]), (9950, True))
     t = motor.explicar_pregunta("de 3 en 3 hasta 30", SABER)
     comprobar("B6 de 3 en 3 todavia no (no esta en el estandar de 2.o)", t.startswith("NO ENTIENDO"), True)
 

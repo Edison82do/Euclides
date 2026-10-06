@@ -591,7 +591,7 @@ def nombre_de_numero(texto, saber):
         return inversa[t], True
     n = _cifra_a_numero(t, saber)
     if n is not None:
-        nombre = construir_nombre_hasta_mil(n, saber)
+        nombre = construir_nombre_hasta_diez_mil(n, saber)
         if nombre:
             return nombre, True
     return t, False

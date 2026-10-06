@@ -19,7 +19,8 @@ PIEZA = {
 }
 
 # el sitio: (la cifra del sitio, las de su derecha, la de justo a la derecha, el salto, el nombre)
-_SITIOS = {"decena": (1, (0,), 0, "diez", "decenas"), "centena": (2, (0, 1), 1, "cien", "centenas")}
+_SITIOS = {"decena": (1, (0,), 0, "diez", "decenas"), "centena": (2, (0, 1), 1, "cien", "centenas"),
+           "millar": (3, (0, 1, 2), 2, "mil", "millares")}                     # N.3: tambien al millar
 
 
 def hacer(s, u):

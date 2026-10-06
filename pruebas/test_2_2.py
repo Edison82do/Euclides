@@ -69,16 +69,12 @@ DOMINIO_RECITAR = [
     # UNIDAD 6.1: la secuencia ahora llega a CIEN, asi que estos casos cambian de valor (no de
     # sentido).  Y se anaden los SALTOS DE DECENA, que es donde esta la dificultad de verdad.
     # UNIDAD 6.7: la secuencia llega a MIL; el final ya no es cien, es mil.
-    ("D9 recitar desde 'novecientos noventa y ocho': los dos ultimos, y avisa de que ahi acaba",
-     "novecientos noventa y ocho", "recitado",
-     ["novecientos noventa y ocho", "novecientos noventa y nueve", "mil"], True),
-    ("D10 recitar desde 'novecientos noventa': la ultima decena entera",
-     "novecientos noventa", "recitado",
-     ["novecientos noventa", "novecientos noventa y uno", "novecientos noventa y dos",
-      "novecientos noventa y tres", "novecientos noventa y cuatro",
-      "novecientos noventa y cinco", "novecientos noventa y seis",
-      "novecientos noventa y siete", "novecientos noventa y ocho",
-      "novecientos noventa y nueve", "mil"], True),
+    # PASO N.3 (4.o): la secuencia llega a DIEZ MIL; el final ya no es mil, es diez mil.
+    ("D9 recitar desde 'nueve mil novecientos noventa y ocho': los dos ultimos, y avisa de que ahi acaba",
+     "nueve mil novecientos noventa y ocho", "recitado",
+     ["nueve mil novecientos noventa y ocho", "nueve mil novecientos noventa y nueve", "diez mil"], True),
+    ("D10 recitar desde 'novecientos noventa': pasa por mil sin pararse (N.3)",
+     "novecientos noventa", "recitado", None, True),
     ("D11 EL SALTO DE DECENA: desde 'dieciocho' recita hasta el final (se comprueba en D18)",
      "dieciocho", "recitado", None, True),
     ("D11b EL OTRO SALTO: desde 'veintiocho' recita hasta el final (se comprueba en D18)",
@@ -127,12 +123,14 @@ def correr_recitar(saber):
     r = decidir_2_2_recitar("uno", saber)
     tramo = r.get("tramo") or []
     puntos = {0: "uno", 1: "dos", 17: "dieciocho", 19: "veinte", 28: "veintinueve",
-              29: "treinta", 43: "cuarenta y cuatro", 98: "noventa y nueve", 99: "cien"}
-    ok = len(tramo) == 1000 and all(len(tramo) > k and tramo[k] == v for k, v in puntos.items())
-    print("%-6s D18 LA SECUENCIA ENTERA A MANO: 1000 palabras (6.7), y los saltos de decena bien"
+              29: "treinta", 43: "cuarenta y cuatro", 98: "noventa y nueve", 99: "cien",
+              998: "novecientos noventa y nueve", 999: "mil", 1000: "mil uno", 2004: "dos mil cinco",
+              9999: "diez mil"}
+    ok = len(tramo) == 10000 and all(len(tramo) > k and tramo[k] == v for k, v in puntos.items())
+    print("%-6s D18 LA SECUENCIA ENTERA A MANO: 10000 palabras (N.3), y los saltos bien"
           % ("OK" if ok else "FALLA"))
     if not ok:
-        print("       esperado: 1000 palabras con %s" % puntos)
+        print("       esperado: 10000 palabras con %s" % puntos)
         print("       obtenido: %d palabras: %s" % (len(tramo), {k: (tramo[k] if len(tramo) > k else None) for k in puntos}))
     bien += ok
     total = len(DOMINIO_RECITAR) + 1

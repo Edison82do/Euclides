@@ -131,16 +131,17 @@ def main():
     print("=" * 76)
     print("F) LIMITES Y TRAMPAS")
     print("=" * 76)
-    r = decidir_5_1_descomponer(escena_0_2(",".join("o%d" % i for i in range(1, 1002))), saber)
+    r = decidir_5_1_descomponer(escena_0_2(",".join("o%d" % i for i in range(1, 10002))), saber)   # N.3: diez mil
     # UNIDAD 6.1: once objetos YA se cuentan y 6+6 = doce ya se puede; el limite esta en cien.
-    comprobar("F1 TRAMPA: mas de MIL objetos -> no_alcanza", r["conclusion"], "no_alcanza")
+    comprobar("F1 TRAMPA: mas de DIEZ MIL objetos -> no_alcanza", r["conclusion"], "no_alcanza")
     r = decidir_5_1_componer(coleccion(6), coleccion(6), saber)
     comprobar("F2 (MEJORA 6.1): SEIS Y SEIS ya SI se juntan -> doce (antes no llegaba)",
               r.get("total"), "doce")
     # UNIDAD 6.7: el techo subio a MIL; 60+60 ya se puede.
     # (con nombres GENERADOS: la lista fija de arriba es corta)
-    r = decidir_5_1_componer(escena_0_2(",".join("o%d" % (i + 1) for i in range(600))), escena_0_2(",".join("o%d" % (i + 1) for i in range(600))), saber)
-    comprobar("F2b TRAMPA: seiscientos y seiscientos (1200) pasa de MIL -> no_alcanza",
+    # PASO N.3: el techo es DIEZ MIL; 6000 + 6000 pasa.
+    r = decidir_5_1_componer(escena_0_2(",".join("o%d" % (i + 1) for i in range(6000))), escena_0_2(",".join("o%d" % (i + 1) for i in range(6000))), saber)
+    comprobar("F2b TRAMPA: seis mil y seis mil (12000) pasa de DIEZ MIL -> no_alcanza",
               r["conclusion"], "no_alcanza")
     salida = explicar_pregunta("componer: a,b,c", saber)
     comprobar("F3 sin la barra -> NO ENTIENDO (hacen falta DOS partes)", "NO ENTIENDO" in salida, True)

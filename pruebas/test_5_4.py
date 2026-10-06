@@ -153,8 +153,8 @@ comprobar("I6 y la suma escrita SI llega (da 'diez', que es una palabra)",
 r = motor.decidir_5_4_quitar(esc(12), "dos", SABER)
 comprobar("I7 (MEJORA 6.1) con doce objetos YA se puede contar: 12 - 2 = 10",
           r["expresion"], "doce - 2 = diez")
-r = motor.decidir_5_4_quitar(esc(1001), "dos", SABER)
-comprobar("I7b TRAMPA: con mas de MIL objetos si lo dice", r["conclusion"], "no_alcanza")
+r = motor.decidir_5_4_quitar(esc(10001), "dos", SABER)
+comprobar("I7b TRAMPA: con mas de DIEZ MIL objetos si lo dice (N.3)", r["conclusion"], "no_alcanza")
 r = motor.decidir_5_4_quitar(esc(10), "dos", SABER)
 comprobar("I8 diez si (es la ultima palabra): 10 - 2 = 8", r["expresion"], "diez - 2 = 8")
 comprobar("I9 y la vuelta cuadra", r["verificacion_con_la_suma"], True)
@@ -162,10 +162,10 @@ comprobar("I9 y la vuelta cuadra", r["verificacion_con_la_suma"], True)
 # Y LO MISMO EN LAS OTRAS UNIDADES que cuentan: mas de lo que llega la secuencia no debe reventar.
 print("\nI-bis) MAS DE DIEZ OBJETOS EN LAS UNIDADES QUE CUENTAN (que no reviente)")
 casos = [
-    ("cuantos:", lambda: motor.explicar_2_3_cuantos(esc(1001), SABER), "no"),
-    ("descomponer:", lambda: motor.explicar_5_1_descomponer(esc(1001), SABER), "no"),
-    ("sumar:", lambda: motor.explicar_5_2_sumar(esc(1001), esc(2), SABER), "no"),
-    ("comparar:", lambda: motor.explicar_4_1_comparar(esc(1001), esc(2), SABER), "no"),
+    ("cuantos:", lambda: motor.explicar_2_3_cuantos(esc(10001), SABER), "no"),
+    ("descomponer:", lambda: motor.explicar_5_1_descomponer(esc(10001), SABER), "no"),
+    ("sumar:", lambda: motor.explicar_5_2_sumar(esc(10001), esc(2), SABER), "no"),
+    ("comparar:", lambda: motor.explicar_4_1_comparar(esc(10001), esc(2), SABER), "no"),
 ]
 for nombre, fn, _ in casos:
     try:

@@ -881,8 +881,8 @@ def _detalle_error(escena, r):
 # No es un metodo nuevo: es el de la 7.3 y la 7.5 con las columnas que hagan falta (hasta mil).
 # Cada columna se hace con SU MECANISMO (dedos 7.1 / 7.4): ninguna cuenta sale de "Python suma".
 
-_NOMBRE_COLUMNA = ("unidades", "decenas", "centenas", "unidades de mil")
-_UNA_DE_LA_COLUMNA = ("unidad", "decena", "centena", "unidad de mil")
+_NOMBRE_COLUMNA = ("unidades", "decenas", "centenas", "unidades de mil", "decenas de mil")
+_UNA_DE_LA_COLUMNA = ("unidad", "decena", "centena", "unidad de mil", "decena de mil")
 
 
 def _dos_valores(texto_a, texto_b, saber):
@@ -1045,11 +1045,11 @@ def explicar_7_6_columnas(texto_a, op, texto_b, saber=None):
     lineas.append("NUMEROS:  %s  y  %s" % (texto_a, texto_b))
     if r["conclusion"] == "no_es_un_numero":
         lineas.append("RESULTADO: no_es_un_numero")
-        lineas.append("  Alguno no es un numero que sepa leer (los mios van del CERO al MIL).")
+        lineas.append("  Alguno no es un numero que sepa leer (los mios van del CERO al %s)." % techo(saber).upper())
         return "\n".join(lineas)
     if r["conclusion"] == "no_alcanza":
         lineas.append("RESULTADO: no_alcanza")
-        lineas.append("  Se pasa de MIL, y mi secuencia de contar llega al mil.  No me lo invento.")
+        lineas.append("  Se pasa de %s, y mi secuencia de contar llega ahi.  No me lo invento." % techo(saber).upper())
         return "\n".join(lineas)
     if r["conclusion"] == "no_hay_bastantes":
         lineas.append("RESULTADO: no_hay_bastantes")

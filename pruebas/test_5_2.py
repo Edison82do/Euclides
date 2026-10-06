@@ -152,8 +152,9 @@ def main():
     comprobar("F1 (MEJORA 6.1): seis y seis ya SI suman -> doce", r.get("suma"), "doce")
     # UNIDAD 6.7: el techo subio a MIL; 60+60 ya se puede.
     # (con nombres GENERADOS: la lista fija de arriba es corta)
-    r = decidir_5_2_anadir(escena_0_2(",".join("o%d" % (i + 1) for i in range(600))), escena_0_2(",".join("o%d" % (i + 1) for i in range(600))), saber)
-    comprobar("F2 TRAMPA: seiscientos y seiscientos (1200) pasa de MIL -> no_alcanza",
+    # PASO N.3: el techo subio a DIEZ MIL; 6000 + 6000 pasa.
+    r = decidir_5_2_anadir(escena_0_2(",".join("o%d" % (i + 1) for i in range(6000))), escena_0_2(",".join("o%d" % (i + 1) for i in range(6000))), saber)
+    comprobar("F2 TRAMPA: seis mil y seis mil (12000) pasa de DIEZ MIL -> no_alcanza",
               r["conclusion"], "no_alcanza")
     salida = explicar_pregunta("sumar: a,b,c", saber)
     comprobar("F3 sin la barra -> NO ENTIENDO (hacen falta DOS)", "NO ENTIENDO" in salida, True)

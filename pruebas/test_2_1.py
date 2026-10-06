@@ -36,8 +36,9 @@ DOMINIO_CONTAR = [
      "a, a, a", "emparejado", [("a", "uno")]),
 
     # UNIDAD 6.1: la secuencia llega a 100, asi que el techo ya no son diez objetos.
+    # PASO N.3 (4.o): la lista llega a DIEZ MIL; el techo se mueve, la trampa sigue.
     ("D2 TRAMPA: mas objetos que palabras conoce el sistema -> NO se inventa las que faltan",
-     ",".join("o%d" % (i + 1) for i in range(1001)), "no_alcanza_la_secuencia", None),
+     ",".join("o%d" % (i + 1) for i in range(10001)), "no_alcanza_la_secuencia", None),
 
     ("D2b (MEJORA 6.1): ONCE objetos ya SI se emparejan (antes el sistema solo llegaba a diez)",
      ",".join("o%d" % (i + 1) for i in range(11)), "emparejado", None),

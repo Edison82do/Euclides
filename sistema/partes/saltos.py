@@ -11,7 +11,7 @@ de cinco, de diez'.  El salto lo da el MECANISMO (saltar); aqui solo se lee la o
 
 import re
 
-_DE = {"2": "dos", "5": "cinco", "10": "diez", "100": "cien"}
+_DE = {"2": "dos", "5": "cinco", "10": "diez", "100": "cien", "1000": "mil"}
 _ORDEN_SALTOS = re.compile(r"^de\s+(\d+)\s+en\s+(\d+)(?:\s+desde\s+(\d+))?(?:\s+hasta\s+(\d+))?\s*$")
 
 
@@ -39,19 +39,19 @@ def explicar_saltos(texto, saber=None):
         saber = cargar_conocimiento()
     m = _ORDEN_SALTOS.match(" ".join(texto.lower().split()))
     if not m or m.group(1) != m.group(2) or m.group(1) not in _DE:
-        return ("NO ENTIENDO ESTO: se puede contar de 2 en 2, de 5 en 5, de 10 en 10 o de 100 en 100.\n"
+        return ("NO ENTIENDO ESTO: se puede contar de 2 en 2, de 5 en 5, de 10 en 10, de 100 en 100 o de 1000 en 1000.\n"
                 "   se escribe asi:  de 5 en 5 hasta 50      o   de 10 en 10 desde 47 hasta 97")
     de = _DE[m.group(1)]
     desde = int(m.group(3)) if m.group(3) else 0
     hasta = int(m.group(4)) if m.group(4) else None
     for n in (desde, hasta):
         if n is not None and decir(n, saber) is None:
-            return "NO ENTIENDO ESTO: solo se contar hasta mil."
+            return "NO ENTIENDO ESTO: solo se contar hasta %s." % techo(saber)
     r = contar_de_en(de, desde, hasta, saber)
     como = ("se recita en voz baja con %s dedos y se dice en voz alta el ultimo" % de
             if de in ("dos", "cinco") else
-            "no se cuentan %s pasos: se ESCRIBE la cifra de las %s (sube una)"
-            % (de, "decenas" if de == "diez" else "centenas"))
+            "no se cuentan %s pasos: se ESCRIBE la cifra de %s (sube una)"
+            % (de, {"diez": "las decenas", "cien": "las centenas", "mil": "los millares"}[de]))
     L = ["PREGUNTA (N.1): contar de %s en %s desde %d%s" % (m.group(1), m.group(1), desde,
                                                              "" if hasta is None else " hasta %d" % hasta),
          "  (cada salto: %s)" % como, ""]
@@ -59,12 +59,12 @@ def explicar_saltos(texto, saber=None):
     if r["llega"] is True:
         L.append("  -> llego justo al %d (%d saltos)" % (hasta, len(r["serie"])))
     elif r["llega"] is False and r.get("se_sale"):
-        L.append("  -> no llego al %d: me salgo de mi lista (mil)" % hasta)
+        L.append("  -> no llego al %d: me salgo de mi lista (%s)" % (hasta, techo(saber)))
     elif r["llega"] is False:
         L.append("  -> el %d NO se toca saltando de %s en %s desde %d: del %s salto al %d"
                  % (hasta, m.group(1), m.group(1), desde, r["serie"][-1] if r["serie"] else desde, r["despues"]))
     elif r.get("se_sale"):
-        L.append("  -> me paro: el siguiente salto pasa de mil")
+        L.append("  -> me paro: el siguiente salto pasa de %s" % techo(saber))
     L.append("")
     L.append("RESULTADO: %s" % ", ".join(str(x) for x in r["serie"]))
     return "\n".join(L)

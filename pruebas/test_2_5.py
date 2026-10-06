@@ -40,8 +40,8 @@ DOMINIO_ORDEN = [
 
     ("D3 diez objetos -> coinciden", "a,b,c,d,e,f,g,h,i,j", "coinciden"),
 
-    ("D4 TRAMPA: mas de cien objetos -> no puede decidirlo",
-     ",".join("o%d" % (i + 1) for i in range(1001)), "no_alcanza_la_secuencia"),
+    ("D4 TRAMPA: mas objetos que la lista (N.3: diez mil) -> no puede decidirlo",
+     ",".join("o%d" % (i + 1) for i in range(10001)), "no_alcanza_la_secuencia"),
 
     ("D4b (MEJORA 6.1): ONCE objetos ya SI se pueden decidir",
      ",".join("o%d" % (i + 1) for i in range(11)), "coinciden"),

@@ -124,8 +124,8 @@ def main():
     comprobar("D6b (MEJORA 7.1): 9 + 9 = dieciocho (antes el techo era diez)",
               decidir_5_3_sumar_numeros("9", "9", saber).get("suma"), "dieciocho")
     # UNIDAD 6.7: el techo subio de cien a MIL.  (Antes: noventa + noventa = 180 no alcanzaba.)
-    comprobar("D6c MEJORA 6.7: novecientos + novecientos = 1800 pasa de MIL -> no_alcanza",
-              decidir_5_3_sumar_numeros("novecientos", "novecientos", saber)["conclusion"],
+    comprobar("D6c MEJORA N.3: nueve mil + nueve mil = 18000 pasa de DIEZ MIL -> no_alcanza",
+              decidir_5_3_sumar_numeros("nueve mil", "nueve mil", saber)["conclusion"],
               "no_alcanza")
     comprobar("D6d (MEJORA 6.7): noventa + noventa YA SI suma -> ciento ochenta",
               decidir_5_3_sumar_numeros("noventa", "noventa", saber).get("suma"),

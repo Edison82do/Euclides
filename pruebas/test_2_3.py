@@ -36,8 +36,8 @@ DOMINIO = [
     ("D3 diez objetos -> diez (el maximo que conozco)", "a,b,c,d,e,f,g,h,i,j", "hay_cantidad", "diez"),
 
     # UNIDAD 6.1: la secuencia llega a cien, asi que el techo deja de estar en diez.
-    ("D4 TRAMPA: mas de cien objetos -> no se inventa la cantidad",
-     ",".join("o%d" % (i + 1) for i in range(1001)), "no_alcanza_la_secuencia", None),
+    ("D4 TRAMPA: mas objetos que la lista (N.3: diez mil) -> no se inventa la cantidad",
+     ",".join("o%d" % (i + 1) for i in range(10001)), "no_alcanza_la_secuencia", None),
 
     ("D4b (MEJORA 6.1): ONCE objetos ya SI se cuentan -> once",
      ",".join("o%d" % (i + 1) for i in range(11)), "hay_cantidad", "once"),

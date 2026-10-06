@@ -111,9 +111,9 @@ def main():
     print("=" * 76)
     print("F) LIMITES DECLARADOS")
     print("=" * 76)
-    r = comp(",".join("o%d" % i for i in range(1, 1002)), "a,b", saber)
+    r = comp(",".join("o%d" % i for i in range(1, 10002)), "a,b", saber)   # N.3: diez mil
     # UNIDAD 6.1: once objetos YA se cuentan; ahora el limite esta en cien.
-    comprobar("F1 TRAMPA: con mas de MIL objetos no le alcanza -> lo dice",
+    comprobar("F1 TRAMPA: con mas de DIEZ MIL objetos no le alcanza -> lo dice",
               r["conclusion"], "no_alcanza")
     r = decidir_4_1_comparar(escena_0_2(",".join("o%d" % (i + 1) for i in range(11))),
                              escena_0_2("a,b"), saber)

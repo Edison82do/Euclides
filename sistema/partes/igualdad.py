@@ -46,7 +46,7 @@ def decidir_igualdad(texto, saber=None):
     for l in lados:
         for k in ("a", "b", "n"):
             if k in l and decir(l[k], saber) is None:
-                return {"conclusion": "no_entiendo", "porque": "solo se contar hasta mil"}
+                return {"conclusion": "no_entiendo", "porque": "solo se contar hasta %s" % techo(saber)}
     r = aplicar("igualdad", {"lados": lados}, saber)
     r["lados"] = lados
     return r

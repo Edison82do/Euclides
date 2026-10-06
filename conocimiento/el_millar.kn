@@ -1,0 +1,60 @@
+id: el_millar
+nombre: El millar (diez centenas son un millar) y los numeros de cuatro cifras
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  LA ESCALERA SIGUE (paso N.3, 4.o; NCETM 1.22; Common Core 4.NBT.A).
+
+  REGLA FIJADA 1 - DIEZ CENTENAS HACEN UN MILLAR.  Y el mismo mil son 100 decenas y 1000 unidades
+  (NCETM 1.22: "ten hundreds make 1,000, which can also be decomposed into 100 tens and 1,000 ones").
+      10 UNIDADES  hacen  1 DECENA
+      10 DECENAS   hacen  1 CENTENA
+      10 CENTENAS  hacen  1 MILLAR
+      10 MILLARES  hacen  1 DECENA DE MILLAR (diez mil: el techo de 4.o)
+
+  REGLA FIJADA 2 - UN NUMERO DE CUATRO CIFRAS SON MILLARES, CENTENAS, DECENAS Y UNIDADES, y la
+  POSICION dice el valor (4.NBT.A.2):
+      3456  ->  3 millares, 4 centenas, 5 decenas y 6 unidades  =  3000 + 400 + 50 + 6
+
+  REGLA FIJADA 3 - LOS NOMBRES SE CONSTRUYEN, como los de tres cifras.  Solo hay una palabra nueva,
+  MIL, que se pone detras de lo que cuentan los millares:
+      2345 = dos mil + trescientos cuarenta y cinco
+  OJO: 1000 es "mil" a secas (no "un mil"); 1001 es "mil uno".
+
+  REGLA FIJADA 4 - EL CERO MARCA EL SITIO (como en 204).  "dos mil cinco" se escribe 2005: no 205 ni
+  20005.  Y en 3045 la cifra de las centenas es 0, pero hay 30 CENTENAS (las de los 3 millares).
+
+  REGLA FIJADA 5 - COMPARAR ES MIRAR LAS CIFRAS (4.NBT.A.2): el que tiene MAS cifras es mayor; si
+  tienen las mismas, se mira de IZQUIERDA a DERECHA y la PRIMERA cifra distinta decide.
+  (NCETM 1.22: "los numeros de mas de mil tienen una estructura que va con su tamano: por eso se
+  pueden ordenar, componer y descomponer".)
+
+  REGLA FIJADA 6 - LO DE TRES CIFRAS SIRVE PARA CUATRO (NCETM 1.22): las columnas, contar de mil en
+  mil, redondear (ahora tambien al millar).  Y mil se compone multiplicando: 2 x 500, 4 x 250, 5 x 200.
+
+  REGLA FIJADA 7 - SUBIR EL TECHO NO ES INVENTAR.  La lista de contar llega ahora a DIEZ MIL, con la
+  misma regla.  Mas alla, 5.o (NCETM 1.26, hasta un millon): "todavia no".
+
+errores_tipicos:
+  - Escribir "dos mil cinco" como 20005 o 205 (el cero que marca el sitio).
+  - Creer que 3045 no tiene centenas.  Tiene 30.
+  - Comparar mirando la ultima cifra, o creer que 999 es mas que 1000 "porque tiene nueves".
+  - Decir "un mil" para 1000.
+fuentes:
+  - NCETM 1.22, Composition and calculation: 1,000 and four-digit numbers (Year 4), sus seis
+    teaching points.
+  - Common Core 4.NBT.A.1-3 (valor de posicion; leer, escribir y comparar; redondear).
+
+millares:
+  1: mil
+  2: dos mil
+  3: tres mil
+  4: cuatro mil
+  5: cinco mil
+  6: seis mil
+  7: siete mil
+  8: ocho mil
+  9: nueve mil
+
+techo: 10000
+techo_nombre: diez mil

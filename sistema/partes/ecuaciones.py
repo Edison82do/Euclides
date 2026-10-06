@@ -129,7 +129,7 @@ def decidir_ecuacion(texto, saber=None):
     for l in e["lados"]:
         for k in ("a", "b", "n"):
             if isinstance(l.get(k), int) and decir(l[k], saber) is None:
-                return {"conclusion": "no_entiendo", "porque": "solo se contar hasta mil"}
+                return {"conclusion": "no_entiendo", "porque": "solo se contar hasta %s" % techo(saber)}
     r = {"ecuacion": e["texto"], "lados": e["lados"]}
     if any(l.get("op") in ("x", ":") for l in e["lados"]):
         return _resolver_por(e, r, saber)
@@ -338,7 +338,7 @@ def _resolver_por(e, r, saber):
     def multiplicar(x, y):
         p = aplicar("multiplicar", {"a": x, "b": y}, saber)
         r["paso"] = p
-        return (p.get("valor"), None) if p["conclusion"] == "hecho" else (None, "me paso de mil")
+        return (p.get("valor"), None) if p["conclusion"] == "hecho" else (None, "me paso de %s" % techo(saber))
 
     if op == "x" and donde == "resultado":
         v, porque = multiplicar(a, b)

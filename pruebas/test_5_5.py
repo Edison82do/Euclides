@@ -101,9 +101,9 @@ r = motor.decidir_5_5_diferencia(esc(12), esc(3), SABER)
 # UNIDAD 6.1: doce objetos YA se cuentan.
 # UNIDAD 6.7 (LA CENTENA): el limite subio de cien a MIL.  Antes esta prueba decia
 # 101 y esperaba no_alcanza; ahora 101 SI se puede, y el techo esta en 1000.
-r = motor.decidir_5_5_diferencia(esc(1001), esc(3), SABER)
-comprobar("D1 TRAMPA: mas de mil objetos: lo dice", r["conclusion"], "no_alcanza")
-r = motor.decidir_5_5_diferencia(esc(3), esc(1001), SABER)
+r = motor.decidir_5_5_diferencia(esc(10001), esc(3), SABER)
+comprobar("D1 TRAMPA: mas de diez mil objetos (N.3): lo dice", r["conclusion"], "no_alcanza")
+r = motor.decidir_5_5_diferencia(esc(3), esc(10001), SABER)
 comprobar("D2 TRAMPA: y tambien si es la segunda", r["conclusion"], "no_alcanza")
 r = motor.decidir_5_5_diferencia(esc(12), esc(3), SABER)
 comprobar("D2b (MEJORA 6.1): doce contra tres ya SI: la diferencia es 9",

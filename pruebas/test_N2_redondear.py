@@ -68,7 +68,7 @@ try:
     comprobar("A10 49 a la centena -> 0", R(49, "centena"), 0)
     comprobar("A11 4 a la decena -> 0;  5 -> 10;  0 -> 0", (R(4, "decena"), R(5, "decena"), R(0, "decena")), (0, 10, 0))
     comprobar("A12 1000 -> 1000 a los dos sitios", (R(1000, "decena"), R(1000, "centena")), (1000, 1000))
-    comprobar("A13 1001 -> no esta en la lista", R(1001, "decena"), "ninguna")
+    comprobar("A13 10001 -> no esta en la lista (N.3: hasta diez mil)", R(10001, "decena"), "ninguna")
 
     print("\nB - DE 0 A 1000 CONTRA EL TESTIGO (muestra), LOS DOS CAMINOS DE ACUERDO")
     for a in ("decena", "centena"):
@@ -101,7 +101,7 @@ try:
     comprobar("D3 'redondear: 37' -> las dos", S("redondear: 37"), "decena 40, centena 0")
     comprobar("D4 'redondear: 247 a la centena' -> 200", S("redondear: 247 a la centena"), "200")
     comprobar("D5 'redondear: 37 a la decena mas cercana' -> 40", S("redondear: 37 a la decena mas cercana"), "40")
-    comprobar("D6 al millar -> todavia_no", S("redondear: 4567 al millar"), "todavia_no")
+    comprobar("D6 al millar: desde N.3 (4.NBT.A.3) si -> 5000", S("redondear: 4567 al millar"), "5000")
     comprobar("D7 'redondear: hola' -> no_entiendo", S("redondear: hola"), "no_entiendo")
 finally:
     shutil.rmtree(TMP, ignore_errors=True)

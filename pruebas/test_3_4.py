@@ -76,9 +76,9 @@ def main():
     comprobar("P2 la cifra es '2'", r.get("cifra"), "2")
     r = decidir_3_4_puente([], saber)
     comprobar("P3 una coleccion vacia es CERO (no 'no se puede decidir')", r["conclusion"], "vacia")
-    r = decidir_3_4_puente(escena_0_2(",".join("o%d" % i for i in range(1, 1002))), saber)
+    r = decidir_3_4_puente(escena_0_2(",".join("o%d" % i for i in range(1, 10002))), saber)   # N.3: diez mil
     # UNIDAD 6.1: once objetos YA se cuentan; por eso ahora el limite esta en cien.
-    comprobar("P4 TRAMPA: con mas de MIL objetos no le alcanza -> lo dice",
+    comprobar("P4 TRAMPA: con mas de DIEZ MIL objetos no le alcanza -> lo dice",
               r["conclusion"], "no_alcanza")
     r = decidir_3_4_puente(escena_0_2(",".join("o%d" % (i + 1) for i in range(11))), saber)
     comprobar("P4b (MEJORA 6.1): once objetos -> la palabra SI, pero la cifra no existe",

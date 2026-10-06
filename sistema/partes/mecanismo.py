@@ -41,6 +41,12 @@ def lista_de_contar(saber):
     return saber["_lista_con_cero"]
 
 
+def techo(saber):
+    """La ULTIMA palabra de la lista: hasta donde se contar (cien en la 6.1, mil en la 6.7, diez mil en
+    la N.3).  Los mensajes de 'no me alcanza' la dicen de aqui, no escrita a mano."""
+    return lista_de_contar(saber)[-1]
+
+
 def leer(palabra, saber):
     """El VALOR de una palabra es su SITIO en la lista (principio cardinal).  Solo lectura."""
     lista_de_contar(saber)
@@ -175,6 +181,8 @@ def saltar(desde, de, saber):
         return subir_una_decena(desde, saber)
     if de == "cien":
         return subir_una_centena(desde, saber)
+    if de == "mil":                                   # paso N.3: de mil en mil, la cifra de los millares
+        return _subir_en_el_sitio(desde, 3, saber)
     p = decir(desde, saber)
     for _ in levantar_dedos(de, saber) or []:
         p = siguiente(p, saber)

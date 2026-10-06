@@ -47,11 +47,11 @@ def decidir_multiplicar(texto, saber=None):
         return {"conclusion": "no_entiendo"}
     a, b = int(m.group(1)), int(m.group(2))
     if decir(a, saber) is None or decir(b, saber) is None:
-        return {"conclusion": "no_entiendo", "porque": "solo se contar hasta mil"}
+        return {"conclusion": "no_entiendo", "porque": "solo se contar hasta %s" % techo(saber)}
     r = aplicar("multiplicar", {"a": a, "b": b}, saber)
     out = {"a": a, "b": b, "aplicado": r}
     if r["conclusion"] != "hecho":
-        out.update(conclusion="no_se_puede", porque="me paso de mil (mi lista de contar llega a mil)")
+        out.update(conclusion="no_se_puede", porque="me paso de %s (mi lista de contar llega ahi)" % techo(saber))
         return out
     out.update(conclusion="hecho", valor=r["valor"])
     return out

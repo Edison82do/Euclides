@@ -101,9 +101,10 @@ for k, v in malas.items():
 
 # Y por encima de MIL, lo dice  (UNIDAD 6.7: el techo subio de cien a mil;
 # antes esta lista era 60+50, 99+9, 100+1 y 55+55, que ahora SI se pueden)
-for a, b in ((600, 500), (999, 9), (1000, 1), (550, 550)):
+# PASO N.3: el techo es DIEZ MIL (600+500, 999+9, 1000+1 y 550+550 ya SI se pueden).
+for a, b in ((6000, 5000), (9999, 9), (10000, 1), (5500, 5500)):
     r = motor.decidir_7_3_columnas(str(a), str(b), SABER)
-    check("B %d+%d pasa de MIL -> no_alcanza" % (a, b), r["conclusion"] == "no_alcanza",
+    check("B %d+%d pasa de DIEZ MIL -> no_alcanza" % (a, b), r["conclusion"] == "no_alcanza",
           r["conclusion"])
 
 r = motor.decidir_7_3_columnas("manzana", "3", SABER)
@@ -142,8 +143,8 @@ t = motor.explicar_7_3_columnas("5", "3", SABER)
 check("D9 sin llevarse lo dice", "no hay nada que llevarse" in t)
 
 # 6.7: 60+50 = 110 YA se puede; el techo es MIL.
-t = motor.explicar_7_3_columnas("600", "500", SABER)
-check("D10 el techo se explica (6.7: el techo es MIL)", "no_alcanza" in t)
+t = motor.explicar_7_3_columnas("6000", "5000", SABER)
+check("D10 el techo se explica (N.3: el techo es DIEZ MIL)", "no_alcanza" in t)
 
 
 # ---------------------------------------------------------------------------

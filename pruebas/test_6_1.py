@@ -112,8 +112,8 @@ comprobar("E el 101 NO: fuera_de_mi_secuencia",
 comprobar("E y el 0 tampoco (la secuencia de contar empieza en uno)",
           motor.construir_nombre_hasta_cien(0, SABER), None)
 # UNIDAD 6.7 (LA CENTENA): la lista subio de 100 a MIL nombres.
-comprobar("E la lista tiene 1000 palabras (subio de 100 en la 6.7)", len(SEC), 1000)
-comprobar("E y son todas distintas (no hay dos iguales)", len(set(SEC)), 1000)
+comprobar("E la lista tiene 10000 palabras (subio de 100 en la 6.7, y a diez mil en la N.3)", len(SEC), 10000)
+comprobar("E y son todas distintas (no hay dos iguales)", len(set(SEC)), 10000)
 
 # ============================================ LA PRUEBA DE HIERRO (F)
 print("\n" + "=" * 78)

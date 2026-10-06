@@ -79,7 +79,7 @@ def decidir_3_1_palabra(cifra, saber=None):
     n = _cifra_a_numero(cifra, saber)
     if n is not None and n > 9:
         # Cifra de DOS O TRES digitos: el nombre se CONSTRUYE con la regla (6.1 y 6.7).
-        nombre = construir_nombre_hasta_mil(n, saber)
+        nombre = construir_nombre_hasta_diez_mil(n, saber)
         if nombre:
             regla_ = ("palabra_de_tres_cifras (6.7)" if n > 99 else "palabra_de_dos_digitos (6.3)")
             return _resultado_de_la_6_3("palabra", regla_, saber,

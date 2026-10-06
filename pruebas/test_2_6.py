@@ -53,7 +53,7 @@ DOMINIO = [
 
     # UNIDAD 6.1: el techo dejo de estar en diez.  Ahora hacen falta mas de cien.
     ("D8 TRAMPA: mas de cien en una -> no_alcanza_la_secuencia",
-     ",".join("a_%d" % (i + 1) for i in range(1001)),
+     ",".join("a_%d" % (i + 1) for i in range(10001)),       # N.3: el techo es diez mil
      "b_1,b_2", "no_alcanza_la_secuencia"),
 
     ("D8b (MEJORA 6.1): once contra dos ya SI se decide (antes no se podia contar)",

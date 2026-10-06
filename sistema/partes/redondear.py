@@ -14,7 +14,8 @@ import re
 
 _ORDEN_REDONDEAR = re.compile(
     r"^(\d+)(?:\s+(?:a\s+la|al|a)\s+(decena|centena|diez|cien|millar|mil|unidad)(?:\s+mas\s+cercana)?)?\s*$")
-_SITIO_DE = {"decena": "decena", "diez": "decena", "centena": "centena", "cien": "centena"}
+_SITIO_DE = {"decena": "decena", "diez": "decena", "centena": "centena", "cien": "centena",
+             "millar": "millar", "mil": "millar"}                                 # N.3 (4.NBT.A.3)
 
 
 def decidir_redondear(n, a, saber=None):
@@ -40,17 +41,17 @@ def explicar_redondear(texto, saber=None):
                 "   se escribe asi:  redondear: 37     redondear: 247 a la centena")
     n, sitio = leido
     L = ["PREGUNTA (N.2): redondear %d  (3.NBT.A.1: a la decena o a la centena MAS CERCANA)" % n, ""]
-    if sitio in ("millar", "mil", "unidad") or decir(n, saber) is None:
-        porque = ("redondear al millar todavia no (3.NBT.A.1 pide decena y centena)"
-                  if sitio in ("millar", "mil") else
-                  "a la unidad no se redondea: ya es un numero entero" if sitio == "unidad" else
-                  "%d no esta en mi lista (llego hasta mil)" % n)
+    if sitio == "unidad" or decir(n, saber) is None:
+        porque = ("a la unidad no se redondea: ya es un numero entero" if sitio == "unidad" else
+                  "%d no esta en mi lista (llego hasta %s)" % (n, techo(saber)))
         return "\n".join(L + ["  TODAVIA NO: %s" % porque, "", "RESULTADO: todavia_no"])
     sitios = [_SITIO_DE[sitio]] if sitio else ["decena", "centena"]
+    if not sitio and len(cifras_de(n)) >= 4:
+        sitios.append("millar")                                           # N.3: de cuatro cifras, tambien al millar
     finales, valores = [], {}
     for a in sitios:
         r = decidir_redondear(n, a, saber)
-        L.append("  A LA %s:" % a.upper())
+        L.append("  %s %s:" % ("AL" if a == "millar" else "A LA", a.upper()))
         if r["conclusion"] != "hecho":
             L.append("    NO SALE: %s" % r.get("porque"))
             finales.append("%s %s" % (a, r["conclusion"]))
@@ -65,7 +66,7 @@ def explicar_redondear(texto, saber=None):
         L.append("    -> los dos caminos dicen %d" % r["valor"])
         L.append("")
         finales.append("%d" % r["valor"] if sitio else "%s %d" % (a, r["valor"]))
-    if not sitio and len(valores) == 2:
+    if not sitio and "decena" in valores and "centena" in valores:
         cadena = decidir_redondear(valores["decena"], "centena", saber)
         if cadena["conclusion"] == "hecho" and cadena["valor"] != valores["centena"]:
             L.append("  OJO, LA TRAMPA DE LA CADENA: si redondeara %d (lo ya redondeado) a la centena saldria %d;"

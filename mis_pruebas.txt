@@ -70,7 +70,7 @@ verdad: 8 + 4 = 12 + 5            | ??         | ver el razonamiento
 # --- N.1 contar de n en n; par o impar ---
 de 5 en 5 hasta 50                | 5, 10, 15, 20, 25, 30, 35, 40, 45, 50
 de 10 en 10 desde 47 hasta 97     | 57, 67, 77, 87, 97
-de 100 en 100 desde 250           | 350, 450, 550, 650, 750, 850, 950
+de 100 en 100 desde 9250          | 9350, 9450, 9550, 9650, 9750, 9850, 9950   | N.3: ahora se para antes de DIEZ MIL
 de 5 en 5 desde 3 hasta 50        | ??         | el 50 no se toca
 par: 14                           | par        | 14 = 7 + 7
 par: 7                            | impar
@@ -199,6 +199,13 @@ recta: 3/4                        | ??          | ver la recta dibujada
 1 - 3/8                           | 5/8
 3/8 + 5/8                         | 1
 5/7 - 2/7                         | ??          | ver la tira tachada
+
+# --- N.3 el millar ---
+nombre: 2005                      | dos mil cinco
+millar: 3045                      | ??          | ver las 30 centenas
+comparar: 3456 y 3465             | 3456 < 3465
+redondear: 3456                   | decena 3460, centena 3500, millar 3000
+columnas: 2345 + 1678             | ??          | cuatro columnas
 
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades

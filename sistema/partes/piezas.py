@@ -272,7 +272,7 @@ def explicar_calculo(texto, saber=None):
                 "   se escribe asi:  calcular: 47 + 30     o     calcular sin memoria: 6 + 7")
     a, op, b = int(m.group(1)), m.group(2), int(m.group(3))
     if decir(a, saber) is None or decir(b, saber) is None:
-        return "NO ENTIENDO ESTO: solo se contar hasta mil."
+        return "NO ENTIENDO ESTO: solo se contar hasta %s." % techo(saber)
     pregunta = "sumar" if op == "+" else "restar"
     sit = {"a": a, "b": b}
     if sin_memoria:
