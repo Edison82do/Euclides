@@ -450,6 +450,12 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         redondear: 2.35 a la decima -> 2.4      redondear: 2.35 -> 2 (al entero)
         de 0.01 en 0.01 desde 0.98    fraccion: 35/100 -> 0.35;  3/10 = 30/100
 
+  DINERO  ->  pesos y centavos: un centavo es la centesima parte de un peso (paso D.3; NCETM 1.25)
+        dinero: $3.45          -> 345 centavos
+        $2.99 + $1.50          -> $4.49   en columnas, y COMPENSANDO: $3.00 + $1.50, menos 1 centavo
+        cambio: pago $10 por $6.35   -> $3.65   contando hacia adelante: 5 centavos, 60 centavos, 3 pesos
+        cambio: pago $20 por $3.45 + $6.80 + $2.15   -> $7.60   (el todo y las partes)
+
   REDONDEAR  ->  a la decena o a la centena MAS CERCANA (paso N.2; 3.NBT.A.1)
         redondear: 37          -> decena 40, centena 0   (las dos)
         redondear: 37 a la decena   -> 40   EN LA RECTA: entre 30 y 40, la mitad es 35, pasa de la mitad
@@ -620,6 +626,11 @@ def preguntar(texto, saber):
         if t.lower().startswith("tabla del") or t.lower().startswith("mitad"):
             salida = (motor.explicar_tabla(t, saber) if t.lower().startswith("tabla")
                       else motor.explicar_mitad(t[len("mitad"):].lstrip(":").strip(), saber))
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
+        if motor.es_orden_dinero(t):
+            salida = motor.explicar_orden_dinero(t, saber)
             if salida.startswith("NO ENTIENDO"):
                 return "no_entiendo", None
             return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None

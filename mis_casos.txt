@@ -883,3 +883,11 @@ comparar: 0.5 y 0.45                       | 0.5 > 0.45 | no '45 > 5'
 2.35 + 1.7                                 | 4.05 | puntos alineados
 5 - 0.25                                   | 4.75 | cambiar a traves del cero
 redondear: 2.35 a la decima                | 2.4 | la cifra de las centesimas
+# ---------------------------------------------------------------------------
+# PASO D.3 - EL DINERO (NCETM 1.25)
+# ---------------------------------------------------------------------------
+dinero: $3.45                              | 345 centavos | centesimas de peso
+$2.99 + $1.50                              | $4.49 | compensando
+cambio: pago $10 por $6.35                 | $3.65 | contando hacia adelante
+cambio: pago $20 por $3.45 + $6.80 + $2.15 | $7.60 | parte-parte-parte-todo
+cambio: pago $5 por $6.35                  | no_alcanza | no llega

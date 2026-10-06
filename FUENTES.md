@@ -162,6 +162,11 @@
   **Common Core 4.NF.C.5–7** (3/10 = 30/100; 0.62 = 62/100; comparar decimales hasta las centésimas
   razonando sobre su tamaño: el error «0.45 > 0.5»). → D.2.
 
+- **NCETM 1.25** (*Addition and subtraction: money*, Year 4): un penique es una centésima de libra; el
+  cálculo equivalente para sumar precios (compensar); el cambio contando hacia adelante (la diferencia);
+  las columnas; varias cosas: parte-parte-parte-todo. **Common Core 4.MD.A.2**. → D.3 (con pesos y
+  centavos).
+
 ## Enlaces
 - NCETM 2.9: https://www.ncetm.org.uk/classroom-resources/primm-209-times-tables-7-and-patterns-withinacross-times-tables/
 - NCETM 2.10: https://www.ncetm.org.uk/classroom-resources/primm-210-connecting-multiplication-and-division-and-the-distributive-law/

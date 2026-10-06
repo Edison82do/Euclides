@@ -255,6 +255,11 @@ comparar: 0.5 y 0.45              | 0.5 > 0.45  | el error tipico: '45 es mas qu
 redondear: 2.35 a la decima       | 2.4
 5 - 0.25                          | ??          | ver los cambios a traves del cero
 
+# --- D.3 el dinero ---
+$2.99 + $1.50                     | $4.49
+cambio: pago $10 por $6.35        | $3.65
+cambio: pago $20 por $3.45 + $6.80 + $2.15   | ??   | ver el todo y las partes
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete
