@@ -19,6 +19,13 @@ PIEZA = {
 
 def hacer(s, u):
     i, d = s["lados"]
+    if i["op"] == "x":
+        return {"valor": "verdadero", "metodo": "los factores al reves (E.0 + M.2)",
+                "cuenta": "%s y %s son los mismos factores al reves: %d grupos de %d y %d grupos de %d son "
+                          "las mismas filas y columnas vistas de lado (NCETM 2.3: los factores en cualquier "
+                          "orden, el producto es el mismo).  No hace falta calcular"
+                          % (i["texto"], d["texto"], i["a"], i["b"], d["a"], d["b"]),
+                "vuelta": "", "vuelta_ok": True}
     return {"valor": "verdadero", "metodo": "dar la vuelta (E.0 + P.5)",
             "cuenta": "%s y %s son los mismos numeros juntados al reves: juntar %d y %d es lo mismo que "
                       "juntar %d y %d (P.5).  No hace falta calcular"

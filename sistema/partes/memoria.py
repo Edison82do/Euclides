@@ -107,6 +107,8 @@ def aprender(que, saber=None, ruta=None):
     hechos = dict(cargar_memoria(ruta))
     hoy = time.strftime("%Y-%m-%d")
     res = {"que": que, "nuevos": [], "ya_sabia": [], "rechazados": [], "dos_caminos": 0}
+    if que == "tablas":
+        return _aprender_tablas(saber, ruta, hechos, hoy, res)
     digitos = _cifras_de_una(saber)
     for a in digitos:
         for b in digitos:
@@ -148,6 +150,35 @@ def aprender(que, saber=None, ruta=None):
     return res
 
 
+def _aprender_tablas(saber, ruta, hechos, hoy, res):
+    """M.2: las tablas del 2, 5 y 10 (0 a 10 grupos, en las dos lecturas: 3 x 5 y 5 x 3).  Cada producto
+    se CALCULA sin memoria y se COMPRUEBA con la otra lectura de los grupos (la conmutativa)."""
+    factores = _cifras_de_una(saber) + [10]
+    for t in (2, 5, 10):
+        for k in factores:
+            for a, b in ((k, t), (t, k)):
+                clave = "%d x %d" % (a, b)
+                if clave in res["nuevos"]:                 # 2 x 5 sale en la tabla del 2 y en la del 5
+                    continue
+                if clave in hechos:
+                    if clave not in res["ya_sabia"]:
+                        res["ya_sabia"].append(clave)
+                    continue
+                r = aplicar("multiplicar", {"a": a, "b": b, "sin_memoria": True}, saber)
+                otra = aplicar("suma_de_iguales", {"veces": b, "n": a}, saber)
+                if r["conclusion"] != "hecho" or otra["conclusion"] != "hecho" or otra["valor"] != r["valor"]:
+                    res["rechazados"].append((clave, "las dos lecturas no dan lo mismo"))
+                    continue
+                hechos[clave] = {"valor": r["valor"], "como": r["resultado"]["metodo"],
+                                 "comprobado": "la otra lectura (%d grupos de %d = %d)" % (b, a, otra["valor"]),
+                                 "fecha": hoy}
+                res["nuevos"].append(clave)
+                res["dos_caminos"] += 1
+    _escribir(hechos, ruta)
+    res["total_en_memoria"] = len(hechos)
+    return res
+
+
 def olvidar_todo(ruta=None):
     ruta = ruta or ruta_memoria()
     _escribir({}, ruta)
@@ -158,8 +189,10 @@ def explicar_memoria(saber=None):
     L = ["PREGUNTA: que se DE MEMORIA?  (conocimiento/memoria/hechos.txt)", ""]
     sumas = sorted(k for k in hechos if "+" in k)
     restas = sorted(k for k in hechos if "-" in k)
-    L.append("  sumas que se de memoria:  %d   restas: %d" % (len(sumas), len(restas)))
-    for k in [x for grupo in (sumas, restas) for x in grupo[:3]]:
+    productos = sorted(k for k in hechos if "x" in k)
+    L.append("  sumas que se de memoria:  %d   restas: %d   productos (tablas): %d"
+             % (len(sumas), len(restas), len(productos)))
+    for k in [x for grupo in (sumas, restas, productos) for x in grupo[:3]]:
         h = hechos[k]
         L.append("    %s = %d   aprendido con %s el %s;  comprobado por %s"
                  % (k, h["valor"], h["como"], h["fecha"], h["comprobado"]))
@@ -176,10 +209,19 @@ def explicar_memoria(saber=None):
 
 def explicar_aprender(que, saber=None):
     que = que.strip().lower()
-    if que not in ("sumas", "restas"):
-        return ("NO ENTIENDO ESTO: se puede aprender 'sumas' o 'restas' (hasta 20).\n"
+    if que not in ("sumas", "restas", "tablas"):
+        return ("NO ENTIENDO ESTO: se puede aprender 'sumas' o 'restas' (hasta 20), o 'tablas' (del 2, 5 y 10).\n"
                 "   se escribe asi:  aprender: sumas")
     r = aprender(que, saber)
+    if que == "tablas":
+        L = ["PREGUNTA: aprender las TABLAS del 2, del 5 y del 10 (de 0 a 10 grupos, en las dos lecturas)", "",
+             "  CALCULO cada producto SIN memoria y lo compruebo con la OTRA LECTURA de los grupos",
+             "  (3 x 5 son 3 grupos de 5; y 5 grupos de 3 tienen que dar lo mismo: NCETM 2.3).", "",
+             "  nuevos en la memoria:    %d" % len(r["nuevos"]),
+             "  ya los sabia:            %d" % len(r["ya_sabia"]),
+             "  rechazados:              %d %s" % (len(r["rechazados"]), r["rechazados"][:3] or ""), "",
+             "RESULTADO: %d hechos en la memoria" % r["total_en_memoria"]]
+        return "\n".join(L)
     L = ["PREGUNTA: aprender las %s hasta 20 (las de dos numeros de una cifra)" % que, ""]
     L.append("  PRACTICO cada una SIN memoria, con el metodo mas corto que tengo, la compruebo por la")
     L.append("  vuelta y, si hay otro metodo que tambien sirve, la hago tambien por ese.")

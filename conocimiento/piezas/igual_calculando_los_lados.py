@@ -14,14 +14,14 @@ PIEZA = {
     "condiciones": [
         ("hay_dos_lados_o_mas", "no hay dos lados que comparar"),
     ],
-    "usa": ["sumar", "restar"],
+    "usa": ["sumar", "restar", "multiplicar"],
 }
 
 
 def _vale(lado, u):
     if "n" in lado:
         return lado["n"], "es un numero"
-    r = u.usar("sumar" if lado["op"] == "+" else "restar", a=lado["a"], b=lado["b"])
+    r = u.usar({"+": "sumar", "-": "restar", "x": "multiplicar"}[lado["op"]], a=lado["a"], b=lado["b"])
     return r["valor"], r["resultado"]["metodo"]
 
 

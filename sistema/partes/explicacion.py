@@ -753,6 +753,10 @@ def explicar_pregunta(texto, saber=None):
     try:
         if t.lower().strip() in ("piezas", "mapa"):
             return explicar_piezas(saber)
+        if t.lower().startswith("tabla del"):
+            return explicar_tabla(t, saber)
+        if t.lower().startswith("mitad"):
+            return explicar_mitad(t[len("mitad"):].lstrip(":").strip(), saber)
         if es_multiplicacion(t):
             return explicar_multiplicar(t, saber)
         if re.match(r"^(filas:\s*)?\d+\s+(filas?|columnas?)\s+de\s+\d+", t.lower()):

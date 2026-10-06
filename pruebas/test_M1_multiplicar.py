@@ -66,7 +66,8 @@ try:
 
     print("\nD - LAS TRAMPAS")
     r = M("5 x 2")
-    comprobar("D1 5 x 2: grupos de 2 -> saltando", r["aplicado"]["resultado"]["metodo"].startswith("contar de"), True)
+    comprobar("D1 5 x 2 = 10 (en M.1 saltando de 2 en 2; desde M.2, el doble de 5)",
+              (r["valor"], r["aplicado"]["pieza"]["id"]), (10, "multiplicar_con_dobles"))
     comprobar("D2 40 x 30: pasa de mil -> no se puede", M("40 x 30")["conclusion"], "no_se_puede")
     comprobar("D3 3 x ? = 12: todavia no (dividir)", motor.decidir_ecuacion("3 x ? = 12", SABER)["conclusion"], "todavia_no")
     comprobar("D4 3 x 4 = ? ya no se lee como '4 = ?' (una puerta que habria mentido)",

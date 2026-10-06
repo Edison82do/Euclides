@@ -657,3 +657,16 @@ ecuacion: 47 + ? = 77                      | 30 | saltando de diez
 grupos de 2, 3 y 4                         | 9 | desiguales: suma
 40 x 30                                    | no_se_puede | pasa de mil
 ecuacion: 3 x ? = 12                       | todavia_no | dividir, M.3
+# ---------------------------------------------------------------------------
+# PASO M.2 - LAS TABLAS DEL 2, 5 Y 10; CONMUTATIVA; DOBLES Y MITADES (NCETM 2.3-2.5)
+# ---------------------------------------------------------------------------
+tabla del 2                                | 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 | de 2 en 2
+tabla del 10                               | 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 | de 10 en 10
+tabla del 7                                | todavia_no | las demas despues
+5 x 9                                      | 45 | la otra lectura
+2 x 8                                      | 16 | el doble
+1 x 7                                      | 7 | factor uno
+verdad: 3 x 4 = 4 x 3                      | verdadero | conmutativa
+verdad: 3 x 4 = 3 + 4                      | falso | 12 y 7
+mitad: 18                                  | 9 | lo contrario del doble
+mitad: 9                                   | impar | sobra uno

@@ -65,7 +65,14 @@
   desiguales; decir cuántos grupos y cuántos en cada uno; suma repetida; multiplicación; grupos de
   cero y de uno. **Common Core 3.OA.A.1**: 5 × 7 = 5 grupos de 7. → M.1.
 
+- **NCETM 2.3** (tabla del 2; factor y producto; los factores en cualquier orden), **2.4** (tablas del
+  10 y del 5; factores 0 y 1), **2.5** (dos lecturas de la misma multiplicación; dobles; la mitad es
+  lo contrario del doble; la del 10 es el doble de la del 5). → M.2.
+
 ## Enlaces
+- NCETM 2.3: https://www.ncetm.org.uk/classroom-resources/primm-203-times-tables-groups-of-2-and-commutativity-part-1/
+- NCETM 2.4: https://www.ncetm.org.uk/classroom-resources/primm-204-times-tables-groups-of-10-and-of-5-and-factors-of-0-and-1/
+- NCETM 2.5: https://www.ncetm.org.uk/classroom-resources/primm-205-commutativity-part-2-doubling-and-halving/
 - NCETM 2.2: https://www.ncetm.org.uk/classroom-resources/primm-202-structures-multiplication-representing-equal-groups/
 - NCETM 2.1: https://www.ncetm.org.uk/classroom-resources/primm-201-counting-unitising-and-coins/
 - Common Core 2.OA: https://www.thecorestandards.org/Math/Content/2/OA/

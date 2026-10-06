@@ -104,6 +104,12 @@ CONDICIONES = {
     "el_segundo_no_es_menor": lambda s, u: not u.viene_despues(u.decir(s["a"]), u.decir(s["b"])),
     # ---- multiplicar (paso M.1): situacion {"a": grupos, "b": cuantos en cada grupo}
     "los_grupos_tienen_nombre_x": lambda s, u: u.decir(s["a"]) is not None,
+    # ---- las tablas (paso M.2)
+    "un_factor_es_cero_o_uno": lambda s, u: s["a"] in (0, 1) or s["b"] in (0, 1),
+    "un_factor_es_dos": lambda s, u: s["a"] == 2 or s["b"] == 2,
+    "la_otra_lectura_se_salta": lambda s, u: u.decir(s["a"]) in ("dos", "cinco", "diez")
+    and u.decir(s["b"]) not in ("dos", "cinco", "diez"),
+    "el_producto_esta_en_la_memoria": lambda s, u: u.recuerdo("%d x %d" % (s["a"], s["b"])) is not None,
     # ---- suma de iguales (paso M.0): situacion {"veces": .., "n": ..}
     "cada_grupo_se_salta": lambda s, u: u.decir(s["n"]) in ("dos", "cinco", "diez"),
     "los_grupos_tienen_nombre": lambda s, u: u.decir(s["veces"]) is not None,
@@ -123,7 +129,7 @@ CONDICIONES = {
     "todos_los_lados_estan_escritos_igual": lambda s, u: len(s.get("lados", ())) >= 2
     and all(l["texto"] == s["lados"][0]["texto"] for l in s["lados"]),
     "son_los_mismos_numeros_al_reves": lambda s, u: len(s.get("lados", ())) == 2
-    and all(l.get("op") == "+" for l in s["lados"])
+    and s["lados"][0].get("op") in ("+", "x") and s["lados"][1].get("op") == s["lados"][0].get("op")
     and s["lados"][0]["a"] == s["lados"][1]["b"] and s["lados"][0]["b"] == s["lados"][1]["a"],
     # ---- dar la vuelta (paso P.5)
     "el_primero_es_menor": lambda s, u: u.viene_despues(u.decir(s["b"]), u.decir(s["a"])),

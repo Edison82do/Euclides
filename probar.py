@@ -311,6 +311,15 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         ecuacion: ... / hueco: ...  -> lo mismo con la orden delante.
         Y escrito directamente: '8 + 3 = 11' -> verdad,  '8 + 3' -> calcular.
 
+  TABLAS  ->  las tablas del 2, 5 y 10; la conmutativa; dobles y mitades (paso M.2; NCETM 2.3-2.5)
+        tabla del 5            -> 0 x 5 = 0 ... 10 x 5 = 50 (contar de 5 en 5)
+        5 x 7                  -> 35   la OTRA LECTURA: 7 grupos de 5, con la tabla del 5
+        2 x 9                  -> 18   un factor es 2: el DOBLE de 9
+        0 x 8 / 8 x 1          -> 0 / 8   sin calcular (un factor es cero o uno)
+        3 x 4 = 4 x 3          -> VERDADERO sin calcular (los factores en cualquier orden)
+        mitad: 14              -> 7    lo contrario del doble (hasta 20); mitad: 7 -> impar
+        aprender: tablas       -> las tablas del 2, 5 y 10 a la memoria (comprobadas con la otra lectura)
+
   MULTIPLICAR  ->  a x b son a GRUPOS IGUALES de b (paso M.1; 3.OA.A.1, NCETM 2.2)
         3 x 4                  -> 12   3 grupos de 4: los dibuja, 4 + 4 + 4, y 3 x 4 = 12
         5 x 7                  -> 35   (el ejemplo del estandar: 5 grupos de 7)
@@ -428,6 +437,12 @@ def preguntar(texto, saber):
     try:
         if t.lower().strip() in ("piezas", "mapa"):
             return "las_piezas", None
+        if t.lower().startswith("tabla del") or t.lower().startswith("mitad"):
+            salida = (motor.explicar_tabla(t, saber) if t.lower().startswith("tabla")
+                      else motor.explicar_mitad(t[len("mitad"):].lstrip(":").strip(), saber))
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
         if motor.es_multiplicacion(t):
             r = motor.decidir_multiplicar(t, saber)
             return (str(r["valor"]) if r["conclusion"] in ("hecho", "desiguales") else r["conclusion"]), None
@@ -974,7 +989,7 @@ def como_problema(texto):
         return "ecuacion: " + t
     if "?" in t:
         return "problema: " + t
-    if re.match(r"^[\d\s+\-=\u2212]+$", t) and "=" in t:            # una igualdad sin hueco (E.0)
+    if re.match(r"^[\d\s+\-=\u2212x*\u00d7]+$", t.lower()) and "=" in t:            # una igualdad sin hueco (E.0)
         return "verdad: " + t
     if re.match(r"^\d+\s*[+\-\u2212]\s*\d+$", t):                   # una cuenta suelta
         return "calcular: " + t

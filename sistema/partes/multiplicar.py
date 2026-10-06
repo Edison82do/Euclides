@@ -108,6 +108,17 @@ def explicar_multiplicar(texto, saber=None):
         L.append("RESULTADO: no_se_puede")
         return "\n".join(L)
     pasos = ap["resultado"].get("pasos") or []
+    L.append("")
+    L.append("     PRUEBO TODO LO QUE SE PARA MULTIPLICAR:")
+    for f in ap["candidatos"]:
+        if f.get("descartado"):
+            L.append("        [no]  %-46s porque %s" % (f["nombre"], f["descartado"]))
+        elif f.get("no_salio"):
+            L.append("        [no]  %-46s no salio: %s" % (f["nombre"], f["no_salio"]))
+        elif f["id"] == ap["pieza"]["id"]:
+            L.append("        [SI]  %-46s <- el mas corto que encaja: ESTE" % f["nombre"])
+        else:
+            L.append("        [si]  %-46s tambien servia (es mas largo)" % f["nombre"])
     L.append("     con %s:" % ap["resultado"]["metodo"])
     if len(pasos) > 12:
         L.extend("        %s" % p for p in pasos[:5])
@@ -116,7 +127,83 @@ def explicar_multiplicar(texto, saber=None):
     else:
         L.append("        %s" % ap["resultado"]["cuenta"].replace("; ", "\n        "))
     L.append("")
-    L.append("  4. LA MULTIPLICACION: %d x %d = %d" % (a, b, r["valor"]))
+    L.append("  4. LA MULTIPLICACION: %d x %d = %d   (%d y %d son los FACTORES; %d es el PRODUCTO)"
+             % (a, b, r["valor"], a, b, r["valor"]))
     L.append("")
     L.append("RESULTADO: %d" % r["valor"])
     return "\n".join(L)
+
+
+# ------------------------------------------------------------- M.2: las tablas, la mitad
+
+_TABLAS = {"2": "dos", "5": "cinco", "10": "diez"}
+
+
+def explicar_tabla(texto, saber=None):
+    """'tabla del 5': 1 x 5 ... 10 x 5, contando de 5 en 5 (NCETM 2.3 y 2.4: cada producto es el
+    anterior mas 5)."""
+    if saber is None:
+        saber = cargar_conocimiento()
+    m = re.match(r"^tabla\s+del\s+(\d+)$", " ".join(texto.lower().split()))
+    if not m:
+        return "NO ENTIENDO ESTO: se escribe asi:  tabla del 2   (o del 5, o del 10)"
+    n = m.group(1)
+    if n not in _TABLAS:
+        return ("PREGUNTA (M.2): tabla del %s\n\n  TODAVIA NO: por ahora se las tablas del 2, del 5 y del 10 "
+                "(NCETM 2.3 y 2.4); las demas llegan despues.  Pero %s x 4 lo calculo: escribelo.\n\n"
+                "RESULTADO: todavia_no" % (n, n))
+    L = ["PREGUNTA (M.2): la tabla del %s  (grupos de %s; cada producto es el anterior MAS %s)" % (n, n, n), ""]
+    v, k, fila = 0, "cero", []
+    while True:
+        L.append("    %2d x %s = %d" % (leer(k, saber), n, v))
+        fila.append(str(v))
+        if k == "diez":
+            break
+        v = saltar(v, _TABLAS[n], saber)
+        k = siguiente(k, saber)
+    L.append("")
+    L.append("  (es contar de %s en %s: %s)" % (n, n, ", ".join(fila)))
+    L.append("")
+    L.append("RESULTADO: %s" % ", ".join(fila))
+    return "\n".join(L)
+
+
+def mitad(n, saber=None):
+    """La MITAD de n (NCETM 2.5: lo contrario del doble), hasta 20: se hacen parejas y se reparte una
+    de cada pareja a cada lado.  Se comprueba con el doble.  Devuelve {"valor"} o {"conclusion"}."""
+    if saber is None:
+        saber = cargar_conocimiento()
+    if viene_despues(decir(n, saber), "veinte", saber):
+        return {"conclusion": "todavia_no"}
+    actual, cada_lado, objetivo = "cero", "cero", decir(n, saber)
+    while actual != objetivo:
+        uno = siguiente(actual, saber)
+        if uno == objetivo:
+            return {"conclusion": "impar", "sobra": leer(cada_lado, saber)}
+        actual = siguiente(uno, saber)
+        cada_lado = siguiente(cada_lado, saber)
+    v = leer(cada_lado, saber)
+    doble = aplicar("sumar", {"a": v, "b": v}, saber)
+    return {"conclusion": "hecho", "valor": v, "comprobacion": doble["valor"] == n,
+            "doble": "%d + %d = %d (%s)" % (v, v, doble["valor"], doble["resultado"]["metodo"])}
+
+
+def explicar_mitad(texto, saber=None):
+    t = texto.strip().rstrip("?").strip()
+    if not t.isdigit():
+        return "NO ENTIENDO ESTO: se escribe asi:  mitad: 14"
+    n = int(t)
+    r = mitad(n, saber)
+    L = ["PREGUNTA (M.2): la MITAD de %d  (lo contrario del doble: que numero, mas el mismo, da %d?)" % (n, n), ""]
+    if r["conclusion"] == "todavia_no":
+        L += ["  TODAVIA NO: por ahora parto hasta 20 (los dobles que se); mas grande es REPARTIR (M.3).", "",
+              "RESULTADO: todavia_no"]
+    elif r["conclusion"] == "impar":
+        L += ["  hago parejas y reparto una de cada pareja a cada lado: %d a cada lado y SOBRA UNO." % r["sobra"],
+              "  %d es impar: no tiene mitad exacta (sin partir uno por la mitad)." % n, "", "RESULTADO: impar"]
+    else:
+        L += ["  hago parejas y reparto una de cada pareja a cada lado: %d a cada lado, no sobra ninguno." % r["valor"],
+              "  COMPRUEBO con el doble: %s ... %s" % (r["doble"], "SI" if r["comprobacion"] else "NO"), "",
+              "RESULTADO: %d" % r["valor"]]
+    return "\n".join(L)
+

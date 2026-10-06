@@ -94,6 +94,16 @@ grupos de 2, 3 y 4                | 9          | desiguales: es una suma
 3 x ? = 12                        | todavia_no | eso es dividir (M.3)
 3 x 4                             | ??         | ver el razonamiento
 
+# --- M.2 las tablas del 2, 5 y 10; la conmutativa; dobles y mitades ---
+tabla del 5                       | 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50
+5 x 7                             | 35         | 7 grupos de 5 (la otra lectura)
+2 x 9                             | 18         | el doble de 9
+0 x 8                             | 0
+3 x 4 = 4 x 3                     | verdadero  | sin calcular
+mitad: 14                         | 7
+mitad: 7                          | impar
+5 x 7                             | ??         | ver todo lo que prueba
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete
