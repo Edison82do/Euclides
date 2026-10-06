@@ -270,6 +270,11 @@ area: rectangulo 5 x 3            | 15 unidades cuadradas
 perimetro: rectangulo 5 x 3       | 16
 comparar: rectangulo 6 x 2 y rectangulo 4 x 3   | ??   | la misma area, distinto perimetro
 
+# --- S.1 veces ---
+veces: 4 veces 6                  | 24
+La azul mide 24 cm. Es 4 veces mas larga que la roja. Cuanto mide la roja?   | 6 cm
+La azul mide 24 cm y la roja 6 cm. Cuantas veces es mas larga la azul?   | ??   | ver la division
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete

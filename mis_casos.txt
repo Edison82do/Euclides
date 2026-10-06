@@ -906,3 +906,10 @@ perimetro: rectangulo 5 x 3                | 16 | no 15
 perimetro: cuadrado de 6                   | 24 | no 36
 lado: cuadrado de perimetro 24             | 6 | lo inverso
 comparar: rectangulo 6 x 2 y rectangulo 4 x 3 | area igual, perimetro distinto | 3.MD.D.8
+# ---------------------------------------------------------------------------
+# PASO S.1 - VECES Y FRACCIONES PARA COMPARAR (NCETM 2.17)
+# ---------------------------------------------------------------------------
+veces: 4 veces 6                           | 24 | no 10
+cuantas veces: 24 y 6                      | 4 | dividir
+problema: La cuerda roja mide 6 cm. La azul es 4 veces mas larga. Cuanto mide la azul? | 24 cm | multiplicar
+problema: La azul mide 24 cm. Es 4 veces mas larga que la roja. Cuanto mide la roja? | 6 cm | dividir

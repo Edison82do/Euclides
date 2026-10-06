@@ -470,6 +470,14 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         comparar: rectangulo 6 x 2 y rectangulo 4 x 3 -> la misma area y distinto perimetro
         Con unidades: rectangulo 5 cm x 3 cm  ->  15 cm cuadrados
 
+  VECES  ->  comparar multiplicando: "K veces" y fracciones (paso S.1; NCETM 2.17; 4.OA.A.1-2)
+        veces: 4 veces 6       -> 24   (4 veces mas NO es 4 mas: eso seria 10)
+        cuantas veces: 24 y 6  -> 4    (24 es 4 veces 6; 6 es 1/4 de 24)
+        La cuerda roja mide 6 cm. La azul es 4 veces mas larga. Cuanto mide la azul?        -> 24 cm
+        La azul mide 24 cm. Es 4 veces mas larga que la roja. Cuanto mide la roja?          -> 6 cm
+        La azul mide 24 cm. La roja mide 1/4 de la azul. Cuanto mide la roja?               -> 6 cm
+        La azul mide 24 cm y la roja 6 cm. Cuantas veces es mas larga la azul?             -> 4 veces
+
   REDONDEAR  ->  a la decena o a la centena MAS CERCANA (paso N.2; 3.NBT.A.1)
         redondear: 37          -> decena 40, centena 0   (las dos)
         redondear: 37 a la decena   -> 40   EN LA RECTA: entre 30 y 40, la mitad es 35, pasa de la mitad
@@ -640,6 +648,11 @@ def preguntar(texto, saber):
         if t.lower().startswith("tabla del") or t.lower().startswith("mitad"):
             salida = (motor.explicar_tabla(t, saber) if t.lower().startswith("tabla")
                       else motor.explicar_mitad(t[len("mitad"):].lstrip(":").strip(), saber))
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
+        if motor.es_orden_escala(t):
+            salida = motor.explicar_orden_escala(t, saber)
             if salida.startswith("NO ENTIENDO"):
                 return "no_entiendo", None
             return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None

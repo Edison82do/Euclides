@@ -176,6 +176,11 @@
   formas rectilíneas compuestas, partiéndolas en rectángulos. **Common Core 4.MD.A.3**, **3.MD.C–D**.
   → G.1.
 
+- **NCETM 2.17** (*Structures: using measures and comparison to understand scaling*, Year 4): lo largo
+  en términos de lo corto con «veces» (multiplicar); lo corto en términos de lo largo con fracciones
+  (dividir); otras medidas igual. **Common Core 4.OA.A.1–2** (comparación multiplicativa, distinta de la
+  aditiva). → S.1.
+
 ## Enlaces
 - NCETM 2.9: https://www.ncetm.org.uk/classroom-resources/primm-209-times-tables-7-and-patterns-withinacross-times-tables/
 - NCETM 2.10: https://www.ncetm.org.uk/classroom-resources/primm-210-connecting-multiplication-and-division-and-the-distributive-law/
