@@ -322,6 +322,14 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         8 : 0                  -> no se puede (no se reparte entre nadie)
         Siempre se COMPRUEBA multiplicando: cociente x divisor (+ resto) = dividendo.
 
+  TABLA DEL 7 Y LA DISTRIBUTIVA  ->  (paso M.6; NCETM 2.9, 2.10; 3.OA.B.5, C.7)
+        tabla del 7            -> cada producto PARTIDO: 7 = 5 + 2 -> 8 x 7 = 40 + 16 = 56
+        aprender: tablas       -> ya TODAS hasta 10 x 10, cada una sacada de otras y comprobada
+        12 x 6                 -> 72   mas alla de las tablas: 10 x 6 + 2 x 6
+        7 x 9                  -> 63   y dice: impar x impar -> el producto es IMPAR
+        6 x 6                  -> 36   y dice: es un NUMERO CUADRADO
+        divisible: 49 entre 7  -> si   (para el 7 no hay regla corta: dividiendo)
+
   TABLAS DEL 3, 6 Y 9  ->  sus relaciones (paso M.5; NCETM 2.8)
         tabla del 3            -> contar de 3 en 3
         tabla del 6            -> el DOBLE de la del 3

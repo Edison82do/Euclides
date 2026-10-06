@@ -219,8 +219,8 @@ trae la letra, así que E.5 va con ellos).
 | 9 | ✅ **HECHO y probado por Carlos (5 oct)** — `diario/2026-10-05-paso-E4-hueco-por.md`. **E.4 El hueco en × y ÷** (`3 x ? = 12`, `? : 4 = 5`, `12 = ? x 3`) | 3.OA.A.4; 3.OA.B.6 (factor desconocido); NCETM 2.6 | el hueco en las tres posiciones, a los dos lados del `=`; sin número entero → se dice |
 | 10 | ✅ **HECHO y probado por Carlos (5 oct)** — `diario/2026-10-05-paso-R2-problemas-por.md`. **R.2 Problemas de × y ÷ con pocas palabras** (grupos iguales, filas, repartir, agrupar), con el **modelo de barras** | 3.OA.A.3; CGI (estructuras multiplicativas); Singapur (bar model) | cada estructura con su pieza; las trampas de palabras clave |
 | 11 | ✅ **HECHO y probado por Carlos (5 oct)** — `diario/2026-10-05-paso-M4-tablas-4-8.md`. **M.4 Tablas del 4 y del 8 desde la del 2** (doblar) | NCETM 2.7 | cada producto derivado y comprobado; aprender de memoria |
-| 12 | ✅ **HECHO (5 oct), falta la prueba de Carlos** — `diario/2026-10-05-paso-M5-tablas-3-6-9.md`. **M.5 Tablas del 3, 6 y 9** (y sus relaciones) | NCETM 2.8 | ídem |
-| 13 | **M.6 Tabla del 7 y la distributiva** (7 × 6 = 5 × 6 + 2 × 6) | NCETM 2.9, 2.10; 3.OA.B.5; 3.OA.C.7 | todas las tablas hasta 10 × 10 |
+| 12 | ✅ **HECHO y probado por Carlos** — `diario/2026-10-05-paso-M5-tablas-3-6-9.md`. **M.5 Tablas del 3, 6 y 9** (y sus relaciones) | NCETM 2.8 | ídem |
+| 13 | ✅ **HECHO (6 oct), falta la prueba de Carlos** — `diario/2026-10-06-paso-M6-tabla-7-distributiva.md`. **M.6 Tabla del 7 y la distributiva** (7 × 6 = 5 × 6 + 2 × 6) | NCETM 2.9, 2.10; 3.OA.B.5; 3.OA.C.7 | todas las tablas hasta 10 × 10 |
 | 14 | **E.5 Dos pasos, con la letra como hueco** | 3.OA.D.8 | problemas de dos pasos con las cuatro operaciones |
 
 ## EL PLAN ANTERIOR (5 oct, tarde) — sustituido por el de arriba en el orden; se conserva como referencia

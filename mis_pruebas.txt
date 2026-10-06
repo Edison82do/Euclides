@@ -150,6 +150,14 @@ divisible: 51 entre 6             | no         | es impar
 divisible: 999 entre 9            | si
 tabla del 9                       | ??         | ver como triplica
 
+# --- M.6 la tabla del 7 y la distributiva ---
+tabla del 7                       | 0, 7, 14, 21, 28, 35, 42, 49, 56, 63, 70
+12 x 6                            | 72         | mas alla de las tablas
+divisible: 49 entre 7             | si
+tabla del 11                      | todavia_no
+8 x 7                             | ??         | ver todo lo que prueba
+6 x 6                             | ??         | el numero cuadrado
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete

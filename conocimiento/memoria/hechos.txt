@@ -207,6 +207,7 @@
 0 x 4 = 0 | un factor es cero o uno (M.2) | la otra lectura (4 grupos de 0 = 0) | 2026-10-06
 0 x 5 = 0 | un factor es cero o uno (M.2) | la otra lectura (5 grupos de 0 = 0) | 2026-10-06
 0 x 6 = 0 | un factor es cero o uno (M.2) | la otra lectura (6 grupos de 0 = 0) | 2026-10-06
+0 x 7 = 0 | un factor es cero o uno (M.2) | la otra lectura (7 grupos de 0 = 0) | 2026-10-06
 0 x 8 = 0 | un factor es cero o uno (M.2) | la otra lectura (8 grupos de 0 = 0) | 2026-10-06
 0 x 9 = 0 | un factor es cero o uno (M.2) | la otra lectura (9 grupos de 0 = 0) | 2026-10-06
 0 x 10 = 0 | un factor es cero o uno (M.2) | la otra lectura (10 grupos de 0 = 0) | 2026-10-06
@@ -215,6 +216,7 @@
 1 x 4 = 4 | un factor es cero o uno (M.2) | la otra lectura (4 grupos de 1 = 4) | 2026-10-06
 1 x 5 = 5 | un factor es cero o uno (M.2) | la otra lectura (5 grupos de 1 = 5) | 2026-10-06
 1 x 6 = 6 | un factor es cero o uno (M.2) | la otra lectura (6 grupos de 1 = 6) | 2026-10-06
+1 x 7 = 7 | un factor es cero o uno (M.2) | la otra lectura (7 grupos de 1 = 7) | 2026-10-06
 1 x 8 = 8 | un factor es cero o uno (M.2) | la otra lectura (8 grupos de 1 = 8) | 2026-10-06
 1 x 9 = 9 | un factor es cero o uno (M.2) | la otra lectura (9 grupos de 1 = 9) | 2026-10-06
 1 x 10 = 10 | un factor es cero o uno (M.2) | la otra lectura (10 grupos de 1 = 10) | 2026-10-06
@@ -273,11 +275,14 @@
 6 x 8 = 48 | doblando (M.4) | la otra lectura (8 grupos de 6 = 48) | 2026-10-06
 6 x 9 = 54 | doblando (M.4) | la otra lectura (9 grupos de 6 = 54) | 2026-10-06
 6 x 10 = 60 | contar de n en n (una fila, un salto) (M.0) | la otra lectura (10 grupos de 6 = 60) | 2026-10-06
+7 x 0 = 0 | un factor es cero o uno (M.2) | la otra lectura (0 grupos de 7 = 0) | 2026-10-06
+7 x 1 = 7 | un factor es cero o uno (M.2) | la otra lectura (1 grupos de 7 = 7) | 2026-10-06
 7 x 2 = 14 | el doble (M.2) | la otra lectura (2 grupos de 7 = 14) | 2026-10-06
 7 x 3 = 21 | sumar grupo a grupo (M.0) | la otra lectura (3 grupos de 7 = 21) | 2026-10-06
 7 x 4 = 28 | doblando (M.4) | la otra lectura (4 grupos de 7 = 28) | 2026-10-06
 7 x 5 = 35 | contar de n en n (una fila, un salto) (M.0) | la otra lectura (5 grupos de 7 = 35) | 2026-10-06
 7 x 6 = 42 | doblando (M.4) | la otra lectura (6 grupos de 7 = 42) | 2026-10-06
+7 x 7 = 49 | partiendo (M.6) | la otra lectura (7 grupos de 7 = 49) | 2026-10-06
 7 x 8 = 56 | doblando (M.4) | la otra lectura (8 grupos de 7 = 56) | 2026-10-06
 7 x 9 = 63 | triplicando (M.5) | la otra lectura (9 grupos de 7 = 63) | 2026-10-06
 7 x 10 = 70 | contar de n en n (una fila, un salto) (M.0) | la otra lectura (10 grupos de 7 = 70) | 2026-10-06

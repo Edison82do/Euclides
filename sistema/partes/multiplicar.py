@@ -129,6 +129,13 @@ def explicar_multiplicar(texto, saber=None):
     L.append("")
     L.append("  4. LA MULTIPLICACION: %d x %d = %d   (%d y %d son los FACTORES; %d es el PRODUCTO)"
              % (a, b, r["valor"], a, b, r["valor"]))
+    pa = decidir_paridad(a, saber)["valor"]
+    pb = decidir_paridad(b, saber)["valor"]
+    pp = "par" if "par" in (pa, pb) else "impar"
+    L.append("     par o impar (NCETM 2.9): %s x %s -> el producto es %s" % (pa, pb, pp.upper()))
+    if a == b:
+        L.append("     los dos factores son IGUALES: %d es un NUMERO CUADRADO (%d filas de %d, en cuadrado)"
+                 % (r["valor"], a, a))
     L.append("")
     L.append("RESULTADO: %d" % r["valor"])
     return "\n".join(L)
@@ -151,8 +158,8 @@ def explicar_tabla(texto, saber=None):
     if n in _DERIVA:
         return _tabla_doblando(n, saber)
     if n not in _TABLAS:
-        return ("PREGUNTA (M.2): tabla del %s\n\n  TODAVIA NO: por ahora se las tablas del 2, 3, 4, 5, 6, 8, 9 y 10 "
-                "(NCETM 2.3, 2.4, 2.7 y 2.8); la del 7 llega despues.  Pero %s x 4 lo calculo: escribelo.\n\n"
+        return ("PREGUNTA (M.2): tabla del %s\n\n  TODAVIA NO: se las tablas del 2 al 10 (NCETM 2.3 a 2.9); "
+                "la del 11 y la del 12 son de 4.o (NCETM 2.11).  Pero %s x 4 lo calculo: escribelo.\n\n"
                 "RESULTADO: todavia_no" % (n, n))
     L = ["PREGUNTA (M.2): la tabla del %s  (grupos de %s; cada producto es el anterior MAS %s)" % (n, n, n), ""]
     v, k, fila = 0, "cero", []
@@ -231,12 +238,23 @@ def _fila_de(n, saber):
         return [doble(x) for x in _fila_de({"4": "2", "8": "4", "6": "3"}[n], saber)]
     if n == "9":
         return [aplicar("sumar", {"a": doble(x), "b": x}, saber)["valor"] for x in _fila_de("3", saber)]
+    if n in ("5", "10"):
+        out, v, k = [], 0, "cero"
+        while True:
+            out.append(v)
+            if k == "diez":
+                return out
+            v = saltar(v, _TABLAS[n], saber)
+            k = siguiente(k, saber)
+    if n == "7":                                       # 7 = 5 + 2 (la distributiva, NCETM 2.10)
+        return [aplicar("sumar", {"a": x, "b": y}, saber)["valor"]
+                for x, y in zip(_fila_de("5", saber), _fila_de("2", saber))]
     return None
 
 
 _DERIVA = {"3": (None, "contar de 3 en 3", "NCETM 2.8"), "4": ("2", "el DOBLE", "NCETM 2.7"),
            "8": ("4", "el DOBLE", "NCETM 2.7"), "6": ("3", "el DOBLE", "NCETM 2.8"),
-           "9": ("3", "el TRIPLE", "NCETM 2.8")}
+           "9": ("3", "el TRIPLE", "NCETM 2.8"), "7": ("5 y 2", "PARTIR", "NCETM 2.9 y 2.10")}
 
 
 def _tabla_doblando(n, saber):
@@ -244,7 +262,12 @@ def _tabla_doblando(n, saber):
     y la del 3 contando de 3 en 3."""
     base, como, fuente = _DERIVA[n]
     fila = _fila_de(n, saber)
-    if base:
+    if n == "7":
+        L = ["PREGUNTA (M.6): la tabla del 7  (7 = 5 + 2: cada producto es el de la del 5 MAS el de la del 2;"
+             " la distributiva, NCETM 2.10)", ""]
+        for k, (v, a, b) in enumerate(zip(fila, _fila_de("5", saber), _fila_de("2", saber))):
+            L.append("    %2d x 7 = %2d x 5 + %2d x 2 = %2d + %2d = %d" % (k, k, k, a, b, v))
+    elif base:
         L = ["PREGUNTA (M.4/M.5): la tabla del %s  (cada producto es %s del de la tabla del %s; %s)"
              % (n, como, base, fuente), ""]
         fb = _fila_de(base, saber)
@@ -269,7 +292,12 @@ def decidir_divisible(n, d, saber=None):
         return _divisible_por_cifras(n, d, saber)
     veces = {2: "uno", 4: "dos", 8: "tres"}.get(d)
     if veces is None:
-        return {"conclusion": "todavia_no"}
+        r = aplicar("dividir", {"total": n, "divisor": d}, saber)
+        if r["conclusion"] != "hecho":
+            return {"conclusion": "imposible", "porque": r.get("porque")}
+        resto = r["resultado"].get("resto", 0)
+        return {"conclusion": "hecho", "valor": not resto, "regla": "dividiendo", "cociente": r["valor"],
+                "resto": resto, "metodo": r["resultado"]["metodo"]}
     v, hecho, camino = n, "cero", [str(n)]
     while hecho != veces:
         r = aplicar("dividir", {"total": v, "divisor": 2}, saber)
@@ -316,6 +344,14 @@ def explicar_divisible(texto, saber=None):
     L = ["PREGUNTA (M.4/M.5): %d se puede dividir entre %d sin que sobre?" % (n, d), ""]
     if r["conclusion"] == "todavia_no":
         return "\n".join(L + ["  TODAVIA NO: por ahora se mirarlo entre 2, 3, 4, 6, 8 y 9 (NCETM 2.7 y 2.8).", "", "RESULTADO: todavia_no"])
+    if r["conclusion"] == "imposible":
+        return "\n".join(L + ["  NO SE PUEDE: %s" % r.get("porque"), "", "RESULTADO: no_se_puede"])
+    if r.get("regla") == "dividiendo":
+        L.append("  para el %d no hay regla corta (NCETM 2.9): DIVIDO con lo que se (%s)" % (d, r["metodo"]))
+        L.append("  %s" % ("SI: %d entre %d da %d, justo." % (n, d, r["cociente"]) if r["valor"]
+                           else "NO: da %d y sobra%s %d." % (r["cociente"], "" if r["resto"] == 1 else "n", r["resto"])))
+        L += ["", "RESULTADO: %s" % ("si" if r["valor"] else "no")]
+        return "\n".join(L)
     if r.get("regla") == "cifras":
         L.append("  la regla (NCETM 2.8): se suman las cifras hasta que queda UNA: %s" % " -> ".join(r["camino"]))
         if d == 3:

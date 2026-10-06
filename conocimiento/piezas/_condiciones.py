@@ -36,6 +36,19 @@ def _mitad_conocida(s, u):
     return False
 
 
+def _se_puede_partir(s, u):
+    """La distributiva (M.6): f = p + q con p x k y q x k sabidos (p entre 10, 5, 2, 4, 3)."""
+    def sabido(x, k):
+        return x == 1 or u.recuerdo("%d x %d" % (x, k)) or u.recuerdo("%d x %d" % (k, x))
+    for f, k in ((s["a"], s["b"]), (s["b"], s["a"])):
+        for p in (10, 5, 2, 4, 3):
+            if u.viene_despues(u.decir(f), u.decir(p)):
+                q = u.leer(u.contar_hasta(u.decir(p), u.decir(f)))
+                if sabido(p, k) and sabido(q, k):
+                    return True
+    return False
+
+
 def _tercio_conocido(s, u):
     for f, k in ((s["b"], s["a"]), (s["a"], s["b"])):
         if f == 9 and (u.recuerdo("%d x 3" % k) or u.recuerdo("3 x %d" % k)):
@@ -146,6 +159,7 @@ CONDICIONES = {
     # ---- doblar tablas (paso M.4)
     "se_puede_doblar_una_tabla": lambda s, u: _mitad_conocida(s, u),
     "se_puede_triplicar_el_3": lambda s, u: _tercio_conocido(s, u),
+    "un_factor_se_puede_partir": lambda s, u: _se_puede_partir(s, u),
     # ---- las tablas (paso M.2)
     "un_factor_es_cero_o_uno": lambda s, u: s["a"] in (0, 1) or s["b"] in (0, 1),
     "un_factor_es_dos": lambda s, u: s["a"] == 2 or s["b"] == 2,

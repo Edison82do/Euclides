@@ -73,7 +73,7 @@ try:
     comprobar("C1 36 entre 8: no (36 -> 18 -> 9)", (r["valor"], r["camino"]), (False, ["36", "18", "9"]))
     r = motor.decidir_divisible(40, 8, SABER)
     comprobar("C2 40 entre 8: si, da 5", (r["valor"], r["cociente"]), (True, 5))
-    comprobar("C3 entre 7: todavia no (entre 3 llega en M.5)", motor.decidir_divisible(36, 7, SABER)["conclusion"], "todavia_no")
+    comprobar("C3 entre 0: no se puede (y desde M.6 cualquier otro divisor se mira dividiendo)", motor.decidir_divisible(36, 0, SABER)["conclusion"], "imposible")
     fallos = [(n, d) for n in range(0, 201, 3) for d in (2, 4, 8)
               if motor.decidir_divisible(n, d, SABER)["valor"] != (n % d == 0)]
     comprobar("C4 de 0 a 200 (de 3 en 3) entre 2, 4 y 8 contra el testigo", fallos[:3], [])

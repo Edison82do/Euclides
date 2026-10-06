@@ -662,7 +662,7 @@ ecuacion: 3 x ? = 12                       | 4 | desde E.4: repartir 12 entre 3
 # ---------------------------------------------------------------------------
 tabla del 2                                | 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 | de 2 en 2
 tabla del 10                               | 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 | de 10 en 10
-tabla del 7                                | todavia_no | las demas despues
+tabla del 11                               | todavia_no | la del 11 es de 4.o
 5 x 9                                      | 45 | la otra lectura
 2 x 8                                      | 16 | el doble
 1 x 7                                      | 7 | factor uno
@@ -731,4 +731,14 @@ divisible: 51 entre 3                      | si | 5 + 1 = 6
 divisible: 52 entre 3                      | no | 5 + 2 = 7
 divisible: 72 entre 6                      | si | par y 9
 divisible: 81 entre 9                      | si | 8 + 1 = 9
-divisible: 36 entre 7                      | todavia_no | M.6
+divisible: 36 entre 7                      | no | desde M.6: dividiendo, sobra 1
+# ---------------------------------------------------------------------------
+# PASO M.6 - LA TABLA DEL 7 Y LA DISTRIBUTIVA (NCETM 2.9, 2.10; 3.OA.B.5, C.7)
+# ---------------------------------------------------------------------------
+tabla del 7                                | 0, 7, 14, 21, 28, 35, 42, 49, 56, 63, 70 | 5 + 2
+7 x 7                                      | 49 | cuadrado
+8 x 7                                      | 56 | el ejemplo del estandar
+12 x 6                                     | 72 | mas alla de las tablas
+15 x 7                                     | 105 | 10 x 7 + 5 x 7
+divisible: 49 entre 7                      | si | dividiendo
+divisible: 50 entre 7                      | no | sobra 1

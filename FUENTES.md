@@ -88,7 +88,13 @@
 - **NCETM 2.8** (tablas del 3, 6 y 9): la del 6 es el doble de la del 3; la del 9, el triple de la del
   3; reglas de divisibilidad entre 3, 6 y 9. → M.5.
 
+- **NCETM 2.9** (tabla del 7; par/impar del producto; números cuadrados; divisibilidad) y **2.10**
+  (la multiplicación es conmutativa y la división no; la distributiva: partir un factor; hechos más
+  allá de las tablas). **Common Core 3.OA.B.5** (8 × 7 = 8 × 5 + 8 × 2) y **3.OA.C.7**. → M.6.
+
 ## Enlaces
+- NCETM 2.9: https://www.ncetm.org.uk/classroom-resources/primm-209-times-tables-7-and-patterns-withinacross-times-tables/
+- NCETM 2.10: https://www.ncetm.org.uk/classroom-resources/primm-210-connecting-multiplication-and-division-and-the-distributive-law/
 - NCETM 2.8: https://www.ncetm.org.uk/classroom-resources/primm-208-times-tables-3-6-and-9-and-the-relationship-between-them/
 - NCETM 2.7: https://www.ncetm.org.uk/classroom-resources/primm-207-times-tables-2-4-and-8-and-the-relationship-between-them/
 - Common Core 3.OA: https://www.thecorestandards.org/Math/Content/3/OA/
