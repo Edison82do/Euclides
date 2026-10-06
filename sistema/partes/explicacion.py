@@ -759,6 +759,8 @@ def explicar_pregunta(texto, saber=None):
             return explicar_tabla(t, saber)
         if t.lower().startswith("mitad"):
             return explicar_mitad(t[len("mitad"):].lstrip(":").strip(), saber)
+        if es_comprobar_division(t):
+            return explicar_comprobar_division(t, saber)
         if t.lower().startswith("millar"):
             return explicar_millar(t, saber)
         if es_comparar_numeros(t):

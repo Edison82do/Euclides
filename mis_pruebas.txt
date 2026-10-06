@@ -213,6 +213,13 @@ tabla del 12                      | 0, 12, 24, 36, 48, 60, 72, 84, 96, 108, 120
 divisible: 84 entre 12            | si
 tabla del 11                      | ??          | ver como parte 10 + 1
 
+# --- M.8 division con resto ---
+17 : 5                            | 3 resto 2
+comprobar: 17 : 5 = 2 resto 7     | no
+Hay 17 ninos. En cada coche caben 5. Cuantos coches hacen falta?   | 4
+Tiene 17 euros. Cada libro cuesta 5 euros. Cuantos libros puede comprar?   | 3
+Reparte 17 caramelos entre 5 ninos. Cuantos sobran?   | ??   | ver como interpreta el resto
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete

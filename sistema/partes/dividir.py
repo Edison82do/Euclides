@@ -125,6 +125,64 @@ def explicar_dividir(texto, saber=None):
     L.append("")
     L.append("  %d : %d = %d%s   (%d es el COCIENTE%s)" % (t, d, q, (", y sobra 1" if resto == 1 else ", y sobran %d" % resto) if resto else "",
                                                           q, "; %d el RESTO" % resto if resto else ""))
+    if resto:                                          # M.8 (NCETM 2.12): el resto, en la ecuacion
+        L.append("  en una ecuacion: %d = %d x %d + %d" % (t, q, d, resto))
+        L.append("  el RESTO (%d) es MENOR que el divisor (%d): si sobraran %d o mas, cabria otro grupo (NCETM 2.12)."
+                 % (resto, d, d))
+    else:
+        L.append("  sin resto: %d es MULTIPLO de %d (contando de %d en %d se llega justo)." % (t, d, d, d))
     L.append("")
     L.append("RESULTADO: %d%s" % (q, " resto %d" % resto if resto else ""))
+    return "\n".join(L)
+
+
+# ---------------------------------------------------------------- comprobar: 17 : 5 = 3 resto 2   (M.8)
+
+_ORDEN_COMPROBAR_DIV = re.compile(r"^comprobar:?\s*(\d+)\s*[:/]\s*(\d+)\s*=\s*(\d+)(?:\s*(?:resto|r|y sobran?)\s*(\d+))?$")
+
+
+def es_comprobar_division(texto):
+    return bool(_ORDEN_COMPROBAR_DIV.match(" ".join(texto.lower().split())))
+
+
+def decidir_comprobar_division(t, d, q, resto, saber=None):
+    """NCETM 2.12: una respuesta de division esta bien si cociente x divisor + resto = dividendo Y el
+    resto es MENOR que el divisor."""
+    if saber is None:
+        saber = cargar_conocimiento()
+    m = aplicar("multiplicar", {"a": q, "b": d}, saber)
+    if m["conclusion"] != "hecho":
+        return {"conclusion": "no_se", "porque": m.get("porque")}
+    vuelta = aplicar("sumar", {"a": m["valor"], "b": resto}, saber)["valor"] if resto else m["valor"]
+    cuadra = vuelta == t
+    menor = resto != d and not viene_despues(decir(resto, saber), decir(d, saber), saber)
+    r = {"conclusion": "hecho", "producto": m["valor"], "vuelta": vuelta, "cuadra": cuadra, "menor": menor,
+         "valor": "si" if cuadra and menor else "no"}
+    if not (cuadra and menor):
+        buena = aplicar("dividir", {"total": t, "divisor": d}, saber)
+        if buena["conclusion"] == "hecho":
+            r["buena"] = (buena["valor"], buena["resultado"].get("resto", 0))
+    return r
+
+
+def explicar_comprobar_division(texto, saber=None):
+    if saber is None:
+        saber = cargar_conocimiento()
+    m = _ORDEN_COMPROBAR_DIV.match(" ".join(texto.lower().split()))
+    t, d, q = int(m.group(1)), int(m.group(2)), int(m.group(3))
+    resto = int(m.group(4)) if m.group(4) else 0
+    L = ["PREGUNTA (M.8): esta bien %d : %d = %d%s?  (NCETM 2.12)" % (t, d, q, " resto %d" % resto if resto else ""), ""]
+    if d == 0:
+        return "\n".join(L + ["  NO SE PUEDE: no se divide entre cero.", "", "RESULTADO: no_se_puede"])
+    r = decidir_comprobar_division(t, d, q, resto, saber)
+    if r["conclusion"] != "hecho":
+        return "\n".join(L + ["  %s" % r.get("porque"), "", "RESULTADO: no_se"])
+    L.append("  1. LA VUELTA: %d x %d%s = %d  ... %s" % (q, d, " + %d" % resto if resto else "", r["vuelta"],
+                                                    "cuadra con %d" % t if r["cuadra"] else "NO es %d" % t))
+    L.append("  2. EL RESTO (%d) es menor que el divisor (%d)? ... %s" % (resto, d, "SI" if r["menor"] else
+             "NO: con %d sobrando cabe OTRO grupo de %d" % (resto, d)))
+    if r["valor"] == "no" and "buena" in r:
+        L.append("")
+        L.append("  la buena: %d : %d = %d%s" % (t, d, r["buena"][0], " resto %d" % r["buena"][1] if r["buena"][1] else ""))
+    L += ["", "RESULTADO: %s" % r["valor"]]
     return "\n".join(L)

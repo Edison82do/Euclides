@@ -84,7 +84,7 @@ ORDENES = [
     "restar_numeros", "diferencia", "diferencia_numeros", "dedos", "derivar",
     "nombre", "numero", "decenas", "agrupar", "sitio", "tabla", "partir",
     "juntar_decenas", "columnas", "pertenece", "casos", "ayuda", "salir", "listas",
-    "centena", "problema", "piezas", "memoria", "aprender", "olvidar", "calcular", "verdad", "ecuacion", "hueco", "de 5 en 5", "par:", "filas de", "columnas de", "grupos de", "3 x 4", "tabla del", "mitad:", "aprender: tablas", "en grupos de", "12 entre 3", "12 : 3", "3 x ? = 12", "? : 3 = 4", "tabla del 4", "tabla del 8", "divisible:", "tabla del 3", "tabla del 6", "tabla del 9", "tabla del 7", "12 x 6", "3 x 4 - 5 = c", "3 x n + 2 = 14", "redondear", "247 a la centena", "estimar", "razonable", "tabla del 12", "divisible: 84 entre 12", "millar: 3045", "comparar: 3456 y 3465", "2/7 + 3/7", "1 - 3/8", "recta: 3/4", "3/4 de 12", "fraccion: 1/4", "1/4 de 12",
+    "centena", "problema", "piezas", "memoria", "aprender", "olvidar", "calcular", "verdad", "ecuacion", "hueco", "de 5 en 5", "par:", "filas de", "columnas de", "grupos de", "3 x 4", "tabla del", "mitad:", "aprender: tablas", "en grupos de", "12 entre 3", "12 : 3", "3 x ? = 12", "? : 3 = 4", "tabla del 4", "tabla del 8", "divisible:", "tabla del 3", "tabla del 6", "tabla del 9", "tabla del 7", "12 x 6", "3 x 4 - 5 = c", "3 x n + 2 = 14", "redondear", "247 a la centena", "estimar", "razonable", "comprobar: 17 : 5", "Cuantos sobran", "tabla del 12", "divisible: 84 entre 12", "millar: 3045", "comparar: 3456 y 3465", "2/7 + 3/7", "1 - 3/8", "recta: 3/4", "3/4 de 12", "fraccion: 1/4", "1/4 de 12",
 ]
 for o in ORDENES:
     check("C la ayuda menciona la orden '%s'" % o, o in AYUDA)

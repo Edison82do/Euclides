@@ -465,6 +465,13 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         divisible: 77 entre 11 -> si   (dos cifras iguales)
         aprender: tablas       -> ahora hasta 12 x 12 (al acabar 4.o)
 
+  DIVISION CON RESTO  ->  el resto, en la ecuacion y en los problemas (paso M.8; NCETM 2.12; 4.OA.A.3)
+        17 : 5                 -> 3 resto 2;  17 = 3 x 5 + 2;  el resto es MENOR que el divisor
+        comprobar: 17 : 5 = 2 resto 7   -> no (la vuelta cuadra, pero con 7 cabe otro grupo de 5)
+        Hay 17 ninos. En cada coche caben 5. Cuantos coches hacen falta?        -> 4 (los 2 tambien van)
+        Tiene 17 euros. Cada libro cuesta 5 euros. Cuantos libros puede comprar? -> 3 (no llega para otro)
+        Reparte 17 caramelos entre 5 ninos. Cuantos sobran?                     -> 2 (el resto)
+
   ECUACION CON x Y :  ->  el hueco en una multiplicacion o division (paso E.4; 3.OA.A.4)
         3 x ? = 12             -> 4    cuantos en cada grupo: REPARTIR 12 entre 3
         ? x 4 = 12             -> 3    cuantos grupos: AGRUPAR 12 en grupos de 4
@@ -574,6 +581,9 @@ def preguntar(texto, saber):
                       else motor.explicar_mitad(t[len("mitad"):].lstrip(":").strip(), saber))
             if salida.startswith("NO ENTIENDO"):
                 return "no_entiendo", None
+            return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
+        if motor.es_comprobar_division(t):
+            salida = motor.explicar_comprobar_division(t, saber)
             return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
         if t.lower().startswith("millar") or motor.es_comparar_numeros(t):
             salida = (motor.explicar_millar(t, saber) if t.lower().startswith("millar")

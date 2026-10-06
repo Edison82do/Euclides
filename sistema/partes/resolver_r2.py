@@ -35,12 +35,15 @@ _R2_HECHOS = [
     ("hay_n", re.compile(r"^(?:\w+ )?(?:hay|tiene|tienen|compra|compro|trae|son|junta|junto) (?P<n>\d+) (?P<x>\w+)$")),
 ]
 _R2_PREGUNTAS = [
+    # M.8 (NCETM 2.12): el RESTO como respuesta
+    ("sobran", re.compile(r"^cuant\w* (?:\w+ )?(?:sobran|sobra|le sobran|les sobran|quedan sin repartir|quedan fuera)$")),
     ("final", re.compile(r"^cuant\w* (?:\w+ )?(?:le |les )?(?:quedan|queda|tiene ahora|tienen ahora|hay ahora)$")),
     ("cuanto_pesan", re.compile(r"^cuanto (?:pesan|cuestan|miden|valen) (?P<g>\d+) (?P<grupo>\w+)$")),
     ("a_cada", re.compile(r"^cuant\w* (?:\w+ )?(?:le )?(?:toca\w*|da\w*|recibe\w*) (?:a )?cada")),
     ("en_cada", re.compile(r"^cuant\w* (?P<x>\w+) (?:hay|tiene|lleva|van|caben) (?:en )?cada (?P<grupo>\w+)$")),
     ("en_total", re.compile(r"^cuant\w* (?:(?P<x>\w+) )?hay en total$")),
-    ("cuantos_x", re.compile(r"^cuant\w* (?P<x>\w+) (?:hay|son|tiene|tienen|salen|hacen|hace|necesita\w*|llena\w*|habra\w*|se llenan|le dio|tenia)(?: .*)?$")),
+    ("cuantos_x", re.compile(r"^cuant\w* (?P<x>\w+) (?:hay|son|tiene|tienen|salen|hacen|hace|necesita\w*|llena\w*|habra\w*|se llenan|le dio|tenia|"
+                             r"puede|pueden|se pueden|caben|completa\w*)(?: .*)?$")),
 ]
 # las formas que solo puede tener un problema de grupos iguales (para elegir R.2 en vez de R.1)
 _R2_PROPIAS = {"grupos_con", "en_n_grupos", "filas", "cada", "reparte", "en_grupos_de", "cuanto_pesan", "a_cada", "en_cada"}
@@ -54,8 +57,17 @@ def _raiz(w):
     return w
 
 
+def _singulares(w):
+    """coches -> {coches, coche, coch}: las lecturas posibles del singular (M.8: 'coches' es 'coche')."""
+    w = (w or "").lower()
+    out = {w, _raiz(w)}
+    if w.endswith("s"):
+        out.add(w[:-1])
+    return out
+
+
 def _mismo(a, b):
-    return bool(a and b) and (_raiz(a) == _raiz(b) or a == b)
+    return bool(a and b) and bool(_singulares(a) & _singulares(b))
 
 
 def _frases_r2(texto, saber):
@@ -136,6 +148,21 @@ def leer_problema_por(texto, saber=None):
     if pregunta is None:
         return {"error": "no hay pregunta", "leidas": leidas}
     nombre, g = pregunta
+    frase_pregunta = leidas[[x["forma"] for x in leidas].index(nombre)]["frase"]
+    # M.8 (NCETM 2.12; 4.OA.A.3): como hay que INTERPRETAR el resto, lo dice la pregunta
+    if re.search(r"hacen? falta|necesit", frase_pregunta):
+        e["redondeo"] = "arriba"
+    elif re.search(r"se pueden|puede|pueden|se llenan|llena\w* enter|complet", frase_pregunta):
+        e["redondeo"] = "abajo"
+    if nombre == "sobran":
+        if e["total"] is None or (e["grupos"] is None and e["en_cada"] is None):
+            return {"error": "para saber cuantos sobran hacen falta el total y los grupos (o cuantos en cada uno)",
+                    "leidas": leidas}
+        e["busca"] = "grupos" if e["grupos"] is None else "en_cada"
+        e["pide_resto"] = True
+        e["leidas"] = leidas
+        e["cambios"] = []
+        return e
     e["cambios"] = cambios
     if cambios:
         # DOS PASOS (3.OA.D.8): primero el total de los grupos iguales, luego lo que cambia
@@ -188,10 +215,26 @@ def decidir_R2_problema(texto, saber=None):
         r["comprobacion"] = t
         r["comprobacion_ok"] = decidir_igualdad(t, saber).get("valor") == "verdadero"
     else:
-        r["comprobacion"] = "%d x %d + %d = %d" % (lleno["grupos"], lleno["en_cada"], resto, lleno["total"])
-        r["comprobacion_ok"] = True
+        prod = aplicar("multiplicar", {"a": lleno["grupos"], "b": lleno["en_cada"]}, saber).get("valor")
+        vuelta = aplicar("sumar", {"a": prod, "b": resto}, saber).get("valor") if prod is not None else None
+        r["comprobacion"] = "%d x %d + %d = %s" % (lleno["grupos"], lleno["en_cada"], resto, vuelta)
+        r["comprobacion_ok"] = vuelta == lleno["total"]
     unidad = (e.get("palabra_pregunta") or e["grupo"]) if e["busca"] == "grupos" else (e["cosa"] or "")
     r["unidad"] = unidad
+    # M.8: INTERPRETAR EL RESTO (NCETM 2.12, punto 3)
+    if e.get("pide_resto"):
+        r["interpreta"] = "la pregunta es por lo que SOBRA: el resto, %d" % resto
+        r["valor_division"], r["valor"], r["unidad"] = v, resto, e["cosa"] or ""
+        r["resto"] = 0
+    elif resto and e.get("redondeo") == "arriba" and e["busca"] == "grupos":
+        siguiente_v = aplicar("sumar", {"a": v, "b": 1}, saber)["valor"]
+        r["interpreta"] = ("salen %d %s llenos y sobran %d, que TAMBIEN necesitan sitio: hace falta uno mas, %d "
+                           "(el ultimo no va lleno)" % (v, unidad, resto, siguiente_v))
+        r["valor_division"], r["valor"], r["resto"] = v, siguiente_v, 0
+    elif resto and e.get("redondeo") == "abajo":
+        r["interpreta"] = ("salen %d enteros; los %d %s que sobran no llegan para otro %s: la respuesta es %d"
+                           % (v, resto, e["cosa"] or "", e["grupo"] or "", v))
+        r["valor_division"], r["resto"] = v, 0
     if e.get("cambios"):
         _segundo_paso(e, r, saber)
     return r
@@ -283,6 +326,9 @@ def explicar_R2_problema(texto, saber=None):
     L.extend(_barra(r["lleno"], None, saber))
     L.append("")
     L.append("  6. COMPRUEBO: %s ... %s" % (r["comprobacion"], "SI" if r["comprobacion_ok"] else "NO"))
+    if r.get("interpreta"):
+        L.append("")
+        L.append("  7. EL RESTO HAY QUE INTERPRETARLO (NCETM 2.12; 4.OA.A.3): %s" % r["interpreta"])
     if r.get("pasos2"):
         L.append("")
         L.append("  7. EL SEGUNDO PASO (3.OA.D.8): lo que hay despues de los grupos iguales")
