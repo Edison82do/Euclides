@@ -891,3 +891,10 @@ $2.99 + $1.50                              | $4.49 | compensando
 cambio: pago $10 por $6.35                 | $3.65 | contando hacia adelante
 cambio: pago $20 por $3.45 + $6.80 + $2.15 | $7.60 | parte-parte-parte-todo
 cambio: pago $5 por $6.35                  | no_alcanza | no llega
+# ---------------------------------------------------------------------------
+# PASO F.5 - UN ENTERO POR UNA FRACCION (NCETM 3.6)
+# ---------------------------------------------------------------------------
+3 x 2/5                                    | 1 1/5 | no 6/15
+3 x 1 2/5                                  | 4 1/5 | no 3 2/5
+12 x 3/4                                   | 9 | 3/4 de 12
+1/4 x 12                                   | 3 | 1/4 de 12

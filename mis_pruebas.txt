@@ -260,6 +260,11 @@ $2.99 + $1.50                     | $4.49
 cambio: pago $10 por $6.35        | $3.65
 cambio: pago $20 por $3.45 + $6.80 + $2.15   | ??   | ver el todo y las partes
 
+# --- F.5 entero por fraccion ---
+3 x 2/5                           | 1 1/5
+3 x 1 2/5                         | 4 1/5
+12 x 3/4                          | ??          | ver las dos lecturas
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete

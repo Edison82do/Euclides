@@ -456,6 +456,12 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         cambio: pago $10 por $6.35   -> $3.65   contando hacia adelante: 5 centavos, 60 centavos, 3 pesos
         cambio: pago $20 por $3.45 + $6.80 + $2.15   -> $7.60   (el todo y las partes)
 
+  ENTERO POR FRACCION  ->  sumar una fraccion una y otra vez (paso F.5; NCETM 3.6; 4.NF.B.4)
+        3 x 2/5                -> 1 1/5   2/5 + 2/5 + 2/5 = 6 quintos (el de abajo no se multiplica)
+        3 x 1 2/5              -> 4 1/5   partiendo: 3 enteros y 6/5;  por impropias: 3 x 7/5 = 21/5
+        12 x 3/4               -> 9       y la otra lectura: 3/4 de 12 (repartir en 4, tomar 3)
+        2/3 x 3/4              -> todavia_no (fraccion por fraccion: 6.o)
+
   REDONDEAR  ->  a la decena o a la centena MAS CERCANA (paso N.2; 3.NBT.A.1)
         redondear: 37          -> decena 40, centena 0   (las dos)
         redondear: 37 a la decena   -> 40   EN LA RECTA: entre 30 y 40, la mitad es 35, pasa de la mitad

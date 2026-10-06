@@ -24,6 +24,7 @@ _FR_SOLA = re.compile(r"^(\d+)\s*/\s*(\d+)$")
 _ORDEN_MIXTO = re.compile(r"^mixto:?\s*(\d+)\s+(\d+)\s*/\s*(\d+)$")
 _ORDEN_CUENTA_MIXTA = re.compile(r"^(?P<x>[\d/ ]+?)\s*(?P<op>[+\-])\s*(?P<y>[\d/ ]+)$")
 _ORDEN_COMPARAR_MIXTO = re.compile(r"^comparar:?\s*(?P<x>[\d/ ]+?)\s*(?:y|,|con)\s*(?P<y>[\d/ ]+)$")
+_ORDEN_POR_FR = re.compile(r"^(?P<x>[\d/ ]+?)\s*[x\u00d7*]\s*(?P<y>[\d/ ]+)$")
 _ORDEN_RECTA = re.compile(r"^recta:?\s*" + _FR_PATRON + r"$")
 _ORDEN_PARTES = re.compile(r"^partes:?\s*(\d+)\s*=\s*(\d+(?:\s*\+\s*\d+)*)$")
 
@@ -43,7 +44,7 @@ def es_orden_fraccion(texto):
     if any(p.match(t) for p in (_ORDEN_FRACCION, _ORDEN_DE, _ORDEN_COMPARAR_FR, _ORDEN_ENTERO, _ORDEN_PARTES,
                                 _ORDEN_RECTA, _ORDEN_CUENTA_FR, _ORDEN_MIXTO)):
         return True
-    for patron in (_ORDEN_CUENTA_MIXTA, _ORDEN_COMPARAR_MIXTO):    # F.4: con numeros mixtos o enteros
+    for patron in (_ORDEN_CUENTA_MIXTA, _ORDEN_COMPARAR_MIXTO, _ORDEN_POR_FR):    # F.4/F.5: mixtos y enteros
         m = patron.match(t)
         if m and "/" in t:
             x, y = _fr_termino(m.group("x")), _fr_termino(m.group("y"))
@@ -670,6 +671,70 @@ def explicar_comparar_mixtos(x, y, saber):
     return "\n".join(L)
 
 
+# ---------------------------------------------------------------- F.5: 3 x 2/5
+
+def decidir_por_fraccion(x, y, saber=None):
+    """Un ENTERO por una FRACCION (o un mixto), en cualquier orden (NCETM 3.6)."""
+    if saber is None:
+        saber = cargar_conocimiento()
+    if x[2] is not None and y[2] is not None:
+        return {"conclusion": "todavia_no", "porque": "fraccion por fraccion es de 6.o (NCETM 3.9)"}
+    n, f = (x[0], y) if x[2] is None else (y[0], x)
+    e, a, b = f
+    p = _fr_problema(a, b, saber)
+    if p:
+        return {"conclusion": p[0], "porque": p[1]}
+    impropia = _fr_impropia(e, a, b, saber)
+    arriba = aplicar("multiplicar", {"a": n, "b": impropia}, saber)
+    if arriba["conclusion"] != "hecho":
+        return {"conclusion": "todavia_no", "porque": arriba.get("porque") or "se sale de mi lista"}
+    r = {"conclusion": "hecho", "n": n, "e": e, "a": a, "b": b, "impropia": impropia,
+         "arriba": arriba["valor"], "valor": (arriba["valor"], b), "fraccion_primero": x[2] is not None}
+    if e:                                                    # partiendo: n x e  y  n x a/b
+        r["por_enteros"] = aplicar("multiplicar", {"a": n, "b": e}, saber)["valor"]
+        r["por_partes"] = aplicar("multiplicar", {"a": n, "b": a}, saber)["valor"] if a else 0
+        juntos = _fr_impropia(r["por_enteros"], 0, b, saber)
+        r["partir"] = aplicar("sumar", {"a": juntos, "b": r["por_partes"]}, saber)["valor"]
+        r["de_acuerdo"] = r["partir"] == r["arriba"]
+    else:                                                    # la otra lectura: a/b DE n (si se reparte justo)
+        de = decidir_fraccion_de(a, b, n, saber)
+        r["de"] = de
+        if de["conclusion"] == "hecho":
+            r["de_acuerdo"] = _fr_impropia(de["valor"], 0, b, saber) == r["arriba"]
+    return r
+
+
+def explicar_por_fraccion(x, y, saber):
+    r = decidir_por_fraccion(x, y, saber)
+    L = ["PREGUNTA (F.5): %s x %s  (NCETM 3.6; 4.NF.B.4)" % (_fr_texto_termino(x), _fr_texto_termino(y)), ""]
+    if r["conclusion"] != "hecho":
+        etiqueta = {"imposible": "NO SE PUEDE"}.get(r["conclusion"], "TODAVIA NO")
+        return "\n".join(L + ["  %s: %s" % (etiqueta, r["porque"]), "", "RESULTADO: %s" % r["conclusion"]])
+    n, e, a, b = r["n"], r["e"], r["a"], r["b"]
+    f = _fr_texto_termino((e, a, b))
+    nom = _NOMBRES_FR[b][1]
+    if n and levantar_dedos(decir(n, saber), saber) is not None:
+        L.append("  1. %d VECES %s (sumar una y otra vez, NCETM 3.6): %s" % (n, f, " + ".join(f for _ in _fr_marcas(n, saber))))
+    else:
+        L.append("  1. %d VECES %s (sumar %s una y otra vez, NCETM 3.6)" % (n, f, f))
+    if e:
+        L.append("     PARTIENDO: %d x %d = %d enteros, y %d x %d/%d = %d/%d;  juntos: %s" % (
+            n, e, r["por_enteros"], n, a, b, r["por_partes"], b, _fr_texto_mixto(r["partir"], b, saber)))
+        L.append("     POR IMPROPIAS: %s = %d/%d;  %d x %d/%d = %d/%d ... %s" % (
+            f, r["impropia"], b, n, r["impropia"], b, r["arriba"], b, "lo mismo" if r["de_acuerdo"] else "NO CUADRA"))
+    else:
+        L.append("     se cuentan los %s: %d x %d = %d %s;  el de abajo NO se multiplica (dice el tamano de las partes)"
+                 % (nom, n, a, r["arriba"], nom))
+        L.append("     -> %d/%d%s" % (r["arriba"], b, " = %s" % _fr_texto_mixto(r["arriba"], b, saber)
+                                       if viene_despues(decir(r["arriba"], saber), decir(b, saber), saber) or r["arriba"] == b else ""))
+        de = r.get("de")
+        if de and de["conclusion"] == "hecho":
+            L.append("  2. LA OTRA LECTURA (NCETM 3.6, puntos 3 y 4): %s de %d -> repartir %d en %d partes (%d cada una) y tomar %d: %d ... %s"
+                     % (f, n, n, b, de["cada"], a, de["valor"], "lo mismo" if r["de_acuerdo"] else "NO CUADRA"))
+    L += ["", "RESULTADO: %s" % _fr_texto_mixto(r["arriba"], b, saber)]
+    return "\n".join(L)
+
+
 # ---------------------------------------------------------------- la puerta
 
 
@@ -702,6 +767,9 @@ def explicar_orden_fraccion(texto, saber=None):
         g = m.groups()
         primera = (int(g[0]), int(g[1])) if g[0] is not None else None     # None: el entero '1'
         return explicar_cuenta_fracciones(primera, g[3], (int(g[4]), int(g[5])), saber)
+    m = _ORDEN_POR_FR.match(t)
+    if m and "/" in t and _fr_termino(m.group("x")) and _fr_termino(m.group("y")):
+        return explicar_por_fraccion(_fr_termino(m.group("x")), _fr_termino(m.group("y")), saber)
     m = _ORDEN_CUENTA_MIXTA.match(t)
     if m and "/" in t and _fr_termino(m.group("x")) and _fr_termino(m.group("y")):
         return explicar_cuenta_mixta(_fr_termino(m.group("x")), m.group("op"), _fr_termino(m.group("y")), saber)

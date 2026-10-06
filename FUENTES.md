@@ -167,6 +167,15 @@
   las columnas; varias cosas: parte-parte-parte-todo. **Common Core 4.MD.A.2**. → D.3 (con pesos y
   centavos).
 
+- **NCETM 3.6** (*Multiplying whole numbers and fractions*, Year 4): sumar una fracción (o un mixto)
+  varias veces es multiplicar por un entero; una fracción de una cantidad es un entero por una fracción;
+  la no unitaria desde la unitaria; el entero desde una parte. **Common Core 4.NF.B.4**. → F.5.
+- **NCETM 2.16** (*Multiplicative contexts: area and perimeter 1*, Year 4): el perímetro es la distancia
+  alrededor; se mide en unidades de longitud y se suma; multiplicar para polígonos regulares, dividir
+  para lo inverso; el área es la superficie, en unidades cuadradas; la del rectángulo multiplicando; las
+  formas rectilíneas compuestas, partiéndolas en rectángulos. **Common Core 4.MD.A.3**, **3.MD.C–D**.
+  → G.1.
+
 ## Enlaces
 - NCETM 2.9: https://www.ncetm.org.uk/classroom-resources/primm-209-times-tables-7-and-patterns-withinacross-times-tables/
 - NCETM 2.10: https://www.ncetm.org.uk/classroom-resources/primm-210-connecting-multiplication-and-division-and-the-distributive-law/
