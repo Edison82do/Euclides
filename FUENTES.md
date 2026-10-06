@@ -147,6 +147,15 @@
   unidades; después el algoritmo de la división corta, de **izquierda a derecha**. **Common Core
   4.NBT.B.6**. → M.11.
 
+- **NCETM 3.5** (*Working across one whole: improper fractions and mixed numbers*, Year 4): cantidades
+  de enteros y partes como números mixtos; en la recta; comparar (enteros primero); partir y juntar
+  como los enteros; mixtos ↔ impropias; las impropias se suman y restan como las propias.
+  **Common Core 4.NF.B.3**. → F.4.
+- **NCETM 1.23** (*Composition and calculation: tenths*): uno partido en diez partes iguales: cada una
+  es una décima; 0.1; uno es diez veces 0.1; contar de décima en décima pasando el 1; componer y
+  descomponer; los métodos de siempre (también las columnas) sirven con décimas; redondear al entero
+  mirando la cifra de las décimas. → D.1.
+
 ## Enlaces
 - NCETM 2.9: https://www.ncetm.org.uk/classroom-resources/primm-209-times-tables-7-and-patterns-withinacross-times-tables/
 - NCETM 2.10: https://www.ncetm.org.uk/classroom-resources/primm-210-connecting-multiplication-and-division-and-the-distributive-law/

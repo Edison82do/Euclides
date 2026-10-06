@@ -236,6 +236,12 @@ corta: 25 x 4                     | ??          | ver las columnas y la comproba
 corta: 305 : 5                    | 61          | (con las tablas aprendidas)
 corta: 4321 : 7                   | ??          | ver los cambios columna a columna
 
+# --- F.4 mas de un entero ---
+fraccion: 7/4                     | siete cuartos = 1 3/4
+mixto: 2 3/4                      | 11/4
+2 3/4 + 1 1/4                     | 4
+recta: 7/4                        | ??          | ver la recta hasta el 2
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete

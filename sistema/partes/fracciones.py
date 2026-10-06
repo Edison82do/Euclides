@@ -19,6 +19,11 @@ _ORDEN_DE = re.compile(r"^" + _FR_PATRON + r"\s+de\s+(\d+)$")
 _ORDEN_COMPARAR_FR = re.compile(r"^comparar:?\s*" + _FR_PATRON + r"\s*(?:y|,|con|\?)\s*" + _FR_PATRON + r"$")
 _ORDEN_ENTERO = re.compile(r"^entero:?\s*(?:si\s+)?" + _FR_PATRON + r"\s+(?:es|son|=)\s+(\d+)$")
 _ORDEN_CUENTA_FR = re.compile(r"^(?:" + _FR_PATRON + r"|(1))\s*([+\-])\s*" + _FR_PATRON + r"$")
+_FR_MIXTO = re.compile(r"^(\d+)\s+(\d+)\s*/\s*(\d+)$")
+_FR_SOLA = re.compile(r"^(\d+)\s*/\s*(\d+)$")
+_ORDEN_MIXTO = re.compile(r"^mixto:?\s*(\d+)\s+(\d+)\s*/\s*(\d+)$")
+_ORDEN_CUENTA_MIXTA = re.compile(r"^(?P<x>[\d/ ]+?)\s*(?P<op>[+\-])\s*(?P<y>[\d/ ]+)$")
+_ORDEN_COMPARAR_MIXTO = re.compile(r"^comparar:?\s*(?P<x>[\d/ ]+?)\s*(?:y|,|con)\s*(?P<y>[\d/ ]+)$")
 _ORDEN_RECTA = re.compile(r"^recta:?\s*" + _FR_PATRON + r"$")
 _ORDEN_PARTES = re.compile(r"^partes:?\s*(\d+)\s*=\s*(\d+(?:\s*\+\s*\d+)*)$")
 
@@ -34,7 +39,30 @@ def _fr_limpio(texto):
 
 def es_orden_fraccion(texto):
     t = _fr_limpio(texto)
-    return any(p.match(t) for p in (_ORDEN_FRACCION, _ORDEN_DE, _ORDEN_COMPARAR_FR, _ORDEN_ENTERO, _ORDEN_PARTES, _ORDEN_RECTA, _ORDEN_CUENTA_FR))
+    if any(p.match(t) for p in (_ORDEN_FRACCION, _ORDEN_DE, _ORDEN_COMPARAR_FR, _ORDEN_ENTERO, _ORDEN_PARTES,
+                                _ORDEN_RECTA, _ORDEN_CUENTA_FR, _ORDEN_MIXTO)):
+        return True
+    for patron in (_ORDEN_CUENTA_MIXTA, _ORDEN_COMPARAR_MIXTO):    # F.4: con numeros mixtos o enteros
+        m = patron.match(t)
+        if m and "/" in t:
+            x, y = _fr_termino(m.group("x")), _fr_termino(m.group("y"))
+            if x and y:
+                return True
+    return False
+
+
+def _fr_termino(texto):
+    """'2 3/4' -> (2, 3, 4);  '3/4' -> (0, 3, 4);  '3' -> (3, 0, None).  None si no es nada de eso."""
+    t = " ".join(texto.split())
+    m = _FR_MIXTO.match(t)
+    if m:
+        return int(m.group(1)), int(m.group(2)), int(m.group(3))
+    m = _FR_SOLA.match(t)
+    if m:
+        return 0, int(m.group(1)), int(m.group(2))
+    if t.isdigit():
+        return int(t), 0, None
+    return None
 
 
 def nombre_fraccion(a, b, saber):
@@ -74,10 +102,35 @@ def _fr_problema(a, b, saber):
         return "imposible", "no se puede partir un entero en CERO partes"
     if b not in _NOMBRES_FR and b != 1:
         return "todavia_no", "en 3.o las partes van de medios a doceavos (1/2 a 1/12)"
-    if b != 1 and a != b and viene_despues(decir(a, saber), decir(b, saber), saber):
-        return "todavia_no", ("%d/%d es MAS de un entero (%d partes de %d): eso es de 4.o (NCETM 3.5)"
-                              % (a, b, a, b))
+    if decir(a, saber) is None:
+        return "todavia_no", "%d no esta en mi lista" % a
     return None
+
+
+def _fr_mixto(a, b, saber):
+    """7/4 -> (1, 3): cuantos ENTEROS caben (agrupar a en grupos de b, M.8) y cuantas partes sobran."""
+    if b == 1:
+        return a, 0
+    r = aplicar("dividir", {"total": a, "divisor": b}, saber)
+    return r["valor"], r["resultado"].get("resto", 0)
+
+
+def _fr_impropia(entero, a, b, saber):
+    """2 3/4 -> 11 (cuartos): los enteros son entero x b partes, y se suman las a."""
+    if not entero:
+        return a
+    m = aplicar("multiplicar", {"a": entero, "b": b}, saber)["valor"]
+    return aplicar("sumar", {"a": m, "b": a}, saber)["valor"] if a else m
+
+
+def _fr_texto_mixto(a, b, saber):
+    """11/4 -> '2 3/4';  8/4 -> '2';  3/4 -> '3/4'."""
+    if b == 1:
+        return "%d" % a
+    e, r = _fr_mixto(a, b, saber)
+    if e == 0:
+        return "%d/%d" % (a, b) if a else "0"
+    return "%d" % e if r == 0 else "%d %d/%d" % (e, r, b)
 
 
 # ---------------------------------------------------------------- fraccion: 1/4
@@ -102,7 +155,14 @@ def explicar_fraccion(a, b, saber):
     L.append("  el de ABAJO (%d) dice en cuantas partes IGUALES se parte el entero;" % b)
     L.append("  el de ARRIBA (%d) dice cuantas de esas partes se toman." % a)
     L.append("")
-    L.append("     %s" % _fr_tira(b, 4, a, saber))
+    if viene_despues(decir(a, saber), decir(b, saber), saber):
+        e, r = _fr_mixto(a, b, saber)
+        tiras = [_fr_tira(b, 4, b, saber) for _ in _fr_marcas(e, saber)]
+        if r:
+            tiras.append(_fr_tira(b, 4, r, saber))
+        L.append("     %s" % "  ".join(tiras))
+    else:
+        L.append("     %s" % _fr_tira(b, 4, a, saber))
     L.append("")
     if a != 1:
         L.append("  %d/%d son %s fracciones de 1/%d: %s  (NCETM 3.3)" % (
@@ -112,6 +172,14 @@ def explicar_fraccion(a, b, saber):
     if a == b:
         L.append("  arriba y abajo el mismo numero: %d/%d es UN ENTERO." % (a, b))
         nombre = "un entero"
+    elif viene_despues(decir(a, saber), decir(b, saber), saber):
+        e, r = _fr_mixto(a, b, saber)
+        L.append("  %d/%d es MAS DE UN ENTERO (fraccion impropia; NCETM 3.5): cuantos enteros caben?" % (a, b))
+        L.append("     agrupo %d %s en grupos de %d (cada %d hacen un entero): %d : %d = %d%s"
+                 % (a, _NOMBRES_FR[b][1], b, b, a, b, e, ", y sobran %d" % r if r else ""))
+        L.append("  %d/%d = %s  (%d %s%s)" % (a, b, _fr_texto_mixto(a, b, saber), e, "entero" if e == 1 else "enteros",
+                                            " y %s" % nombre_fraccion(r, b, saber) if r else ", justos"))
+        nombre = "%s = %s" % (nombre, _fr_texto_mixto(a, b, saber))
     L += ["", "RESULTADO: %s" % nombre]
     return "\n".join(L)
 
@@ -119,16 +187,20 @@ def explicar_fraccion(a, b, saber):
 # ---------------------------------------------------------------- recta: 3/4
 
 def explicar_recta(a, b, saber):
-    L = ["PREGUNTA (F.2): donde esta %d/%d en la recta?  (NCETM 3.3; 3.NF.A.2)" % (a, b), ""]
+    L = ["PREGUNTA (F.2/F.4): donde esta %d/%d en la recta?  (NCETM 3.3, 3.5; 3.NF.A.2)" % (a, b), ""]
     p = _fr_problema(a, b, saber)
     if p or b == 1:
         porque = p[1] if p else "%d/1 son %d enteros: en la recta de los enteros" % (a, a)
         return "\n".join(L + ["  %s" % porque, "", "RESULTADO: %s" % (p[0] if p else "%d" % a)])
-    huecos = "".join("     " for _ in _fr_marcas(b, saber))
-    arriba = "0" + huecos[1:] + "1"
-    linea = "|" + "|".join("----" for _ in _fr_marcas(b, saber)) + "|"
+    e, r = _fr_mixto(a, b, saber)
+    hasta_entero = e if r == 0 and e else aplicar("sumar", {"a": e, "b": 1}, saber)["valor"]
+    if hasta_entero == 0:
+        hasta_entero = 1
+    bloque = "".join("     " for _ in _fr_marcas(b, saber))           # un entero de ancho
+    arriba = "%s%d" % ("".join(str(k).ljust(len(bloque)) for k in _fr_cuenta_hasta(hasta_entero, saber)), hasta_entero)
+    linea = "|" + "|".join("----" for _ in _fr_marcas(_fr_impropia(hasta_entero, 0, b, saber), saber)) + "|"
     hasta = "".join("     " for _ in _fr_marcas(a, saber))
-    L.append("  de 0 a 1 partido en %d trozos IGUALES (cada trozo es 1/%d); %d/%d esta a %s trozos del 0:"
+    L.append("  cada entero partido en %d trozos IGUALES (cada trozo es 1/%d); %d/%d esta a %s trozos del 0:"
              % (b, b, a, b, decir(a, saber)))
     L.append("")
     L.append("     " + arriba)
@@ -136,14 +208,26 @@ def explicar_recta(a, b, saber):
     L.append("     " + hasta + "^")
     L.append("     %s%d/%d" % (hasta, a, b))
     L.append("")
-    if a == b:
-        L.append("  %d/%d cae justo en el 1: es un entero." % (a, b))
-    elif a == 0:
+    if a == 0:
         L.append("  0/%d cae en el 0." % b)
-    else:
+    elif r == 0:
+        L.append("  %d/%d cae justo en el %d: son %d %s." % (a, b, e, e, "entero" if e == 1 else "enteros"))
+    elif e == 0:
         L.append("  %d/%d esta entre 0 y 1: es un NUMERO, como los demas, solo que entre dos enteros." % (a, b))
+    else:
+        L.append("  %d/%d esta entre %d y %d: es %s (NCETM 3.5: los mixtos tambien van en la recta)."
+                 % (a, b, e, hasta_entero, _fr_texto_mixto(a, b, saber)))
     L += ["", "RESULTADO: a %s trozos de 1/%d del 0" % (decir(a, saber), b)]
     return "\n".join(L)
+
+
+def _fr_cuenta_hasta(n, saber):
+    """0, 1, ... n - 1 (recitando)."""
+    out, k = [], "cero"
+    while k != decir(n, saber):
+        out.append(leer(k, saber))
+        k = siguiente(k, saber)
+    return out
 
 
 # ---------------------------------------------------------------- 1/4 de 12
@@ -358,9 +442,6 @@ def decidir_cuenta_fracciones(fa, signo, fb, saber=None):
         saber = cargar_conocimiento()
     r = {"signo": signo, "b": fb}
     if fa is None:
-        if signo != "-":
-            r.update(conclusion="todavia_no", porque="1 + una fraccion pasa de un entero (4.o)")
-            return r
         fa = (fb[1], fb[1])
         r["entero_como"] = fa
     r["a"] = fa
@@ -381,10 +462,6 @@ def decidir_cuenta_fracciones(fa, signo, fb, saber=None):
         return r
     arriba = x["valor"]
     r["metodo"] = x["pieza"]["nombre"]
-    if arriba != b and viene_despues(decir(arriba, saber), decir(b, saber), saber):
-        r.update(conclusion="todavia_no", porque="%d/%d pasa de un entero: eso es de 4.o (NCETM 3.5)" % (arriba, b),
-                 valor=(arriba, b))
-        return r
     # LA VUELTA (NCETM 3.4: sumar y restar son inversas)
     inv = aplicar("restar" if signo == "+" else "sumar", {"a": arriba, "b": fb[0]}, saber)
     r.update(conclusion="hecho", valor=(arriba, b), vuelta_ok=inv.get("valor") == fa[0],
@@ -392,12 +469,14 @@ def decidir_cuenta_fracciones(fa, signo, fb, saber=None):
     return r
 
 
-def _fr_texto_valor(v):
+def _fr_texto_valor(v, saber=None):
     arriba, b = v
     if arriba == b:
         return "1"
     if arriba == 0:
         return "0"
+    if saber is not None and viene_despues(decir(arriba, saber), decir(b, saber), saber):
+        return _fr_texto_mixto(arriba, b, saber)                    # F.4: 9/7 -> 1 2/7
     return "%d/%d" % v
 
 
@@ -423,13 +502,156 @@ def explicar_cuenta_fracciones(fa, signo, fb, saber):
                  "(el error tipico: %d/%s)." % (r["valor"][0], doble))
     else:
         L.append("     el de abajo NO se resta: dice de que tamano son las partes, y no cambia.")
-    L.append("")
-    L.append("     %s" % _fr_tira_dos(b, a, c, saber, signo))
+    if not any(viene_despues(decir(x, saber), decir(b, saber), saber) for x in (a, c, r["valor"][0])):
+        L.append("")
+        L.append("     %s" % _fr_tira_dos(b, a, c, saber, signo))
     L.append("")
     L.append("  2. LA VUELTA (sumar y restar son inversas): %s ... %s" % (r["vuelta"], "SI" if r["vuelta_ok"] else "NO"))
     if r["valor"][0] == b:
         L.append("  %d/%d: arriba y abajo iguales, es UN ENTERO." % r["valor"])
-    L += ["", "RESULTADO: %s" % _fr_texto_valor(r["valor"])]
+    if viene_despues(decir(r["valor"][0], saber), decir(b, saber), saber):
+        L.append("  %d/%d es mas de un entero (NCETM 3.5): %d/%d = %s" % (r["valor"][0], b, r["valor"][0], b,
+                                                                     _fr_texto_mixto(r["valor"][0], b, saber)))
+    L += ["", "RESULTADO: %s" % _fr_texto_valor(r["valor"], saber)]
+    return "\n".join(L)
+
+
+# ---------------------------------------------------------------- F.4: mixtos e impropias
+
+def explicar_mixto(e, a, b, saber):
+    L = ["PREGUNTA (F.4): %d %d/%d como fraccion impropia  (NCETM 3.5, punto 5)" % (e, a, b), ""]
+    p = _fr_problema(a, b, saber)
+    if p or b == 1:
+        return "\n".join(L + ["  %s" % (p[1] if p else "1 no parte nada"), "", "RESULTADO: %s" % (p[0] if p else "no_entiendo")])
+    if a != 0 and not viene_despues(decir(b, saber), decir(a, saber), saber):
+        return "\n".join(L + ["  %d/%d ya es un entero o mas: un numero mixto lleva una parte MENOR que un entero" % (a, b),
+                              "", "RESULTADO: no_entiendo"])
+    m = aplicar("multiplicar", {"a": e, "b": b}, saber)["valor"]
+    n = _fr_impropia(e, a, b, saber)
+    L.append("  1. cada entero son %d %s: %d %s son %d x %d = %d %s" % (b, _NOMBRES_FR[b][1], e,
+             "entero" if e == 1 else "enteros", e, b, m, _NOMBRES_FR[b][1]))
+    L.append("  2. y %d %s mas: %d + %d = %d %s" % (a, _NOMBRES_FR[b][1], m, a, n, _NOMBRES_FR[b][1]))
+    em, rm = _fr_mixto(n, b, saber)
+    L.append("  LA VUELTA: %d : %d = %d, y sobran %d -> %d %d/%d ... %s" % (n, b, em, rm, em, rm, b,
+                                                                          "SI" if (em, rm) == (e, a) else "NO"))
+    L += ["", "RESULTADO: %d/%d" % (n, b)]
+    return "\n".join(L)
+
+
+def decidir_cuenta_mixta(x, op, y, saber=None):
+    """x, y: (entero, arriba, abajo|None).  Mismo de abajo (o enteros).  Dos caminos: partir (enteros con
+    enteros, partes con partes) y por impropias; tienen que dar lo mismo."""
+    if saber is None:
+        saber = cargar_conocimiento()
+    bs = {t[2] for t in (x, y) if t[2] is not None}
+    if len(bs) != 1:
+        return {"conclusion": "todavia_no", "porque": "las partes son de tamanos distintos: hay que buscar el mismo "
+                "de abajo (NCETM 3.8, 5.o)"}
+    b = bs.pop()
+    for t in (x, y):
+        p = _fr_problema(t[1], b, saber)
+        if p:
+            return {"conclusion": p[0], "porque": p[1]}
+    nx, ny = _fr_impropia(x[0], x[1], b, saber), _fr_impropia(y[0], y[1], b, saber)
+    r = {"b": b, "nx": nx, "ny": ny}
+    # camino 1: por impropias (NCETM 3.5, puntos 5 y 6)
+    if op == "-" and viene_despues(decir(ny, saber), decir(nx, saber), saber):
+        r.update(conclusion="imposible", porque="se quita mas de lo que hay")
+        return r
+    n = aplicar("sumar" if op == "+" else "restar", {"a": nx, "b": ny}, saber)["valor"]
+    r["impropia"] = n
+    # camino 2: partir (NCETM 3.5, punto 4): enteros con enteros, partes con partes
+    ex, ax = _fr_mixto(nx, b, saber)
+    ey, ay = _fr_mixto(ny, b, saber)
+    pasos = []
+    if op == "+":
+        W = aplicar("sumar", {"a": ex, "b": ey}, saber)["valor"]
+        P = aplicar("sumar", {"a": ax, "b": ay}, saber)["valor"]
+        pasos.append("enteros con enteros: %d + %d = %d;  partes con partes: %d/%d + %d/%d = %d/%d" % (ex, ey, W, ax, b, ay, b, P, b))
+        if P == b or viene_despues(decir(P, saber), decir(b, saber), saber):
+            P = aplicar("restar", {"a": P, "b": b}, saber)["valor"]
+            W = aplicar("sumar", {"a": W, "b": 1}, saber)["valor"]
+            pasos.append("%d %s hacen un entero mas (reagrupo): %d enteros%s" % (b, _NOMBRES_FR[b][1], W,
+                                                                                " y %d/%d" % (P, b) if P else " justos"))
+    else:
+        if ay != ax and viene_despues(decir(ay, saber), decir(ax, saber), saber):
+            ex = aplicar("restar", {"a": ex, "b": 1}, saber)["valor"]
+            ax = aplicar("sumar", {"a": ax, "b": b}, saber)["valor"]
+            pasos.append("no hay bastantes partes: CAMBIO un entero por %d/%d -> %d y %d/%d" % (b, b, ex, ax, b))
+        W = aplicar("restar", {"a": ex, "b": ey}, saber)["valor"]
+        P = aplicar("restar", {"a": ax, "b": ay}, saber)["valor"]
+        pasos.append("enteros con enteros: %d - %d = %d;  partes con partes: %d/%d - %d/%d = %d/%d" % (ex, ey, W, ax, b, ay, b, P, b))
+    r["pasos_partir"] = pasos
+    r["partir"] = _fr_impropia(W, P, b, saber)
+    r.update(conclusion="hecho", valor=(n, b), de_acuerdo=r["partir"] == n)
+    return r
+
+
+def _fr_texto_termino(t):
+    if t[2] is None:
+        return "%d" % t[0]
+    return "%d/%d" % (t[1], t[2]) if not t[0] else "%d %d/%d" % t
+
+
+def explicar_cuenta_mixta(x, op, y, saber):
+    r = decidir_cuenta_mixta(x, op, y, saber)
+    L = ["PREGUNTA (F.4): %s %s %s  (NCETM 3.5: numeros mixtos e impropias)" % (_fr_texto_termino(x), op,
+                                                                              _fr_texto_termino(y)), ""]
+    if r["conclusion"] != "hecho":
+        etiqueta = {"imposible": "NO SE PUEDE"}.get(r["conclusion"], "TODAVIA NO")
+        return "\n".join(L + ["  %s: %s" % (etiqueta, r["porque"]), "", "RESULTADO: %s" % r["conclusion"]])
+    b = r["b"]
+    L.append("  1. PARTIENDO (como con los enteros):")
+    for p in r["pasos_partir"]:
+        L.append("        %s" % p)
+    L.append("  2. POR IMPROPIAS: %s = %d/%d y %s = %d/%d;  %d/%d %s %d/%d = %d/%d"
+             % (_fr_texto_termino(x), r["nx"], b, _fr_texto_termino(y), r["ny"], b, r["nx"], b, op, r["ny"], b,
+                r["impropia"], b))
+    L.append("     (el de abajo no cambia: dice de que tamano son las partes)")
+    L.append("  -> los dos caminos: %s" % ("lo mismo" if r["de_acuerdo"] else "NO CUADRAN"))
+    L += ["", "RESULTADO: %s" % _fr_texto_mixto(r["impropia"], b, saber)]
+    return "\n".join(L)
+
+
+def decidir_comparar_mixtos(x, y, saber=None):
+    """NCETM 3.5, punto 3: primero los ENTEROS; si son iguales, las partes (como las fracciones propias)."""
+    if saber is None:
+        saber = cargar_conocimiento()
+    res = []
+    for t in (x, y):
+        if t[2] is None:
+            res.append((t[0], 0, None))
+            continue
+        p = _fr_problema(t[1], t[2], saber)
+        if p:
+            return {"conclusion": p[0], "porque": p[1]}
+        e, a = _fr_mixto(_fr_impropia(t[0], t[1], t[2], saber), t[2], saber)
+        res.append((e, a, t[2]))
+    (ex, ax, bx), (ey, ay, by) = res
+    if ex != ey:
+        mayor = viene_despues(decir(ex, saber), decir(ey, saber), saber)
+        return {"conclusion": "hecho", "valor": ">" if mayor else "<", "como": "enteros",
+                "porque": "%d enteros contra %d: deciden los enteros" % (ex, ey)}
+    if not ax and not ay:
+        return {"conclusion": "hecho", "valor": "=", "como": "enteros", "porque": "los mismos enteros y nada mas"}
+    if not ax or not ay:
+        return {"conclusion": "hecho", "valor": "<" if not ax else ">", "como": "partes",
+                "porque": "los mismos enteros, y uno no tiene partes"}
+    r = decidir_comparar_fracciones((ax, bx), (ay, by), saber)
+    if r["conclusion"] != "hecho":
+        return {"conclusion": "todavia_no", "porque": "los mismos enteros; las partes no tienen nada en comun (5.o)"}
+    return {"conclusion": "hecho", "valor": r["valor"], "como": "partes",
+            "porque": "los mismos enteros (%d); deciden las partes: %d/%d %s %d/%d" % (ex, ax, bx, r["valor"], ay, by)}
+
+
+def explicar_comparar_mixtos(x, y, saber):
+    r = decidir_comparar_mixtos(x, y, saber)
+    tx, ty = _fr_texto_termino(x), _fr_texto_termino(y)
+    L = ["PREGUNTA (F.4): cual es mayor, %s o %s?  (NCETM 3.5, punto 3)" % (tx, ty), ""]
+    if r["conclusion"] != "hecho":
+        return "\n".join(L + ["  TODAVIA NO: %s" % r["porque"], "", "RESULTADO: %s" % r["conclusion"]])
+    L.append("  primero los ENTEROS, luego las partes: %s" % r["porque"])
+    L += ["", "RESULTADO: %s %s %s" % (tx, r["valor"], ty)]
     return "\n".join(L)
 
 
@@ -454,11 +676,20 @@ def explicar_orden_fraccion(texto, saber=None):
     m = _ORDEN_ENTERO.match(t)
     if m:
         return explicar_entero(int(m.group(1)), int(m.group(2)), int(m.group(3)), saber)
+    m = _ORDEN_MIXTO.match(t)
+    if m:
+        return explicar_mixto(int(m.group(1)), int(m.group(2)), int(m.group(3)), saber)
+    m = _ORDEN_COMPARAR_MIXTO.match(t)
+    if m and not _ORDEN_COMPARAR_FR.match(t):
+        return explicar_comparar_mixtos(_fr_termino(m.group("x")), _fr_termino(m.group("y")), saber)
     m = _ORDEN_CUENTA_FR.match(t)
     if m:
         g = m.groups()
         primera = (int(g[0]), int(g[1])) if g[0] is not None else None     # None: el entero '1'
         return explicar_cuenta_fracciones(primera, g[3], (int(g[4]), int(g[5])), saber)
+    m = _ORDEN_CUENTA_MIXTA.match(t)
+    if m and "/" in t and _fr_termino(m.group("x")) and _fr_termino(m.group("y")):
+        return explicar_cuenta_mixta(_fr_termino(m.group("x")), m.group("op"), _fr_termino(m.group("y")), saber)
     m = _ORDEN_RECTA.match(t)
     if m:
         return explicar_recta(int(m.group(1)), int(m.group(2)), saber)

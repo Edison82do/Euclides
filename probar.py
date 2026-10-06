@@ -427,6 +427,14 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         columnas: 2345 + 1678  -> 4023   (lo de tres cifras sirve para cuatro)
         La lista de contar llega ahora a DIEZ MIL.  Mas alla: 5.o (NCETM 1.26).
 
+  MAS DE UN ENTERO  ->  numeros mixtos y fracciones impropias (paso F.4; NCETM 3.5; 4.NF.B.3)
+        fraccion: 7/4          -> siete cuartos = 1 3/4   (agrupo 7 cuartos de 4 en 4: 1 entero y sobran 3)
+        mixto: 2 3/4           -> 11/4   (2 enteros son 8 cuartos, y 3 mas)
+        recta: 7/4             -> la recta de 0 a 2, la marca a siete trozos
+        2 3/4 + 1 1/4          -> 4      enteros con enteros, partes con partes (y por impropias: 11/4 + 5/4)
+        3 - 1/4                -> 2 3/4  (cambio un entero por 4/4)
+        comparar: 2 1/4 y 1 3/4 -> 2 1/4 > 1 3/4   primero los enteros, luego las partes
+
   REDONDEAR  ->  a la decena o a la centena MAS CERCANA (paso N.2; 3.NBT.A.1)
         redondear: 37          -> decena 40, centena 0   (las dos)
         redondear: 37 a la decena   -> 40   EN LA RECTA: entre 30 y 40, la mitad es 35, pasa de la mitad

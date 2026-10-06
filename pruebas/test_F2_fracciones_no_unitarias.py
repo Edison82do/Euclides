@@ -53,7 +53,7 @@ try:
     print("\nA - LAS TRAMPAS DEL PLAN")
     comprobar("A1 fraccion: 3/4 -> tres cuartos", S("fraccion: 3/4"), "tres cuartos")
     comprobar("A2 fraccion: 4/4 -> un entero", S("fraccion: 4/4"), "un entero")
-    comprobar("A3 fraccion: 5/4 -> todavia no (4.o)", S("fraccion: 5/4"), "todavia_no")
+    comprobar("A3 fraccion: 5/4 -> desde F.4 (4.o) si: cinco cuartos = 1 1/4", S("fraccion: 5/4"), "cinco cuartos = 1 1/4")
     comprobar("A4 fraccion: 0/4 -> cero;  3/1 -> 3 enteros", (S("fraccion: 0/4"), S("fraccion: 3/1")), ("cero", "3 enteros"))
     comprobar("A5 comparar 2/5 y 3/5 -> 3/5 mayor", S("comparar: 2/5 y 3/5"), "2/5 < 3/5")
     comprobar("A6 comparar 2/3 y 2/5 -> 2/3 mayor (no 'cinco es mas')", S("comparar: 2/3 y 2/5"), "2/3 > 2/5")

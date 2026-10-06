@@ -53,7 +53,7 @@ try:
     comprobar("A4 1 - 3/8 -> 5/8 (1 = 8/8)", S("1 - 3/8"), "5/8")
     comprobar("A5 3/8 + 5/8 -> 1", S("3/8 + 5/8"), "1")
     comprobar("A6 3/8 - 3/8 -> 0", S("3/8 - 3/8"), "0")
-    comprobar("A7 4/7 + 5/7 -> todavia no (4.o)", S("4/7 + 5/7"), "todavia_no")
+    comprobar("A7 4/7 + 5/7 -> desde F.4 pasa de un entero: 1 2/7", S("4/7 + 5/7"), "1 2/7")
     comprobar("A8 2/7 - 5/7 -> imposible", S("2/7 - 5/7"), "imposible")
     comprobar("A9 1/2 + 1/4 -> todavia no (5.o)", S("1/2 + 1/4"), "todavia_no")
     comprobar("A10 la vuelta: 5/7 - 3/7 = 2/7", "5/7 - 3/7 = 2/7 ... SI" in t, True)
@@ -69,8 +69,6 @@ try:
                     n += 1
                     if v < 0:
                         esperado = "imposible"
-                    elif v > 1:
-                        esperado = "todavia_no"
                     else:
                         esperado = (a + c if sg == "+" else a - c, b)
                     obtenido = r["valor"] if r["conclusion"] == "hecho" else r["conclusion"]
