@@ -82,7 +82,11 @@
   grupos, cuántos en cada uno, total); la operación la decide la casilla que falta, no las palabras
   clave. **Singapur, el modelo de barras**. → R.2.
 
+- **NCETM 2.7** (tablas del 2, 4 y 8): la del 4 es el doble de la del 2, la del 8 el doble de la del 4;
+  seguidos se diferencian en 4 / 8; reglas de divisibilidad entre 2, 4 y 8. → M.4.
+
 ## Enlaces
+- NCETM 2.7: https://www.ncetm.org.uk/classroom-resources/primm-207-times-tables-2-4-and-8-and-the-relationship-between-them/
 - Common Core 3.OA: https://www.thecorestandards.org/Math/Content/3/OA/
 - NCETM 2.6: https://www.ncetm.org.uk/classroom-resources/primm-206-structures-quotitive-and-partitive-division/
 - NCETM 2.3: https://www.ncetm.org.uk/classroom-resources/primm-203-times-tables-groups-of-2-and-commutativity-part-1/

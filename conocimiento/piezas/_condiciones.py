@@ -27,6 +27,15 @@ def _acaba_en_nueve(n, u):
     return len(c) == 2 and c[0] == 9 and c[1] != 9
 
 
+def _mitad_conocida(s, u):
+    for f, k in ((s["b"], s["a"]), (s["a"], s["b"])):
+        if f in (4, 8):
+            m = 2 if f == 4 else 4
+            if u.recuerdo("%d x %d" % (k, m)) or u.recuerdo("%d x %d" % (m, k)):
+                return True
+    return False
+
+
 def _en_las_tablas(s, u):
     q = "cero"
     while True:
@@ -127,6 +136,8 @@ CONDICIONES = {
     "es_un_caso_especial": lambda s, u: s["total"] == 0 or s["total"] == s["divisor"] or s["divisor"] == 1,
     "el_divisor_es_dos": lambda s, u: s["divisor"] == 2,
     "la_division_esta_en_las_tablas": lambda s, u: _en_las_tablas(s, u),
+    # ---- doblar tablas (paso M.4)
+    "se_puede_doblar_una_tabla": lambda s, u: _mitad_conocida(s, u),
     # ---- las tablas (paso M.2)
     "un_factor_es_cero_o_uno": lambda s, u: s["a"] in (0, 1) or s["b"] in (0, 1),
     "un_factor_es_dos": lambda s, u: s["a"] == 2 or s["b"] == 2,

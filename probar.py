@@ -322,6 +322,14 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         8 : 0                  -> no se puede (no se reparte entre nadie)
         Siempre se COMPRUEBA multiplicando: cociente x divisor (+ resto) = dividendo.
 
+  TABLAS DEL 4 Y DEL 8  ->  doblando (paso M.4; NCETM 2.7)
+        tabla del 4            -> cada producto, el DOBLE del de la tabla del 2
+        tabla del 8            -> cada producto, el DOBLE del de la tabla del 4
+        7 x 8                  -> 56   (si 7 x 4 ya se sabe: 28 + 28)
+        aprender: tablas       -> ahora tambien la del 4 y la del 8, en orden (2 -> 4 -> 8)
+        divisible: 36 entre 8  -> no   (36 -> 18 -> 9: entre 8 hay que partir por la mitad TRES veces)
+        divisible: 40 entre 8  -> si   (40 -> 20 -> 10 -> 5)
+
   TABLAS  ->  las tablas del 2, 5 y 10; la conmutativa; dobles y mitades (paso M.2; NCETM 2.3-2.5)
         tabla del 5            -> 0 x 5 = 0 ... 10 x 5 = 50 (contar de 5 en 5)
         5 x 7                  -> 35   la OTRA LECTURA: 7 grupos de 5, con la tabla del 5
@@ -468,6 +476,11 @@ def preguntar(texto, saber):
     try:
         if t.lower().strip() in ("piezas", "mapa"):
             return "las_piezas", None
+        if t.lower().startswith("divisible"):
+            salida = motor.explicar_divisible(t[len("divisible"):].lstrip(":").strip(), saber)
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
         if t.lower().startswith("tabla del") or t.lower().startswith("mitad"):
             salida = (motor.explicar_tabla(t, saber) if t.lower().startswith("tabla")
                       else motor.explicar_mitad(t[len("mitad"):].lstrip(":").strip(), saber))

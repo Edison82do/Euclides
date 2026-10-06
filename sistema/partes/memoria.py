@@ -150,11 +150,14 @@ def aprender(que, saber=None, ruta=None):
     return res
 
 
+TABLAS_ENSENADAS = (2, 4, 8, 5, 10)        # M.2: 2, 5, 10;  M.4: 4 y 8 (doblando)
+
+
 def _aprender_tablas(saber, ruta, hechos, hoy, res):
-    """M.2: las tablas del 2, 5 y 10 (0 a 10 grupos, en las dos lecturas: 3 x 5 y 5 x 3).  Cada producto
+    """M.2 y M.4: las tablas del 2, 4, 8, 5 y 10 (0 a 10 grupos, en las dos lecturas).  Cada producto
     se CALCULA sin memoria y se COMPRUEBA con la otra lectura de los grupos (la conmutativa)."""
     factores = _cifras_de_una(saber) + [10]
-    for t in (2, 5, 10):
+    for t in TABLAS_ENSENADAS:                 # en orden: la del 4 se saca de la del 2, la del 8 de la del 4
         for k in factores:
             for a, b in ((k, t), (t, k)):
                 clave = "%d x %d" % (a, b)
@@ -174,6 +177,7 @@ def _aprender_tablas(saber, ruta, hechos, hoy, res):
                                  "fecha": hoy}
                 res["nuevos"].append(clave)
                 res["dos_caminos"] += 1
+        _escribir(hechos, ruta)                # al acabar cada tabla: la siguiente ya la puede usar (doblar)
     _escribir(hechos, ruta)
     res["total_en_memoria"] = len(hechos)
     return res
@@ -214,7 +218,9 @@ def explicar_aprender(que, saber=None):
                 "   se escribe asi:  aprender: sumas")
     r = aprender(que, saber)
     if que == "tablas":
-        L = ["PREGUNTA: aprender las TABLAS del 2, del 5 y del 10 (de 0 a 10 grupos, en las dos lecturas)", "",
+        L = ["PREGUNTA: aprender las TABLAS del %s (de 0 a 10 grupos, en las dos lecturas)"
+             % ", ".join(str(t) for t in TABLAS_ENSENADAS), "",
+             "  EN ORDEN: la del 4 se saca DOBLANDO la del 2, y la del 8 doblando la del 4 (NCETM 2.7).",
              "  CALCULO cada producto SIN memoria y lo compruebo con la OTRA LECTURA de los grupos",
              "  (3 x 5 son 3 grupos de 5; y 5 grupos de 3 tienen que dar lo mismo: NCETM 2.3).", "",
              "  nuevos en la memoria:    %d" % len(r["nuevos"]),

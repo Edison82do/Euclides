@@ -84,13 +84,13 @@ try:
 
     print("\nE - APRENDER LAS TABLAS (la memoria se gana)")
     a = motor.aprender("tablas", SABER)
-    comprobar("E1 aprende las tablas del 2, 5 y 10 en las dos lecturas, sin rechazar ninguna",
+    comprobar("E1 aprende las tablas ensenadas (2, 5, 10; desde M.4 tambien 4 y 8) en las dos lecturas, sin rechazar ninguna",
               (len(a["nuevos"]), a["rechazados"]),
-              (len({(k, t) for t in (2, 5, 10) for k in range(11)} | {(t, k) for t in (2, 5, 10) for k in range(11)}), []))
+              (len({(k, t) for t in motor.TABLAS_ENSENADAS for k in range(11)} | {(t, k) for t in motor.TABLAS_ENSENADAS for k in range(11)}), []))
     h = motor.cargar_memoria()["6 x 5"]
     comprobar("E2 6 x 5 = 30, comprobado con la otra lectura (5 grupos de 6)", (h["valor"], "5 grupos de 6" in h["comprobado"]), (30, True))
     comprobar("E3 6 x 5 ahora de memoria", P(6, 5)[:2], (30, "recordar_producto"))
-    comprobar("E4 3 x 4 no esta en las tablas aprendidas: se calcula", P(3, 4)[1], "multiplicar_grupos_iguales")
+    comprobar("E4 3 x 7 no esta en las tablas aprendidas: se calcula", P(3, 7)[1], "multiplicar_grupos_iguales")
     comprobar("E5 sin memoria, 6 x 5 se calcula", P(6, 5, sin_memoria=True)[1] != "recordar_producto", True)
     with open(RUTA, encoding="utf-8") as f:
         txt = f.read()

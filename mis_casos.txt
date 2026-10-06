@@ -708,3 +708,14 @@ problema: En el cine hay 3 filas de 4 sillas. Cuantas sillas hay? | 12 | filas
 problema: Cada caja pesa 5 kilos. Cuanto pesan 4 cajas? | 20 | medida
 problema: Hay 20 lapices en 4 cajas iguales. Cuantos lapices hay en cada caja? | 5 | repartir
 problema: Mete 14 caramelos en bolsas de 4. Cuantas bolsas salen? | 3 resto 2 | sobra
+# ---------------------------------------------------------------------------
+# PASO M.4 - LAS TABLAS DEL 4 Y DEL 8, DOBLANDO (NCETM 2.7)
+# ---------------------------------------------------------------------------
+tabla del 4                                | 0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40 | doble de la del 2
+tabla del 8                                | 0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80 | doble de la del 4
+9 x 8                                      | 72 | la del 8
+8 x 4                                      | 32 | la del 4
+divisible: 36 entre 4                      | si | dos mitades
+divisible: 36 entre 8                      | no | 9 no se parte
+divisible: 50 entre 4                      | no | 25 no se parte
+divisible: 36 entre 3                      | todavia_no | M.5

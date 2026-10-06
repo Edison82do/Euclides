@@ -753,6 +753,8 @@ def explicar_pregunta(texto, saber=None):
     try:
         if t.lower().strip() in ("piezas", "mapa"):
             return explicar_piezas(saber)
+        if t.lower().startswith("divisible"):
+            return explicar_divisible(t[len("divisible"):].lstrip(":").strip(), saber)
         if t.lower().startswith("tabla del"):
             return explicar_tabla(t, saber)
         if t.lower().startswith("mitad"):

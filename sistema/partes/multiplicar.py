@@ -148,9 +148,11 @@ def explicar_tabla(texto, saber=None):
     if not m:
         return "NO ENTIENDO ESTO: se escribe asi:  tabla del 2   (o del 5, o del 10)"
     n = m.group(1)
+    if n in ("4", "8"):
+        return _tabla_doblando(n, saber)
     if n not in _TABLAS:
-        return ("PREGUNTA (M.2): tabla del %s\n\n  TODAVIA NO: por ahora se las tablas del 2, del 5 y del 10 "
-                "(NCETM 2.3 y 2.4); las demas llegan despues.  Pero %s x 4 lo calculo: escribelo.\n\n"
+        return ("PREGUNTA (M.2): tabla del %s\n\n  TODAVIA NO: por ahora se las tablas del 2, 4, 8, 5 y 10 "
+                "(NCETM 2.3, 2.4 y 2.7); las demas llegan despues.  Pero %s x 4 lo calculo: escribelo.\n\n"
                 "RESULTADO: todavia_no" % (n, n))
     L = ["PREGUNTA (M.2): la tabla del %s  (grupos de %s; cada producto es el anterior MAS %s)" % (n, n, n), ""]
     v, k, fila = 0, "cero", []
@@ -205,5 +207,70 @@ def explicar_mitad(texto, saber=None):
         L += ["  hago parejas y reparto una de cada pareja a cada lado: %d a cada lado, no sobra ninguno." % r["valor"],
               "  COMPRUEBO con el doble: %s ... %s" % (r["doble"], "SI" if r["comprobacion"] else "NO"), "",
               "RESULTADO: %d" % r["valor"]]
+    return "\n".join(L)
+
+
+# ------------------------------------------------------------- M.4: las tablas del 4 y del 8; divisible
+
+
+def _tabla_doblando(n, saber):
+    """NCETM 2.7: la tabla del 4 es el DOBLE de la del 2; la del 8, el doble de la del 4."""
+    base = {"4": "2", "8": "4"}[n]
+    L = ["PREGUNTA (M.4): la tabla del %s  (cada producto es el DOBLE del de la tabla del %s; NCETM 2.7)" % (n, base), ""]
+    v2, k, fila = 0, "cero", []
+    while True:
+        b = v2
+        if n == "8":                                   # la del 4 sale doblando la del 2
+            b = aplicar("sumar", {"a": v2, "b": v2}, saber)["valor"]
+        v = aplicar("sumar", {"a": b, "b": b}, saber)["valor"]
+        L.append("    %2d x %s = el doble de %2d x %s (%2d) = %d" % (leer(k, saber), n, leer(k, saber), base, b, v))
+        fila.append(str(v))
+        if k == "diez":
+            break
+        v2 = saltar(v2, "dos", saber)
+        k = siguiente(k, saber)
+    L.append("")
+    L.append("  (y seguidos se diferencian en %s: contar de %s en %s: %s)" % (n, n, n, ", ".join(fila)))
+    L.append("")
+    L.append("RESULTADO: %s" % ", ".join(fila))
+    return "\n".join(L)
+
+
+def decidir_divisible(n, d, saber=None):
+    """NCETM 2.7 (punto 5), con MITADES: entre 2 si se parte por la mitad sin que sobre; entre 4 si se
+    puede DOS veces; entre 8, TRES veces."""
+    if saber is None:
+        saber = cargar_conocimiento()
+    veces = {2: "uno", 4: "dos", 8: "tres"}.get(d)
+    if veces is None:
+        return {"conclusion": "todavia_no"}
+    v, hecho, camino = n, "cero", [str(n)]
+    while hecho != veces:
+        r = aplicar("dividir", {"total": v, "divisor": 2}, saber)
+        if r["resultado"].get("resto"):
+            return {"conclusion": "hecho", "valor": False, "camino": camino, "falla_en": v}
+        v = r["valor"]
+        camino.append(str(v))
+        hecho = siguiente(hecho, saber)
+    return {"conclusion": "hecho", "valor": True, "camino": camino, "cociente": v}
+
+
+def explicar_divisible(texto, saber=None):
+    m = re.match(r"^(\d+)\s+entre\s+(\d+)$", " ".join(texto.lower().split()))
+    if not m:
+        return "NO ENTIENDO ESTO: se escribe asi:  divisible: 36 entre 4"
+    n, d = int(m.group(1)), int(m.group(2))
+    r = decidir_divisible(n, d, saber)
+    L = ["PREGUNTA (M.4): %d se puede dividir entre %d sin que sobre?" % (n, d), ""]
+    if r["conclusion"] == "todavia_no":
+        return "\n".join(L + ["  TODAVIA NO: por ahora se mirarlo entre 2, 4 y 8 (NCETM 2.7).", "", "RESULTADO: todavia_no"])
+    veces = {2: "UNA vez", 4: "DOS veces", 8: "TRES veces"}[d]
+    L.append("  la regla (con mitades): entre %d si se puede partir por la mitad %s sin que sobre." % (d, veces))
+    L.append("  %s" % " -> ".join(r["camino"]))
+    if r["valor"]:
+        L.append("  SI: %d entre %d da %d, justo." % (n, d, r["cociente"]))
+    else:
+        L.append("  NO: el %d ya no se parte por la mitad sin que sobre uno." % r["falla_en"])
+    L += ["", "RESULTADO: %s" % ("si" if r["valor"] else "no")]
     return "\n".join(L)
 

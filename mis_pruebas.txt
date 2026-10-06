@@ -132,6 +132,14 @@ Cada caja pesa 5 kilos. Cuanto pesan 4 cajas?                      | 20
 Mete 14 caramelos en bolsas de 4. Cuantas bolsas salen?            | 3 resto 2
 Reparte 12 caramelos entre 3 ninos. Cuantos le tocan a cada uno?   | ??   | ver el esquema y la barra
 
+# --- M.4 las tablas del 4 y del 8, doblando ---
+tabla del 4                       | 0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40
+tabla del 8                       | 0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80
+7 x 8                             | 56
+divisible: 36 entre 8             | no
+divisible: 40 entre 8             | si
+tabla del 8                       | ??         | ver como dobla
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete
