@@ -251,7 +251,7 @@ pruebas → commit. Carlos prueba por la mañana.
 | 22 | ✅ **HECHO (6 oct, noche), falta la prueba de Carlos** — `diario/2026-10-06-paso-M8-division-con-resto.md`. **M.8 División con resto** | NCETM 2.12; 4.OA.A.3 | 2412 divisiones; interpretar el resto |
 | 23 | ✅ **HECHO (6 oct, noche), falta la prueba de Carlos** — `diario/2026-10-06-paso-M9-por-10-y-100.md`. **M.9 Multiplicar y dividir por 10 y por 100** | NCETM 2.13; 3.NBT.A.3 | ×/÷ 10 y 100 hasta diez mil; decenas justas |
 | 24 | ✅ **HECHO (6 oct, noche), falta la prueba de Carlos** — `diario/2026-10-06-paso-M10-multiplicacion-corta.md`. **M.10 Partir por sitios y la multiplicación corta** | NCETM 2.14; 4.NBT.B.5 | los 720 de dos cifras × una; muestra de 3–4 cifras |
-| 25 | **M.11 División corta** | NCETM 2.15; 4.NBT.B.6 | |
+| 25 | ✅ **HECHO (6 oct, noche), falta la prueba de Carlos** — `diario/2026-10-06-paso-M11-division-corta.md`. **M.11 La división corta** | NCETM 2.15; 4.NBT.B.6 | 1286 divisiones con la vuelta |
 
 ## EL PLAN ANTERIOR (5 oct, tarde) — sustituido por el de arriba en el orden; se conserva como referencia
 

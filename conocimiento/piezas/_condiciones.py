@@ -140,6 +140,8 @@ CONDICIONES = {
     "un_factor_de_una_cifra_y_otro_de_varias": lambda s, u: any(
         len(u.cifras_de(x)) == 1 and x not in (0, 1) and len(u.cifras_de(y)) >= 2
         for x, y in ((s.get("a", 0), s.get("b", 0)), (s.get("b", 0), s.get("a", 0)))),
+    "el_divisor_es_de_una_cifra_y_el_dividendo_de_varias": lambda s, u: s.get("divisor") not in (None, 0, 1)
+        and len(u.cifras_de(s["divisor"])) == 1 and len(u.cifras_de(s.get("total") or 0)) >= 2,
     # ---- por 10 y por 100 (paso M.9; NCETM 2.13)
     "un_factor_es_10_o_100": lambda s, u: s.get("a") in (10, 100) or s.get("b") in (10, 100),
     "el_divisor_es_10_o_100": lambda s, u: s.get("divisor") in (10, 100),

@@ -433,9 +433,11 @@ def explicar_corta(texto, saber=None):
     """'corta: 347 x 6': el algoritmo de la multiplicacion corta (NCETM 2.14), aunque haya un camino mas corto."""
     if saber is None:
         saber = cargar_conocimiento()
+    if es_division(texto):                                   # M.11: corta: 72 : 3
+        return explicar_division_corta(texto, saber)
     m = _POR.match(" ".join(texto.lower().split()))
     if not m:
-        return "NO ENTIENDO ESTO: se escribe asi:  corta: 347 x 6"
+        return "NO ENTIENDO ESTO: se escribe asi:  corta: 347 x 6   o   corta: 72 : 3"
     a, b = int(m.group(1)), int(m.group(2))
     L = ["PREGUNTA (M.10): %d x %d con la MULTIPLICACION CORTA  (NCETM 2.14; 4.NBT.B.5)" % (a, b), ""]
     r = aplicar("multiplicacion_corta", {"a": a, "b": b}, saber)

@@ -485,6 +485,11 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
                                         300 x 6 + 40 x 6 + 7 x 6 = 1800 + 240 + 42
         (Cada columna es un hecho de la tabla: hace falta haberlas aprendido, 'aprender: tablas'.)
 
+  DIVISION CORTA  ->  de izquierda a derecha, cambiando lo que sobra (paso M.11; NCETM 2.15; 4.NBT.B.6)
+        72 : 3                 -> 24   7 decenas : 3 = 2 decenas, sobra 1 -> se CAMBIA por 10 unidades -> 12 : 3 = 4
+        corta: 305 : 5         -> 61   las 3 centenas no dan para cada uno: pasan a decenas (30)
+        corta: 4321 : 7        -> 617 resto 2   (con la vuelta: 617 x 7 + 2 = 4321)
+
   ECUACION CON x Y :  ->  el hueco en una multiplicacion o division (paso E.4; 3.OA.A.4)
         3 x ? = 12             -> 4    cuantos en cada grupo: REPARTIR 12 entre 3
         ? x 4 = 12             -> 3    cuantos grupos: AGRUPAR 12 en grupos de 4

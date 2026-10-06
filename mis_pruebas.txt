@@ -231,6 +231,11 @@ Reparte 17 caramelos entre 5 ninos. Cuantos sobran?   | ??   | ver como interpre
 corta: 347 x 6                    | 2082        | (con las tablas aprendidas)
 corta: 25 x 4                     | ??          | ver las columnas y la comprobacion
 
+# --- M.11 division corta ---
+72 : 3                            | 24
+corta: 305 : 5                    | 61          | (con las tablas aprendidas)
+corta: 4321 : 7                   | ??          | ver los cambios columna a columna
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete

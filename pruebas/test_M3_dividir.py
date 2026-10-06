@@ -70,7 +70,7 @@ try:
     motor.aprender("tablas", SABER)
     v, p, r = D("30 : 5")
     comprobar("C5 30 : 5 con las tablas aprendidas -> 6 x 5 = 30 (factor desconocido)", (v, p), ((6, 0), "dividir_con_la_tabla"))
-    comprobar("C6 31 : 5 no esta en la tabla -> saltando: 6 y sobra 1", D("31 : 5")[:2], ((6, 1), "dividir_saltando"))
+    comprobar("C6 31 : 5 no esta en la tabla -> (desde M.11) la division corta: 6 y sobra 1", D("31 : 5")[:2], ((6, 1), "division_corta"))
     motor.olvidar_todo()
 
     print("\nD - CONTRA EL TESTIGO")

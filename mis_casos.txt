@@ -851,3 +851,9 @@ problema: Reparte 17 caramelos entre 5 ninos. Cuantos sobran? | 2 | el resto
 47 x 6                                     | 282 | corta, o sumando si no se saben las tablas
 347 x 6                                    | 2082 | llevar a traves del cero
 1234 x 9                                   | no_se_puede | pasa de diez mil
+# ---------------------------------------------------------------------------
+# PASO M.11 - LA DIVISION CORTA (NCETM 2.15)
+# ---------------------------------------------------------------------------
+72 : 3                                     | 24 | cambiar la decena que sobra
+4321 : 7                                   | 617 resto 2 | cuatro cifras
+100 : 7                                    | 14 resto 2 | a traves de ceros

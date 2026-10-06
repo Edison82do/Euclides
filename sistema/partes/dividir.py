@@ -111,7 +111,7 @@ def explicar_dividir(texto, saber=None):
         L.append("RESULTADO: no_se_puede")
         return "\n".join(L)
     q, resto = r["valor"], r["resto"]
-    L.append("  3. %s" % ap["resultado"]["cuenta"])
+    L.append("  3. %s" % ap["resultado"]["cuenta"].replace("; ", "\n     "))
     if levantar_dedos(decir(q, saber), saber) is not None and levantar_dedos(decir(d, saber), saber) is not None:
         L.append("")
         if r["lectura"] in ("agrupar", "las_dos"):
@@ -185,4 +185,25 @@ def explicar_comprobar_division(texto, saber=None):
         L.append("")
         L.append("  la buena: %d : %d = %d%s" % (t, d, r["buena"][0], " resto %d" % r["buena"][1] if r["buena"][1] else ""))
     L += ["", "RESULTADO: %s" % r["valor"]]
+    return "\n".join(L)
+
+
+def explicar_division_corta(texto, saber=None):
+    """'corta: 72 : 3': la division corta (NCETM 2.15) aunque haya otro camino mas corto."""
+    if saber is None:
+        saber = cargar_conocimiento()
+    m = _DIV_SIMBOLO.match(" ".join(texto.lower().split()))
+    if not m:
+        return "NO ENTIENDO ESTO: se escribe asi:  corta: 72 : 3"
+    t, d = int(m.group(1)), int(m.group(2))
+    L = ["PREGUNTA (M.11): %d : %d con la DIVISION CORTA  (NCETM 2.15; 4.NBT.B.6)" % (t, d), ""]
+    r = aplicar("division_corta", {"total": t, "divisor": d}, saber)
+    if r["conclusion"] != "hecho":
+        porque = r.get("porque") or (r["candidatos"][0].get("descartado") if r.get("candidatos") else "")
+        return "\n".join(L + ["  NO SE PUEDE: %s" % porque, "", "RESULTADO: no_se_puede"])
+    L.append("     %s" % r["resultado"]["cuenta"].replace("; ", "\n     "))
+    L.append("")
+    L.append("  LA VUELTA: %s ... %s" % (r["resultado"]["vuelta"], "SI" if r["resultado"]["vuelta_ok"] else "NO"))
+    resto = r["resultado"].get("resto", 0)
+    L += ["", "RESULTADO: %d%s" % (r["valor"], " resto %d" % resto if resto else "")]
     return "\n".join(L)
