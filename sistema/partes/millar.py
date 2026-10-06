@@ -14,8 +14,8 @@ import re
 
 _ORDEN_MILLAR = re.compile(r"^millar:?\s*(\d+)$")
 _ORDEN_COMPARAR_NUM = re.compile(r"^comparar:?\s*(\d+)\s*(?:y|,|con|\?)\s*(\d+)$")
-_SITIOS_NOMBRE = ("unidades", "decenas", "centenas", "millares", "decenas de millar")
-_SITIO_UNO = ("unidad", "decena", "centena", "millar", "decena de millar")
+_SITIOS_NOMBRE = ("unidades", "decenas", "centenas", "millares", "decenas de millar", "centenas de millar", "millones")
+_SITIO_UNO = ("unidad", "decena", "centena", "millar", "decena de millar", "centena de millar", "millon")
 
 
 def _millares(saber):
@@ -60,7 +60,7 @@ def decidir_millar(n, saber=None):
     if saber is None:
         saber = cargar_conocimiento()
     if decir(n, saber) is None:
-        return {"conclusion": "todavia_no", "porque": "%d pasa de diez mil: eso es de 5.o (NCETM 1.26)" % n}
+        return {"conclusion": "todavia_no", "porque": "%d pasa de %s: eso es de 6.o (NCETM 1.30)" % (n, techo(saber))}
     cif = cifras_de(n)
     while len(cif) < 4:
         cif.append(0)
@@ -84,23 +84,27 @@ def explicar_millar(texto, saber=None):
         return "NO ENTIENDO ESTO: se escribe asi:  millar: 3045"
     n = int(m.group(1))
     r = decidir_millar(n, saber)
-    L = ["PREGUNTA (N.3): como esta hecho %d?  (NCETM 1.22; 4.NBT.A.2)" % n, ""]
+    L = ["PREGUNTA (N.3, N.4): como esta hecho %d?  (NCETM 1.22, 1.26; 4.NBT.A.2)" % n, ""]
     if r["conclusion"] != "hecho":
         return "\n".join(L + ["  TODAVIA NO: %s" % r["porque"], "", "RESULTADO: todavia_no"])
     s = r["sitios"]
     L.append("  1. CADA CIFRA EN SU SITIO (la posicion dice el valor):")
     for x in reversed(s):
-        L.append("        %-10s %d  -> vale %d" % (x["sitio"], x["cifra"], x["vale"]))
+        L.append("        %-18s %d  -> vale %d" % (x["sitio"], x["cifra"], x["vale"]))
     sumandos = [str(x["vale"]) for x in reversed(s) if x["cifra"]]
     L.append("     %d = %s" % (n, " + ".join(sumandos) if sumandos else "0"))
     L.append("")
     L.append("  2. CUANTAS HAY DE CADA (no solo las sueltas): se tapan las cifras de la derecha")
     for nombre in ("millares", "centenas", "decenas", "unidades"):
-        L.append("        %-10s %d" % (nombre, r["cuantas"][nombre]))
+        L.append("        %-18s %d" % (nombre, r["cuantas"][nombre]))
     for x in s[1:3]:
         if x["cifra"] == 0 and r["cuantas"][x["sitio"]]:
             L.append("     OJO: la cifra de las %s es 0, pero hay %d %s (el cero solo dice que no hay %s SUELTAS)."
                      % (x["sitio"], r["cuantas"][x["sitio"]], x["sitio"], x["sitio"]))
+    if len(cifras_de(n)) >= 5:
+        L.append("")
+        L.append("  3. EL MIL COMO UNA COSA (NCETM 1.26): %d son %d MIL y %d" % (n, r["cuantas"]["millares"],
+                                                                         escribir_cifras(cifras_de(n)[:3])))
     if n == 1000:
         L.append("")
         L.append("  3. MIL: 10 centenas = 100 decenas = 1000 unidades.  Y multiplicando (NCETM 1.22):")

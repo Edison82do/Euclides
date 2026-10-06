@@ -41,41 +41,160 @@ def lista_de_contar(saber):
     return saber["_lista_con_cero"]
 
 
-def techo(saber):
-    """La ULTIMA palabra de la lista: hasta donde se contar (cien en la 6.1, mil en la 6.7, diez mil en
-    la N.3).  Los mensajes de 'no me alcanza' la dicen de aqui, no escrita a mano."""
+def techo_de_contar(saber):
+    """La ULTIMA palabra de la LISTA de contar (cien en la 6.1, mil en la 6.7, diez mil en la N.3): hasta
+    donde se cuentan COSAS una a una.  Las unidades viejas (contar, columnas de la 7.x) llegan hasta aqui."""
     return lista_de_contar(saber)[-1]
 
 
+def numero_maximo(saber):
+    """El numero mas grande que se sabe ESCRIBIR y LEER: el de la lista, o el techo de el_millon.kn (N.4)
+    si lo hay -- los numeros mas alla de la lista se construyen por su estructura, no se recitan."""
+    lista = lista_de_contar(saber)
+    ultimo = len(lista) - 1
+    t = (saber.get("el_millon") or {}).get("techo")
+    t = int(t) if t is not None and str(t).isdigit() else None
+    return t if t is not None and t > ultimo else ultimo
+
+
+def techo(saber):
+    """La palabra del numero maximo: hasta donde se (los mensajes de 'no me alcanza' la dicen de aqui)."""
+    return decir(numero_maximo(saber), saber)
+
+
+# ------------------------------------------- N.4: los numeros mas alla de la lista, POR SU ESTRUCTURA
+
+def _apocope(nombre):
+    """'veintiuno' -> 'veintiun', 'treinta y uno' -> 'treinta y un': el uno delante de 'mil' se acorta."""
+    return nombre[:-1] if nombre.endswith("uno") else nombre
+
+
+def _sin_apocope(nombre):
+    return "%so" % nombre if nombre.endswith("un") and not nombre.endswith("uno") else nombre
+
+
+def _nombre_grande(n, saber):
+    """345678 -> 'trescientos cuarenta y cinco mil seiscientos setenta y ocho' (por grupos de tres cifras)."""
+    lista = lista_de_contar(saber)
+    d = saber.get("el_millon") or {}
+    if str(d.get("techo")) == str(n):
+        return d.get("techo_nombre")
+    cif = cifras_de(n)
+    if len(cif) > 6:
+        return None
+    miles, resto = escribir_cifras(cif[3:]), escribir_cifras(cif[:3])
+    nombre_miles = "mil" if miles == 1 else "%s mil" % _apocope(lista[miles])
+    return nombre_miles if resto == 0 else "%s %s" % (nombre_miles, lista[resto])
+
+
+def _leer_grande(palabra, saber):
+    """Lo contrario: el nombre por grupos de tres -> el numero (se ESCRIBEN las cifras de cada grupo)."""
+    d = saber.get("el_millon") or {}
+    if palabra == d.get("techo_nombre"):
+        return int(d.get("techo"))
+    trozos = palabra.split(" mil")
+    if palabra.startswith("mil "):
+        trozos = ["", palabra[3:]]
+    if len(trozos) != 2:
+        return None
+    antes, despues = trozos[0].strip(), trozos[1].strip()
+    sitio = saber["_sitio_en_la_lista"]
+    miles = 1 if antes == "" else sitio.get(_sin_apocope(antes))
+    resto = 0 if despues == "" else sitio.get(despues)
+    if miles is None or resto is None or miles == 0:
+        return None
+    cr = cifras_de(resto)
+    while len(cr) < 3:
+        cr.append(0)
+    todo = cr[:3]
+    todo.extend(cifras_de(miles))
+    n = escribir_cifras(todo)
+    return n if _nombre_grande(n, saber) == palabra else None
+
+
 def leer(palabra, saber):
-    """El VALOR de una palabra es su SITIO en la lista (principio cardinal).  Solo lectura."""
+    """El VALOR de una palabra es su SITIO en la lista (principio cardinal).  Solo lectura.
+    N.4: y si no esta en la lista, se lee por su ESTRUCTURA (grupos de tres cifras y 'mil')."""
     lista_de_contar(saber)
-    return saber["_sitio_en_la_lista"].get(palabra)
+    v = saber["_sitio_en_la_lista"].get(palabra)
+    if v is not None or palabra is None:
+        return v
+    cache = saber.setdefault("_grandes_leidos", {})
+    if palabra not in cache:
+        cache[palabra] = _leer_grande(palabra, saber)
+    return cache[palabra]
 
 
 def decir(valor, saber):
-    """La palabra que esta en ese sitio de la lista (lo contrario de leer)."""
+    """La palabra que esta en ese sitio de la lista (lo contrario de leer).
+    N.4: mas alla de la lista (hasta el numero maximo), se CONSTRUYE por grupos de tres cifras."""
     lista = lista_de_contar(saber)
-    return lista[valor] if valor is not None and 0 <= valor < len(lista) else None
+    if valor is None or valor < 0:
+        return None
+    if valor < len(lista):
+        return lista[valor]
+    if valor > numero_maximo(saber):
+        return None
+    cache = saber.setdefault("_grandes_dichos", {})
+    if valor not in cache:
+        cache[valor] = _nombre_grande(valor, saber)
+    return cache[valor]
 
 
 def siguiente(palabra, saber):
     lista = lista_de_contar(saber)
     i = saber["_sitio_en_la_lista"].get(palabra)
-    return lista[i + 1] if i is not None and i + 1 < len(lista) else None
+    if i is not None and i + 1 < len(lista):
+        return lista[i + 1]
+    n = leer(palabra, saber)                          # N.4: mas alla, se ESCRIBE (cuentakilometros)
+    if n is None:
+        return None
+    m = _subir_en_el_sitio(n, 0, saber)
+    return decir(m, saber) if m is not None else None
 
 
 def anterior(palabra, saber):
     lista = lista_de_contar(saber)
     i = saber["_sitio_en_la_lista"].get(palabra)
-    return lista[i - 1] if i is not None and i > 0 else None
+    if i is not None:
+        return lista[i - 1] if i > 0 else None
+    n = leer(palabra, saber)
+    if n is None:
+        return None
+    return decir(_bajar_en_el_sitio(n, 0, saber), saber)
+
+
+def _bajar_en_el_sitio(valor, i, saber):
+    """Bajar uno en el sitio i (como el cuentakilometros hacia atras): los ceros se vuelven nueves."""
+    cif = cifras_de(valor)
+    while True:
+        if len(cif) <= i:
+            return None
+        if cif[i] != 0:
+            cif[i] = leer(anterior(decir(cif[i], saber), saber), saber)
+            return escribir_cifras(cif)
+        cif[i] = 9
+        i = i + 1
 
 
 def viene_despues(p, q, saber):
-    """p es MAYOR que q: en la lista viene despues (unidad 4.2)."""
+    """p es MAYOR que q: en la lista viene despues (unidad 4.2).
+    N.4: si alguno no esta en la lista, se comparan las CIFRAS (mas cifras, mayor; si no, la primera
+    distinta de izquierda a derecha)."""
     lista_de_contar(saber)
     s = saber["_sitio_en_la_lista"]
-    return s[p] > s[q]
+    if p in s and q in s:
+        return s[p] > s[q]
+    a, b = leer(p, saber), leer(q, saber)
+    if a is None or b is None:
+        raise KeyError(p if a is None else q)
+    ca, cb = cifras_de(a), cifras_de(b)
+    if len(ca) != len(cb):
+        return s[decir(len(ca), saber)] > s[decir(len(cb), saber)]
+    for x, y in zip(reversed(ca), reversed(cb)):
+        if x != y:
+            return s[decir(x, saber)] > s[decir(y, saber)]
+    return False
 
 
 def levantar_dedos(palabra, saber):
@@ -183,6 +302,8 @@ def saltar(desde, de, saber):
         return subir_una_centena(desde, saber)
     if de == "mil":                                   # paso N.3: de mil en mil, la cifra de los millares
         return _subir_en_el_sitio(desde, 3, saber)
+    if de in ("diez mil", "cien mil"):                # paso N.4: la cifra de las decenas / centenas de millar
+        return _subir_en_el_sitio(desde, 4 if de == "diez mil" else 5, saber)
     p = decir(desde, saber)
     for _ in levantar_dedos(de, saber) or []:
         p = siguiente(p, saber)

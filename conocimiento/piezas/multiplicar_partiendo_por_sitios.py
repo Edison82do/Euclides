@@ -16,7 +16,7 @@ PIEZA = {
     "usa": ["sumar"],
 }
 
-_SITIO = ("unidades", "decenas", "centenas", "millares")
+_SITIO = ("unidades", "decenas", "centenas", "millares", "decenas de millar", "centenas de millar", "millones")
 
 
 def _hecho(u, x, k):

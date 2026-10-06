@@ -65,7 +65,7 @@ try:
     comprobar("B3 ... y partiendo por sitios da lo mismo", ("1800 + 240 + 42 = 2082" in t, "lo mismo: SI" in t), (True, True))
     comprobar("B4 6 x 47 -> 282 (el de una cifra delante)", S("6 x 47"), "282")
     comprobar("B5 25 x 4 -> 100", S("25 x 4"), "100")
-    comprobar("B6 1234 x 9 -> se pasa de diez mil", S("1234 x 9"), "no_se_puede")
+    comprobar("B6 123456 x 9 -> se pasa de un millon (N.4)", S("123456 x 9"), "no_se_puede")
 
     print("\nC - TODAS LAS DE DOS CIFRAS x UNA CIFRA, Y UNA MUESTRA DE TRES Y CUATRO CIFRAS")
     malos = []
@@ -80,7 +80,7 @@ try:
     for _ in range(200):
         n, k = rnd.randint(100, 2000), rnd.randint(2, 9)
         x, y = C("multiplicacion_corta", n, k), C("multiplicar_partiendo_por_sitios", n, k)
-        esperado = n * k if n * k <= 10000 else "no_salio"
+        esperado = n * k if n * k <= 1000000 else "no_salio"
         if x != esperado or y != esperado:
             malos.append((n, k, x, y))
     comprobar("C2 200 de tres y cuatro cifras (las que se pasan de diez mil, no salen)", malos[:3], [])

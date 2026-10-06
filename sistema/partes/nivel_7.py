@@ -28,7 +28,11 @@ def decidir_7_1_dedos(texto_a, texto_b, saber=None):
     pa, ca = nombre_de_numero(texto_a, saber)
     pb, cb = nombre_de_numero(texto_b, saber)
     secuencia = saber["secuencia_de_conteo"]["palabras"]
+    # PASO N.4: el primero puede ser un numero GRANDE (mas alla de la lista de contar); se LEE
+    # por su estructura y se cuenta hacia adelante con 'siguiente' (que sabe pasar de sitio).
     va = _valor_de_cantidad(pa, saber)
+    if va is None and pa is not None:
+        va = _valor_de_numero(pa, saber)
     vb = _valor_de_cantidad(pb, saber)
     cuenta = {"secuencia": secuencia, "valor_a": va, "valor_b": vb, "_saber": saber}
     r = _aplicar_reglas(saber["reglas_7_1"]["reglas_dedos"], None, None, saber, cuenta=cuenta)
@@ -881,8 +885,8 @@ def _detalle_error(escena, r):
 # No es un metodo nuevo: es el de la 7.3 y la 7.5 con las columnas que hagan falta (hasta mil).
 # Cada columna se hace con SU MECANISMO (dedos 7.1 / 7.4): ninguna cuenta sale de "Python suma".
 
-_NOMBRE_COLUMNA = ("unidades", "decenas", "centenas", "unidades de mil", "decenas de mil")
-_UNA_DE_LA_COLUMNA = ("unidad", "decena", "centena", "unidad de mil", "decena de mil")
+_NOMBRE_COLUMNA = ("unidades", "decenas", "centenas", "unidades de mil", "decenas de mil", "centenas de mil", "millones")
+_UNA_DE_LA_COLUMNA = ("unidad", "decena", "centena", "unidad de mil", "decena de mil", "centena de mil", "millon")
 
 
 def _dos_valores(texto_a, texto_b, saber):

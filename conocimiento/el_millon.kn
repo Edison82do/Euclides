@@ -1,0 +1,36 @@
+id: el_millon
+nombre: Hasta un millon (los miles como cosas; los nombres por grupos de tres cifras)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  LA ESCALERA SIGUE OTRA VEZ (paso N.4, 5.o; NCETM 1.26; Common Core 5.NBT.A).
+
+  REGLA FIJADA 1 - EL MIL SE CUENTA COMO UNA COSA (unitising, como la decena 6.2, la centena 6.7 y el
+  millar N.3): 345 000 son 345 MIL.  Por eso lo que se sabe hasta 1000 sirve para los miles:
+      345 mil + 278 mil = 623 mil        100 mil : 4 = 25 mil
+
+  REGLA FIJADA 2 - LOS NOMBRES SE CONSTRUYEN POR GRUPOS DE TRES CIFRAS, de derecha a izquierda:
+      345 678 = (trescientos cuarenta y cinco) MIL (seiscientos setenta y ocho)
+  OJO (el castellano): 1000 es "mil" a secas; pero el "uno" delante de "mil" se acorta: 21 000 es
+  "veintiun mil" y 101 000 "ciento un mil".  Y 1 000 000 es "un millon".
+
+  REGLA FIJADA 3 - UNA PERSONA NO CUENTA HASTA UN MILLON: lee la estructura.  La lista de contar se queda
+  en diez mil (contar cosas una a una llega hasta ahi); los numeros mas grandes se escriben, se leen, se
+  comparan y se calculan por sus cifras: el SIGUIENTE se escribe subiendo la cifra de las unidades (como
+  el cuentakilometros); COMPARAR es mirar las cifras (mas cifras, mayor; si no, la primera distinta).
+
+  REGLA FIJADA 4 - EL CERO MARCA EL SITIO (como siempre): "doscientos mil cinco" es 200 005.
+
+  REGLA FIJADA 5 - EL TECHO DE 5.o ES UN MILLON (NCETM 1.26).  Mas alla: 6.o (NCETM 1.30, diez millones).
+
+errores_tipicos:
+  - Decir "veintiuno mil" o "un mil".
+  - Escribir "doscientos mil cinco" como 2005 o 2 000 005.
+  - Creer que 99 999 es mas que 100 000 "porque tiene nueves".
+fuentes:
+  - NCETM 1.26, Composition and calculation: multiples of 1,000 up to 1,000,000 (Year 5), sus seis
+    teaching points.
+  - Common Core 4.NBT.A.2 (leer y escribir hasta 1 000 000), 5.NBT.A.
+
+techo: 1000000
+techo_nombre: un millon

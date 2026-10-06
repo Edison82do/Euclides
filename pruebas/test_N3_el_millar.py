@@ -93,7 +93,7 @@ try:
     comprobar("A11 300 + 800 -> 1100 (11 centenas)", S("300 + 800"), "1100")
     t = motor.explicar_pregunta(probar.como_problema("300 + 800"), SABER)
     comprobar("A12 ... contando centenas como cosas", "11 centenas" in t, True)
-    comprobar("A13 nombre: 10001 -> todavia no (5.o)", S("nombre: 10001"), "fuera_de_mi_secuencia")
+    comprobar("A13 nombre: 1000001 -> todavia no (N.4: hasta un millon)", S("nombre: 1000001"), "fuera_de_mi_secuencia")
     comprobar("A14 de 1000 en 1000", S("de 1000 en 1000"), "1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000")
     t = motor.explicar_pregunta("millar: 1000", SABER)
     comprobar("A15 mil = 10 centenas = 100 decenas; 2 x 500, 4 x 250, 5 x 200",

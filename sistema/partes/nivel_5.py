@@ -287,8 +287,9 @@ def _valor_de_numero(palabra, saber):
     numeros = list(saber["secuencia_de_numeros"]["numeros"])
     if palabra in numeros:
         return numeros.index(palabra)
-    # El mapa inverso de la 6.7: O(1), no un recorrido de mil nombres.
-    return (saber.get("_nombre_a_valor") or {}).get(palabra)
+    # El mapa inverso de la 6.7: O(1), no un recorrido de mil nombres.  N.4: y si no, por la estructura.
+    v = (saber.get("_nombre_a_valor") or {}).get(palabra)
+    return v if v is not None else leer(palabra, saber)
 
 
 def _valor_de_cantidad(palabra, saber):

@@ -425,7 +425,19 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         redondear: 3456        -> decena 3460, centena 3500, millar 3000      de 1000 en 1000
         300 + 800              -> 1100   3 centenas + 8 centenas = 11 centenas (las centenas como cosas)
         columnas: 2345 + 1678  -> 4023   (lo de tres cifras sirve para cuatro)
-        La lista de contar llega ahora a DIEZ MIL.  Mas alla: 5.o (NCETM 1.26).
+        La lista de contar llega a DIEZ MIL (para contar objetos).  Los numeros: hasta UN MILLON (N.4).
+
+  HASTA UN MILLON  ->  numeros de cinco y seis cifras (paso N.4, 4.o-5.o; NCETM 1.26; 4.NBT.A, 4.NBT.B.5)
+        nombre: 21000          -> veintiun mil      nombre: 101000 -> ciento un mil
+        nombre: 200005         -> doscientos mil cinco   (se lee por grupos de tres: '200 mil' y '5')
+        millar: 345678         -> 300000 + 40000 + 5000 + 600 + 70 + 8   (345 MIL y 678)
+        comparar: 99999 y 100000  -> 99999 < 100000   (mas cifras gana)
+        345000 + 278000        -> 623000   345 mil + 278 mil = 623 mil (el mil como una cosa)
+        columnas: 500000 - 1   -> 499999   (cambiar a traves de cinco ceros)
+        18 x 38                -> 684      LA REJILLA: 10 x 30 + 10 x 8 + 8 x 30 + 8 x 8 (los dos por sitios)
+        redondear: 345678      -> ... decena de millar 350000, centena de millar 300000
+        de 10000 en 10000 desde 970000  -> 980000, 990000, 1000000
+        Contar OBJETOS sigue hasta diez mil; los NUMEROS llegan a un millon.  Mas alla: 5.o-6.o.
 
   MAS DE UN ENTERO  ->  numeros mixtos y fracciones impropias (paso F.4; NCETM 3.5; 4.NF.B.3)
         fraccion: 7/4          -> siete cuartos = 1 3/4   (agrupo 7 cuartos de 4 en 4: 1 entero y sobran 3)

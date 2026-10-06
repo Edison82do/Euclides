@@ -127,7 +127,8 @@ def _dec_columnas(na, nb, k, signo, saber):
     while len(cb) < len(ca):
         cb.append(0)
     sitios = [_DEC_NOMBRE[x][1] for x in range(k, 0, -1)]           # de derecha a izquierda: la mas pequena primero
-    sitios.extend(["unidades", "decenas", "centenas", "millares", "decenas de millar"])
+    sitios.extend(["unidades", "decenas", "centenas", "millares", "decenas de millar", "centenas de millar",
+                   "millones"])
     lineas, lleva = [], 0
     if signo == "+":
         for i, (x, y) in enumerate(zip(ca, cb)):

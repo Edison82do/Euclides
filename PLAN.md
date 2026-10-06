@@ -259,6 +259,7 @@ pruebas → commit. Carlos prueba por la mañana.
 | 30 | ✅ **HECHO (7 oct, madrugada), falta la prueba de Carlos** — `diario/2026-10-07-paso-F5-entero-por-fraccion.md`. **F.5 Multiplicar un entero por una fracción** | NCETM 3.6; 4.NF.B.4 | 300 productos |
 | 31 | ✅ **HECHO (7 oct, madrugada), falta la prueba de Carlos** — `diario/2026-10-07-paso-G1-area-perimetro.md`. **G.1 Área y perímetro** | NCETM 2.16; 3.MD.C.7, 3.MD.D.8; 4.MD.A.3 | 144 rectángulos; polígonos; compuestas |
 | 32 | ✅ **HECHO (7 oct, madrugada), falta la prueba de Carlos** — `diario/2026-10-07-paso-S1-veces.md`. **S.1 «Veces» y fracciones para comparar** | NCETM 2.17; 4.OA.A.1–2 | 160 problemas |
+| 33 | ✅ **HECHO (7 oct, madrugada), falta la prueba de Carlos** — `diario/2026-10-07-paso-N4-hasta-un-millon.md`. **N.4 Hasta un millón** | NCETM 1.26; 4.NBT.A, 4.NBT.B.5 | 316 nombres ida y vuelta, fronteras, 60 comparaciones, 80 columnas, 30 rejillas |
 
 ## EL PLAN ANTERIOR (5 oct, tarde) — sustituido por el de arriba en el orden; se conserva como referencia
 

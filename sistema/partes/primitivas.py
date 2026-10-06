@@ -571,7 +571,7 @@ def _cifra_a_numero(texto, saber):
     t = texto.strip()
     if t.isdigit():
         n = int(t)
-        if 0 <= n <= len(saber["secuencia_de_conteo"]["palabras"]):
+        if 0 <= n <= numero_maximo(saber):              # N.4: hasta el numero maximo (un millon)
             return n
     return None
 
@@ -591,7 +591,7 @@ def nombre_de_numero(texto, saber):
         return inversa[t], True
     n = _cifra_a_numero(t, saber)
     if n is not None:
-        nombre = construir_nombre_hasta_diez_mil(n, saber)
+        nombre = construir_nombre_hasta_diez_mil(n, saber) or decir(n, saber)    # N.4: y por la estructura
         if nombre:
             return nombre, True
     return t, False
@@ -694,6 +694,8 @@ def p_alguna_pasa_del_techo(escena, cuenta):
     Mira tambien el TEXTO: '1500' es un numero aunque no se pueda leer (no_alcanza, no
     no_es_un_numero)."""
     techo = _techo(cuenta)
+    if cuenta.get("_saber"):                       # N.4: las columnas llegan a lo que se sabe escribir (un millon)
+        techo = numero_maximo(cuenta["_saber"])
     for texto in (cuenta.get("texto_a"), cuenta.get("texto_b")):
         if isinstance(texto, str) and texto.strip().isdigit() and int(texto.strip()) > techo:
             return True

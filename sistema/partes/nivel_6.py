@@ -183,6 +183,26 @@ def explicar_6_1_nombre(texto, saber=None):
         lineas.append("  nombres, porque no los tengo escritos en ningun sitio.")
         return "\n".join(lineas)
     palabra = d["palabra"]
+    if n > 10000:
+        # PASO N.4 (5.o): por GRUPOS DE TRES CIFRAS; el mil se cuenta como una cosa (NCETM 1.26)
+        cif = cifras_de(n)
+        miles, resto = escribir_cifras(cif[3:6]), escribir_cifras(cif[:3])
+        lineas.append("")
+        if palabra == (saber.get("el_millon") or {}).get("techo_nombre"):
+            lineas.append("  MIL MILES son UN MILLON (el techo de 5.o; NCETM 1.26).")
+        else:
+            lineas.append("  SE CONSTRUYE POR GRUPOS DE TRES CIFRAS (paso N.4): %d MIL y %d" % (miles, resto))
+            lineas.append("     %d -> '%s', y detras 'mil'%s" % (miles, decir(miles, saber),
+                          " (el uno se acorta: 'un mil' no, '%s mil' si)" % palabra.split(" mil")[0]
+                          if decir(miles, saber).endswith("uno") else ""))
+            if resto:
+                lineas.append("     %d -> '%s'" % (resto, decir(resto, saber)))
+            if resto and cifras_de(resto) and len(cifras_de(resto)) < 3:
+                lineas.append("  OJO: el resto (%d) no tiene centenas: se escribe con ceros en su sitio (%d)" % (resto, n))
+            lineas.append("     ->  %s" % palabra)
+        lineas.append("")
+        lineas.append("RESULTADO: %s" % palabra)
+        return "\n".join(lineas)
     if n > 1000:
         # PASO N.3 (4.o): el MILLAR se dice delante ('dos mil') y el resto se construye como antes.
         mil, resto = escribir_cifras(cifras_de(n)[3:]), escribir_cifras(cifras_de(n)[:3])
@@ -529,7 +549,7 @@ def explicar_6_3_sitio(texto, saber=None):
     lineas.append("NUMERO:  %s" % texto)
     if r["conclusion"] == "no_alcanza":
         lineas.append("RESULTADO: no_alcanza")
-        lineas.append("  Es un numero, pero pasa de %s: se sale de mi secuencia.  No me lo invento." % techo(saber).upper())
+        lineas.append("  Es un numero, pero pasa de %s: se sale de mi secuencia.  No me lo invento." % techo_de_contar(saber).upper())
         return "\n".join(lineas)
     if r["conclusion"] == "no_es_un_numero":
         lineas.append("RESULTADO: no_es_un_numero")
@@ -688,7 +708,7 @@ def explicar_6_5_partir(texto, saber=None):
     lineas.append("NUMERO:  %s" % texto)
     if r["conclusion"] == "no_alcanza":
         lineas.append("RESULTADO: no_alcanza")
-        lineas.append("  Es un numero, pero pasa de %s: se sale de mi secuencia.  No me lo invento." % techo(saber).upper())
+        lineas.append("  Es un numero, pero pasa de %s: se sale de mi secuencia.  No me lo invento." % techo_de_contar(saber).upper())
         return "\n".join(lineas)
     if r["conclusion"] == "no_es_un_numero":
         lineas.append("RESULTADO: no_es_un_numero")
@@ -788,7 +808,7 @@ def explicar_6_5_juntar_decenas(decenas, unidades, saber=None):
     if r["conclusion"] in ("fuera_de_la_tabla", "no_alcanza"):
         lineas.append("RESULTADO: %s" % r["conclusion"])
         lineas.append("  Eso se pasa de %s (%d decenas y %d unidades), y mi secuencia llega ahi."
-                      % (techo(saber).upper(), r["decenas"], r["unidades"]))
+                      % (techo_de_contar(saber).upper(), r["decenas"], r["unidades"]))
         return "\n".join(lineas)
     d, u = r["decenas"], r["unidades"]
     lineas.append("")
@@ -976,12 +996,12 @@ def explicar_6_7_centena(texto, saber=None, desde=None):
     lineas = [cab, "NUMERO:  %s" % texto]
     if r["conclusion"] == "no_es_un_numero":
         lineas.append("RESULTADO: no_es_un_numero")
-        lineas.append("  '%s' no es un numero que sepa leer (los mios van del CERO al %s)." % (texto, techo(saber).upper()))
+        lineas.append("  '%s' no es un numero que sepa leer (los mios van del CERO al %s)." % (texto, techo_de_contar(saber).upper()))
         return "\n".join(lineas)
     if r["conclusion"] == "no_alcanza":
         lineas.append("RESULTADO: no_alcanza")
         lineas.append("  %s es un numero, pero se sale de mi secuencia (llega a %s).  No me lo"
-                      " invento." % (r["valor"], techo(saber).upper()))
+                      " invento." % (r["valor"], techo_de_contar(saber).upper()))
         return "\n".join(lineas)
     v = r["valor"]
     lineas.append("")
@@ -1035,9 +1055,10 @@ def decidir_6_1_nombre(texto, saber=None):
     if not t.isdigit():
         return {"conclusion": "no_lo_se", "texto": t}
     n = int(t)
-    if n < 1 or n > len(saber["secuencia_de_conteo"]["palabras"]):
+    if n < 1 or decir(n, saber) is None:                 # N.4: hasta el numero maximo (un millon)
         return {"conclusion": "fuera_de_mi_secuencia", "valor": n}
-    return {"conclusion": "nombre", "valor": n, "palabra": construir_nombre_hasta_diez_mil(n, saber)}
+    return {"conclusion": "nombre", "valor": n,
+            "palabra": construir_nombre_hasta_diez_mil(n, saber) or decir(n, saber)}
 
 
 def decidir_6_1_numero(texto, saber=None):
@@ -1048,6 +1069,8 @@ def decidir_6_1_numero(texto, saber=None):
     if not t:
         return {"conclusion": "no_entendido"}
     v = (saber.get("_nombre_a_valor") or {}).get(t)
+    if v is None:
+        v = leer(t, saber)                               # N.4: mas alla de la lista, por la estructura
     if v is None:
         return {"conclusion": "no_lo_se", "texto": t}
     return {"conclusion": "numero", "valor": v, "palabra": t}

@@ -17,7 +17,9 @@ PIEZA = {
 }
 
 _SITIOS = {"decena": (1, (0,), 0, "diez", "unidades"), "centena": (2, (0, 1), 1, "cien", "decenas"),
-           "millar": (3, (0, 1, 2), 2, "mil", "centenas")}                     # N.3: tambien al millar
+           "millar": (3, (0, 1, 2), 2, "mil", "centenas"),                     # N.3: tambien al millar
+           "decena de millar": (4, (0, 1, 2, 3), 3, "diez mil", "millares"),              # N.4 (5.o)
+           "centena de millar": (5, (0, 1, 2, 3, 4), 4, "cien mil", "decenas de millar")}
 
 
 def hacer(s, u):

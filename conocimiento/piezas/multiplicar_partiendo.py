@@ -29,6 +29,8 @@ def _sabido(x, k, u):
 def partir(s, u):
     """(f, k, p, q, p x k, q x k) o None: f = p + q y los dos productos se saben."""
     for f, k in ((s["a"], s["b"]), (s["b"], s["a"])):
+        if len(u.cifras_de(f)) > 2:
+            continue
         for p in _TROZOS:
             if not u.viene_despues(u.decir(f), u.decir(p)):
                 continue

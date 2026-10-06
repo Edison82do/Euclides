@@ -181,6 +181,14 @@
   (dividir); otras medidas igual. **Common Core 4.OA.A.1–2** (comparación multiplicativa, distinta de la
   aditiva). → S.1.
 
+- **NCETM 1.26** (*Numbers 10,000–1,000,000*, Year 5): los números hasta un millón se leen y escriben por
+  grupos de tres («345 mil 678»): los miles se cuentan como **una cosa** (como las decenas y las
+  centenas); contar hacia adelante y hacia atrás cruzando fronteras (99 999 → 100 000); comparar y
+  ordenar; redondear a la decena y centena de millar; sumar y restar «miles justos» como
+  unidades (345 mil + 278 mil). **Common Core 4.NBT.A.1–3** (hasta 1 000 000), **4.NBT.B.4** (algoritmo
+  en columnas), **4.NBT.B.5** (dos cifras por dos cifras con valor posicional y modelo de área → la
+  rejilla). → N.4.
+
 ## Enlaces
 - NCETM 2.9: https://www.ncetm.org.uk/classroom-resources/primm-209-times-tables-7-and-patterns-withinacross-times-tables/
 - NCETM 2.10: https://www.ncetm.org.uk/classroom-resources/primm-210-connecting-multiplication-and-division-and-the-distributive-law/

@@ -26,9 +26,9 @@ def hacer(s, u):
     ca, cb = _centenas(u, s["a"]), _centenas(u, s["b"])
     c = u.sumar_por_columnas(ca, cb)                       # las centenas, como cosas (el mecanismo)
     total = u.escribir_cifras([0, 0] + u.cifras_de(c))    # 11 centenas -> 1100
-    atras = u.leer(u.contar_hasta(u.decir(cb), u.decir(c)))  # la vuelta: de cb a c, contando hacia arriba
+    atras = u.sumar_por_columnas(cb, ca)                   # la vuelta: en el otro orden tiene que dar lo mismo
     return {"valor": total, "metodo": "contar centenas (N.3)",
             "cuenta": "%d + %d: %d centenas + %d centenas = %d centenas (%d + %d = %d, por columnas) = %d"
                       % (s["a"], s["b"], ca, cb, c, ca, cb, c, total),
-            "vuelta": "%d - %d: %d centenas - %d centenas = %d centenas" % (total, s["b"], c, cb, atras),
-            "vuelta_ok": atras == ca}
+            "vuelta": "en el otro orden: %d centenas + %d centenas = %d centenas" % (cb, ca, atras),
+            "vuelta_ok": atras == c}

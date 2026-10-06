@@ -15,12 +15,14 @@ PIEZA = {
     "condiciones": [
         ("se_puede_redondear", "el numero no esta en mi lista (hasta mil), o el sitio no es decena ni centena"),
     ],
-    "usa": [],
+    "usa": ["restar"],
 }
 
 # el sitio: (la cifra del sitio, las de su derecha, la de justo a la derecha, el salto, el nombre)
 _SITIOS = {"decena": (1, (0,), 0, "diez", "decenas"), "centena": (2, (0, 1), 1, "cien", "centenas"),
-           "millar": (3, (0, 1, 2), 2, "mil", "millares")}                     # N.3: tambien al millar
+           "millar": (3, (0, 1, 2), 2, "mil", "millares"),                     # N.3: tambien al millar
+           "decena de millar": (4, (0, 1, 2, 3), 3, "diez mil", "decenas de millar"),     # N.4 (5.o)
+           "centena de millar": (5, (0, 1, 2, 3, 4), 4, "cien mil", "centenas de millar")}
 
 
 def hacer(s, u):
@@ -42,7 +44,7 @@ def hacer(s, u):
     mitad_c[junto] = 5
     mitad = u.escribir_cifras(mitad_c)
     pasa = u.escribir_cifras([cif[j] for j in derecha])              # lo que pasa de abajo: se LEE
-    falta = u.leer(u.contar_hasta(u.decir(n), u.decir(arriba)))                        # lo que falta: contando hacia arriba
+    falta = u.usar("restar", a=arriba, b=n)["valor"]                  # lo que falta hasta arriba (la resta, P.6)
     linea = "%d esta entre %d y %d.  La mitad del camino es %d." % (n, abajo, arriba, mitad)
     lejos = "  De %d a %d hay %d; de %d a %d hay %d." % (abajo, n, pasa, n, arriba, falta)
     if n == mitad:

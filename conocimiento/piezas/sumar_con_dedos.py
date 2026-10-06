@@ -12,7 +12,7 @@ PIEZA = {
     "que_hace": "anota el primero y cuenta hacia adelante tantos dedos como el segundo",
     "condiciones": [
         ("el_segundo_cabe_en_los_dedos", "el segundo pasa de diez: no cabe en los dedos"),
-        ("el_total_tiene_nombre", "el total se pasa de mi lista de contar (mil)"),
+        ("el_total_tiene_nombre", "el total se pasa de mi lista de contar (un millon)"),
     ],
     "usa": ["7.1"],
 }

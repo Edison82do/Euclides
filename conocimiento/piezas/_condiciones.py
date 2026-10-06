@@ -41,6 +41,8 @@ def _se_puede_partir(s, u):
     def sabido(x, k):
         return x == 1 or u.recuerdo("%d x %d" % (x, k)) or u.recuerdo("%d x %d" % (k, x))
     for f, k in ((s["a"], s["b"]), (s["b"], s["a"])):
+        if len(u.cifras_de(f)) > 2:                      # se parte un numero pequeno (los grandes: por sitios, M.10)
+            continue
         for p in (10, 5, 2, 4, 3):
             if u.viene_despues(u.decir(f), u.decir(p)):
                 q = u.leer(u.contar_hasta(u.decir(p), u.decir(f)))
@@ -137,6 +139,8 @@ CONDICIONES = {
         u.contar_adelante(u.decir(s["a"]), u.decir(s["b"]))["resultado"], "diez"),
     "el_total_tiene_nombre": lambda s, u: u.sumar_por_columnas(s["a"], s["b"]) is not None,
     # ---- multiplicacion corta (paso M.10; NCETM 2.14): un factor de una cifra (2..9), el otro de varias
+    "los_dos_factores_de_varias_cifras": lambda s, u: (len(u.cifras_de(s.get("a", 0))) >= 2
+                                                        and len(u.cifras_de(s.get("b", 0))) >= 2),
     "un_factor_de_una_cifra_y_otro_de_varias": lambda s, u: any(
         len(u.cifras_de(x)) == 1 and x not in (0, 1) and len(u.cifras_de(y)) >= 2
         for x, y in ((s.get("a", 0), s.get("b", 0)), (s.get("b", 0), s.get("a", 0)))),
@@ -148,6 +152,9 @@ CONDICIONES = {
     "un_factor_acaba_en_cero": lambda s, u: any(x and u.cifras_de(x)[0] == 0 for x in (s.get("a"), s.get("b"))),
     "el_dividendo_acaba_en_cero": lambda s, u: bool(s.get("total")) and u.cifras_de(s["total"])[0] == 0
                                                 and s.get("divisor") not in (0, 1, 10, 100),
+    # ---- miles justos (paso N.4; NCETM 1.26: lo de hasta mil sirve para los miles)
+    "los_dos_son_miles_justos": lambda s, u: all(len(u.cifras_de(x)) >= 5 and u.cifras_de(x)[:3] == [0, 0, 0]
+                                                for x in (s["a"], s["b"])),
     # ---- centenas justas (paso N.3; NCETM 1.22: 'al sumar o restar multiplos de 100, sale un multiplo de 100')
     "los_dos_son_centenas_justas": lambda s, u: all(len(u.cifras_de(x)) >= 3 and u.cifras_de(x)[0] == 0
                                                    and u.cifras_de(x)[1] == 0 for x in (s["a"], s["b"])),
@@ -159,6 +166,9 @@ CONDICIONES = {
     "el_segundo_no_es_menor": lambda s, u: not u.viene_despues(u.decir(s["a"]), u.decir(s["b"])),
     # ---- multiplicar (paso M.1): situacion {"a": grupos, "b": cuantos en cada grupo}
     "los_grupos_tienen_nombre_x": lambda s, u: u.decir(s["a"]) is not None,
+    # N.4: sumar grupo a grupo es para POCOS grupos (hasta doce), leyendolo como haga falta (la conmutativa)
+    "pocos_grupos_en_alguna_lectura": lambda s, u: any(u.decir(x) is not None and not u.viene_despues(u.decir(x), "doce")
+                                                       for x in (s["a"], s["b"])),
     # ---- problemas de x y : (paso R.2): el esquema de grupos iguales {"busca", "grupos", "en_cada", "total"}
     "se_busca_el_total": lambda s, u: s.get("busca") == "total",
     "se_busca_cuantos_en_cada": lambda s, u: s.get("busca") == "en_cada",
@@ -227,7 +237,8 @@ CONDICIONES = {
     "mismo_numerador": lambda s, u: s["a"][0] == s["b"][0],
     "comparten_arriba_o_abajo": lambda s, u: s["a"][0] == s["b"][0] or s["a"][1] == s["b"][1],
     # ---- redondear (paso N.2; 3.NBT.A.1): el numero esta en la lista, y el sitio es decena o centena
-    "se_puede_redondear": lambda s, u: u.decir(s["n"]) is not None and s.get("a") in ("decena", "centena", "millar"),
+    "se_puede_redondear": lambda s, u: u.decir(s["n"]) is not None and s.get("a") in (
+        "decena", "centena", "millar", "decena de millar", "centena de millar"),
 }
 
 DE_APLICACION = {"el_divisor_no_es_cero", "hay_bastantes", "hay_bastantes_al_deshacer", "la_parte_cabe_en_el_todo",

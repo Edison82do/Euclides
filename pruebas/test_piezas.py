@@ -79,8 +79,8 @@ desc = {c["id"]: c.get("descartado") for c in r["candidatos"]}
 comprobar("B5 y el descarte lleva su porque", "no cabe en los dedos" in (desc["sumar_con_dedos"] or ""), True)
 r = motor.aplicar("restar", {"a": 3, "b": 5}, SABER)
 comprobar("B6 3 - 5: imposible (no hay restas negativas)", r["conclusion"], "imposible")
-r = motor.aplicar("sumar", {"a": 9000, "b": 2000}, SABER)
-comprobar("B7 9000 + 2000: ninguna pieza (se pasa de diez mil, N.3)", r["conclusion"] in ("ninguna", "imposible"), True)
+r = motor.aplicar("sumar", {"a": 900000, "b": 200000}, SABER)
+comprobar("B7 900000 + 200000: ninguna pieza (se pasa de un millon, N.4)", r["conclusion"] in ("ninguna", "imposible"), True)
 r = motor.aplicar("paso", {"tipo": "cambio", "antes": 5, "signo": "+", "n": 3}, SABER)
 comprobar("B8 un paso: se prueban TODAS las piezas de pasos",
           len(r["candidatos"]), len([p for p in BASE["piezas"].values() if p["responde"] == "paso"]))

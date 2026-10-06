@@ -204,6 +204,8 @@ def aplicar(pregunta, situacion, saber=None, base=None):
     for k, (p, fila) in enumerate(validas):
         try:
             res = p["hacer"](situacion, _Lo_que_puede_usar(p, base, saber))
+            if res.get("vuelta_ok") is False:          # su propia comprobacion no cuadro: no se da por buena
+                raise NoSalio("su comprobacion no cuadro (%s)" % res.get("vuelta", ""))
             hechos.append((p, res))
         except (NoSalio, ValueError) as e:      # una pieza dice que no le sale con ValueError
             fila["no_salio"] = str(e)

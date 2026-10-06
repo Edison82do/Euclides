@@ -13,9 +13,11 @@ Es lo que hace falta para la estimacion de 3.OA.D.8 ('es razonable la respuesta?
 import re
 
 _ORDEN_REDONDEAR = re.compile(
-    r"^(\d+)(?:\s+(?:a\s+la|al|a)\s+(decena|centena|diez|cien|millar|mil|unidad)(?:\s+mas\s+cercana)?)?\s*$")
+    r"^(\d+)(?:\s+(?:a\s+la|al|a)\s+(decena de millar|centena de millar|decena|centena|diez|cien|millar|mil|unidad)"
+    r"(?:\s+mas\s+cercana)?)?\s*$")
 _SITIO_DE = {"decena": "decena", "diez": "decena", "centena": "centena", "cien": "centena",
-             "millar": "millar", "mil": "millar"}                                 # N.3 (4.NBT.A.3)
+             "millar": "millar", "mil": "millar",                                 # N.3 (4.NBT.A.3)
+             "decena de millar": "decena de millar", "centena de millar": "centena de millar"}   # N.4
 
 
 def decidir_redondear(n, a, saber=None):
@@ -48,6 +50,10 @@ def explicar_redondear(texto, saber=None):
     sitios = [_SITIO_DE[sitio]] if sitio else ["decena", "centena"]
     if not sitio and len(cifras_de(n)) >= 4:
         sitios.append("millar")                                           # N.3: de cuatro cifras, tambien al millar
+    if not sitio and len(cifras_de(n)) >= 5:
+        sitios.append("decena de millar")                                 # N.4 (NCETM 1.26)
+    if not sitio and len(cifras_de(n)) >= 6:
+        sitios.append("centena de millar")
     finales, valores = [], {}
     for a in sitios:
         r = decidir_redondear(n, a, saber)

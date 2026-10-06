@@ -47,17 +47,19 @@ def main():
     t0 = time.time()
     os.environ.update(entorno)
     separados = "--separados" in sys.argv
-    for nombre in archivos:
-        t = time.time()
-        if separados:
-            r = subprocess.run([sys.executable, os.path.join(DIR_PRUEBAS, nombre)], cwd=RAIZ,
-                               capture_output=True, text=True, env=entorno)
-        else:
-            antes = dict(os.environ)
-            r = _correr_aqui(os.path.join(DIR_PRUEBAS, nombre))
-            os.environ.clear()
-            os.environ.update(antes)
-        seg = time.time() - t
+    # Los casos de Carlos se lanzan YA, en otro proceso, mientras corren las pruebas (7 oct 2026: la suite
+    # pasaba de dos minutos; con dos procesos a la vez tarda la mitad).
+    t_casos = time.time()
+    casos_proc = subprocess.Popen([sys.executable, os.path.join(RAIZ, "probar.py"), "--casos"], cwd=RAIZ,
+                                  stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, env=entorno)
+    if separados:
+        resultados = ((n,) + _separado(n, entorno) for n in archivos)
+    else:
+        import multiprocessing
+        trabajadores = max(1, min(2, (os.cpu_count() or 1)))
+        pool = multiprocessing.get_context("fork").Pool(trabajadores) if trabajadores > 1 else None
+        resultados = pool.imap(_trabajo, archivos) if pool else map(_trabajo, archivos)
+    for nombre, r, seg in resultados:
         log.write("\n" + "#" * 72 + "\n# %s\n" % nombre + "#" * 72 + "\n" + r.stdout + r.stderr)
         mal = r.returncode != 0
         encontrados = re.findall(r"(?:^|\n)(?:TOTAL|UNIDAD [0-9A-Z.]+):\s*(\d+)/(\d+)", r.stdout)
@@ -76,10 +78,13 @@ def main():
             fallos.append(nombre)
         if mal or todo:
             print(r.stdout + r.stderr)
+    if not separados and pool:
+        pool.close()
+        pool.join()
     # Los casos de Carlos corren por la OTRA via (la del probador): si se desincroniza, ROJO.
-    t = time.time()
-    r = subprocess.run([sys.executable, os.path.join(RAIZ, "probar.py"), "--casos"], cwd=RAIZ,
-                       capture_output=True, text=True, env=entorno)
+    t = t_casos
+    out, err = casos_proc.communicate()
+    r = _Resultado(out, err, casos_proc.returncode)
     log.write("\n# probar.py --casos\n" + r.stdout + r.stderr)
     m = re.search(r"mis casos: (\d+) bien, (\d+) fallan", r.stdout)
     casos = "%s/%d" % (m.group(1), int(m.group(1)) + int(m.group(2))) if m else "?"
@@ -105,6 +110,23 @@ def main():
         return 1
     print("RESULTADO GLOBAL: VERDE")
     return 0
+
+
+def _trabajo(nombre):
+    """Un archivo de pruebas en un trabajador (su propio proceso, con el motor cargado una vez)."""
+    t = time.time()
+    antes = dict(os.environ)
+    r = _correr_aqui(os.path.join(DIR_PRUEBAS, nombre))
+    os.environ.clear()
+    os.environ.update(antes)
+    return nombre, r, time.time() - t
+
+
+def _separado(nombre, entorno):
+    t = time.time()
+    r = subprocess.run([sys.executable, os.path.join(DIR_PRUEBAS, nombre)], cwd=RAIZ,
+                       capture_output=True, text=True, env=entorno)
+    return r, time.time() - t
 
 
 class _Resultado:

@@ -266,7 +266,7 @@ sumar_numeros: 0 + 4                       | 0 + 4 = 4    | el cero vale
 sumar_numeros: 5 + 5                       | 5 + 5 = diez | la cifra del diez no la tengo
 sumar_numeros: 7 + 5                       | 7 + 5 = doce | MEJORA 7.1: pasa de diez y ya no importa
 sumar_numeros: 9 + 9                       | 9 + 9 = dieciocho | MEJORA 7.1: el techo viejo era diez
-sumar_numeros: nueve mil + nueve mil  | no_alcanza | MEJORA N.3: el techo es DIEZ MIL (900 + 900 ya suma: 1800)
+sumar_numeros: novecientos mil + novecientos mil  | no_alcanza | MEJORA N.4: las cuentas llegan a UN MILLON
 sumar_numeros: noventa + noventa           | 90 + 90 = 180 | (6.7) YA se puede: el techo es mil
 sumar_numeros: manzana + 2                 | no_es_un_numero | TRAMPA: 'manzana' no es un numero
 descomponer_numero: 5                      | 0+5,1+4,2+3 | partir un NUMERO (no una coleccion)
@@ -330,7 +330,7 @@ nombre: 30                                 | treinta      | una DECENA: hay que 
 nombre: 15                                 | quince       | irregular: del 11 al 15 hay que saberselos
 nombre: 100                                | cien         | el final de la secuencia
 nombre: 101   | ciento uno | (6.7) el techo subio a mil: 101 YA se lee
-nombre: 10001  | fuera_de_mi_secuencia | (N.3) mas alla de diez mil no me lo invento
+nombre: 1000001 | fuera_de_mi_secuencia | (N.4) mas alla de un millon no me lo invento
 numero: cuarenta y siete                   | 47           | la vuelta: del nombre al numero
 numero: veintidos                          | 22           |
 numero: cien                               | 100          |
@@ -348,7 +348,7 @@ dedos: 0 + 3                               | cero + tres = tres | se cuenta desd
 dedos: 1 + 1                               | uno + uno = dos | el mas pequeno
 dedos: ocho + diez                         | ocho + diez = dieciocho | diez dedos caben justo
 dedos: ocho + doce                         | no_caben_en_los_dedos | al SEGUNDO no le pueden pasar de 10
-dedos: nueve mil novecientos noventa y cinco + nueve  | no_alcanza | (N.3) el techo es DIEZ MIL
+dedos: novecientos noventa y nueve mil novecientos noventa y cinco + nueve  | no_alcanza | (N.4) el techo es UN MILLON
 dedos: noventa y cinco + nueve  | noventa y cinco + nueve = ciento cuatro | (6.7) YA se puede
 dedos: ocho + manzana                      | no_es_un_numero | 'manzana' no es un numero
 dedos: cuarenta y siete + tres             | cuarenta y siete + tres = cincuenta | el PRIMERO puede ser grande
@@ -372,9 +372,9 @@ columnas: 5 + 3                            | 5 + 3 = 8 | SIN llevarse: 5+3=8 no 
 columnas: 60 + 40                          | 60 + 40 = 100 | justo el cien
 columnas: 100 + 0                          | 100 + 0 = 100 |
 columnas: 0 + 0                            | 0 + 0 = 0 |
-columnas: 6000 + 5000  | no_alcanza | (N.3) 11000 pasa de diez mil
+columnas: 600000 + 500000  | no_alcanza | (N.4) pasa de un millon
 columnas: 60 + 50    | 60 + 50 = 110 | (6.7) YA se puede: el techo es mil
-columnas: 9000 + 2000  | no_alcanza | (N.3) 11000 pasa de diez mil
+columnas: 900000 + 200000  | no_alcanza | (N.4) pasa de un millon
 columnas: 9 + 99    | 9 + 99 = 108 | (6.7) YA se puede: el techo es mil
 columnas: manzana + 3                      | no_es_un_numero |
 sumar_numeros: 32 + 15                     | 32 + 15 = 47 | AHORA usa las COLUMNAS (antes decia necesito_las_columnas)
@@ -533,7 +533,7 @@ columnas: 99 + 99                          | 99 + 99 = 198 | el total pasa de ci
 columnas: 500 - 247                        | 500 - 247 = 253 | A TRAVES DE UN CERO (y NO 347, dar la vuelta)
 columnas: 1000 - 1                         | 1000 - 1 = 999 | tres cambios seguidos
 columnas: 300 - 301                        | no_hay_bastantes | no hay resta negativa
-columnas: 15000 - 40                       | no_alcanza | es un numero, pero pasa de diez mil
+columnas: 1000001 - 40                     | no_alcanza | es un numero, pero pasa de un millon
 sumar_numeros: 247 + 385                   | 247 + 385 = 632 | sumar numeros usa las columnas (7.6)
 restar_numeros: 50 - 27                    | 50 - 27 = 23 | ANTES salia 'None - None = veintitres' (fallo arreglado el 5 oct)
 restar_numeros: 500 - 247                  | 500 - 247 = 253 | con dos o tres cifras, por columnas
@@ -628,7 +628,7 @@ ecuacion: 8 + 4 = ? + 13                   | imposible | el otro plato pesa mas
 # ---------------------------------------------------------------------------
 de 2 en 2 hasta 10                         | 2, 4, 6, 8, 10 | de dos en dos
 de 10 en 10 desde 47 hasta 97              | 57, 67, 77, 87, 97 | se escribe la cifra
-de 100 en 100 desde 9750                   | 9850, 9950 | se para antes de diez mil (N.3)
+de 100 en 100 desde 999750                 | 999850, 999950 | se para antes de un millon y uno (N.4)
 de 3 en 3 hasta 30                         | no_entiendo | no esta en el estandar
 par: 0                                     | par | cero parejas
 par: 7                                     | impar | sobra uno
@@ -655,7 +655,7 @@ ecuacion: 47 + ? = 77                      | 30 | saltando de diez
 5 x 2                                      | 10 | saltando de 2
 3 grupos de 4                              | 12 | con palabras
 grupos de 2, 3 y 4                         | 9 | desiguales: suma
-400 x 30                                   | no_se_puede | pasa de diez mil (N.3)
+4000 x 300                                 | no_se_puede | pasa de un millon (N.4)
 ecuacion: 3 x ? = 12                       | 4 | desde E.4: repartir 12 entre 3
 # ---------------------------------------------------------------------------
 # PASO M.2 - LAS TABLAS DEL 2, 5 Y 10; CONMUTATIVA; DOBLES Y MITADES (NCETM 2.3-2.5)
@@ -844,13 +844,13 @@ problema: Reparte 17 caramelos entre 5 ninos. Cuantos sobran? | 2 | el resto
 23 x 100                                   | 2300 | dos veces
 47 : 10                                    | 4 resto 7 | las unidades sobran
 2345 : 100                                 | 23 resto 45 | dos sitios
-999 x 100                                  | no_se_puede | pasa de diez mil
+99999 x 100                                | no_se_puede | pasa de un millon (N.4)
 # ---------------------------------------------------------------------------
 # PASO M.10 - LA MULTIPLICACION CORTA (NCETM 2.14)
 # ---------------------------------------------------------------------------
 47 x 6                                     | 282 | corta, o sumando si no se saben las tablas
 347 x 6                                    | 2082 | llevar a traves del cero
-1234 x 9                                   | no_se_puede | pasa de diez mil
+123456 x 9                                 | no_se_puede | pasa de un millon (N.4)
 # ---------------------------------------------------------------------------
 # PASO M.11 - LA DIVISION CORTA (NCETM 2.15)
 # ---------------------------------------------------------------------------
@@ -913,3 +913,12 @@ veces: 4 veces 6                           | 24 | no 10
 cuantas veces: 24 y 6                      | 4 | dividir
 problema: La cuerda roja mide 6 cm. La azul es 4 veces mas larga. Cuanto mide la azul? | 24 cm | multiplicar
 problema: La azul mide 24 cm. Es 4 veces mas larga que la roja. Cuanto mide la roja? | 6 cm | dividir
+# --- paso N.4: hasta un millon (NCETM 1.26)
+nombre: 21000                              | veintiun mil | (N.4) apocope: veintiun mil, no veintiuno mil
+nombre: 200005                             | doscientos mil cinco | (N.4) grupos de tres
+numero: ciento un mil                      | 101000 | (N.4) leer por grupos de tres
+comparar: 99999 y 100000                   | 99999 < 100000 | (N.4) mas cifras gana
+calcular: 345000 + 278000                  | 623000 | (N.4) 345 mil + 278 mil
+columnas: 500000 - 1                       | 500000 - 1 = 499999 | (N.4) cambiar a traves de los ceros
+18 x 38                                    | 684 | (N.4) la rejilla
+de 100000 en 100000 desde 700000           | 800000, 900000, 1000000 | (N.4) y se para en el millon

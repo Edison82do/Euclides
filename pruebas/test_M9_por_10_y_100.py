@@ -62,7 +62,7 @@ try:
     comprobar("A3 ... y lo dice: 23 x 10 = 230, y 230 x 10 = 2300", ("23 x 10 = 230" in t, "230 x 10 = 2300" in t), (True, True))
     comprobar("A4 230 : 10 -> 23;  47 : 10 -> 4 resto 7", (D(230, 10)[:2], D(47, 10)[:2]), ((23, 0), (4, 7)))
     comprobar("A5 2345 : 100 -> 23 resto 45", D(2345, 100)[:2], (23, 45))
-    comprobar("A6 999 x 100 -> se pasa de diez mil", S("999 x 100"), "no_se_puede")
+    comprobar("A6 99999 x 100 -> se pasa de un millon (N.4)", S("99999 x 100"), "no_se_puede")
     comprobar("A7 9 x 80 sin memoria: no se deriva (hace falta saber 9 x 8)", M(9, 80)[1] != "multiplicar_por_decenas_justas", True)
     motor.aprender("tablas", SABER)
     comprobar("A8 con las tablas aprendidas: 9 x 80 -> 720 (9 x 8 = 72, diez veces)", M(9, 80), (720, "multiplicar_por_decenas_justas"))
@@ -74,9 +74,9 @@ try:
     for n in numeros(0, 1000):
         for k in (10, 100):
             v, pid = M(n, k)
-            if n * k <= 10000 and v != n * k:
+            if n * k <= 1000000 and v != n * k:
                 malos.append((n, k, v))
-            if n * k > 10000 and v is not None:
+            if n * k > 1000000 and v is not None:
                 malos.append((n, k, "se paso", v))
     comprobar("B1 n x 10 y n x 100", malos[:3], [])
     malos = []
@@ -92,7 +92,7 @@ try:
     for a in range(1, 13):
         for b in (10, 20, 30, 50, 70, 90, 110, 200, 400, 900):
             v, pid = M(a, b)
-            if v != (a * b if a * b <= 10000 else None):
+            if v != (a * b if a * b <= 1000000 else None):
                 malos.append((a, b, v))
     comprobar("C1 una cifra (o 10, 11, 12) por decenas y centenas justas", malos[:3], [])
     malos = []

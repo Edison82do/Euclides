@@ -70,7 +70,7 @@ verdad: 8 + 4 = 12 + 5            | ??         | ver el razonamiento
 # --- N.1 contar de n en n; par o impar ---
 de 5 en 5 hasta 50                | 5, 10, 15, 20, 25, 30, 35, 40, 45, 50
 de 10 en 10 desde 47 hasta 97     | 57, 67, 77, 87, 97
-de 100 en 100 desde 9250          | 9350, 9450, 9550, 9650, 9750, 9850, 9950   | N.3: ahora se para antes de DIEZ MIL
+de 100 en 100 desde 9250          | 9350, 9450, 9550, 9650, 9750, 9850, 9950, 10050, 10150, 10250   | N.4: ya cruza DIEZ MIL sin pararse
 de 5 en 5 desde 3 hasta 50        | ??         | el 50 no se toca
 par: 14                           | par        | 14 = 7 + 7
 par: 7                            | impar
@@ -274,6 +274,10 @@ comparar: rectangulo 6 x 2 y rectangulo 4 x 3   | ??   | la misma area, distinto
 veces: 4 veces 6                  | 24
 La azul mide 24 cm. Es 4 veces mas larga que la roja. Cuanto mide la roja?   | 6 cm
 La azul mide 24 cm y la roja 6 cm. Cuantas veces es mas larga la azul?   | ??   | ver la division
+
+nombre: 101000                    | ciento un mil   | N.4: ciento UN mil
+millar: 345678                    | 300000 + 40000 + 5000 + 600 + 70 + 8 | N.4: seis cifras
+13 x 14                           | 182             | N.4: la rejilla
 
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades

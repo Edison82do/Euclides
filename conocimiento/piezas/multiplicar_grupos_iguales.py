@@ -13,13 +13,22 @@ PIEZA = {
     "que_hace": "a x b son a grupos de b: se juntan con la suma de iguales (M.0)",
     "condiciones": [
         ("los_grupos_tienen_nombre_x", "no se cuantos grupos son"),
+        ("pocos_grupos_en_alguna_lectura", "son demasiados grupos para sumarlos uno a uno (mas de doce en las dos lecturas)"),
     ],
     "usa": ["suma_de_iguales"],
 }
 
 
 def hacer(s, u):
-    r = u.usar("suma_de_iguales", veces=s["a"], n=s["b"])
+    a, b = s["a"], s["b"]
+    vuelta = u.viene_despues(u.decir(a), "doce")          # muchos grupos: se lee al reves (la conmutativa, M.2)
+    if vuelta:
+        a, b = b, a
+    r = u.usar("suma_de_iguales", veces=a, n=b)
+    cuenta = r["resultado"]["cuenta"]
+    if vuelta:
+        cuenta = "%d grupos de %d son muchos: lo leo al reves, %d grupos de %d (la conmutativa); %s" % (
+            s["a"], s["b"], a, b, cuenta)
     return {"valor": r["valor"], "metodo": "%s (M.0)" % r["pieza"]["nombre"],
-            "cuenta": r["resultado"]["cuenta"], "pasos": r["resultado"].get("pasos", []),
+            "cuenta": cuenta, "pasos": r["resultado"].get("pasos", []),
             "vuelta": "", "vuelta_ok": True}
