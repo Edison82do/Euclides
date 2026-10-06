@@ -129,6 +129,15 @@
   **Common Core 4.NBT.A.1–3** (valor de posición; leer, escribir, forma desarrollada; comparar mirando
   las cifras de cada sitio; redondear a cualquier sitio). → N.3.
 
+- **NCETM 2.11** (*Times tables: 11 and 12*, Year 4): la del 11 con la distributiva, 10 + 1; la del 12,
+  10 + 2; la del 12 es el doble de la del 6; reglas de divisibilidad entre 11 y 12. → M.7.
+- **NCETM 2.12** (*Division with remainders*): agrupar y repartir, a veces con resto; el resto es parte
+  de la ecuación; si el dividendo es múltiplo del divisor no hay resto; **el resto siempre es menor que
+  el divisor**; en los problemas, el resto se **interpreta** (redondear arriba, abajo, o usarlo). → M.8.
+- **NCETM 2.13** (*×/÷ por 10 y 100*): «diez veces más» es × 10; × 10 pone un cero detrás; ÷ 10 a un
+  múltiplo de 10 le quita el cero; × 100 dos ceros (= × 10 dos veces); si un factor se hace 10 veces
+  mayor, el producto también (y el dividendo / el cociente). → M.9.
+
 ## Enlaces
 - NCETM 2.9: https://www.ncetm.org.uk/classroom-resources/primm-209-times-tables-7-and-patterns-withinacross-times-tables/
 - NCETM 2.10: https://www.ncetm.org.uk/classroom-resources/primm-210-connecting-multiplication-and-division-and-the-distributive-law/

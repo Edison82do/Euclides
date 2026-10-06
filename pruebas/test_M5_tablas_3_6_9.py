@@ -50,7 +50,7 @@ try:
         t = motor.explicar_pregunta("tabla del %d" % n, SABER)
         comprobar("A tabla del %d (%s)" % (n, rel), (t.strip().splitlines()[-1], rel in t),
                   ("RESULTADO: " + ", ".join(str(n * k) for k in range(11)), True))
-    comprobar("A4 tabla del 11: todavia no (la del 7 llego en M.6)", motor.explicar_pregunta("tabla del 11", SABER).strip().splitlines()[-1],
+    comprobar("A4 tabla del 13: todavia no (la del 7 llego en M.6; la del 11 y 12 en M.7)", motor.explicar_pregunta("tabla del 13", SABER).strip().splitlines()[-1],
               "RESULTADO: todavia_no")
 
     print("\nB - HECHOS DERIVADOS: SOLO SI LA TABLA DEL 3 YA SE SABE")

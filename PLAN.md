@@ -247,7 +247,7 @@ pruebas → commit. Carlos prueba por la mañana.
 | 18 | ✅ **HECHO (6 oct, noche), falta la prueba de Carlos** — `diario/2026-10-06-paso-F2-fracciones-no-unitarias.md`. **F.2 Fracciones no unitarias; en la recta; comparar** | NCETM 3.3; 3.NF.A.2, A.3 | todas las parejas que comparten arriba o abajo |
 | 19 | ✅ **HECHO (6 oct, noche), falta la prueba de Carlos** — `diario/2026-10-06-paso-F3-sumar-restar-fracciones.md`. **F.3 Sumar y restar fracciones dentro de un entero** | NCETM 3.4 | todas las cuentas con b ≤ 12 |
 | 20 | ✅ **HECHO (6 oct, noche), falta la prueba de Carlos** — `diario/2026-10-06-paso-N3-el-millar.md`. **N.3 El 1000 y los números de cuatro cifras** | NCETM 1.22; 4.NBT.A | los 10 000 nombres; comparar; descomponer; redondear; columnas |
-| 21 | **M.7 Tablas del 11 y del 12** | NCETM 2.11 | |
+| 21 | ✅ **HECHO (6 oct, noche), falta la prueba de Carlos** — `diario/2026-10-06-paso-M7-tablas-11-12.md`. **M.7 Tablas del 11 y del 12** | NCETM 2.11 | hasta 12 × 12 aprendido; divisibilidad 0–200 |
 | 22 | **M.8 División con resto** | NCETM 2.12 | |
 | 23 | **M.9 Multiplicar y dividir por 10 y por 100** | NCETM 2.13 | |
 | 24 | **M.10 Multiplicación corta** (partir → en columna) | NCETM 2.14; 4.NBT.B.5 | |

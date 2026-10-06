@@ -50,8 +50,8 @@ try:
     comprobar("A1 tabla del 7: 0 ... 70, cada fila 5 x k + 2 x k",
               (t.strip().splitlines()[-1], "8 x 7 =  8 x 5 +  8 x 2 = 40 + 16 = 56" in t),
               ("RESULTADO: " + ", ".join(str(7 * k) for k in range(11)), True))
-    comprobar("A2 tabla del 11: todavia no (NCETM 2.11, 4.o)",
-              motor.explicar_pregunta("tabla del 11", SABER).strip().splitlines()[-1], "RESULTADO: todavia_no")
+    comprobar("A2 tabla del 13: todavia no (la del 11 y la del 12 llegaron en M.7, NCETM 2.11)",
+              motor.explicar_pregunta("tabla del 13", SABER).strip().splitlines()[-1], "RESULTADO: todavia_no")
 
     print("\nB - LA DISTRIBUTIVA: PARTIR UN FACTOR (solo con hechos que ya se saben)")
     comprobar("B1 sin memoria no se puede partir: 8 x 7 se calcula de otra manera", P(8, 7)[1] != "multiplicar_partiendo", True)
@@ -66,9 +66,9 @@ try:
     r = motor.aplicar("multiplicar", {"a": 8, "b": 7, "sin_memoria": True}, SABER)
     comprobar("B5 8 x 7 sin recordarlo pero partiendo: 8 x 5 + 8 x 2 = 40 + 16 (el ejemplo de 3.OA.B.5)",
               (r["valor"], r["pieza"]["id"] in ("multiplicar_partiendo", "multiplicar_doblando")), (56, True))
-    v, p, r = P(12, 6)
-    comprobar("B6 MAS ALLA de las tablas: 12 x 6 = 10 x 6 + 2 x 6 = 72", (v, p, "60 + 12 = 72" in r["resultado"]["cuenta"]),
-              (72, "multiplicar_partiendo", True))
+    v, p, r = P(15, 6)          # (desde M.7 el 12 x 6 ya se sabe de memoria: la tabla del 12)
+    comprobar("B6 MAS ALLA de las tablas: 15 x 6 = 10 x 6 + 5 x 6 = 90", (v, p, "60 + 30 = 90" in r["resultado"]["cuenta"]),
+              (90, "multiplicar_partiendo", True))
     fallos = [(x, y) for x in range(11, 21) for y in range(0, 11) if P(x, y)[0] != x * y]
     comprobar("B7 de 11 a 20 por 0 a 10 contra el testigo", fallos[:3], [])
 

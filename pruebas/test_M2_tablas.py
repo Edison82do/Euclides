@@ -63,7 +63,7 @@ try:
         esperado = ", ".join(str(n * k) for k in range(0, 11))
         comprobar("B tabla del %d: 0 ... %d, cada uno el anterior mas %d" % (n, 10 * n, n),
                   t.strip().splitlines()[-1], "RESULTADO: " + esperado)
-    comprobar("B4 tabla del 11: todavia no (en M.2 era la del 3; llegan en orden)", motor.explicar_pregunta("tabla del 11", SABER).strip().splitlines()[-1],
+    comprobar("B4 tabla del 13: todavia no (en M.2 era la del 3; llegan en orden; desde M.7 hasta la del 12)", motor.explicar_pregunta("tabla del 13", SABER).strip().splitlines()[-1],
               "RESULTADO: todavia_no")
 
     print("\nC - LA CONMUTATIVA EN EL = (E.0)")
@@ -86,11 +86,11 @@ try:
     a = motor.aprender("tablas", SABER)
     comprobar("E1 aprende las tablas ensenadas (2, 5, 10; desde M.4 tambien 4 y 8) en las dos lecturas, sin rechazar ninguna",
               (len(a["nuevos"]), a["rechazados"]),
-              (len({(k, t) for t in motor.TABLAS_ENSENADAS for k in range(11)} | {(t, k) for t in motor.TABLAS_ENSENADAS for k in range(11)}), []))
+              (len({(k, t) for t in motor.TABLAS_ENSENADAS for k in range(13)} | {(t, k) for t in motor.TABLAS_ENSENADAS for k in range(13)}), []))
     h = motor.cargar_memoria()["6 x 5"]
     comprobar("E2 6 x 5 = 30, comprobado con la otra lectura (5 grupos de 6)", (h["valor"], "5 grupos de 6" in h["comprobado"]), (30, True))
     comprobar("E3 6 x 5 ahora de memoria", P(6, 5)[:2], (30, "recordar_producto"))
-    comprobar("E4 12 x 11 no esta en las tablas aprendidas: no se recuerda", P(12, 11)[1] != "recordar_producto", True)
+    comprobar("E4 13 x 11 no esta en las tablas aprendidas (desde M.7 llegan a 12 x 12): no se recuerda", P(13, 11)[1] != "recordar_producto", True)
     comprobar("E5 sin memoria, 6 x 5 se calcula", P(6, 5, sin_memoria=True)[1] != "recordar_producto", True)
     with open(RUTA, encoding="utf-8") as f:
         txt = f.read()

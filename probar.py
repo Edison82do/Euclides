@@ -458,6 +458,13 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         Ana tiene 3 bolsas con 4 caramelos cada una. Se come 5. Cuantos le quedan?   -> 7
         Ana tiene 3 bolsas con 4 caramelos cada una. Le dan 5. Cuantos tiene ahora?  -> 17
 
+  TABLAS DEL 11 Y DEL 12  ->  partiendo 10 + 1 y 10 + 2 (paso M.7; NCETM 2.11)
+        tabla del 11           -> 0, 11 ... 110    7 x 11 = 7 x 10 + 7 x 1 = 70 + 7
+        tabla del 12           -> 0, 12 ... 120    y es el DOBLE de la del 6
+        divisible: 84 entre 12 -> si   (entre 3 por las cifras Y entre 4 por dos mitades)
+        divisible: 77 entre 11 -> si   (dos cifras iguales)
+        aprender: tablas       -> ahora hasta 12 x 12 (al acabar 4.o)
+
   ECUACION CON x Y :  ->  el hueco en una multiplicacion o division (paso E.4; 3.OA.A.4)
         3 x ? = 12             -> 4    cuantos en cada grupo: REPARTIR 12 entre 3
         ? x 4 = 12             -> 3    cuantos grupos: AGRUPAR 12 en grupos de 4

@@ -150,13 +150,13 @@ def aprender(que, saber=None, ruta=None):
     return res
 
 
-TABLAS_ENSENADAS = (2, 4, 8, 3, 6, 9, 5, 10, 7)   # M.2: 2, 5, 10;  M.4: 4, 8;  M.5: 3, 6, 9;  M.6: 7 (partiendo)
+TABLAS_ENSENADAS = (2, 4, 8, 3, 6, 9, 5, 10, 7, 11, 12)   # M.2: 2, 5, 10;  M.4: 4, 8;  M.5: 3, 6, 9;  M.6: 7;  M.7: 11, 12
 
 
 def _aprender_tablas(saber, ruta, hechos, hoy, res):
     """M.2 y M.4: las tablas del 2, 4, 8, 5 y 10 (0 a 10 grupos, en las dos lecturas).  Cada producto
     se CALCULA sin memoria y se COMPRUEBA con la otra lectura de los grupos (la conmutativa)."""
-    factores = _cifras_de_una(saber) + [10]
+    factores = _cifras_de_una(saber) + [10, 11, 12]   # M.7: hasta 12 x 12 (el curriculo ingles, al acabar 4.o)
     for t in TABLAS_ENSENADAS:                 # en orden: la del 4 se saca de la del 2, la del 8 de la del 4
         for k in factores:
             for a, b in ((k, t), (t, k)):
@@ -218,11 +218,12 @@ def explicar_aprender(que, saber=None):
                 "   se escribe asi:  aprender: sumas")
     r = aprender(que, saber)
     if que == "tablas":
-        L = ["PREGUNTA: aprender las TABLAS del %s (de 0 a 10 grupos, en las dos lecturas)"
+        L = ["PREGUNTA: aprender las TABLAS del %s (de 0 a 12 grupos, en las dos lecturas)"
              % ", ".join(str(t) for t in TABLAS_ENSENADAS), "",
              "  EN ORDEN: la del 4 se saca DOBLANDO la del 2, y la del 8 doblando la del 4 (NCETM 2.7);",
              "  la del 6 doblando la del 3, y la del 9 TRIPLICANDO la del 3 (NCETM 2.8);",
-             "  y la del 7 PARTIENDO: 7 = 5 + 2 (la distributiva, NCETM 2.10).",
+             "  y la del 7 PARTIENDO: 7 = 5 + 2 (la distributiva, NCETM 2.10); la del 11 y la del 12 tambien",
+             "  partiendo: 10 + 1 y 10 + 2 (NCETM 2.11).  Hasta 12 x 12.",
              "  CALCULO cada producto SIN memoria y lo compruebo con la OTRA LECTURA de los grupos",
              "  (3 x 5 son 3 grupos de 5; y 5 grupos de 3 tienen que dar lo mismo: NCETM 2.3).", "",
              "  nuevos en la memoria:    %d" % len(r["nuevos"]),

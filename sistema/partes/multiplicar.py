@@ -158,8 +158,8 @@ def explicar_tabla(texto, saber=None):
     if n in _DERIVA:
         return _tabla_doblando(n, saber)
     if n not in _TABLAS:
-        return ("PREGUNTA (M.2): tabla del %s\n\n  TODAVIA NO: se las tablas del 2 al 10 (NCETM 2.3 a 2.9); "
-                "la del 11 y la del 12 son de 4.o (NCETM 2.11).  Pero %s x 4 lo calculo: escribelo.\n\n"
+        return ("PREGUNTA (M.2): tabla del %s\n\n  TODAVIA NO: se las tablas del 2 al 12 (NCETM 2.3 a 2.11; "
+                "hasta 12 x 12 al acabar 4.o).  Pero %s x 4 lo calculo: escribelo.\n\n"
                 "RESULTADO: todavia_no" % (n, n))
     L = ["PREGUNTA (M.2): la tabla del %s  (grupos de %s; cada producto es el anterior MAS %s)" % (n, n, n), ""]
     v, k, fila = 0, "cero", []
@@ -249,12 +249,18 @@ def _fila_de(n, saber):
     if n == "7":                                       # 7 = 5 + 2 (la distributiva, NCETM 2.10)
         return [aplicar("sumar", {"a": x, "b": y}, saber)["valor"]
                 for x, y in zip(_fila_de("5", saber), _fila_de("2", saber))]
+    if n == "1":                                       # k grupos de 1 son k (NCETM 2.4): recitar
+        return _cifras_de_una(saber) + [10]
+    if n in ("11", "12"):                              # 11 = 10 + 1;  12 = 10 + 2  (NCETM 2.11)
+        return [aplicar("sumar", {"a": x, "b": y}, saber)["valor"]
+                for x, y in zip(_fila_de("10", saber), _fila_de({"11": "1", "12": "2"}[n], saber))]
     return None
 
 
 _DERIVA = {"3": (None, "contar de 3 en 3", "NCETM 2.8"), "4": ("2", "el DOBLE", "NCETM 2.7"),
            "8": ("4", "el DOBLE", "NCETM 2.7"), "6": ("3", "el DOBLE", "NCETM 2.8"),
-           "9": ("3", "el TRIPLE", "NCETM 2.8"), "7": ("5 y 2", "PARTIR", "NCETM 2.9 y 2.10")}
+           "9": ("3", "el TRIPLE", "NCETM 2.8"), "7": ("5 y 2", "PARTIR", "NCETM 2.9 y 2.10"),
+           "11": ("10 y 1", "PARTIR", "NCETM 2.11"), "12": ("10 y 2", "PARTIR", "NCETM 2.11")}
 
 
 def _tabla_doblando(n, saber):
@@ -267,6 +273,17 @@ def _tabla_doblando(n, saber):
              " la distributiva, NCETM 2.10)", ""]
         for k, (v, a, b) in enumerate(zip(fila, _fila_de("5", saber), _fila_de("2", saber))):
             L.append("    %2d x 7 = %2d x 5 + %2d x 2 = %2d + %2d = %d" % (k, k, k, a, b, v))
+    elif n in ("11", "12"):
+        q = {"11": "1", "12": "2"}[n]
+        L = ["PREGUNTA (M.7): la tabla del %s  (%s = 10 + %s: cada producto es el de la del 10 MAS el de la del %s;"
+             " la distributiva, NCETM 2.11)" % (n, n, q, q), ""]
+        for k, (v, a, b) in enumerate(zip(fila, _fila_de("10", saber), _fila_de(q, saber))):
+            L.append("    %2d x %s = %2d x 10 + %2d x %s = %3d + %2d = %d" % (k, n, k, k, q, a, b, v))
+        if n == "12":
+            dobles = [aplicar("sumar", {"a": x, "b": x}, saber)["valor"] for x in _fila_de("6", saber)]
+            L.append("")
+            L.append("  COMPRUEBO (NCETM 2.11, punto 3): cada producto de la del 12 es el DOBLE del de la del 6 ... %s"
+                     % ("SI" if dobles == fila else "NO"))
     elif base:
         L = ["PREGUNTA (M.4/M.5): la tabla del %s  (cada producto es %s del de la tabla del %s; %s)"
              % (n, como, base, fuente), ""]
@@ -290,6 +307,18 @@ def decidir_divisible(n, d, saber=None):
         saber = cargar_conocimiento()
     if d in (3, 9, 6):
         return _divisible_por_cifras(n, d, saber)
+    if d == 12:                                        # NCETM 2.11: entre 3 Y entre 4
+        r3, r4 = decidir_divisible(n, 3, saber), decidir_divisible(n, 4, saber)
+        out = {"conclusion": "hecho", "valor": r3["valor"] and r4["valor"], "regla": "3_y_4", "por3": r3, "por4": r4}
+        if out["valor"]:
+            out["cociente"] = aplicar("dividir", {"total": n, "divisor": 12}, saber)["valor"]
+        return out
+    if d == 11 and len(cifras_de(n)) == 2:             # NCETM 2.11: dos cifras iguales (11, 22 ... 99)
+        c = cifras_de(n)
+        out = {"conclusion": "hecho", "valor": c[0] == c[1], "regla": "cifras_iguales", "cifras": c}
+        if out["valor"]:
+            out["cociente"] = c[0]
+        return out
     veces = {2: "uno", 4: "dos", 8: "tres"}.get(d)
     if veces is None:
         r = aplicar("dividir", {"total": n, "divisor": d}, saber)
@@ -347,7 +376,9 @@ def explicar_divisible(texto, saber=None):
     if r["conclusion"] == "imposible":
         return "\n".join(L + ["  NO SE PUEDE: %s" % r.get("porque"), "", "RESULTADO: no_se_puede"])
     if r.get("regla") == "dividiendo":
-        L.append("  para el %d no hay regla corta (NCETM 2.9): DIVIDO con lo que se (%s)" % (d, r["metodo"]))
+        L.append("  %s: DIVIDO con lo que se (%s)" % (
+            "la regla del 11 de 4.o es para DOS cifras (NCETM 2.11); con mas" if d == 11 else
+            "para el %d no hay regla corta (NCETM 2.9)" % d, r["metodo"]))
         L.append("  %s" % ("SI: %d entre %d da %d, justo." % (n, d, r["cociente"]) if r["valor"]
                            else "NO: da %d y sobra%s %d." % (r["cociente"], "" if r["resto"] == 1 else "n", r["resto"])))
         L += ["", "RESULTADO: %s" % ("si" if r["valor"] else "no")]
@@ -361,6 +392,21 @@ def explicar_divisible(texto, saber=None):
         else:
             L.append("  entre 6 si es PAR (%s) y se divide entre 3 (la cifra es %d)" % ("si" if r["par"] else "no", r["cifra"]))
         L.append("  %s" % ("SI: %d entre %d da %d, justo." % (n, d, r["cociente"]) if r["valor"] else "NO."))
+        L += ["", "RESULTADO: %s" % ("si" if r["valor"] else "no")]
+        return "\n".join(L)
+    if r.get("regla") == "3_y_4":
+        r3, r4 = r["por3"], r["por4"]
+        L.append("  la regla (NCETM 2.11): entre 12 si se divide entre 3 Y entre 4 (12 = 3 x 4).")
+        L.append("    entre 3? se suman las cifras: %s -> %s" % (" -> ".join(r3["camino"]), "SI" if r3["valor"] else "NO"))
+        L.append("    entre 4? dos mitades sin que sobre: %s -> %s" % (" -> ".join(r4["camino"]), "SI" if r4["valor"] else "NO"))
+        L.append("  %s" % ("SI: %d entre 12 da %d, justo." % (n, r["cociente"]) if r["valor"] else "NO."))
+        L += ["", "RESULTADO: %s" % ("si" if r["valor"] else "no")]
+        return "\n".join(L)
+    if r.get("regla") == "cifras_iguales":
+        L.append("  la regla (NCETM 2.11): un numero de dos cifras se divide entre 11 si las DOS CIFRAS son IGUALES"
+                 " (11, 22 ... 99).")
+        L.append("  %d: %d y %d -> %s" % (n, r["cifras"][1], r["cifras"][0],
+                                        "iguales: SI, %d entre 11 da %d." % (n, r["cociente"]) if r["valor"] else "distintas: NO."))
         L += ["", "RESULTADO: %s" % ("si" if r["valor"] else "no")]
         return "\n".join(L)
     veces = {2: "UNA vez", 4: "DOS veces", 8: "TRES veces"}[d]
