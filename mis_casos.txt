@@ -845,3 +845,9 @@ problema: Reparte 17 caramelos entre 5 ninos. Cuantos sobran? | 2 | el resto
 47 : 10                                    | 4 resto 7 | las unidades sobran
 2345 : 100                                 | 23 resto 45 | dos sitios
 999 x 100                                  | no_se_puede | pasa de diez mil
+# ---------------------------------------------------------------------------
+# PASO M.10 - LA MULTIPLICACION CORTA (NCETM 2.14)
+# ---------------------------------------------------------------------------
+47 x 6                                     | 282 | corta, o sumando si no se saben las tablas
+347 x 6                                    | 2082 | llevar a traves del cero
+1234 x 9                                   | no_se_puede | pasa de diez mil

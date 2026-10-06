@@ -126,6 +126,12 @@ def explicar_multiplicar(texto, saber=None):
         L.extend("        %s" % p for p in pasos[-2:])
     else:
         L.append("        %s" % ap["resultado"]["cuenta"].replace("; ", "\n        "))
+    if ap["pieza"]["id"] == "multiplicacion_corta":          # M.10: el algoritmo, comprobado partiendo
+        otra = aplicar("multiplicar_partiendo_por_sitios", {"a": a, "b": b}, saber)
+        if otra["conclusion"] == "hecho":
+            L.append("     LO COMPRUEBO PARTIENDO POR SITIOS (NCETM 2.14, punto 1):")
+            L.append("        %s" % otra["resultado"]["cuenta"].replace("; ", "\n        "))
+            L.append("        ... %s" % ("lo mismo: SI" if otra["valor"] == r["valor"] else "NO CUADRA"))
     L.append("")
     L.append("  4. LA MULTIPLICACION: %d x %d = %d   (%d y %d son los FACTORES; %d es el PRODUCTO)"
              % (a, b, r["valor"], a, b, r["valor"]))
@@ -419,3 +425,29 @@ def explicar_divisible(texto, saber=None):
     L += ["", "RESULTADO: %s" % ("si" if r["valor"] else "no")]
     return "\n".join(L)
 
+
+
+# ------------------------------------------------------------- M.10: corta: 347 x 6
+
+def explicar_corta(texto, saber=None):
+    """'corta: 347 x 6': el algoritmo de la multiplicacion corta (NCETM 2.14), aunque haya un camino mas corto."""
+    if saber is None:
+        saber = cargar_conocimiento()
+    m = _POR.match(" ".join(texto.lower().split()))
+    if not m:
+        return "NO ENTIENDO ESTO: se escribe asi:  corta: 347 x 6"
+    a, b = int(m.group(1)), int(m.group(2))
+    L = ["PREGUNTA (M.10): %d x %d con la MULTIPLICACION CORTA  (NCETM 2.14; 4.NBT.B.5)" % (a, b), ""]
+    r = aplicar("multiplicacion_corta", {"a": a, "b": b}, saber)
+    if r["conclusion"] != "hecho":
+        porque = r.get("porque") or (r["candidatos"][0].get("descartado") if r.get("candidatos") else "")
+        return "\n".join(L + ["  NO SE PUEDE: %s" % porque, "", "RESULTADO: no_se_puede"])
+    L.append("        %s" % r["resultado"]["cuenta"].replace("; ", "\n        "))
+    otra = aplicar("multiplicar_partiendo_por_sitios", {"a": a, "b": b}, saber)
+    if otra["conclusion"] == "hecho":
+        L.append("")
+        L.append("  LO COMPRUEBO PARTIENDO POR SITIOS:")
+        L.append("        %s" % otra["resultado"]["cuenta"].replace("; ", "\n        "))
+        L.append("        ... %s" % ("lo mismo: SI" if otra["valor"] == r["valor"] else "NO CUADRA"))
+    L += ["", "RESULTADO: %d" % r["valor"]]
+    return "\n".join(L)

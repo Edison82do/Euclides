@@ -136,6 +136,10 @@ CONDICIONES = {
     "la_suma_cruza_el_diez": lambda s, u: u.viene_despues(
         u.contar_adelante(u.decir(s["a"]), u.decir(s["b"]))["resultado"], "diez"),
     "el_total_tiene_nombre": lambda s, u: u.sumar_por_columnas(s["a"], s["b"]) is not None,
+    # ---- multiplicacion corta (paso M.10; NCETM 2.14): un factor de una cifra (2..9), el otro de varias
+    "un_factor_de_una_cifra_y_otro_de_varias": lambda s, u: any(
+        len(u.cifras_de(x)) == 1 and x not in (0, 1) and len(u.cifras_de(y)) >= 2
+        for x, y in ((s.get("a", 0), s.get("b", 0)), (s.get("b", 0), s.get("a", 0)))),
     # ---- por 10 y por 100 (paso M.9; NCETM 2.13)
     "un_factor_es_10_o_100": lambda s, u: s.get("a") in (10, 100) or s.get("b") in (10, 100),
     "el_divisor_es_10_o_100": lambda s, u: s.get("divisor") in (10, 100),

@@ -226,6 +226,11 @@ Reparte 17 caramelos entre 5 ninos. Cuantos sobran?   | ??   | ver como interpre
 9 x 80                            | 720         | tras 'aprender: tablas' sale del 9 x 8
 120 : 4                           | ??          | ver si usa 12 : 4
 
+# --- M.10 multiplicacion corta ---
+47 x 6                            | 282
+corta: 347 x 6                    | 2082        | (con las tablas aprendidas)
+corta: 25 x 4                     | ??          | ver las columnas y la comprobacion
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete

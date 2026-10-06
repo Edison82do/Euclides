@@ -66,9 +66,9 @@ try:
     r = motor.aplicar("multiplicar", {"a": 8, "b": 7, "sin_memoria": True}, SABER)
     comprobar("B5 8 x 7 sin recordarlo pero partiendo: 8 x 5 + 8 x 2 = 40 + 16 (el ejemplo de 3.OA.B.5)",
               (r["valor"], r["pieza"]["id"] in ("multiplicar_partiendo", "multiplicar_doblando")), (56, True))
-    v, p, r = P(15, 6)          # (desde M.7 el 12 x 6 ya se sabe de memoria: la tabla del 12)
-    comprobar("B6 MAS ALLA de las tablas: 15 x 6 = 10 x 6 + 5 x 6 = 90", (v, p, "60 + 30 = 90" in r["resultado"]["cuenta"]),
-              (90, "multiplicar_partiendo", True))
+    v, p, r = P(13, 12)         # (desde M.7 el 12 x 6 se sabe; desde M.10 15 x 6 va por la corta)
+    comprobar("B6 MAS ALLA de las tablas: 13 x 12 = 10 x 12 + 3 x 12 = 156", (v, p, "120 + 36 = 156" in r["resultado"]["cuenta"]),
+              (156, "multiplicar_partiendo", True))
     fallos = [(x, y) for x in range(11, 21) for y in range(0, 11) if P(x, y)[0] != x * y]
     comprobar("B7 de 11 a 20 por 0 a 10 contra el testigo", fallos[:3], [])
 

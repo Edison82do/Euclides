@@ -138,6 +138,15 @@
   múltiplo de 10 le quita el cero; × 100 dos ceros (= × 10 dos veces); si un factor se hace 10 veces
   mayor, el producto también (y el dividendo / el cociente). → M.9.
 
+- **NCETM 2.14** (*Multiplication: partitioning leading to short multiplication*, Year 4): la
+  distributiva por sitios (decenas y unidades; luego centenas) y los productos parciales; después el
+  algoritmo de la multiplicación corta, de derecha a izquierda, reagrupando si una columna da diez o
+  más. **Common Core 4.NBT.B.5**. → M.10.
+- **NCETM 2.15** (*Division: partitioning leading to short division*): partir el dividendo por sitios,
+  dividir cada parte y sumar los cocientes parciales, **cambiando** lo que sobra de las decenas por
+  unidades; después el algoritmo de la división corta, de **izquierda a derecha**. **Common Core
+  4.NBT.B.6**. → M.11.
+
 ## Enlaces
 - NCETM 2.9: https://www.ncetm.org.uk/classroom-resources/primm-209-times-tables-7-and-patterns-withinacross-times-tables/
 - NCETM 2.10: https://www.ncetm.org.uk/classroom-resources/primm-210-connecting-multiplication-and-division-and-the-distributive-law/

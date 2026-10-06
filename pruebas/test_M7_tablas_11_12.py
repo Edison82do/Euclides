@@ -64,7 +64,8 @@ try:
     comprobar("B2 en la memoria estan todos los productos hasta 12 x 12", faltan, [])
     malos = [k for k, v in h.items() if " x " in k and v["valor"] != int(k.split(" x ")[0]) * int(k.split(" x ")[1])]
     comprobar("B3 y todos bien (contra el testigo)", malos[:3], [])
-    comprobar("B4 11 x 7 se aprendio PARTIENDO (10 + 1)", h["11 x 7"]["como"], "partiendo (M.6)")
+    comprobar("B4 11 x 7 se aprendio por el valor de posicion (partiendo 10 + 1, o la corta desde M.10)",
+              h["11 x 7"]["como"] in ("partiendo (M.6)", "la multiplicacion corta (M.10)"), True)
     comprobar("B5 12 x 12 = 144 de memoria", S("12 x 12"), "144")
 
     print("\nC - DIVISIBLE ENTRE 12 (entre 3 y entre 4) Y ENTRE 11")

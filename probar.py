@@ -479,6 +479,12 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         9 x 80                 -> 720   9 x 8 = 72 (de memoria) y 80 es diez veces 8
         120 : 4                -> 30    12 : 4 = 3 y 120 es diez veces 12
 
+  MULTIPLICACION CORTA  ->  partir por sitios y el algoritmo en columnas (paso M.10; NCETM 2.14; 4.NBT.B.5)
+        47 x 6                 -> 282   7 x 6 = 42: escribo 2, llevo 4;  4 x 6 = 24, + 4 = 28 ...
+        corta: 347 x 6         -> 2082  el algoritmo dibujado, y comprobado PARTIENDO POR SITIOS:
+                                        300 x 6 + 40 x 6 + 7 x 6 = 1800 + 240 + 42
+        (Cada columna es un hecho de la tabla: hace falta haberlas aprendido, 'aprender: tablas'.)
+
   ECUACION CON x Y :  ->  el hueco en una multiplicacion o division (paso E.4; 3.OA.A.4)
         3 x ? = 12             -> 4    cuantos en cada grupo: REPARTIR 12 entre 3
         ? x 4 = 12             -> 3    cuantos grupos: AGRUPAR 12 en grupos de 4
@@ -586,6 +592,11 @@ def preguntar(texto, saber):
         if t.lower().startswith("tabla del") or t.lower().startswith("mitad"):
             salida = (motor.explicar_tabla(t, saber) if t.lower().startswith("tabla")
                       else motor.explicar_mitad(t[len("mitad"):].lstrip(":").strip(), saber))
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
+        if t.lower().startswith("corta"):
+            salida = motor.explicar_corta(t[len("corta"):].lstrip(":").strip(), saber)
             if salida.startswith("NO ENTIENDO"):
                 return "no_entiendo", None
             return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
