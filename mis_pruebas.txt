@@ -265,6 +265,11 @@ cambio: pago $20 por $3.45 + $6.80 + $2.15   | ??   | ver el todo y las partes
 3 x 1 2/5                         | 4 1/5
 12 x 3/4                          | ??          | ver las dos lecturas
 
+# --- G.1 area y perimetro ---
+area: rectangulo 5 x 3            | 15 unidades cuadradas
+perimetro: rectangulo 5 x 3       | 16
+comparar: rectangulo 6 x 2 y rectangulo 4 x 3   | ??   | la misma area, distinto perimetro
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete

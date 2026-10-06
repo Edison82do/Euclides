@@ -898,3 +898,11 @@ cambio: pago $5 por $6.35                  | no_alcanza | no llega
 3 x 1 2/5                                  | 4 1/5 | no 3 2/5
 12 x 3/4                                   | 9 | 3/4 de 12
 1/4 x 12                                   | 3 | 1/4 de 12
+# ---------------------------------------------------------------------------
+# PASO G.1 - AREA Y PERIMETRO (NCETM 2.16)
+# ---------------------------------------------------------------------------
+area: rectangulo 5 x 3                     | 15 unidades cuadradas | no 16
+perimetro: rectangulo 5 x 3                | 16 | no 15
+perimetro: cuadrado de 6                   | 24 | no 36
+lado: cuadrado de perimetro 24             | 6 | lo inverso
+comparar: rectangulo 6 x 2 y rectangulo 4 x 3 | area igual, perimetro distinto | 3.MD.D.8

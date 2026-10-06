@@ -462,6 +462,14 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         12 x 3/4               -> 9       y la otra lectura: 3/4 de 12 (repartir en 4, tomar 3)
         2/3 x 3/4              -> todavia_no (fraccion por fraccion: 6.o)
 
+  AREA Y PERIMETRO  ->  la superficie y el borde (paso G.1; NCETM 2.16; 3.MD.C.7, 3.MD.D.8)
+        area: rectangulo 5 x 3       -> 15 unidades cuadradas  (3 filas de 5 cuadraditos = 5 x 3)
+        perimetro: rectangulo 5 x 3  -> 16   (5 + 3 + 5 + 3: el borde, en unidades de longitud)
+        perimetro: cuadrado de 6     -> 24   (4 x 6)      perimetro: 4, 7, 5 -> 16 (suma de lados)
+        lado: cuadrado de perimetro 24 -> 6  (24 : 4)     area: 6 x 4 + 3 x 2 -> 30 (figura compuesta)
+        comparar: rectangulo 6 x 2 y rectangulo 4 x 3 -> la misma area y distinto perimetro
+        Con unidades: rectangulo 5 cm x 3 cm  ->  15 cm cuadrados
+
   REDONDEAR  ->  a la decena o a la centena MAS CERCANA (paso N.2; 3.NBT.A.1)
         redondear: 37          -> decena 40, centena 0   (las dos)
         redondear: 37 a la decena   -> 40   EN LA RECTA: entre 30 y 40, la mitad es 35, pasa de la mitad
@@ -632,6 +640,11 @@ def preguntar(texto, saber):
         if t.lower().startswith("tabla del") or t.lower().startswith("mitad"):
             salida = (motor.explicar_tabla(t, saber) if t.lower().startswith("tabla")
                       else motor.explicar_mitad(t[len("mitad"):].lstrip(":").strip(), saber))
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
+        if motor.es_orden_geometria(t):
+            salida = motor.explicar_orden_geometria(t, saber)
             if salida.startswith("NO ENTIENDO"):
                 return "no_entiendo", None
             return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None

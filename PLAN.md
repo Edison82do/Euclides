@@ -257,7 +257,7 @@ pruebas → commit. Carlos prueba por la mañana.
 | 28 | ✅ **HECHO (7 oct, madrugada), falta la prueba de Carlos** — `diario/2026-10-07-paso-D2-centesimas-milesimas.md`. **D.2 Centésimas y milésimas** | NCETM 1.24; 4.NF.C.5–7 | 300 cuentas, 300 comparaciones, 572 redondeos |
 | 29 | ✅ **HECHO (7 oct, madrugada), falta la prueba de Carlos** — `diario/2026-10-07-paso-D3-dinero.md`. **D.3 El dinero (pesos y centavos)** | NCETM 1.25; 4.MD.A.2 | 200 cuentas de precios, 200 cambios |
 | 30 | ✅ **HECHO (7 oct, madrugada), falta la prueba de Carlos** — `diario/2026-10-07-paso-F5-entero-por-fraccion.md`. **F.5 Multiplicar un entero por una fracción** | NCETM 3.6; 4.NF.B.4 | 300 productos |
-| 31 | **G.1 Área y perímetro** (rectángulos, contando cuadritos y multiplicando) | NCETM 2.16; 4.MD.A.3 | |
+| 31 | ✅ **HECHO (7 oct, madrugada), falta la prueba de Carlos** — `diario/2026-10-07-paso-G1-area-perimetro.md`. **G.1 Área y perímetro** | NCETM 2.16; 3.MD.C.7, 3.MD.D.8; 4.MD.A.3 | 144 rectángulos; polígonos; compuestas |
 
 ## EL PLAN ANTERIOR (5 oct, tarde) — sustituido por el de arriba en el orden; se conserva como referencia
 
