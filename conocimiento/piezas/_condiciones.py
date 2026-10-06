@@ -136,6 +136,12 @@ CONDICIONES = {
     "la_suma_cruza_el_diez": lambda s, u: u.viene_despues(
         u.contar_adelante(u.decir(s["a"]), u.decir(s["b"]))["resultado"], "diez"),
     "el_total_tiene_nombre": lambda s, u: u.sumar_por_columnas(s["a"], s["b"]) is not None,
+    # ---- por 10 y por 100 (paso M.9; NCETM 2.13)
+    "un_factor_es_10_o_100": lambda s, u: s.get("a") in (10, 100) or s.get("b") in (10, 100),
+    "el_divisor_es_10_o_100": lambda s, u: s.get("divisor") in (10, 100),
+    "un_factor_acaba_en_cero": lambda s, u: any(x and u.cifras_de(x)[0] == 0 for x in (s.get("a"), s.get("b"))),
+    "el_dividendo_acaba_en_cero": lambda s, u: bool(s.get("total")) and u.cifras_de(s["total"])[0] == 0
+                                                and s.get("divisor") not in (0, 1, 10, 100),
     # ---- centenas justas (paso N.3; NCETM 1.22: 'al sumar o restar multiplos de 100, sale un multiplo de 100')
     "los_dos_son_centenas_justas": lambda s, u: all(len(u.cifras_de(x)) >= 3 and u.cifras_de(x)[0] == 0
                                                    and u.cifras_de(x)[1] == 0 for x in (s["a"], s["b"])),

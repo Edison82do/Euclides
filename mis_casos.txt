@@ -837,3 +837,11 @@ comprobar: 17 : 5 = 3 resto 2              | si | la buena
 problema: Hay 17 ninos. En cada coche caben 5. Cuantos coches hacen falta? | 4 | arriba
 problema: Tiene 17 euros. Cada libro cuesta 5 euros. Cuantos libros puede comprar? | 3 | abajo
 problema: Reparte 17 caramelos entre 5 ninos. Cuantos sobran? | 2 | el resto
+# ---------------------------------------------------------------------------
+# PASO M.9 - MULTIPLICAR Y DIVIDIR POR 10 Y POR 100 (NCETM 2.13)
+# ---------------------------------------------------------------------------
+23 x 10                                    | 230 | las cifras suben
+23 x 100                                   | 2300 | dos veces
+47 : 10                                    | 4 resto 7 | las unidades sobran
+2345 : 100                                 | 23 resto 45 | dos sitios
+999 x 100                                  | no_se_puede | pasa de diez mil

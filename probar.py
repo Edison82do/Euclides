@@ -472,6 +472,13 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         Tiene 17 euros. Cada libro cuesta 5 euros. Cuantos libros puede comprar? -> 3 (no llega para otro)
         Reparte 17 caramelos entre 5 ninos. Cuantos sobran?                     -> 2 (el resto)
 
+  POR 10 Y POR 100  ->  las cifras suben o bajan de sitio (paso M.9; NCETM 2.13; 3.NBT.A.3)
+        23 x 10                -> 230   cada cifra sube un sitio (las unidades quedan vacias: un cero)
+        23 x 100               -> 2300  por 10 dos veces
+        47 : 10                -> 4 resto 7   las decenas son el cociente; las unidades sobran
+        9 x 80                 -> 720   9 x 8 = 72 (de memoria) y 80 es diez veces 8
+        120 : 4                -> 30    12 : 4 = 3 y 120 es diez veces 12
+
   ECUACION CON x Y :  ->  el hueco en una multiplicacion o division (paso E.4; 3.OA.A.4)
         3 x ? = 12             -> 4    cuantos en cada grupo: REPARTIR 12 entre 3
         ? x 4 = 12             -> 3    cuantos grupos: AGRUPAR 12 en grupos de 4

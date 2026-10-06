@@ -220,6 +220,12 @@ Hay 17 ninos. En cada coche caben 5. Cuantos coches hacen falta?   | 4
 Tiene 17 euros. Cada libro cuesta 5 euros. Cuantos libros puede comprar?   | 3
 Reparte 17 caramelos entre 5 ninos. Cuantos sobran?   | ??   | ver como interpreta el resto
 
+# --- M.9 por 10 y por 100 ---
+23 x 100                          | 2300
+47 : 10                           | 4 resto 7
+9 x 80                            | 720         | tras 'aprender: tablas' sale del 9 x 8
+120 : 4                           | ??          | ver si usa 12 : 4
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete
