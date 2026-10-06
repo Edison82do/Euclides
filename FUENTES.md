@@ -189,6 +189,12 @@
   en columnas), **4.NBT.B.5** (dos cifras por dos cifras con valor posicional y modelo de área → la
   rejilla). → N.4.
 
+- **NCETM 1.27** (*Negative numbers: counting, comparing and calculating*, Year 5): positivos y negativos
+  representan un cambio; los negativos son menores que cero; el signo menos delante de la cifra; en la
+  escala horizontal, a la izquierda del cero, y cuanto mayor la cifra más lejos del cero; intervalos a
+  través del cero; coordenadas. **Common Core 6.NS.C.5–7** (−3 °C es más caliente que −7 °C; el valor
+  absoluto como distancia al cero). → N.5.
+
 ## Enlaces
 - NCETM 2.9: https://www.ncetm.org.uk/classroom-resources/primm-209-times-tables-7-and-patterns-withinacross-times-tables/
 - NCETM 2.10: https://www.ncetm.org.uk/classroom-resources/primm-210-connecting-multiplication-and-division-and-the-distributive-law/

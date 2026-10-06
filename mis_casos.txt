@@ -922,3 +922,10 @@ calcular: 345000 + 278000                  | 623000 | (N.4) 345 mil + 278 mil
 columnas: 500000 - 1                       | 500000 - 1 = 499999 | (N.4) cambiar a traves de los ceros
 18 x 38                                    | 684 | (N.4) la rejilla
 de 100000 en 100000 desde 700000           | 800000, 900000, 1000000 | (N.4) y se para en el millon
+# --- paso N.5: los negativos (NCETM 1.27)
+comparar: -3 y -7                          | -3 > -7 | (N.5) el de cifra mayor es el menor
+recta: 3 - 8                               | -5 | (N.5) cruzar el cero
+recta: -4 + 7                              | 3 | (N.5) cruzar el cero subiendo
+intervalo: -4 y 7                          | 11 | (N.5) uno a cada lado
+recta: desde 2 bajando 4                   | 1, 0, -1, -2 | (N.5) contar hacia atras pasando el cero
+La temperatura es -4 grados. Sube 7 grados. Cual es ahora? | 3 grados | (N.5) la temperatura

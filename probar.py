@@ -482,6 +482,16 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         comparar: rectangulo 6 x 2 y rectangulo 4 x 3 -> la misma area y distinto perimetro
         Con unidades: rectangulo 5 cm x 3 cm  ->  15 cm cuadrados
 
+  NEGATIVOS  ->  numeros menores que cero: contar, comparar y calcular cruzando el cero (paso N.5; NCETM 1.27; 6.NS.C)
+        negativo: -5           -> menos cinco: 5 pasos a la IZQUIERDA del cero
+        comparar: -3 y -7      -> -3 > -7   (el de cifra mayor esta mas lejos del cero: es MENOR)
+        recta: 3 - 8           -> -5    hasta el cero 3, me quedan 5 (como hacer diez)
+        recta: -4 + 7          -> 3     recta: desde 3 bajando 6 -> 2, 1, 0, -1, -2, -3
+        intervalo: -4 y 7      -> 11    (4 hasta el cero y 7 desde el cero)
+        La temperatura es -4 grados. Sube 7 grados. Cual es ahora?            -> 3 grados
+        Por la manana hace -6 grados y a mediodia 5 grados. Cuanto subio?     -> 11 grados
+        3 - 8 sin la recta sigue siendo 'imposible': con cosas no se quitan 8 de 3.
+
   VECES  ->  comparar multiplicando: "K veces" y fracciones (paso S.1; NCETM 2.17; 4.OA.A.1-2)
         veces: 4 veces 6       -> 24   (4 veces mas NO es 4 mas: eso seria 10)
         cuantas veces: 24 y 6  -> 4    (24 es 4 veces 6; 6 es 1/4 de 24)
@@ -660,6 +670,11 @@ def preguntar(texto, saber):
         if t.lower().startswith("tabla del") or t.lower().startswith("mitad"):
             salida = (motor.explicar_tabla(t, saber) if t.lower().startswith("tabla")
                       else motor.explicar_mitad(t[len("mitad"):].lstrip(":").strip(), saber))
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
+        if motor.es_orden_negativos(t):
+            salida = motor.explicar_orden_negativos(t, saber)
             if salida.startswith("NO ENTIENDO"):
                 return "no_entiendo", None
             return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None

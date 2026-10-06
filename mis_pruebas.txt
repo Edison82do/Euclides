@@ -279,6 +279,10 @@ nombre: 101000                    | ciento un mil   | N.4: ciento UN mil
 millar: 345678                    | 300000 + 40000 + 5000 + 600 + 70 + 8 | N.4: seis cifras
 13 x 14                           | 182             | N.4: la rejilla
 
+comparar: -3 y -7                 | -3 > -7         | N.5: -7 esta mas lejos del cero
+recta: 3 - 8                      | -5              | N.5: cruzar el cero
+intervalo: -9 y -2                | 7               | N.5: los dos del mismo lado
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete
