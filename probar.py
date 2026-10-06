@@ -410,6 +410,12 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         comparar: 2/3 y 2/5    -> 2/3 > 2/5   mismo de arriba: manda el de abajo, AL REVES
         comparar: 2/3 y 3/5    -> todavia_no (sin nada en comun: equivalentes, 5.o)   5/4 -> todavia_no (4.o)
 
+  SUMAR Y RESTAR FRACCIONES  ->  dentro de un entero, mismo de abajo (paso F.3; NCETM 3.4)
+        2/7 + 3/7              -> 5/7   las partes son del mismo tamano: se cuentan como manzanas
+                                        (el de abajo NO se suma: 5/14 seria el error)
+        5/7 - 2/7              -> 3/7       1 - 3/8 -> 5/8 (1 = 8/8)       3/8 + 5/8 -> 1
+        Con la vuelta (sumar y restar son inversas).  Pasar de un entero: 4.o.  Distinto abajo: 5.o.
+
   REDONDEAR  ->  a la decena o a la centena MAS CERCANA (paso N.2; 3.NBT.A.1)
         redondear: 37          -> decena 40, centena 0   (las dos)
         redondear: 37 a la decena   -> 40   EN LA RECTA: entre 30 y 40, la mitad es 35, pasa de la mitad

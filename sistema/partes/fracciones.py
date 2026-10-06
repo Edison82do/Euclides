@@ -18,6 +18,7 @@ _ORDEN_FRACCION = re.compile(r"^fracci[oó]n:?\s*" + _FR_PATRON + r"$")
 _ORDEN_DE = re.compile(r"^" + _FR_PATRON + r"\s+de\s+(\d+)$")
 _ORDEN_COMPARAR_FR = re.compile(r"^comparar:?\s*" + _FR_PATRON + r"\s*(?:y|,|con|\?)\s*" + _FR_PATRON + r"$")
 _ORDEN_ENTERO = re.compile(r"^entero:?\s*(?:si\s+)?" + _FR_PATRON + r"\s+(?:es|son|=)\s+(\d+)$")
+_ORDEN_CUENTA_FR = re.compile(r"^(?:" + _FR_PATRON + r"|(1))\s*([+\-])\s*" + _FR_PATRON + r"$")
 _ORDEN_RECTA = re.compile(r"^recta:?\s*" + _FR_PATRON + r"$")
 _ORDEN_PARTES = re.compile(r"^partes:?\s*(\d+)\s*=\s*(\d+(?:\s*\+\s*\d+)*)$")
 
@@ -33,7 +34,7 @@ def _fr_limpio(texto):
 
 def es_orden_fraccion(texto):
     t = _fr_limpio(texto)
-    return any(p.match(t) for p in (_ORDEN_FRACCION, _ORDEN_DE, _ORDEN_COMPARAR_FR, _ORDEN_ENTERO, _ORDEN_PARTES, _ORDEN_RECTA))
+    return any(p.match(t) for p in (_ORDEN_FRACCION, _ORDEN_DE, _ORDEN_COMPARAR_FR, _ORDEN_ENTERO, _ORDEN_PARTES, _ORDEN_RECTA, _ORDEN_CUENTA_FR))
 
 
 def nombre_fraccion(a, b, saber):
@@ -325,6 +326,113 @@ def explicar_partes(total, partes, saber):
     return "\n".join(L)
 
 
+# ---------------------------------------------------------------- 2/7 + 3/7   (F.3)
+
+def _fr_tira_dos(b, a, c, saber, signo):
+    """La tira de b partes: las 'a' primeras con #; luego, si se suma, las 'c' siguientes con +;
+    si se resta, de las 'a' se tachan las 'c' ultimas con x."""
+    trozos, marca, i_a, i_c = [], "cero", "cero", "cero"
+    hasta_quitar = None
+    if signo == "-":
+        hasta_quitar = aplicar("restar", {"a": a, "b": c}, saber).get("valor")
+    while marca != decir(b, saber):
+        if i_a != decir(a, saber):
+            simbolo = "#"
+            if signo == "-" and hasta_quitar is not None and viene_despues(i_a, decir(hasta_quitar, saber), saber) \
+                    or (signo == "-" and i_a == decir(hasta_quitar, saber)):
+                simbolo = "x"
+            i_a = siguiente(i_a, saber)
+        elif signo == "+" and i_c != decir(c, saber):
+            simbolo = "+"
+            i_c = siguiente(i_c, saber)
+        else:
+            simbolo = "o"
+        trozos.append("%s%s%s" % (simbolo, simbolo, simbolo))
+        marca = siguiente(marca, saber)
+    return "[" + "|".join(trozos) + "]"
+
+
+def decidir_cuenta_fracciones(fa, signo, fb, saber=None):
+    """fa None = el entero 1.  Devuelve {conclusion, valor: (arriba, abajo), ...}."""
+    if saber is None:
+        saber = cargar_conocimiento()
+    r = {"signo": signo, "b": fb}
+    if fa is None:
+        if signo != "-":
+            r.update(conclusion="todavia_no", porque="1 + una fraccion pasa de un entero (4.o)")
+            return r
+        fa = (fb[1], fb[1])
+        r["entero_como"] = fa
+    r["a"] = fa
+    for f in (fa, fb):
+        p = _fr_problema(f[0], f[1], saber)
+        if p:
+            r.update(conclusion=p[0], porque=p[1])
+            return r
+    if fa[1] != fb[1]:
+        r.update(conclusion="todavia_no", porque="las partes son de tamanos distintos (1/%d y 1/%d): hay que "
+                 "buscar el mismo de abajo (NCETM 3.8, 5.o)" % (fa[1], fb[1]))
+        return r
+    b = fa[1]
+    preg = "sumar" if signo == "+" else "restar"
+    x = aplicar(preg, {"a": fa[0], "b": fb[0]}, saber)
+    if x["conclusion"] != "hecho":
+        r.update(conclusion="imposible", porque="no se pueden quitar %d partes de %d" % (fb[0], fa[0]))
+        return r
+    arriba = x["valor"]
+    r["metodo"] = x["pieza"]["nombre"]
+    if arriba != b and viene_despues(decir(arriba, saber), decir(b, saber), saber):
+        r.update(conclusion="todavia_no", porque="%d/%d pasa de un entero: eso es de 4.o (NCETM 3.5)" % (arriba, b),
+                 valor=(arriba, b))
+        return r
+    # LA VUELTA (NCETM 3.4: sumar y restar son inversas)
+    inv = aplicar("restar" if signo == "+" else "sumar", {"a": arriba, "b": fb[0]}, saber)
+    r.update(conclusion="hecho", valor=(arriba, b), vuelta_ok=inv.get("valor") == fa[0],
+             vuelta="%d/%d %s %d/%d = %s/%d" % (arriba, b, "-" if signo == "+" else "+", fb[0], b, inv.get("valor"), b))
+    return r
+
+
+def _fr_texto_valor(v):
+    arriba, b = v
+    if arriba == b:
+        return "1"
+    if arriba == 0:
+        return "0"
+    return "%d/%d" % v
+
+
+def explicar_cuenta_fracciones(fa, signo, fb, saber):
+    r = decidir_cuenta_fracciones(fa, signo, fb, saber)
+    izq = "1" if fa is None else "%d/%d" % fa
+    L = ["PREGUNTA (F.3): %s %s %d/%d  (NCETM 3.4: sumar y restar dentro de un entero)" % (izq, signo, fb[0], fb[1]), ""]
+    if r["conclusion"] != "hecho":
+        etiqueta = {"imposible": "NO SE PUEDE"}.get(r["conclusion"], "TODAVIA NO")
+        return "\n".join(L + ["  %s: %s" % (etiqueta, r["porque"]), "", "RESULTADO: %s" % r["conclusion"]])
+    a, b = r["a"]
+    c = fb[0]
+    if fa is None:
+        L.append("  0. el entero se escribe con el mismo arriba y abajo: 1 = %d/%d" % (b, b))
+    uno, varios = _NOMBRES_FR[b]
+    nom = lambda n: "%s %s" % (decir(n, saber), uno if n == 1 else varios)
+    L.append("  1. las partes son del MISMO TAMANO (1/%d): se cuentan como cosas, como manzanas." % b)
+    L.append("     %s %s %s = %s   (%d %s %d = %d, %s)" % (nom(a), "mas" if signo == "+" else "menos", nom(c),
+                                                           nom(r["valor"][0]), a, signo, c, r["valor"][0], r["metodo"]))
+    if signo == "+":
+        doble = aplicar("sumar", {"a": b, "b": b}, saber).get("valor")
+        L.append("     el de abajo NO se suma: dice de que tamano son las partes, y no cambia "
+                 "(el error tipico: %d/%s)." % (r["valor"][0], doble))
+    else:
+        L.append("     el de abajo NO se resta: dice de que tamano son las partes, y no cambia.")
+    L.append("")
+    L.append("     %s" % _fr_tira_dos(b, a, c, saber, signo))
+    L.append("")
+    L.append("  2. LA VUELTA (sumar y restar son inversas): %s ... %s" % (r["vuelta"], "SI" if r["vuelta_ok"] else "NO"))
+    if r["valor"][0] == b:
+        L.append("  %d/%d: arriba y abajo iguales, es UN ENTERO." % r["valor"])
+    L += ["", "RESULTADO: %s" % _fr_texto_valor(r["valor"])]
+    return "\n".join(L)
+
+
 # ---------------------------------------------------------------- la puerta
 
 
@@ -346,6 +454,11 @@ def explicar_orden_fraccion(texto, saber=None):
     m = _ORDEN_ENTERO.match(t)
     if m:
         return explicar_entero(int(m.group(1)), int(m.group(2)), int(m.group(3)), saber)
+    m = _ORDEN_CUENTA_FR.match(t)
+    if m:
+        g = m.groups()
+        primera = (int(g[0]), int(g[1])) if g[0] is not None else None     # None: el entero '1'
+        return explicar_cuenta_fracciones(primera, g[3], (int(g[4]), int(g[5])), saber)
     m = _ORDEN_RECTA.match(t)
     if m:
         return explicar_recta(int(m.group(1)), int(m.group(2)), saber)

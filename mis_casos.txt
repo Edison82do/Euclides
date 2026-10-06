@@ -798,3 +798,12 @@ comparar: 2/5 y 3/5                        | 2/5 < 3/5 | mismo de abajo
 comparar: 2/3 y 2/5                        | 2/3 > 2/5 | mismo de arriba, al reves
 comparar: 2/3 y 3/5                        | todavia_no | 5.o
 fraccion: 5/4                              | todavia_no | 4.o
+# ---------------------------------------------------------------------------
+# PASO F.3 - SUMAR Y RESTAR FRACCIONES DENTRO DE UN ENTERO (NCETM 3.4)
+# ---------------------------------------------------------------------------
+2/7 + 3/7                                  | 5/7 | no 5/14
+5/7 - 2/7                                  | 3/7 | mismo de abajo
+1 - 3/8                                    | 5/8 | 1 = 8/8
+3/8 + 5/8                                  | 1 | un entero
+4/7 + 5/7                                  | todavia_no | pasa de un entero
+1/2 + 1/4                                  | todavia_no | distinto abajo
