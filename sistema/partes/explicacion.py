@@ -757,6 +757,8 @@ def explicar_pregunta(texto, saber=None):
             return explicar_tabla(t, saber)
         if t.lower().startswith("mitad"):
             return explicar_mitad(t[len("mitad"):].lstrip(":").strip(), saber)
+        if es_division(t):
+            return explicar_dividir(t, saber)
         if es_multiplicacion(t):
             return explicar_multiplicar(t, saber)
         if re.match(r"^(filas:\s*)?\d+\s+(filas?|columnas?)\s+de\s+\d+", t.lower()):

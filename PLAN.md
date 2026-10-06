@@ -199,7 +199,7 @@ La investigación (Common Core 1.OA / 2.OA, Carpenter-Franke-Levi, Knuth et al.,
 | 5 | ✅ **HECHO y probado por Carlos (5 oct)** — `diario/2026-10-05-paso-E2-balanza.md`. **E.2 El `=` como balanza** (8 + 4 = ? + 5 → 7, no 12 ni 17) | Knuth et al.; Falkner-Levi-Carpenter | las trampas 12 y 17 descartadas con su porqué |
 | 6 | ✅ **HECHO y probado por Carlos (5 oct)** — `diario/2026-10-05-paso-N1-par-impar-saltos.md`. **N.1 Par e impar; contar de n en n** (2, 5, 10) | 2.OA.C.3; 2.NBT.2 | par = suma de dos iguales (los dobles) |
 | 7 | ✅ **HECHO y probado por Carlos (5 oct)** — `diario/2026-10-05-paso-M0-filas.md`. **M.0 Filas y columnas como sumas iguales** (3 filas de 4 = 4 + 4 + 4) | 2.OA.C.4 | la suma de iguales, por saltos |
-| 8 | ✅ **M.1 HECHO (Carlos: «bien, adelante») y M.2 HECHO (5 oct), falta la prueba de Carlos** — `diario/2026-10-05-paso-M2-tablas.md`. — `diario/2026-10-05-paso-M1-multiplicar.md`. **M.1 Multiplicar = grupos iguales**; luego M.2, M.3, E.4, E.5 (abajo) | 3.OA.A.1 | la tabla de abajo |
+| 8 | ✅ **M.1 HECHO (Carlos: «bien, adelante») y M.2 HECHO y probado; M.3 dividir HECHO (5 oct), falta la prueba de Carlos** — `diario/2026-10-05-paso-M3-dividir.md`. — `diario/2026-10-05-paso-M1-multiplicar.md`. **M.1 Multiplicar = grupos iguales**; luego M.2, M.3, E.4, E.5 (abajo) | 3.OA.A.1 | la tabla de abajo |
 
 ## EL PLAN ANTERIOR (5 oct, tarde) — sustituido por el de arriba en el orden; se conserva como referencia
 

@@ -311,6 +311,17 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         ecuacion: ... / hueco: ...  -> lo mismo con la orden delante.
         Y escrito directamente: '8 + 3 = 11' -> verdad,  '8 + 3' -> calcular.
 
+  DIVIDIR  ->  repartir y agrupar (paso M.3; NCETM 2.6)
+        12 en grupos de 3      -> 4    AGRUPAR: cuantos grupos? contando 3, 6, 9, 12
+        12 entre 3             -> 4    REPARTIR: cuantos para cada uno? (rondas de uno para cada uno)
+        12 : 3                 -> 4    (tambien 12 ÷ 3 y 12 / 3): las dos lecturas
+        13 : 3                 -> 4 resto 1   a veces sobra
+        30 : 5                 -> 6    con la tabla que se: 6 x 5 = 30 (factor desconocido)
+        15 : 2                 -> 7 resto 1   la mitad
+        0 : 4 / 7 : 7 / 9 : 1  -> 0 / 1 / 9   sin calcular
+        8 : 0                  -> no se puede (no se reparte entre nadie)
+        Siempre se COMPRUEBA multiplicando: cociente x divisor (+ resto) = dividendo.
+
   TABLAS  ->  las tablas del 2, 5 y 10; la conmutativa; dobles y mitades (paso M.2; NCETM 2.3-2.5)
         tabla del 5            -> 0 x 5 = 0 ... 10 x 5 = 50 (contar de 5 en 5)
         5 x 7                  -> 35   la OTRA LECTURA: 7 grupos de 5, con la tabla del 5
@@ -443,6 +454,11 @@ def preguntar(texto, saber):
             if salida.startswith("NO ENTIENDO"):
                 return "no_entiendo", None
             return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
+        if motor.es_division(t):
+            r = motor.decidir_dividir(t, saber)
+            if r["conclusion"] != "hecho":
+                return ("no_se_puede" if r["conclusion"] == "imposible" else r["conclusion"]), None
+            return "%d%s" % (r["valor"], " resto %d" % r["resto"] if r["resto"] else ""), None
         if motor.es_multiplicacion(t):
             r = motor.decidir_multiplicar(t, saber)
             return (str(r["valor"]) if r["conclusion"] in ("hecho", "desiguales") else r["conclusion"]), None

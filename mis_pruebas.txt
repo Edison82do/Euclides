@@ -104,6 +104,15 @@ mitad: 14                         | 7
 mitad: 7                          | impar
 5 x 7                             | ??         | ver todo lo que prueba
 
+# --- M.3 dividir: repartir y agrupar ---
+12 en grupos de 3                 | 4          | agrupar
+12 entre 3                        | 4          | repartir
+13 : 3                            | 4 resto 1  | sobra uno
+30 : 5                            | 6          | la tabla
+15 : 2                            | 7 resto 1  | la mitad
+8 : 0                             | no_se_puede
+12 : 3                            | ??         | ver las dos lecturas y los dibujos
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete

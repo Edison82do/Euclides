@@ -27,6 +27,17 @@ def _acaba_en_nueve(n, u):
     return len(c) == 2 and c[0] == 9 and c[1] != 9
 
 
+def _en_las_tablas(s, u):
+    q = "cero"
+    while True:
+        h = u.recuerdo("%d x %d" % (u.leer(q), s["divisor"]))
+        if h and h["valor"] == s["total"]:
+            return True
+        if q == "diez":
+            return False
+        q = u.siguiente(q)
+
+
 def _saltos_de_diez(a, b, u):
     """Cuantos saltos de diez hay de a hasta b (como mucho nueve), o None si no se llega."""
     v, saltos = a, "cero"
@@ -104,6 +115,11 @@ CONDICIONES = {
     "el_segundo_no_es_menor": lambda s, u: not u.viene_despues(u.decir(s["a"]), u.decir(s["b"])),
     # ---- multiplicar (paso M.1): situacion {"a": grupos, "b": cuantos en cada grupo}
     "los_grupos_tienen_nombre_x": lambda s, u: u.decir(s["a"]) is not None,
+    # ---- dividir (paso M.3): situacion {"total": .., "divisor": ..}
+    "el_divisor_no_es_cero": lambda s, u: s["divisor"] != 0,
+    "es_un_caso_especial": lambda s, u: s["total"] == 0 or s["total"] == s["divisor"] or s["divisor"] == 1,
+    "el_divisor_es_dos": lambda s, u: s["divisor"] == 2,
+    "la_division_esta_en_las_tablas": lambda s, u: _en_las_tablas(s, u),
     # ---- las tablas (paso M.2)
     "un_factor_es_cero_o_uno": lambda s, u: s["a"] in (0, 1) or s["b"] in (0, 1),
     "un_factor_es_dos": lambda s, u: s["a"] == 2 or s["b"] == 2,
@@ -152,5 +168,5 @@ CONDICIONES = {
         u.siguiente(u.decir(s["b"])), u.decir(s["a"])),
 }
 
-DE_APLICACION = {"hay_bastantes", "hay_bastantes_al_deshacer", "la_parte_cabe_en_el_todo",
+DE_APLICACION = {"el_divisor_no_es_cero", "hay_bastantes", "hay_bastantes_al_deshacer", "la_parte_cabe_en_el_todo",
                  "el_despues_no_es_menor", "el_despues_no_es_mayor", "el_de_abajo_no_es_mayor"}

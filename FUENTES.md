@@ -69,7 +69,12 @@
   10 y del 5; factores 0 y 1), **2.5** (dos lecturas de la misma multiplicación; dobles; la mitad es
   lo contrario del doble; la del 10 es el doble de la del 5). → M.2.
 
+- **NCETM 2.6** (*Structures: quotitive and partitive division*): agrupar y repartir, las dos contando
+  de divisor en divisor; a veces con resto; atajos (tablas, mitad); dividendo 0, igual al divisor,
+  divisor 1. **Common Core 3.OA.B.6**: la división como factor desconocido. → M.3.
+
 ## Enlaces
+- NCETM 2.6: https://www.ncetm.org.uk/classroom-resources/primm-206-structures-quotitive-and-partitive-division/
 - NCETM 2.3: https://www.ncetm.org.uk/classroom-resources/primm-203-times-tables-groups-of-2-and-commutativity-part-1/
 - NCETM 2.4: https://www.ncetm.org.uk/classroom-resources/primm-204-times-tables-groups-of-10-and-of-5-and-factors-of-0-and-1/
 - NCETM 2.5: https://www.ncetm.org.uk/classroom-resources/primm-205-commutativity-part-2-doubling-and-halving/

@@ -670,3 +670,15 @@ verdad: 3 x 4 = 4 x 3                      | verdadero | conmutativa
 verdad: 3 x 4 = 3 + 4                      | falso | 12 y 7
 mitad: 18                                  | 9 | lo contrario del doble
 mitad: 9                                   | impar | sobra uno
+# ---------------------------------------------------------------------------
+# PASO M.3 - DIVIDIR: REPARTIR Y AGRUPAR (NCETM 2.6)
+# ---------------------------------------------------------------------------
+12 en grupos de 3                          | 4 | agrupar
+repartir 20 entre 4                        | 5 | repartir
+13 : 3                                     | 4 resto 1 | con resto
+3 : 5                                      | 0 resto 3 | no llega a un grupo
+0 : 4                                      | 0 | dividendo cero
+7 : 7                                      | 1 | el mismo
+9 : 1                                      | 9 | entre uno
+8 : 0                                      | no_se_puede | entre nadie
+100 : 7                                    | 14 resto 2 | grande
