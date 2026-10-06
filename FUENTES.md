@@ -92,6 +92,12 @@
   (la multiplicación es conmutativa y la división no; la distributiva: partir un factor; hechos más
   allá de las tablas). **Common Core 3.OA.B.5** (8 × 7 = 8 × 5 + 8 × 2) y **3.OA.C.7**. → M.6.
 
+- **Common Core 3.OA.D.8** (problemas de dos pasos con las cuatro operaciones, representados con una
+  ecuacion con **una letra** en lugar de lo desconocido; valorar si la respuesta es razonable con
+  calculo mental y **estimacion redondeando**). Su nota: sin parentesis, **el orden de siempre**
+  (primero × y ÷, luego + y −). **Pólya** (trabajar hacia atras: deshacer). Singapur/Jitendra: un
+  esquema y luego otro. → E.5.  La estimacion redondeando (**3.NBT.A.1**) queda para el paso siguiente.
+
 ## Enlaces
 - NCETM 2.9: https://www.ncetm.org.uk/classroom-resources/primm-209-times-tables-7-and-patterns-withinacross-times-tables/
 - NCETM 2.10: https://www.ncetm.org.uk/classroom-resources/primm-210-connecting-multiplication-and-division-and-the-distributive-law/

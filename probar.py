@@ -394,6 +394,19 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         Llena el ESQUEMA de grupos iguales (grupos, en cada uno, total) por los NOMBRES, no por
         palabras clave; dibuja la BARRA (Singapur) y comprueba.  Los de sumar y restar siguen en R.1.
 
+  DOS PASOS, CON LA LETRA  ->  ecuaciones con una LETRA en el hueco (paso E.5; 3.OA.D.8)
+        3 x 4 - 5 = c          -> c = 7   el orden de siempre: PRIMERO x y :, LUEGO + y -
+        2 + 3 x 4 = n          -> 14 (no 20: sin parentesis no se va de izquierda a derecha)
+        (2 + 3) x 4 = n        -> 20 (el parentesis manda)
+        3 x n + 2 = 14         -> 4    DESHACER de fuera hacia dentro: 14 - 2 = 12, 12 : 3 = 4
+        x + 5 = 12             -> 7    la x es LETRA si va donde un numero; entre dos numeros es 'por'
+        20 - 2 x n = 8         -> 6        12 : n = 3 -> 4        3 x 4 = ? x 6 -> el hueco = 2
+        n + n = 10 -> todavia_no (la letra dos veces)     3 x n + 2 = 13 -> no_sale (no hay entero)
+        Siempre comprueba poniendo el numero en la letra (como verdad:).
+        Problemas de dos pasos (R.2 y luego un cambio), con la ecuacion escrita con letra:
+        Ana tiene 3 bolsas con 4 caramelos cada una. Se come 5. Cuantos le quedan?   -> 7
+        Ana tiene 3 bolsas con 4 caramelos cada una. Le dan 5. Cuantos tiene ahora?  -> 17
+
   ECUACION CON x Y :  ->  el hueco en una multiplicacion o division (paso E.4; 3.OA.A.4)
         3 x ? = 12             -> 4    cuantos en cada grupo: REPARTIR 12 entre 3
         ? x 4 = 12             -> 3    cuantos grupos: AGRUPAR 12 en grupos de 4
@@ -525,6 +538,9 @@ def preguntar(texto, saber):
             if salida.startswith("NO ENTIENDO"):
                 return "no_entiendo", None
             return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip().lower(), None
+        if motor.es_ecuacion_con_letra(t.split(":", 1)[1] if t.lower().startswith(("ecuacion", "hueco")) and ":" in t else t):
+            r = motor.decidir_ecuacion_letra(t.split(":", 1)[1] if t.lower().startswith(("ecuacion", "hueco")) and ":" in t else t, saber)
+            return (str(r["valor"]) if r["conclusion"] == "hecho" else r["conclusion"]), None
         if t.lower().startswith("ecuacion") or t.lower().startswith("hueco"):
             r = motor.decidir_ecuacion(t.split(":", 1)[1] if ":" in t else t, saber)
             return (str(r["valor"]) if r["conclusion"] == "hecho" else r["conclusion"]), None
@@ -1055,6 +1071,8 @@ def como_problema(texto):
     problema;  una igualdad sin hueco (8 + 3 = 11) -> verdad;  una cuenta suelta (8 + 3) -> calcular."""
     t = texto.strip()
     if re.match(r"^(verdad|ecuacion|hueco|problema|calcular)\w*\s*:", t.lower()):   # ya lleva su orden
+        return t
+    if motor.es_ecuacion_con_letra(t):                    # una ecuacion con LETRA o de dos pasos (E.5)
         return t
     if "=" in t and any(h in t for h in ("?", "_", "\u25a1")):   # una ECUACION con hueco (E.1, E.4)
         return "ecuacion: " + t

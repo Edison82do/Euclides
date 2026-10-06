@@ -770,7 +770,12 @@ def explicar_pregunta(texto, saber=None):
         if t.lower().startswith("par:") or t.lower().startswith("par "):
             return explicar_paridad(t[3:].lstrip(":").strip(), saber)
         if t.lower().startswith("ecuacion") or t.lower().startswith("hueco"):
-            return explicar_ecuacion(t.split(":", 1)[1] if ":" in t else t, saber)
+            resto = t.split(":", 1)[1] if ":" in t else t
+            if es_ecuacion_con_letra(resto):
+                return explicar_ecuacion_letra(resto, saber)
+            return explicar_ecuacion(resto, saber)
+        if es_ecuacion_con_letra(t):
+            return explicar_ecuacion_letra(t, saber)
         if t.lower().startswith("verdad"):
             resto = t.split(":", 1)[1] if ":" in t else t[len("verdad"):]
             return explicar_igualdad(resto, saber)

@@ -742,3 +742,14 @@ tabla del 7                                | 0, 7, 14, 21, 28, 35, 42, 49, 56, 6
 15 x 7                                     | 105 | 10 x 7 + 5 x 7
 divisible: 49 entre 7                      | si | dividiendo
 divisible: 50 entre 7                      | no | sobra 1
+# ---------------------------------------------------------------------------
+# PASO E.5 - DOS PASOS, CON LA LETRA COMO HUECO (3.OA.D.8)
+# ---------------------------------------------------------------------------
+3 x 4 - 5 = c                              | 7 | primero la multiplicacion
+2 + 3 x 4 = n                              | 14 | no 20
+(2 + 3) x 4 = n                            | 20 | el parentesis manda
+3 x n + 2 = 14                             | 4 | deshacer
+x + 5 = 12                                 | 7 | la x es letra
+20 - 2 x n = 8                             | 6 | deshacer
+n + n = 10                                 | todavia_no | la letra dos veces
+3 x n + 2 = 13                             | no_sale | no hay entero

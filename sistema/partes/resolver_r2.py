@@ -26,9 +26,16 @@ _R2_HECHOS = [
     ("reparte", re.compile(r"^(?:\w+ )?repart\w* (?P<t>\d+) (?P<cosa>\w+) entre (?P<g>\d+) (?P<grupo>\w+)$")),
     ("en_grupos_de", re.compile(r"^(?:\w+ )?(?:mete|metio|pone|puso|guarda|guardo|coloca|coloco|empaqueta|reparte|pon|mete)\w* "
                                 r"(?P<t>\d+) (?P<cosa>\w+) en (?P<grupo>\w+) de (?P<m>\d+)$")),
+    # E.5: un SEGUNDO paso (lo que cambia despues): se dicen ANTES que 'hay_n'
+    ("cambio_mas", re.compile(r"^(?:y )?(?:luego )?(?:\w+ )?(?:le dan|les dan|compra|compran|gana|ganan|encuentra|"
+                              r"recibe|reciben|le regalan|les regalan|llegan|traen) (?P<n>\d+)(?: \w+)?(?: mas)?$")),
+    ("cambio_menos", re.compile(r"^(?:y )?(?:luego )?(?:\w+ )?(?:se come|se comen|regala|regalan|pierde|pierden|da|dan|"
+                                r"gasta|gastan|vende|venden|se van|se rompen|se lleva|se llevan|usa|usan) "
+                                r"(?P<n>\d+)(?: \w+)?$")),
     ("hay_n", re.compile(r"^(?:\w+ )?(?:hay|tiene|tienen|compra|compro|trae|son|junta|junto) (?P<n>\d+) (?P<x>\w+)$")),
 ]
 _R2_PREGUNTAS = [
+    ("final", re.compile(r"^cuant\w* (?:\w+ )?(?:le |les )?(?:quedan|queda|tiene ahora|tienen ahora|hay ahora)$")),
     ("cuanto_pesan", re.compile(r"^cuanto (?:pesan|cuestan|miden|valen) (?P<g>\d+) (?P<grupo>\w+)$")),
     ("a_cada", re.compile(r"^cuant\w* (?:\w+ )?(?:le )?(?:toca\w*|da\w*|recibe\w*) (?:a )?cada")),
     ("en_cada", re.compile(r"^cuant\w* (?P<x>\w+) (?:hay|tiene|lleva|van|caben) (?:en )?cada (?P<grupo>\w+)$")),
@@ -88,7 +95,7 @@ def leer_problema_por(texto, saber=None):
         saber = cargar_conocimiento()
     e = {"grupos": None, "en_cada": None, "total": None, "busca": None, "grupo": None, "cosa": None,
          "medida": False}
-    leidas, pendientes, pregunta = [], [], None
+    leidas, pendientes, pregunta, cambios = [], [], None, []
     for f in _frases_r2(texto, saber):
         tipo, nombre, g = _encajar_r2(f)
         if tipo is None:
@@ -99,6 +106,9 @@ def leer_problema_por(texto, saber=None):
             continue
         if nombre == "hay_n":
             pendientes.append(g)
+            continue
+        if nombre in ("cambio_mas", "cambio_menos"):
+            cambios.append(("+" if nombre == "cambio_mas" else "-", int(g["n"]), f))
             continue
         if g.get("grupo"):
             e["grupo"] = e["grupo"] or g["grupo"]
@@ -126,6 +136,16 @@ def leer_problema_por(texto, saber=None):
     if pregunta is None:
         return {"error": "no hay pregunta", "leidas": leidas}
     nombre, g = pregunta
+    e["cambios"] = cambios
+    if cambios:
+        # DOS PASOS (3.OA.D.8): primero el total de los grupos iguales, luego lo que cambia
+        if nombre not in ("final", "en_total", "cuantos_x"):
+            return {"error": "con un segundo paso solo se preguntar por lo que hay al final", "leidas": leidas}
+        e["busca"] = "total"
+        e["leidas"] = leidas
+        return e
+    if nombre == "final":
+        return {"error": "pregunta por lo que queda, pero no dice que cambie nada", "leidas": leidas}
     if nombre == "cuanto_pesan":
         e["busca"], e["grupos"] = "total", int(g["g"])
     elif nombre in ("a_cada", "en_cada"):
@@ -172,7 +192,33 @@ def decidir_R2_problema(texto, saber=None):
         r["comprobacion_ok"] = True
     unidad = (e.get("palabra_pregunta") or e["grupo"]) if e["busca"] == "grupos" else (e["cosa"] or "")
     r["unidad"] = unidad
+    if e.get("cambios"):
+        _segundo_paso(e, r, saber)
     return r
+
+
+def _segundo_paso(e, r, saber):
+    """E.5 (3.OA.D.8): el total de los grupos iguales es el ANTES del segundo paso (R.1).  Y se escribe
+    la ECUACION CON LETRA, que se resuelve tambien por su lado (letra.py) y tiene que dar lo mismo."""
+    v = r["valor"]
+    r["pasos2"] = []
+    expr = "%d x %d" % (r["lleno"]["grupos"], r["lleno"]["en_cada"])
+    for signo, n, frase in e["cambios"]:
+        p = aplicar("paso", {"tipo": "cambio", "antes": v, "signo": signo, "n": n}, saber)
+        if p["conclusion"] != "hecho":
+            r.update(conclusion="imposible", porque=p.get("porque"))
+            return
+        r["pasos2"].append({"frase": frase, "pieza": p["pieza"]["nombre"], "antes": v, "signo": signo, "n": n,
+                            "valor": p["valor"], "metodo": p["resultado"]["resultado"]["metodo"]})
+        v = p["valor"]
+        expr = "%s %s %d" % (expr, signo, n)
+    letra = (e["cosa"] or "n")[0]
+    if letra == "x":
+        letra = "n"
+    r["ecuacion"] = "%s = %s" % (expr, letra)
+    el = decidir_ecuacion_letra(r["ecuacion"], saber)
+    r["ecuacion_ok"] = el.get("valor") == v
+    r["valor_paso1"], r["valor"], r["resto"] = r["valor"], v, 0
 
 
 def _barra(lleno, busca, saber):
@@ -237,6 +283,15 @@ def explicar_R2_problema(texto, saber=None):
     L.extend(_barra(r["lleno"], None, saber))
     L.append("")
     L.append("  6. COMPRUEBO: %s ... %s" % (r["comprobacion"], "SI" if r["comprobacion_ok"] else "NO"))
+    if r.get("pasos2"):
+        L.append("")
+        L.append("  7. EL SEGUNDO PASO (3.OA.D.8): lo que hay despues de los grupos iguales")
+        for p in r["pasos2"]:
+            L.append("     '%s' -> %s: %d %s %d = %d   (%s)" % (p["frase"], p["pieza"], p["antes"], p["signo"],
+                                                              p["n"], p["valor"], p["metodo"]))
+        L.append("")
+        L.append("  8. LA ECUACION CON LETRA: %s   -> %s = %d (resuelta por su lado: %s)"
+                 % (r["ecuacion"], r["ecuacion"].split("= ")[-1], r["valor"], "lo mismo" if r["ecuacion_ok"] else "NO CUADRA"))
     L.append("")
     sobra = (", y sobra%s %d" % ("" if r["resto"] == 1 else "n", r["resto"])) if r["resto"] else ""
     L.append("RESULTADO: %d %s%s" % (r["valor"], r["unidad"], sobra))

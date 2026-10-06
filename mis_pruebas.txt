@@ -158,6 +158,14 @@ tabla del 11                      | todavia_no
 8 x 7                             | ??         | ver todo lo que prueba
 6 x 6                             | ??         | el numero cuadrado
 
+# --- E.5 dos pasos, con la letra como hueco ---
+3 x 4 - 5 = c                     | 7
+2 + 3 x 4 = n                     | 14         | no 20
+(2 + 3) x 4 = n                   | 20
+3 x n + 2 = 14                    | 4
+x + 5 = 12                        | 7
+Ana tiene 3 bolsas con 4 caramelos cada una. Se come 5. Cuantos le quedan?   | ??   | ver los dos pasos
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete
