@@ -169,6 +169,9 @@ def explicar_fraccion(a, b, saber):
             a, b, decir(a, saber), b, " + ".join("1/%d" % b for _ in _fr_marcas(a, saber))))
     L.append("  %s %s hacen un entero (%s)." % (decir(b, saber), _NOMBRES_FR[b][1],
                                                  " + ".join("1/%d" % b for _ in _fr_marcas(b, saber))))
+    if b == 10 and a != b and not viene_despues(decir(a, saber), decir(b, saber), saber):
+        L.append("  con el punto (D.1): %d/10 = 0.%d  (%s %s; NCETM 1.23)" % (a, a, decir(a, saber),
+                                                                      "decima" if a == 1 else "decimas"))
     if a == b:
         L.append("  arriba y abajo el mismo numero: %d/%d es UN ENTERO." % (a, b))
         nombre = "un entero"

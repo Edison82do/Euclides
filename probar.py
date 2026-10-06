@@ -435,6 +435,14 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         3 - 1/4                -> 2 3/4  (cambio un entero por 4/4)
         comparar: 2 1/4 y 1 3/4 -> 2 1/4 > 1 3/4   primero los enteros, luego las partes
 
+  DECIMAS  ->  0.1 es una decima: el uno partido en diez (paso D.1; NCETM 1.23; 4.NF.C.6)
+        decimal: 2.3           -> 23 decimas  (2 enteros y 3 decimas = 2 + 0.3 = 2 + 3/10; entre 2 y 3)
+        2.7 + 1.5              -> 4.2   en columnas con el punto alineado (7 + 5 = 12: escribo 2, llevo 1)
+                                        y contando en decimas: 27 decimas + 15 decimas = 42 decimas
+        4.2 - 1.5              -> 2.7   (cambio 1 unidad por diez decimas)
+        comparar: 0.9 y 1.1    -> 0.9 < 1.1    redondear: 2.7 -> 3    de 0.1 en 0.1 desde 0.7
+        Se escribe con punto (tambien vale la coma).  Centesimas (2.35): todavia no.
+
   REDONDEAR  ->  a la decena o a la centena MAS CERCANA (paso N.2; 3.NBT.A.1)
         redondear: 37          -> decena 40, centena 0   (las dos)
         redondear: 37 a la decena   -> 40   EN LA RECTA: entre 30 y 40, la mitad es 35, pasa de la mitad
@@ -605,6 +613,11 @@ def preguntar(texto, saber):
         if t.lower().startswith("tabla del") or t.lower().startswith("mitad"):
             salida = (motor.explicar_tabla(t, saber) if t.lower().startswith("tabla")
                       else motor.explicar_mitad(t[len("mitad"):].lstrip(":").strip(), saber))
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
+        if motor.es_orden_decimal(t):
+            salida = motor.explicar_orden_decimal(t, saber)
             if salida.startswith("NO ENTIENDO"):
                 return "no_entiendo", None
             return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
