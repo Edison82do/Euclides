@@ -63,7 +63,7 @@ try:
         esperado = ", ".join(str(n * k) for k in range(0, 11))
         comprobar("B tabla del %d: 0 ... %d, cada uno el anterior mas %d" % (n, 10 * n, n),
                   t.strip().splitlines()[-1], "RESULTADO: " + esperado)
-    comprobar("B4 tabla del 3: todavia no", motor.explicar_pregunta("tabla del 3", SABER).strip().splitlines()[-1],
+    comprobar("B4 tabla del 7: todavia no (en M.2 era la del 3; llegan en orden)", motor.explicar_pregunta("tabla del 7", SABER).strip().splitlines()[-1],
               "RESULTADO: todavia_no")
 
     print("\nC - LA CONMUTATIVA EN EL = (E.0)")
@@ -90,7 +90,7 @@ try:
     h = motor.cargar_memoria()["6 x 5"]
     comprobar("E2 6 x 5 = 30, comprobado con la otra lectura (5 grupos de 6)", (h["valor"], "5 grupos de 6" in h["comprobado"]), (30, True))
     comprobar("E3 6 x 5 ahora de memoria", P(6, 5)[:2], (30, "recordar_producto"))
-    comprobar("E4 3 x 7 no esta en las tablas aprendidas: se calcula", P(3, 7)[1], "multiplicar_grupos_iguales")
+    comprobar("E4 7 x 7 no esta en las tablas aprendidas: se calcula", P(7, 7)[1], "multiplicar_grupos_iguales")
     comprobar("E5 sin memoria, 6 x 5 se calcula", P(6, 5, sin_memoria=True)[1] != "recordar_producto", True)
     with open(RUTA, encoding="utf-8") as f:
         txt = f.read()

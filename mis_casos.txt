@@ -718,4 +718,17 @@ tabla del 8                                | 0, 8, 16, 24, 32, 40, 48, 56, 64, 7
 divisible: 36 entre 4                      | si | dos mitades
 divisible: 36 entre 8                      | no | 9 no se parte
 divisible: 50 entre 4                      | no | 25 no se parte
-divisible: 36 entre 3                      | todavia_no | M.5
+divisible: 36 entre 3                      | si | desde M.5: 3 + 6 = 9
+# ---------------------------------------------------------------------------
+# PASO M.5 - LAS TABLAS DEL 3, 6 Y 9 (NCETM 2.8)
+# ---------------------------------------------------------------------------
+tabla del 3                                | 0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30 | de 3 en 3
+tabla del 6                                | 0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60 | doble del 3
+tabla del 9                                | 0, 9, 18, 27, 36, 45, 54, 63, 72, 81, 90 | triple del 3
+8 x 9                                      | 72 | la del 9
+6 x 7                                      | 42 | la del 6
+divisible: 51 entre 3                      | si | 5 + 1 = 6
+divisible: 52 entre 3                      | no | 5 + 2 = 7
+divisible: 72 entre 6                      | si | par y 9
+divisible: 81 entre 9                      | si | 8 + 1 = 9
+divisible: 36 entre 7                      | todavia_no | M.6

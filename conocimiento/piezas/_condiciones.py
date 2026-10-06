@@ -29,10 +29,17 @@ def _acaba_en_nueve(n, u):
 
 def _mitad_conocida(s, u):
     for f, k in ((s["b"], s["a"]), (s["a"], s["b"])):
-        if f in (4, 8):
-            m = 2 if f == 4 else 4
+        if f in (4, 8, 6):
+            m = {4: 2, 8: 4, 6: 3}[f]
             if u.recuerdo("%d x %d" % (k, m)) or u.recuerdo("%d x %d" % (m, k)):
                 return True
+    return False
+
+
+def _tercio_conocido(s, u):
+    for f, k in ((s["b"], s["a"]), (s["a"], s["b"])):
+        if f == 9 and (u.recuerdo("%d x 3" % k) or u.recuerdo("3 x %d" % k)):
+            return True
     return False
 
 
@@ -138,6 +145,7 @@ CONDICIONES = {
     "la_division_esta_en_las_tablas": lambda s, u: _en_las_tablas(s, u),
     # ---- doblar tablas (paso M.4)
     "se_puede_doblar_una_tabla": lambda s, u: _mitad_conocida(s, u),
+    "se_puede_triplicar_el_3": lambda s, u: _tercio_conocido(s, u),
     # ---- las tablas (paso M.2)
     "un_factor_es_cero_o_uno": lambda s, u: s["a"] in (0, 1) or s["b"] in (0, 1),
     "un_factor_es_dos": lambda s, u: s["a"] == 2 or s["b"] == 2,

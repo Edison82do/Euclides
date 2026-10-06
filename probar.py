@@ -322,6 +322,15 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         8 : 0                  -> no se puede (no se reparte entre nadie)
         Siempre se COMPRUEBA multiplicando: cociente x divisor (+ resto) = dividendo.
 
+  TABLAS DEL 3, 6 Y 9  ->  sus relaciones (paso M.5; NCETM 2.8)
+        tabla del 3            -> contar de 3 en 3
+        tabla del 6            -> el DOBLE de la del 3
+        tabla del 9            -> el TRIPLE de la del 3
+        7 x 9                  -> 63   (si 7 x 3 ya se sabe: 21 + 21 + 21)
+        divisible: 51 entre 3  -> si   (5 + 1 = 6: la suma de las cifras)
+        divisible: 72 entre 6  -> si   (par, y 7 + 2 = 9)
+        divisible: 999 entre 9 -> si   (9+9+9 = 27 -> 2+7 = 9)
+
   TABLAS DEL 4 Y DEL 8  ->  doblando (paso M.4; NCETM 2.7)
         tabla del 4            -> cada producto, el DOBLE del de la tabla del 2
         tabla del 8            -> cada producto, el DOBLE del de la tabla del 4

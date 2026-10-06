@@ -148,11 +148,11 @@ def explicar_tabla(texto, saber=None):
     if not m:
         return "NO ENTIENDO ESTO: se escribe asi:  tabla del 2   (o del 5, o del 10)"
     n = m.group(1)
-    if n in ("4", "8"):
+    if n in _DERIVA:
         return _tabla_doblando(n, saber)
     if n not in _TABLAS:
-        return ("PREGUNTA (M.2): tabla del %s\n\n  TODAVIA NO: por ahora se las tablas del 2, 4, 8, 5 y 10 "
-                "(NCETM 2.3, 2.4 y 2.7); las demas llegan despues.  Pero %s x 4 lo calculo: escribelo.\n\n"
+        return ("PREGUNTA (M.2): tabla del %s\n\n  TODAVIA NO: por ahora se las tablas del 2, 3, 4, 5, 6, 8, 9 y 10 "
+                "(NCETM 2.3, 2.4, 2.7 y 2.8); la del 7 llega despues.  Pero %s x 4 lo calculo: escribelo.\n\n"
                 "RESULTADO: todavia_no" % (n, n))
     L = ["PREGUNTA (M.2): la tabla del %s  (grupos de %s; cada producto es el anterior MAS %s)" % (n, n, n), ""]
     v, k, fila = 0, "cero", []
@@ -213,26 +213,50 @@ def explicar_mitad(texto, saber=None):
 # ------------------------------------------------------------- M.4: las tablas del 4 y del 8; divisible
 
 
+def _fila_de(n, saber):
+    """Los productos 0 x n ... 10 x n, sacados como dice NCETM: el 2 y el 3 contando de n en n; el 4,
+    el 8 y el 6 DOBLANDO (2 -> 4 -> 8; 3 -> 6); el 9 TRIPLICANDO el 3."""
+    def doble(x):
+        return aplicar("sumar", {"a": x, "b": x}, saber)["valor"]
+    if n in ("2", "3"):
+        out, v, k = [], 0, "cero"
+        while True:
+            out.append(v)
+            if k == "diez":
+                return out
+            r = contar_adelante(decir(v, saber), {"2": "dos", "3": "tres"}[n], saber)
+            v = leer(r["resultado"], saber)
+            k = siguiente(k, saber)
+    if n in ("4", "8", "6"):
+        return [doble(x) for x in _fila_de({"4": "2", "8": "4", "6": "3"}[n], saber)]
+    if n == "9":
+        return [aplicar("sumar", {"a": doble(x), "b": x}, saber)["valor"] for x in _fila_de("3", saber)]
+    return None
+
+
+_DERIVA = {"3": (None, "contar de 3 en 3", "NCETM 2.8"), "4": ("2", "el DOBLE", "NCETM 2.7"),
+           "8": ("4", "el DOBLE", "NCETM 2.7"), "6": ("3", "el DOBLE", "NCETM 2.8"),
+           "9": ("3", "el TRIPLE", "NCETM 2.8")}
+
+
 def _tabla_doblando(n, saber):
-    """NCETM 2.7: la tabla del 4 es el DOBLE de la del 2; la del 8, el doble de la del 4."""
-    base = {"4": "2", "8": "4"}[n]
-    L = ["PREGUNTA (M.4): la tabla del %s  (cada producto es el DOBLE del de la tabla del %s; NCETM 2.7)" % (n, base), ""]
-    v2, k, fila = 0, "cero", []
-    while True:
-        b = v2
-        if n == "8":                                   # la del 4 sale doblando la del 2
-            b = aplicar("sumar", {"a": v2, "b": v2}, saber)["valor"]
-        v = aplicar("sumar", {"a": b, "b": b}, saber)["valor"]
-        L.append("    %2d x %s = el doble de %2d x %s (%2d) = %d" % (leer(k, saber), n, leer(k, saber), base, b, v))
-        fila.append(str(v))
-        if k == "diez":
-            break
-        v2 = saltar(v2, "dos", saber)
-        k = siguiente(k, saber)
-    L.append("")
-    L.append("  (y seguidos se diferencian en %s: contar de %s en %s: %s)" % (n, n, n, ", ".join(fila)))
-    L.append("")
-    L.append("RESULTADO: %s" % ", ".join(fila))
+    """Las tablas que salen de otras: 4 y 8 (doblando el 2), 6 (doblando el 3), 9 (triplicando el 3);
+    y la del 3 contando de 3 en 3."""
+    base, como, fuente = _DERIVA[n]
+    fila = _fila_de(n, saber)
+    if base:
+        L = ["PREGUNTA (M.4/M.5): la tabla del %s  (cada producto es %s del de la tabla del %s; %s)"
+             % (n, como, base, fuente), ""]
+        fb = _fila_de(base, saber)
+        for k, (v, b) in enumerate(zip(fila, fb)):
+            L.append("    %2d x %s = %s de %2d x %s (%2d) = %d" % (k, n, como.lower(), k, base, b, v))
+    else:
+        L = ["PREGUNTA (M.5): la tabla del %s  (contar de %s en %s; %s)" % (n, n, n, fuente), ""]
+        for k, v in enumerate(fila):
+            L.append("    %2d x %s = %d" % (k, n, v))
+    txt = ", ".join(str(x) for x in fila)
+    L += ["", "  (y seguidos se diferencian en %s: contar de %s en %s: %s)" % (n, n, n, txt), "",
+          "RESULTADO: %s" % txt]
     return "\n".join(L)
 
 
@@ -241,6 +265,8 @@ def decidir_divisible(n, d, saber=None):
     puede DOS veces; entre 8, TRES veces."""
     if saber is None:
         saber = cargar_conocimiento()
+    if d in (3, 9, 6):
+        return _divisible_por_cifras(n, d, saber)
     veces = {2: "uno", 4: "dos", 8: "tres"}.get(d)
     if veces is None:
         return {"conclusion": "todavia_no"}
@@ -255,15 +281,52 @@ def decidir_divisible(n, d, saber=None):
     return {"conclusion": "hecho", "valor": True, "camino": camino, "cociente": v}
 
 
+def _suma_de_cifras(n, saber):
+    cif = cifras_de(n)
+    total = 0
+    for c in cif:
+        total = aplicar("sumar", {"a": total, "b": c}, saber)["valor"]
+    return total
+
+
+def _divisible_por_cifras(n, d, saber):
+    """NCETM 2.8 (punto 6): entre 3 si la SUMA DE LAS CIFRAS se divide entre 3; entre 9 si se divide
+    entre 9 (se suman las cifras hasta que queda una sola: 3, 6 o 9 -> entre 3; 9 -> entre 9);
+    entre 6 si es PAR y se divide entre 3."""
+    camino, v = [str(n)], n
+    while viene_despues(decir(v, saber), "nueve", saber):
+        v = _suma_de_cifras(v, saber)
+        camino.append(str(v))
+    entre3 = v in (0, 3, 6, 9)
+    entre9 = v in (0, 9)
+    par = decidir_paridad(n, saber)["valor"] == "par"
+    valor = {3: entre3, 9: entre9, 6: entre3 and par}[d]
+    out = {"conclusion": "hecho", "valor": valor, "camino": camino, "cifra": v, "par": par, "regla": "cifras"}
+    if valor:
+        out["cociente"] = aplicar("dividir", {"total": n, "divisor": d}, saber)["valor"]
+    return out
+
+
 def explicar_divisible(texto, saber=None):
     m = re.match(r"^(\d+)\s+entre\s+(\d+)$", " ".join(texto.lower().split()))
     if not m:
         return "NO ENTIENDO ESTO: se escribe asi:  divisible: 36 entre 4"
     n, d = int(m.group(1)), int(m.group(2))
     r = decidir_divisible(n, d, saber)
-    L = ["PREGUNTA (M.4): %d se puede dividir entre %d sin que sobre?" % (n, d), ""]
+    L = ["PREGUNTA (M.4/M.5): %d se puede dividir entre %d sin que sobre?" % (n, d), ""]
     if r["conclusion"] == "todavia_no":
-        return "\n".join(L + ["  TODAVIA NO: por ahora se mirarlo entre 2, 4 y 8 (NCETM 2.7).", "", "RESULTADO: todavia_no"])
+        return "\n".join(L + ["  TODAVIA NO: por ahora se mirarlo entre 2, 3, 4, 6, 8 y 9 (NCETM 2.7 y 2.8).", "", "RESULTADO: todavia_no"])
+    if r.get("regla") == "cifras":
+        L.append("  la regla (NCETM 2.8): se suman las cifras hasta que queda UNA: %s" % " -> ".join(r["camino"]))
+        if d == 3:
+            L.append("  entre 3 si esa cifra es 0, 3, 6 o 9: es %d" % r["cifra"])
+        elif d == 9:
+            L.append("  entre 9 si esa cifra es 0 o 9: es %d" % r["cifra"])
+        else:
+            L.append("  entre 6 si es PAR (%s) y se divide entre 3 (la cifra es %d)" % ("si" if r["par"] else "no", r["cifra"]))
+        L.append("  %s" % ("SI: %d entre %d da %d, justo." % (n, d, r["cociente"]) if r["valor"] else "NO."))
+        L += ["", "RESULTADO: %s" % ("si" if r["valor"] else "no")]
+        return "\n".join(L)
     veces = {2: "UNA vez", 4: "DOS veces", 8: "TRES veces"}[d]
     L.append("  la regla (con mitades): entre %d si se puede partir por la mitad %s sin que sobre." % (d, veces))
     L.append("  %s" % " -> ".join(r["camino"]))

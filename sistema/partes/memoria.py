@@ -150,7 +150,7 @@ def aprender(que, saber=None, ruta=None):
     return res
 
 
-TABLAS_ENSENADAS = (2, 4, 8, 5, 10)        # M.2: 2, 5, 10;  M.4: 4 y 8 (doblando)
+TABLAS_ENSENADAS = (2, 4, 8, 3, 6, 9, 5, 10)   # M.2: 2, 5, 10;  M.4: 4 y 8 (doblando);  M.5: 3, 6, 9
 
 
 def _aprender_tablas(saber, ruta, hechos, hoy, res):
@@ -220,7 +220,8 @@ def explicar_aprender(que, saber=None):
     if que == "tablas":
         L = ["PREGUNTA: aprender las TABLAS del %s (de 0 a 10 grupos, en las dos lecturas)"
              % ", ".join(str(t) for t in TABLAS_ENSENADAS), "",
-             "  EN ORDEN: la del 4 se saca DOBLANDO la del 2, y la del 8 doblando la del 4 (NCETM 2.7).",
+             "  EN ORDEN: la del 4 se saca DOBLANDO la del 2, y la del 8 doblando la del 4 (NCETM 2.7);",
+             "  la del 6 doblando la del 3, y la del 9 TRIPLICANDO la del 3 (NCETM 2.8).",
              "  CALCULO cada producto SIN memoria y lo compruebo con la OTRA LECTURA de los grupos",
              "  (3 x 5 son 3 grupos de 5; y 5 grupos de 3 tienen que dar lo mismo: NCETM 2.3).", "",
              "  nuevos en la memoria:    %d" % len(r["nuevos"]),
