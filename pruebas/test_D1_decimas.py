@@ -61,7 +61,7 @@ try:
     comprobar("A7 redondear 2.7 -> 3;  2.5 -> 3 (convenio);  2.4 -> 2",
               (S("redondear: 2.7"), S("redondear: 2.5"), S("redondear: 2.4")), ("3", "3", "2"))
     comprobar("A8 de 0.1 en 0.1 desde 0.8 -> pasa el uno sin '0.10'", S("de 0.1 en 0.1 desde 0.8 hasta 1.2"), "0.9, 1, 1.1, 1.2")
-    comprobar("A9 2.35 + 1 -> todavia no (D.2)", S("2.35 + 1"), "todavia_no")
+    comprobar("A9 2.35 + 1 -> desde D.2 (centesimas) si: 3.35", S("2.35 + 1"), "3.35")
     comprobar("A10 la coma tambien vale: 2,7 + 1,5", S("2,7 + 1,5"), "4.2")
     comprobar("A11 2 + 0.5 -> 2.5 (un entero y un decimal)", S("2 + 0.5"), "2.5")
     comprobar("A12 1.5 - 2.5 -> imposible", S("1.5 - 2.5"), "imposible")

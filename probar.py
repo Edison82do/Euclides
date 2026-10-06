@@ -443,6 +443,13 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         comparar: 0.9 y 1.1    -> 0.9 < 1.1    redondear: 2.7 -> 3    de 0.1 en 0.1 desde 0.7
         Se escribe con punto (tambien vale la coma).  Centesimas (2.35): todavia no.
 
+  CENTESIMAS Y MILESIMAS  ->  0.01 y 0.001 (paso D.2; NCETM 1.24; 4.NF.C.5-7)
+        decimal: 2.35          -> 235 centesimas  (2 + 0.3 + 0.05)
+        comparar: 0.5 y 0.45   -> 0.5 > 0.45  (0.50 contra 0.45: no '45 es mas que 5')
+        2.35 + 1.7             -> 4.05  (los puntos alineados: 1.70)     5 - 0.25 -> 4.75
+        redondear: 2.35 a la decima -> 2.4      redondear: 2.35 -> 2 (al entero)
+        de 0.01 en 0.01 desde 0.98    fraccion: 35/100 -> 0.35;  3/10 = 30/100
+
   REDONDEAR  ->  a la decena o a la centena MAS CERCANA (paso N.2; 3.NBT.A.1)
         redondear: 37          -> decena 40, centena 0   (las dos)
         redondear: 37 a la decena   -> 40   EN LA RECTA: entre 30 y 40, la mitad es 35, pasa de la mitad

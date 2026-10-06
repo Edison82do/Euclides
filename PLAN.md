@@ -254,7 +254,7 @@ pruebas → commit. Carlos prueba por la mañana.
 | 25 | ✅ **HECHO (6 oct, noche), falta la prueba de Carlos** — `diario/2026-10-06-paso-M11-division-corta.md`. **M.11 La división corta** | NCETM 2.15; 4.NBT.B.6 | 1286 divisiones con la vuelta |
 | 26 | ✅ **HECHO (7 oct, madrugada), falta la prueba de Carlos** — `diario/2026-10-07-paso-F4-mayores-que-un-entero.md`. **F.4 Más de un entero: números mixtos e impropias** | NCETM 3.5; 4.NF.B.3 | mixtos ↔ impropias; 250 cuentas; 200 comparaciones |
 | 27 | ✅ **HECHO (7 oct, madrugada), falta la prueba de Carlos** — `diario/2026-10-07-paso-D1-decimas.md`. **D.1 Las décimas** | NCETM 1.23; 4.NF.C.6 | 300 cuentas, 300 comparaciones, redondeos |
-| 28 | **D.2 Centésimas y milésimas** | NCETM 1.24; 4.NF.C.5–7 | |
+| 28 | ✅ **HECHO (7 oct, madrugada), falta la prueba de Carlos** — `diario/2026-10-07-paso-D2-centesimas-milesimas.md`. **D.2 Centésimas y milésimas** | NCETM 1.24; 4.NF.C.5–7 | 300 cuentas, 300 comparaciones, 572 redondeos |
 | 29 | **D.3 El dinero** (euros y céntimos) | NCETM 1.25 | |
 | 30 | **F.5 Multiplicar un entero por una fracción** | NCETM 3.6; 4.NF.B.4 | |
 | 31 | **G.1 Área y perímetro** (rectángulos, contando cuadritos y multiplicando) | NCETM 2.16; 4.MD.A.3 | |

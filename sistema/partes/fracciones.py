@@ -30,7 +30,8 @@ _ORDEN_PARTES = re.compile(r"^partes:?\s*(\d+)\s*=\s*(\d+(?:\s*\+\s*\d+)*)$")
 _NOMBRES_FR = {2: ("medio", "medios"), 3: ("tercio", "tercios"), 4: ("cuarto", "cuartos"),
                5: ("quinto", "quintos"), 6: ("sexto", "sextos"), 7: ("septimo", "septimos"),
                8: ("octavo", "octavos"), 9: ("noveno", "novenos"), 10: ("decimo", "decimos"),
-               11: ("onceavo", "onceavos"), 12: ("doceavo", "doceavos")}
+               11: ("onceavo", "onceavos"), 12: ("doceavo", "doceavos"),
+               100: ("centesimo", "centesimos"), 1000: ("milesimo", "milesimos")}     # D.2 (NCETM 1.24)
 
 
 def _fr_limpio(texto):
@@ -101,7 +102,7 @@ def _fr_problema(a, b, saber):
     if b == 0:
         return "imposible", "no se puede partir un entero en CERO partes"
     if b not in _NOMBRES_FR and b != 1:
-        return "todavia_no", "en 3.o las partes van de medios a doceavos (1/2 a 1/12)"
+        return "todavia_no", "las partes que se van de medios a doceavos (1/2 a 1/12), y decimos, centesimos y milesimos"
     if decir(a, saber) is None:
         return "todavia_no", "%d no esta en mi lista" % a
     return None
@@ -155,7 +156,9 @@ def explicar_fraccion(a, b, saber):
     L.append("  el de ABAJO (%d) dice en cuantas partes IGUALES se parte el entero;" % b)
     L.append("  el de ARRIBA (%d) dice cuantas de esas partes se toman." % a)
     L.append("")
-    if viene_despues(decir(a, saber), decir(b, saber), saber):
+    if b in (100, 1000):
+        L.append("     (una tira de %d trozos no cabe en la pantalla: cada trozo es 1/%d)" % (b, b))
+    elif viene_despues(decir(a, saber), decir(b, saber), saber):
         e, r = _fr_mixto(a, b, saber)
         tiras = [_fr_tira(b, 4, b, saber) for _ in _fr_marcas(e, saber)]
         if r:
@@ -164,14 +167,23 @@ def explicar_fraccion(a, b, saber):
     else:
         L.append("     %s" % _fr_tira(b, 4, a, saber))
     L.append("")
-    if a != 1:
+    if a != 1 and b not in (100, 1000) and levantar_dedos(decir(a, saber), saber) is not None:
         L.append("  %d/%d son %s fracciones de 1/%d: %s  (NCETM 3.3)" % (
             a, b, decir(a, saber), b, " + ".join("1/%d" % b for _ in _fr_marcas(a, saber))))
-    L.append("  %s %s hacen un entero (%s)." % (decir(b, saber), _NOMBRES_FR[b][1],
-                                                 " + ".join("1/%d" % b for _ in _fr_marcas(b, saber))))
-    if b == 10 and a != b and not viene_despues(decir(a, saber), decir(b, saber), saber):
-        L.append("  con el punto (D.1): %d/10 = 0.%d  (%s %s; NCETM 1.23)" % (a, a, decir(a, saber),
-                                                                      "decima" if a == 1 else "decimas"))
+    elif a != 1:
+        L.append("  %d/%d son %s fracciones de 1/%d  (NCETM 3.3)" % (a, b, decir(a, saber), b))
+    if b in (100, 1000):
+        L.append("  %s %s hacen un entero." % (decir(b, saber), _NOMBRES_FR[b][1]))
+    else:
+        L.append("  %s %s hacen un entero (%s)." % (decir(b, saber), _NOMBRES_FR[b][1],
+                                                     " + ".join("1/%d" % b for _ in _fr_marcas(b, saber))))
+    if b in (10, 100, 1000) and a != b and not viene_despues(decir(a, saber), decir(b, saber), saber):
+        k = {10: 1, 100: 2, 1000: 3}[b]
+        L.append("  con el punto (D.1/D.2): %d/%d = %s  (%d %s; NCETM 1.23, 1.24)" % (
+            a, b, _dec_escribir(a, k), a, _DEC_NOMBRE[k][0] if a == 1 else _DEC_NOMBRE[k][1]))
+        if b == 10:
+            L.append("  y como cada decima son diez centesimas: %d/10 = %d/100 (4.NF.C.5)" % (
+                a, escribir_cifras([0] + cifras_de(a)) if a else 0))
     if a == b:
         L.append("  arriba y abajo el mismo numero: %d/%d es UN ENTERO." % (a, b))
         nombre = "un entero"

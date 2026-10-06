@@ -249,6 +249,12 @@ decimal: 2.3                      | 23 decimas
 comparar: 0.9 y 1.1               | 0.9 < 1.1
 de 0.1 en 0.1 desde 0.7           | ??          | ver como pasa el uno
 
+# --- D.2 centesimas y milesimas ---
+comparar: 0.5 y 0.45              | 0.5 > 0.45  | el error tipico: '45 es mas que 5'
+2.35 + 1.7                        | 4.05
+redondear: 2.35 a la decima       | 2.4
+5 - 0.25                          | ??          | ver los cambios a traves del cero
+
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete

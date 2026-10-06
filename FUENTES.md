@@ -156,6 +156,12 @@
   descomponer; los métodos de siempre (también las columnas) sirven con décimas; redondear al entero
   mirando la cifra de las décimas. → D.1.
 
+- **NCETM 1.24** (*Composition and calculation: hundredths and thousandths*, Year 4): la centésima (el
+  uno en 100; una décima en diez); 0.01; 0.1 es diez veces 0.01; contar de centésima en centésima;
+  componer; medidas; las columnas sirven igual; redondear a la décima y al entero; las milésimas.
+  **Common Core 4.NF.C.5–7** (3/10 = 30/100; 0.62 = 62/100; comparar decimales hasta las centésimas
+  razonando sobre su tamaño: el error «0.45 > 0.5»). → D.2.
+
 ## Enlaces
 - NCETM 2.9: https://www.ncetm.org.uk/classroom-resources/primm-209-times-tables-7-and-patterns-withinacross-times-tables/
 - NCETM 2.10: https://www.ncetm.org.uk/classroom-resources/primm-210-connecting-multiplication-and-division-and-the-distributive-law/
