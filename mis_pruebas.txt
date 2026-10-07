@@ -325,3 +325,9 @@ problema: Ana tiene 5. Le dan algunas. Ahora tiene 8. Cuantas le dieron?    | 3
 # --- para VER como razona (no comprueba nada) ---
 problema: Marta tiene 12 caramelos. Se come 4. Luego compra 10. Cuantos tiene ahora?   | ??
 Hay 12 pajaros. Se van algunos. Ahora hay 7. Cuantos se fueron?   | 5   | escrito directamente
+partes: 37, 25, 63; todo: ?       | 125             | S.2: las parejas amigas (37 + 63 = 100) primero
+todo: 100; partes: 37, ?, 25      | 38              | S.2: no 162 ni 63
+perimetro: 30; lados: 8, 7, 6, ?  | 9 cm            | S.2: el perimetro es el todo, los lados las partes
+tenia: 20; gaste: 4.50, 7.25; queda: ? | 8.25 pesos | S.2: la misma estructura con dinero
+todo: 24; 4 partes iguales        | cada parte: 6   | S.2: partes iguales (multiplicativa)
+perimetro: 30; lados: 20, 15, ?   | no_se_puede     | S.2: ya pasan del todo

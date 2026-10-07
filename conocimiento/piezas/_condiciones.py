@@ -156,6 +156,78 @@ def _m16_factor_comun(s):
     return any(a != "0" and a in [g.lstrip("0") or "0" for g in f2 if "." not in g] for a in limpio)
 
 
+# ---- parte-parte-todo con tres partes o mas (paso S.2; NCETM 1.28): situacion {"partes": ["37", "25", "63"]}
+#      o {"todo": "100", "partes": ["37", None, "25"]} (None: la parte que falta; todas None con "iguales": True)
+def _ppt_partes(s):
+    p = s.get("partes")
+    return p if isinstance(p, list) else []
+
+
+def _ppt_se_saben_todas(s):
+    """Dos partes o mas y todas escritas (falta el TODO).  Mirar, no contar: hay algo detras de la primera."""
+    p = _ppt_partes(s)
+    return bool(p[1:]) and None not in p and s.get("todo") is None
+
+
+def _ppt_falta_una_sola(s):
+    """Hay un todo y falta UNA parte: hay un None y, quitandolo, no queda otro."""
+    p = _ppt_partes(s)
+    if s.get("todo") is None or None not in p or not p[1:]:
+        return False
+    resto = list(p)
+    resto.remove(None)
+    return None not in resto
+
+
+def _ppt_se_saben_dos_o_mas(s):
+    return bool([x for x in _ppt_partes(s) if x is not None][1:])
+
+
+def _ppt_iguales_que_faltan(s):
+    p = _ppt_partes(s)
+    return s.get("todo") is not None and bool(s.get("iguales")) and bool(p[1:]) and set(p) == {None}
+
+
+def _ppt_normal(f):
+    """'6.50' -> '6.5', '06' -> '6': se escriben igual?  (mirar las cifras, no calcular)"""
+    if "." in f:
+        f = f.rstrip("0").rstrip(".")
+    e, punto, d = f.partition(".")
+    e = e.lstrip("0") or "0"
+    return "%s.%s" % (e, d) if punto else e
+
+
+def _ppt_todas_iguales(s):
+    if not _ppt_se_saben_todas(s):
+        return False
+    n = [_ppt_normal(x) for x in _ppt_partes(s)]
+    return all(x == n[0] for x in n)
+
+
+def _ppt_ultima_cifra(f, k):
+    """La ultima cifra de f con el punto alineado a k cifras decimales (escribir ceros, no calcular)."""
+    e, _, d = f.partition(".")
+    return d.ljust(k, "0")[-1] if k else e[-1]
+
+
+def _ppt_son_amigas(f, g, u):
+    """Las ultimas cifras (con el punto en su sitio) hacen DIEZ: 37 y 63 (7 y 3), 1.25 y 0.75 (5 y 5).
+    Se cuenta con los dedos: desde la una, tantos pasos como la otra."""
+    k = max(len(f.partition(".")[2]), len(g.partition(".")[2]))
+    a, b = _ppt_ultima_cifra(f, k), _ppt_ultima_cifra(g, k)
+    if a == "0" or b == "0":
+        return False
+    r = u.contar_adelante(u.decir(int(a)), u.decir(int(b)))
+    return r.get("resultado") == "diez"
+
+
+def _ppt_hay_amigas(s, u):
+    p = _ppt_partes(s)
+    if not _ppt_se_saben_todas(s) or not p[2:]:
+        return False
+    return any(_ppt_son_amigas(f, g, u) for i, f in enumerate(p) for g in p[i + 1:])
+
+
 def _tipo(s):
     return s.get("tipo")
 
@@ -409,6 +481,14 @@ CONDICIONES = {
     "hay_alguna_cuenta": lambda s, u: _m16_hay_cuenta(s),
     "cada_producto_con_un_decimal_como_mucho": lambda s, u: _m16_un_decimal(s),
     "hay_un_factor_comun": lambda s, u: _m16_factor_comun(s),
+    # ---- parte-parte-todo con tres partes o mas (paso S.2; NCETM 1.28)
+    "se_saben_todas_las_partes": lambda s, u: _ppt_se_saben_todas(s),
+    "hay_tres_partes_o_mas": lambda s, u: bool(_ppt_partes(s)[2:]),
+    "hay_dos_partes_amigas": lambda s, u: _ppt_hay_amigas(s, u),
+    "todas_las_partes_son_iguales": lambda s, u: _ppt_todas_iguales(s),
+    "falta_una_sola_parte": lambda s, u: _ppt_falta_una_sola(s),
+    "se_saben_dos_partes_o_mas": lambda s, u: _ppt_se_saben_dos_o_mas(s),
+    "faltan_todas_y_son_iguales": lambda s, u: _ppt_iguales_que_faltan(s),
     # ---- redondear (paso N.2; 3.NBT.A.1): el numero esta en la lista, y el sitio es decena o centena
     "se_puede_redondear": lambda s, u: u.decir(s["n"]) is not None and s.get("a") in (
         "decena", "centena", "millar", "decena de millar", "centena de millar"),

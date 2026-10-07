@@ -245,7 +245,21 @@
   que la suma va antes que la resta (BIDMAS); juntar los factores comunes en vez de los otros; creer que la distributiva solo vale con
   la suma. (La web de NCETM y thecorestandards.org no se abren desde la nube, 7 oct: los puntos salen del índice del buscador.) → M.16.
 
+- **NCETM 1.28** (*Common structures and the part–part–whole relationship*, Year 5). Objetivo: ampliar parte-parte-parte-todo (tres
+  partes o más) para resolver problemas de parte que falta y de todo que falta en contextos variados. Punto 1: las relaciones son
+  aditivas o multiplicativas, y las dos se ven en parte-parte-todo. Punto 2: el todo se halla juntando las partes; estrategias
+  distintas, la misma estructura. Punto 3: sabiendo el todo y todas las partes menos una, la que falta se calcula; estrategias
+  distintas, la misma estructura. Punto 4: contextos muy distintos comparten la estructura de parte que falta. **NCETM, The Bar
+  Model**: el ? marca la parte que no se sabe; con dos de los tres valores se halla el tercero. **Common Core**, tabla 1 (Put
+  Together / Take Apart; 1.OA.A.1, 2.OA.A.1) y 4.MD.A.3 (el perímetro con un lado que falta). **Errores típicos** (resúmenes en el
+  buscador; Oak National KS1, *Understanding part-part-whole relationships*): sumar el todo con las partes, quitar solo una parte,
+  no ver que las partes pasan del todo, creer que se sabe la parte cuando faltan dos. (La web de NCETM no se abre desde la nube,
+  7 oct: los puntos salen del índice del buscador; falta leer los archivos de Year 5.) → S.2.
+
 ## Enlaces
+- NCETM 1.28: https://www.ncetm.org.uk/classroom-resources/primm-128-common-structures-and-the-part-part-whole-relationship/
+- NCETM, The Bar Model: https://www.ncetm.org.uk/classroom-resources/ca-the-bar-model/
+- Oak National (parte-parte-todo, KS1): https://www.thenational.academy/teachers/programmes/maths-primary-ks1/units/additive-structures-addition/lessons/understanding-part-part-whole-relationships
 - NCETM 2.22: https://ncetm.org.uk/classroom-resources/primm-222-combining-multiplication-with-addition-and-subtraction/
 - NCETM 2.28 (lo siguiente, 6.º): https://ncetm.org.uk/classroom-resources/primm-228-combining-division-with-addition-and-subtraction
 - NCETM Year 6 unit 12 (order of operations): https://ncetm.org.uk/classroom-resources/cp-year-6-unit-12-order-of-operations/

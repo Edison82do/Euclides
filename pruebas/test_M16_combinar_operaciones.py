@@ -283,8 +283,10 @@ try:
             cazado = True
         comprobar("H %s: con una multiplicacion mal, la vuelta NO cuadra" % nombre, cazado, True)
     mapa = motor.mapa_del_conocimiento()
-    comprobar("H ninguna pieza usa 'combinar' (no hay vuelta en el mapa)",
-              [p for p, usa in mapa.items() if "combinar" in usa], [])
+    # Caso viejo (M.16): «ninguna pieza usa 'combinar'».  Obsoleto por mejora en S.2: las piezas de parte-parte-todo
+    # USAN 'combinar' para sus sumas y restas con el punto.  Lo que importa es que no haya vuelta en el mapa:
+    comprobar("H ninguna pieza de 'combinar' usa 'combinar' (no hay vuelta en el mapa)",
+              [p for p, usa in mapa.items() if "combinar" in usa and base["piezas"][p]["responde"] == "combinar"], [])
 
     print("\nI - LO DE ANTES SIGUE IGUAL (no se lo come la orden nueva)")
     for texto, esperado in (("calcular: 47 + 30", "77"), ("2 x 3 x 4", "24"), ("3 x 4 - 5 = c", "7"),

@@ -71,6 +71,7 @@
   dice «todavía no» cuando debería decir que se pasa del millón.
 
 ## Dónde se quedó (7 oct 2026)
-Hecho hasta **M.16 combinar la multiplicación con la suma y la resta** (NCETM 2.22). Siguiente en el orden de NCETM,
-5.º (Year 5): **2.23** (su título no se pudo ver desde la nube: mirarlo en el índice de NCETM); y en Spine 1/3: 1.28, 1.29, 3.7 fracciones equivalentes,
-3.8 denominador común… (La división combinada con + y - es 2.28, de 6.º.)
+Hecho hasta **S.2 parte-parte-todo con tres partes o más** (NCETM 1.28). Antes: M.16 combinar la multiplicación con la suma
+y la resta (NCETM 2.22). Siguiente en el orden de NCETM, 5.º (Year 5): **1.29** (Spine 1); **2.23** (su título no se pudo ver desde
+la nube: mirarlo en el índice de NCETM); y en Spine 3: 3.7 fracciones equivalentes, 3.8 denominador común… (La división combinada
+con + y - es 2.28, de 6.º.)

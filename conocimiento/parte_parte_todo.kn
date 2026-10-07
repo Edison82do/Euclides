@@ -1,0 +1,44 @@
+id: parte_parte_todo
+nombre: Parte-parte-todo con tres partes o mas; la misma estructura en contextos distintos
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  LAS ESTRUCTURAS COMUNES (paso S.2, 5.o; NCETM 1.28, Common structures and the part-part-whole relationship).
+
+  REGLA FIJADA 1 - EL TODO ES TODAS LAS PARTES JUNTAS (tres partes o mas, igual que con dos):
+      todo = parte + parte + parte ...
+  Se dibuja la BARRA: arriba el todo, abajo las partes; un ? en lo que falta.
+
+  REGLA FIJADA 2 - SI FALTA EL TODO, SE JUNTAN LAS PARTES.  Hay estrategias distintas (en orden; las parejas
+  amigas primero, 37 + 63 = 100; partes iguales, 4 x 6), pero LA ESTRUCTURA ES LA MISMA y dan lo mismo.
+
+  REGLA FIJADA 3 - SI FALTA UNA PARTE, SE QUITA DEL TODO LO QUE SE SABE (una a una, o juntandolo primero y
+  quitandolo de una vez).  Las partes que se saben no pueden pasar del todo.  Si faltan DOS partes o mas, con
+  una sola cuenta no se sabe... salvo que sean IGUALES: entonces se reparte el todo (24 en 4 partes: 24 : 4).
+
+  REGLA FIJADA 4 - LA ESTRUCTURA ES ADITIVA O MULTIPLICATIVA: partes distintas se suman; partes iguales son
+  tantas veces una parte (y una parte es el todo repartido).
+
+  REGLA FIJADA 5 - CONTEXTOS MUY DISTINTOS TIENEN LA MISMA ESTRUCTURA: el perimetro y sus lados, lo que tenia
+  y lo que gaste y me queda, un camino y sus tramos...  Lo que cambia son las PALABRAS; hay que ver quien es
+  el TODO y quienes son las PARTES.  Los contextos estan abajo: uno nuevo es una linea mas, no codigo.
+
+errores_tipicos:
+  - Sumar el todo con las partes (todo 100, partes 37, ?, 25 -> 162).
+  - Quitar solo una de las partes que se saben (100 - 37 = 63, y se olvida el 25).
+  - Dar un numero cuando las partes que se saben ya pasan del todo (no puede ser).
+  - Creer que se sabe la parte cuando faltan dos (no se sabe, salvo que sean iguales).
+  - Con decimales, no poner el punto en su sitio (2.5 + 0.75 = 0.80; es 3.25).
+fuentes:
+  - NCETM 1.28 (Year 5), sus cuatro teaching points (el indice; el segmento entero no se pudo abrir desde la nube).
+  - NCETM, The Bar Model (el ? marca la parte que no se sabe; con dos de los tres valores, se halla el tercero).
+  - Common Core, tabla 1: Put Together / Take Apart (1.OA.A.1, 2.OA.A.1); 4.MD.A.3 (el perimetro con un lado que falta).
+
+# CONTEXTOS: la palabra del TODO | las palabras de las PARTES (separadas por comas) | la unidad | lo que dice
+contextos:
+  - perimetro | lados | cm | el perimetro es la vuelta entera, todos los lados juntos
+  - tenia | gaste, queda | pesos | lo que tenia es lo que gaste mas lo que me queda
+  - camino | tramos | km | el camino entero son los tramos, uno detras de otro
+  - clase | grupos | ninos | la clase entera son todos los grupos juntos
+  - bolsa | cosas | kg | lo que pesa la bolsa es lo que pesan todas las cosas
+  - dia | ratos | horas | el dia entero son todos los ratos juntos

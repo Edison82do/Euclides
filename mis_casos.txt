@@ -1005,3 +1005,20 @@ verdad: 3 + 4 x 5 = 35                     | FALSO | (M.16) 35 es de izquierda a
 2 x 3 - 4 x 5                              | todavia_no | (M.16) por el camino se baja de cero
 12 : 3 + 1                                 | todavia_no | (M.16) dividir combinado: 2.28 (6.o)
 999 x 1000 + 1001                          | no_alcanza | (M.16) se pasa del millon
+
+# --- paso S.2: parte-parte-todo con tres partes o mas; la misma estructura en contextos distintos (NCETM 1.28)
+partes: 37, 25, 63; todo: ?                | 125 | (S.2) falta el todo; 37 y 63 son amigas
+todo: 100; partes: 37, ?, 25               | 38 | (S.2) no 162 (sumar el todo) ni 63 (quitar solo una)
+partes: 6, 6, 6, 6; todo: ?                | 24 | (S.2) partes iguales: 4 x 6
+todo: 24; 4 partes iguales                 | cada parte: 6 | (S.2) repartir
+todo: 26; partes: ?, ?, ?, ? iguales       | cada parte: 6.5 | (S.2) cambiando a decimas (M.13)
+partes: 2.5, 0.75, 1.125; todo: ?          | 4.375 | (S.2) el punto en su sitio
+perimetro: 30; lados: 8, 7, 6, ?           | 9 cm | (S.2) el perimetro es el todo
+tenia: 20; gaste: 4.50, 7.25; queda: ?     | 8.25 pesos | (S.2) el dinero: la misma estructura
+camino: ?; tramos: 1.25, 3.5, 0.75         | 5.5 km | (S.2) 1.25 y 0.75 son amigas
+perimetro: 30; lados: 20, 15, ?            | no_se_puede | (S.2) los lados ya pasan del perimetro
+todo: 50; partes: 20, ?, ?                 | no_se_puede | (S.2) faltan dos partes
+todo: 10; partes: 4, 6, ?                  | 0 | (S.2) la parte que falta puede ser cero
+todo: 30; partes: 10, 10, 11               | no_cuadra | (S.2) no falta nada, y no juntan el todo
+todo: 1000000; partes: 250000, ?, 250000, 250000 | 250000 | (S.2) cerca del techo
+partes: 999999, 2; todo: ?                 | no_alcanza | (S.2) se pasa del millon

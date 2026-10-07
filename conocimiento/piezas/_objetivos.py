@@ -45,6 +45,10 @@ OBJETIVOS = {
               "que_es": "primo (exactamente dos factores) o compuesto (mas de dos)? (NCETM 2.21)"},
     "combinar": {"elige": "la_mas_rapida",
                  "que_es": "una cuenta con x, + y - (NCETM 2.22; 5.OA.A.1): primero el parentesis, luego las x"},
+    "todo_de_las_partes": {"elige": "la_mas_rapida",
+                           "que_es": "parte-parte-todo (NCETM 1.28): falta el TODO; se juntan las partes (tres o mas)"},
+    "parte_del_todo": {"elige": "la_mas_rapida",
+                       "que_es": "parte-parte-todo (NCETM 1.28): se sabe el todo y falta UNA parte (o son iguales)"},
     "contar_hasta": {"elige": "la_mas_rapida",
                      "que_es": "cuantos pasos hay de un numero a otro (el hueco, 5.5)"},
 }

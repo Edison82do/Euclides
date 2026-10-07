@@ -555,6 +555,19 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         2 x 3 - 4 x 5 -> todavia_no (se baja de cero);  12 : 3 + 1 -> todavia_no (dividir: 2.28, 6.o)
         Cada cuenta se comprueba con la contraria, de la ultima a la primera: 23 - 20 = 3, 20 : 4 = 5.
 
+  PARTE-PARTE-TODO  ->  tres partes o mas; la misma estructura en contextos distintos (paso S.2; NCETM 1.28)
+        partes: 37, 25, 63; todo: ?       -> 125   falta el TODO: junto las partes (37 y 63 son amigas: 100 primero)
+        todo: 100; partes: 37, ?, 25      -> 38    falta UNA PARTE: junto lo que se sabe (62) y lo quito de una vez
+                                                   (no 162: el todo NO se suma con las partes; no 63: hay que quitar TODAS)
+        partes: 6, 6, 6, 6; todo: ?       -> 24    partes iguales: 4 x 6 (tambien es multiplicativa)
+        todo: 24; 4 partes iguales        -> cada parte: 6   (o: todo: 24; partes: ?, ?, ?, ? iguales)
+        perimetro: 30; lados: 8, 7, 6, ?  -> 9 cm  el perimetro es el TODO; los lados, las PARTES
+        tenia: 20; gaste: 4.50, 7.25; queda: ?   -> 8.25 pesos     camino: ?; tramos: 1.25, 3.5, 0.75 -> 5.5 km
+        (los contextos estan en conocimiento/parte_parte_todo.kn: clase/grupos, bolsa/cosas, dia/ratos...)
+        perimetro: 30; lados: 20, 15, ? -> no_se_puede (ya pasan del todo);  todo: 50; partes: 20, ?, ? -> no_se_puede
+        todo: 30; partes: 10, 10, 10    -> cuadra    (no falta nada: miro si las partes juntan el todo)
+        Las partes se separan con coma y los decimales llevan punto.  Se comprueba con la contraria: 37 + 38 + 25 = 100.
+
   VECES  ->  comparar multiplicando: "K veces" y fracciones (paso S.1; NCETM 2.17; 4.OA.A.1-2)
         veces: 4 veces 6       -> 24   (4 veces mas NO es 4 mas: eso seria 10)
         cuantas veces: 24 y 6  -> 4    (24 es 4 veces 6; 6 es 1/4 de 24)
@@ -736,6 +749,11 @@ def preguntar(texto, saber):
                 return "no_entiendo", None
             r = salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip()
             return ({"VERDADERO": "verdadero", "FALSO": "falso"}.get(r, r)), None
+        if motor.es_orden_parte_todo(t, saber):              # parte-parte-todo con tres partes o mas (S.2)
+            salida = motor.explicar_orden_parte_todo(t, saber)
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
         if t.lower().startswith("divisible"):
             salida = motor.explicar_divisible(t[len("divisible"):].lstrip(":").strip(), saber)
             if salida.startswith("NO ENTIENDO"):
@@ -1379,6 +1397,8 @@ def como_problema(texto):
     if t.lower().startswith("volumen"):                   # el volumen con hueco (M.14) lleva su orden
         return t
     if motor.es_orden_factores(t):                        # factores, primos, multiplos (M.15): '?' no es un problema
+        return t
+    if motor.es_orden_parte_todo(t):                      # parte-parte-todo (S.2): el '?' es la parte que falta
         return t
     if "=" in t and any(h in t for h in ("?", "_", "\u25a1")):   # una ECUACION con hueco (E.1, E.4)
         return "ecuacion: " + t
