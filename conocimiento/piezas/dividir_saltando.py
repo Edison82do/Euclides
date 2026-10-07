@@ -22,6 +22,7 @@ PIEZA = {
 # Con un divisor que pasa de las tablas (mas de doce), mas de cien saltos ya es la division larga
 # (6.o, NCETM 2.24): todavia no.
 _MAX_SALTOS_GRANDES = "cien"
+_MAX_SALTOS = "mil"
 
 
 def _grande(d, u):
@@ -50,6 +51,11 @@ def hacer(s, u):
             break
         if _grande(d, u) and saltos == _MAX_SALTOS_GRANDES:
             raise ValueError("son mas de cien saltos de %d: eso es la division larga (6.o), todavia no" % d)
+        if saltos == _MAX_SALTOS:
+            # PASO M.14 (arreglo): 1000000 : 8 eran 125 000 saltos (15 s).  Un humano no salta mil veces:
+            # con un divisor de las tablas se hace la division corta (y para eso hay que saberse la tabla).
+            raise ValueError("son mas de %s saltos de %d: asi no se cuenta; se hace la division corta, y para eso "
+                             "hay que saberse la tabla del %d (aprender: tablas)" % (_MAX_SALTOS, d, d))
         v = nuevo
         saltos = u.siguiente(saltos)
         camino.append(str(v))

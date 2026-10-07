@@ -37,6 +37,8 @@ OBJETIVOS = {
                             "que_es": "un decimal por un entero (NCETM 2.19; 5.NBT.B.7): 0.3 x 4"},
     "dividir_decimal": {"elige": "la_mas_rapida",
                         "que_es": "un decimal entre un entero (NCETM 2.19; 5.NBT.B.7): 7.2 : 3"},
+    "multiplicar_tres": {"elige": "la_mas_rapida",
+                         "que_es": "tres factores o mas (NCETM 2.20): en el orden que sea mas facil, 25 x 7 x 4"},
     "contar_hasta": {"elige": "la_mas_rapida",
                      "que_es": "cuantos pasos hay de un numero a otro (el hueco, 5.5)"},
 }

@@ -515,6 +515,19 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         0.3 x 0.4, 7.2 : 12, 7.2 : 0.3 -> todavia_no (decimal por decimal y division larga: 6.o)
         Cada cuenta se comprueba con la contraria: 1.2 : 4 = 0.3;  24 decimas x 3 = 72 decimas.
 
+  TRES FACTORES Y VOLUMEN  ->  multiplicar tres numeros en el orden mas facil; el volumen (paso M.14; NCETM 2.20; 5.MD.C.3-5)
+        25 x 7 x 4             -> 700    la pareja amiga primero: 25 x 4 = 100, 100 x 7 = 700 (no 175 x 4)
+        7 x 20 x 3             -> 420    las decenas justas al final: 7 x 3 = 21, 21 x 20
+        0.25 x 7 x 4           -> 7      0.25 x 4 = 1 (con un decimal, como en M.13)
+        5 x 0 x 999            -> 0      con un cero no hay nada, sin cuentas
+        2 x 3 x 4 = 24  /  verdad: 2 x 3 x 4 = 4 x 3 x 2  -> VERDADERO (los mismos factores: sin calcular)
+        volumen: caja 5 x 3 x 2 cm   -> 30 cm cubicos  la capa (5 x 3 = 15 cubitos) por 2 capas; no 10 (sumar)
+        volumen: cubo de 3     -> 27     (no 26: el cubito de DENTRO tambien cuenta)
+        volumen: 5 x 3 x 2 + 4 x 4 x 1   -> 46   una figura de dos cajas: se SUMAN
+        volumen: 5 x 3 x ? = 60          -> 4    el problema inverso: 60 : 5 = 12, 12 : 3 = 4
+        volumen: caja 2 m x 30 cm x 4 cm -> todavia_no (la misma unidad);  0.3 x 0.2 x 5 -> todavia_no
+        Cada producto se comprueba DIVIDIENDO entre los factores, uno a uno: 700 : 7 = 100, 100 : 4 = 25.
+
   VECES  ->  comparar multiplicando: "K veces" y fracciones (paso S.1; NCETM 2.17; 4.OA.A.1-2)
         veces: 4 veces 6       -> 24   (4 veces mas NO es 4 mas: eso seria 10)
         cuantas veces: 24 y 6  -> 4    (24 es 4 veces 6; 6 es 1/4 de 24)
@@ -721,6 +734,12 @@ def preguntar(texto, saber):
             if salida.startswith("NO ENTIENDO"):
                 return "no_entiendo", None
             return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
+        if motor.es_orden_volumen(t):
+            salida = motor.explicar_orden_volumen(t, saber)
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            r = salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip()
+            return ({"VERDADERO": "verdadero", "FALSO": "falso"}.get(r, r)), None      # como en verdad: (E.0)
         if motor.es_orden_decimal_por(t):
             salida = motor.explicar_orden_decimal_por(t, saber)
             if salida.startswith("NO ENTIENDO"):
@@ -1318,6 +1337,8 @@ def como_problema(texto):
     if re.match(r"^(verdad|ecuacion|hueco|problema|calcular)\w*\s*:", t.lower()):   # ya lleva su orden
         return t
     if motor.es_ecuacion_con_letra(t):                    # una ecuacion con LETRA o de dos pasos (E.5)
+        return t
+    if t.lower().startswith("volumen"):                   # el volumen con hueco (M.14) lleva su orden
         return t
     if "=" in t and any(h in t for h in ("?", "_", "\u25a1")):   # una ECUACION con hueco (E.1, E.4)
         return "ecuacion: " + t

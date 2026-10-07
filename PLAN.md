@@ -263,6 +263,7 @@ pruebas → commit. Carlos prueba por la mañana.
 | 34 | ✅ **HECHO (7 oct, madrugada), falta la prueba de Carlos** — `diario/2026-10-07-paso-N5-negativos.md`. **N.5 Los números negativos** | NCETM 1.27; 6.NS.C.5–7 | 1722 cuentas en la recta, comparaciones e intervalos de −20 a 20, 200 hasta ±1000 |
 | 35 | ✅ **HECHO (7 oct), falta la prueba de Carlos** — `diario/2026-10-07-paso-M12-equivalencia.md`. **M.12 Usar la equivalencia para calcular** (doblar y partir por la mitad; cambiar los dos igual en ÷) | NCETM 2.18 | 200 productos, 578 divisiones, 452 igualdades, 200 huecos |
 | 36 | ✅ **HECHO (7 oct), falta la prueba de Carlos** — `diario/2026-10-07-paso-M13-decimales-por-enteros.md`. **M.13 Multiplicar y dividir decimales por enteros** (contar en décimas; × 0.1 = ÷ 10; cambiar a la unidad más pequeña si sobra) | NCETM 2.19; 5.NBT.B.7 | 240 productos, 60 por 0.1/0.01, 250 divisiones, 100 entre 10/100, 18 cerca del techo |
+| 37 | ✅ **HECHO (7 oct), falta la prueba de Carlos** — `diario/2026-10-07-paso-M14-tres-factores-volumen.md`. **M.14 Tres factores y volumen** (la pareja amiga primero: 25 x 7 x 4 = 100 x 7; las capas de cubitos; el problema inverso dividiendo) | NCETM 2.20; 5.MD.C.3–5 | 1575 tríos, 6 órdenes, 160 grandes, 120 con decimal, 40 cajas, 12 cubos, 80 inversos, 90 igualdades |
 
 ## EL PLAN ANTERIOR (5 oct, tarde) — sustituido por el de arriba en el orden; se conserva como referencia
 

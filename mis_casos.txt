@@ -933,8 +933,8 @@ La temperatura es -4 grados. Sube 7 grados. Cual es ahora? | 3 grados | (N.5) la
 equivalente: 25 x 16                       | 400 | (M.12) 50 x 8 = 100 x 4
 equivalente: 165 : 5                       | 33 | (M.12) doblar los dos: 330 : 10
 equivalente: 180 : 20                      | 9 | (M.12) quitar un cero a los dos
-verdad: 3 x 12 = 6 x 6                     | VERDADERO | (M.12) sin calcular
-verdad: 3 x 12 = 4 x 11                    | FALSO | (M.12) la compensacion de la suma no vale en x
+verdad: 3 x 12 = 6 x 6                     | verdadero | (M.12) sin calcular
+verdad: 3 x 12 = 4 x 11                    | falso | (M.12) la compensacion de la suma no vale en x
 24 x 5 = 12 x ?                            | 10 | (M.12) la balanza con x
 # --- paso M.13: decimales por y entre enteros (NCETM 2.19; 5.NBT.B.7)
 0.3 x 4                                    | 1.2 | (M.13) 12 decimas, no 0.12
@@ -948,3 +948,21 @@ verdad: 3 x 12 = 4 x 11                    | FALSO | (M.12) la compensacion de l
 3.5 : 10                                   | 0.35 | (M.13) las cifras bajan un sitio
 0.3 x 0.4                                  | todavia_no | (M.13) decimal por decimal: 6.o
 7.2 : 12                                   | todavia_no | (M.13) entre una cifra (NCETM 2.19)
+# --- paso M.14: tres factores y volumen (NCETM 2.20; 5.MD.C.3-5)
+2 x 3 x 4                                  | 24 | (M.14) antes decia un_objeto
+25 x 7 x 4                                 | 700 | (M.14) la pareja amiga: 25 x 4 = 100
+7 x 20 x 3                                 | 420 | (M.14) las decenas justas al final
+0.25 x 7 x 4                               | 7 | (M.14) 0.25 x 4 = 1
+6 x 8 x 0.37                               | 17.76 | (M.14) el decimal con cada entero de una cifra
+5 x 0 x 999                                | 0 | (M.14) con un cero no hay nada
+0.3 x 0.2 x 5                              | todavia_no | (M.14) dos decimales: 6.o
+100 x 100 x 100                            | 1000000 | (M.14) el techo
+verdad: 2 x 3 x 4 = 4 x 3 x 2              | verdadero | (M.14) los mismos factores, sin calcular
+verdad: 2 x 3 x 4 = 2 x 3 x 5              | falso | (M.14)
+volumen: caja 5 x 3 x 2 cm                 | 30 cm cubicos | (M.14) no 10 (sumar las medidas)
+volumen: cubo de 3                         | 27 unidades cubicas | (M.14) no 26: el de dentro cuenta
+volumen: 5 x 3 x 2 + 4 x 4 x 1             | 46 unidades cubicas | (M.14) dos cajas: se suman
+volumen: 5 x 3 x ? = 60                    | 4 | (M.14) el problema inverso: dividir
+volumen: 5 x 3 x ? = 62                    | no_sale | (M.14) ni en milesimas
+volumen: caja 2 m x 30 cm x 4 cm           | todavia_no | (M.14) la misma unidad
+1000000 : 2                                | 500000 | (M.14, arreglo) la mitad por sitios, no 500 000 parejas

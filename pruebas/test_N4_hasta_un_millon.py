@@ -151,7 +151,13 @@ try:
     comprobar("E7 columnas contra el testigo (40 sumas y 40 restas)", mal[:3], [])
 
     print("\nF - MULTIPLICAR Y DIVIDIR CON NUMEROS GRANDES")
-    comprobar("F1 100000 : 4 = 25000 (antes la division corta se comia una cifra)", S("100000 : 4"), "25000")
+    # PASO M.14 (7 oct): con la memoria vacia este caso lo resolvia dividir_saltando con 25 000 SALTOS de 4 (no la
+    # division corta que dice probar).  Ahora saltar mas de mil veces no se hace; la division corta necesita
+    # las tablas: se aprenden antes, como en el PC de Carlos.  (El caso viejo: S("100000 : 4") con memoria vacia.)
+    motor.aprender("tablas", SABER)
+    comprobar("F1 100000 : 4 = 25000 (antes la division corta se comia una cifra)",
+              (S("100000 : 4"), motor.aplicar("dividir", {"total": 100000, "divisor": 4}, SABER)["pieza"]["id"]),
+              ("25000", "division_corta"))
     comprobar("F2 18 x 38 = 684 (la rejilla: los dos por sitios)", S("18 x 38"), "684")
     r = motor.aplicar("multiplicar", {"a": 18, "b": 38}, SABER)
     comprobar("F3 ... y la rejilla dice sus casillas: 300 + 80 + 240 + 64",

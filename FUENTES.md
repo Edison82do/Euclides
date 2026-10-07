@@ -213,7 +213,21 @@
   estrategia con un método escrito. (La web de NCETM no se abre desde la nube, 7 oct: los cinco puntos
   salen del índice de NCETM en el buscador.) → M.13.
 
+- **NCETM 2.20** (*Multiplication with three factors and volume*, Year 5). Usar la multiplicación para el volumen
+  de cuboides y de figuras hechas de varios cuboides, la división para los problemas inversos, y la asociativa y la
+  conmutativa con tres factores. Punto 1: el volumen es la cantidad de espacio que ocupa algo. Punto 2: se mide en
+  unidades cúbicas (cm³, m³). Punto 3: el volumen de un cuboide es largo × ancho × alto. Punto 4: la conmutativa y
+  la asociativa valen al multiplicar tres números o más. Punto 5: el orden se elige según la cuenta más sencilla.
+  **Common Core 5.MD.C.3–5**: el volumen se mide contando cubos unidad; V = l × a × h = B × h (las capas); los
+  volúmenes de figuras que no se pisan se suman. **Errores al contar cubos** (Battista y Clements 1996; *Mathematics
+  Education Research Journal* 2021, s13394-021-00405-7): contar solo los cubos que se ven, olvidar los de dentro,
+  contar dos veces los de las aristas, contar caras en vez de cubos. (La web de NCETM no se abre desde la nube,
+  7 oct: los cinco puntos salen del índice de NCETM en el buscador.) → M.14.
+
 ## Enlaces
+- NCETM 2.20: https://ncetm.org.uk/classroom-resources/primm-220-multiplication-with-three-factors-and-volume/
+- Common Core 5.MD: https://www.thecorestandards.org/Math/Content/5/MD/
+- Contar cubos en una caja (MERJ 2021): https://link.springer.com/article/10.1007/s13394-021-00405-7
 - NCETM 2.19: https://ncetm.org.uk/classroom-resources/primm-219-calculation-decimal-fractions-by-whole-numbers/
 - Common Core 5.NBT.B.7: https://thecorestandards.org/Math/Content/5/NBT/B/7/
 - NCETM 2.18: https://www.ncetm.org.uk/classroom-resources/primm-218-using-equivalence-to-calculate/

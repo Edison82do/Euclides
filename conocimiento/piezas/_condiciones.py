@@ -66,6 +66,40 @@ def _m13_el_entero_es_corto(s):
     return ent in ("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "100")
 
 
+# ---- tres factores (paso M.14; NCETM 2.20): situacion {"factores": ["25", "7", "4"]} (en texto: puede haber UN decimal)
+def _m14_factores(s):
+    f = s.get("factores")
+    return f if isinstance(f, list) and all(isinstance(x, str) for x in f) else []
+
+
+def _m14_acaba_en_5(f):
+    """'25', '50', '0.5', '1.25': sin los ceros del final, la ultima cifra es un 5.  Es MIRAR, no calcular."""
+    return f.replace(".", "").rstrip("0").endswith("5")
+
+
+def _m14_es_par(f):
+    return f != "0" and f[-1] in "02468"
+
+
+def _m14_decenas_justas(f):
+    """'20', '100', '3000': un entero que acaba en cero (y no es el cero)."""
+    return "." not in f and f != "0" and f.endswith("0")
+
+
+def _m14_amigos(f, g):
+    """Uno acaba en 5 y el otro es par: su producto son decenas justas (25 x 4 = 100; 0.5 x 2 = 1)."""
+    if "." in f and "." in g:
+        return False
+    return (_m14_acaba_en_5(f) and _m14_es_par(g)) or (_m14_acaba_en_5(g) and _m14_es_par(f))
+
+
+def _m14_hay_pareja_facil(s):
+    fs = _m14_factores(s)
+    if any(_m14_decenas_justas(f) or "." in f for f in fs):     # decenas justas al final; el decimal, con uno corto
+        return True
+    return any(_m14_amigos(f, g) for i, f in enumerate(fs) for g in fs[i + 1:])
+
+
 def _tipo(s):
     return s.get("tipo")
 
@@ -304,6 +338,12 @@ CONDICIONES = {
     "uno_es_una_decima_o_una_centesima": lambda s, u: s.get("x") in ("0.1", "0.01") or s.get("y") in ("0.1", "0.01"),
     "el_divisor_es_de_una_cifra_sin_el_cero": lambda s, u: s.get("d") in ("1", "2", "3", "4", "5", "6", "7", "8", "9"),
     "el_divisor_es_un_10_o_un_100": lambda s, u: s.get("d") in ("10", "100"),
+    # ---- tres factores (paso M.14; NCETM 2.20): situacion {"factores": ["25", "7", "4"]}
+    "hay_tres_factores_o_mas": lambda s, u: len(_m14_factores(s)) >= 3,
+    "como_mucho_un_decimal": lambda s, u: len([f for f in _m14_factores(s) if "." in f]) < 2,
+    "algun_factor_es_cero": lambda s, u: "0" in _m14_factores(s),
+    "ningun_factor_es_cero": lambda s, u: "0" not in _m14_factores(s),
+    "hay_una_pareja_facil": lambda s, u: _m14_hay_pareja_facil(s),
     # ---- redondear (paso N.2; 3.NBT.A.1): el numero esta en la lista, y el sitio es decena o centena
     "se_puede_redondear": lambda s, u: u.decir(s["n"]) is not None and s.get("a") in (
         "decena", "centena", "millar", "decena de millar", "centena de millar"),

@@ -62,6 +62,6 @@
   (6.º, NCETM 2.24); hasta entonces, «todavía no».
 
 ## Dónde se quedó (7 oct 2026)
-Hecho hasta **M.13 ×/÷ decimales por enteros** (NCETM 2.19). Siguiente en el orden de NCETM, 5.º (Year 5):
-**2.20 tres factores y volumen** → 2.21 factores, múltiplos, primos → 2.22 combinar operaciones;
+Hecho hasta **M.14 tres factores y volumen** (NCETM 2.20). Siguiente en el orden de NCETM, 5.º (Year 5):
+**2.21 factores, múltiplos, primos** → 2.22 combinar operaciones;
 y en Spine 1/3: 1.28, 1.29, 3.7 fracciones equivalentes, 3.8 denominador común…
