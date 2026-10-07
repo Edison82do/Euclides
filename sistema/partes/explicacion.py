@@ -769,6 +769,8 @@ def explicar_pregunta(texto, saber=None):
             return explicar_orden_geometria(t, saber)
         if es_orden_dinero(t):
             return explicar_orden_dinero(t, saber)
+        if es_orden_decimal_por(t):
+            return explicar_orden_decimal_por(t, saber)
         if es_orden_decimal(t):
             return explicar_orden_decimal(t, saber)
         if t.lower().startswith("corta"):

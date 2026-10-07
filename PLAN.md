@@ -262,6 +262,7 @@ pruebas → commit. Carlos prueba por la mañana.
 | 33 | ✅ **HECHO (7 oct, madrugada), falta la prueba de Carlos** — `diario/2026-10-07-paso-N4-hasta-un-millon.md`. **N.4 Hasta un millón** | NCETM 1.26; 4.NBT.A, 4.NBT.B.5 | 316 nombres ida y vuelta, fronteras, 60 comparaciones, 80 columnas, 30 rejillas |
 | 34 | ✅ **HECHO (7 oct, madrugada), falta la prueba de Carlos** — `diario/2026-10-07-paso-N5-negativos.md`. **N.5 Los números negativos** | NCETM 1.27; 6.NS.C.5–7 | 1722 cuentas en la recta, comparaciones e intervalos de −20 a 20, 200 hasta ±1000 |
 | 35 | ✅ **HECHO (7 oct), falta la prueba de Carlos** — `diario/2026-10-07-paso-M12-equivalencia.md`. **M.12 Usar la equivalencia para calcular** (doblar y partir por la mitad; cambiar los dos igual en ÷) | NCETM 2.18 | 200 productos, 578 divisiones, 452 igualdades, 200 huecos |
+| 36 | ✅ **HECHO (7 oct), falta la prueba de Carlos** — `diario/2026-10-07-paso-M13-decimales-por-enteros.md`. **M.13 Multiplicar y dividir decimales por enteros** (contar en décimas; × 0.1 = ÷ 10; cambiar a la unidad más pequeña si sobra) | NCETM 2.19; 5.NBT.B.7 | 240 productos, 60 por 0.1/0.01, 250 divisiones, 100 entre 10/100, 18 cerca del techo |
 
 ## EL PLAN ANTERIOR (5 oct, tarde) — sustituido por el de arriba en el orden; se conserva como referencia
 

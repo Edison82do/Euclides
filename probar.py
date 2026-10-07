@@ -503,6 +503,18 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         180 : 20 = 18 : ?      -> 2     (el dividendo diez veces mas pequeno: el divisor tambien)
         Y 25 x 16, 165 : 5 ... sin decir 'equivalente' tambien lo usan si es lo mas corto.
 
+  DECIMALES POR ENTEROS  ->  multiplicar y dividir un decimal por un entero (paso M.13; NCETM 2.19; 5.NBT.B.7)
+        0.3 x 4                -> 1.2    3 decimas x 4 = 12 decimas (no 0.12: son decimas, no centesimas)
+        3.27 x 4               -> 13.08  327 centesimas x 4 = 1308 centesimas; y por partes 12 + 1.08
+        1.5 x 4                -> 6      (no 4.20: el entero y las decimas no se pegan, se SUMAN)
+        35 x 0.1               -> 3.5    por 0.1 es entre 10: las cifras bajan un sitio (sale MENOS)
+        7.2 : 3                -> 2.4    72 decimas : 3 = 24 decimas
+        1.3 : 4                -> 0.325  sobra: se CAMBIA a centesimas y a milesimas
+        0.12 : 4               -> 0.03   (no 0.3: son 12 centesimas)
+        3.5 : 10               -> 0.35   las cifras bajan un sitio
+        0.3 x 0.4, 7.2 : 12, 7.2 : 0.3 -> todavia_no (decimal por decimal y division larga: 6.o)
+        Cada cuenta se comprueba con la contraria: 1.2 : 4 = 0.3;  24 decimas x 3 = 72 decimas.
+
   VECES  ->  comparar multiplicando: "K veces" y fracciones (paso S.1; NCETM 2.17; 4.OA.A.1-2)
         veces: 4 veces 6       -> 24   (4 veces mas NO es 4 mas: eso seria 10)
         cuantas veces: 24 y 6  -> 4    (24 es 4 veces 6; 6 es 1/4 de 24)
@@ -706,6 +718,11 @@ def preguntar(texto, saber):
             return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
         if motor.es_orden_dinero(t):
             salida = motor.explicar_orden_dinero(t, saber)
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
+        if motor.es_orden_decimal_por(t):
+            salida = motor.explicar_orden_decimal_por(t, saber)
             if salida.startswith("NO ENTIENDO"):
                 return "no_entiendo", None
             return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None

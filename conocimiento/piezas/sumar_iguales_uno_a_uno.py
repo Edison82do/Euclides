@@ -21,6 +21,10 @@ def hacer(s, u):
     if s["veces"] == 0:
         return {"valor": 0, "metodo": "sumar grupo a grupo (M.0)", "cuenta": "no hay ningun grupo: 0",
                 "pasos": [], "vuelta": "", "vuelta_ok": True}
+    # PASO M.13 (arreglo): sumar grupo a grupo esta bien con pocos grupos; con mas de cien, un humano no
+    # hace 999 999 sumas (5 x 999999 tardaba 75 s): se hace de otra manera.
+    if u.viene_despues(u.decir(s["veces"]), "cien"):
+        raise ValueError("son mas de cien grupos: no se suman uno a uno, se hace de otra manera")
     total, marca, pasos = s["n"], "uno", []
     while marca != u.decir(s["veces"]):
         r = u.usar("sumar", a=total, b=s["n"])

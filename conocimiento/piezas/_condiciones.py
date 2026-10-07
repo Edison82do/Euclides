@@ -48,6 +48,24 @@ def _eq_escalar_division(s, u):
     return (u.cifras_de(t)[0] == 0 and u.cifras_de(d)[0] == 0) or _eq_sin_ceros_acaba_en_5(d, u)
 
 
+def _m13_es_decimal(x):
+    """M.13: '0.3' lleva punto; '4' no.  (Es MIRAR si hay punto, no calcular.)"""
+    return isinstance(x, str) and "." in x
+
+
+def _m13_un_decimal_y_un_entero(s):
+    x, y = s.get("x"), s.get("y")
+    if not (isinstance(x, str) and isinstance(y, str)):
+        return False
+    return _m13_es_decimal(x) != _m13_es_decimal(y)
+
+
+def _m13_el_entero_es_corto(s):
+    """NCETM 2.19 (punto 3): el entero es de UNA cifra; o 10 o 100 (las cifras suben de sitio, M.9)."""
+    ent = s["y"] if _m13_es_decimal(s["x"]) else s["x"]
+    return ent in ("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "100")
+
+
 def _tipo(s):
     return s.get("tipo")
 
@@ -280,6 +298,12 @@ CONDICIONES = {
     and s["lados"][0].get("op") in ("x", ":") and s["lados"][1].get("op") == s["lados"][0].get("op"),
     "la_balanza_es_de_por_o_entre": lambda s, u: s["completo"].get("op") in ("x", ":")
     and s["con_hueco"].get("op") == s["completo"]["op"],
+    # ---- decimales por enteros (paso M.13; NCETM 2.19): situacion {"x": "0.3", "y": "4"} o {"x": "7.2", "d": "3"}
+    "un_decimal_y_un_entero": lambda s, u: _m13_un_decimal_y_un_entero(s),
+    "el_entero_es_de_una_cifra_o_10_o_100": lambda s, u: _m13_el_entero_es_corto(s),
+    "uno_es_una_decima_o_una_centesima": lambda s, u: s.get("x") in ("0.1", "0.01") or s.get("y") in ("0.1", "0.01"),
+    "el_divisor_es_de_una_cifra_sin_el_cero": lambda s, u: s.get("d") in ("1", "2", "3", "4", "5", "6", "7", "8", "9"),
+    "el_divisor_es_un_10_o_un_100": lambda s, u: s.get("d") in ("10", "100"),
     # ---- redondear (paso N.2; 3.NBT.A.1): el numero esta en la lista, y el sitio es decena o centena
     "se_puede_redondear": lambda s, u: u.decir(s["n"]) is not None and s.get("a") in (
         "decena", "centena", "millar", "decena de millar", "centena de millar"),

@@ -33,6 +33,10 @@ OBJETIVOS = {
                             "que_es": "cual de dos fracciones es mayor (NCETM 3.2, 3.3): la regla y la tira, de acuerdo"},
     "redondear": {"elige": "todas_iguales",
                   "que_es": "a que decena o centena esta mas cerca (3.NBT.A.1): la recta y el atajo, de acuerdo"},
+    "multiplicar_decimal": {"elige": "la_mas_rapida",
+                            "que_es": "un decimal por un entero (NCETM 2.19; 5.NBT.B.7): 0.3 x 4"},
+    "dividir_decimal": {"elige": "la_mas_rapida",
+                        "que_es": "un decimal entre un entero (NCETM 2.19; 5.NBT.B.7): 7.2 : 3"},
     "contar_hasta": {"elige": "la_mas_rapida",
                      "que_es": "cuantos pasos hay de un numero a otro (el hueco, 5.5)"},
 }

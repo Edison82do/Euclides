@@ -19,6 +19,10 @@ PIEZA = {
 
 def hacer(s, u):
     de = u.decir(s["n"])
+    # PASO M.13 (arreglo, como en dividir_saltando): saltar un salto por grupo esta bien con pocos grupos;
+    # con mas de cien, un humano no cuenta 999 999 saltos de 5 (5 x 999999 tardaba 76 s): otro metodo.
+    if u.viene_despues(u.decir(s["veces"]), "cien"):
+        raise ValueError("son mas de cien saltos de %d: asi no se cuenta, se hace de otra manera" % s["n"])
     v, marca, serie = 0, "cero", []
     while marca != u.decir(s["veces"]):
         v = u.saltar(v, de)

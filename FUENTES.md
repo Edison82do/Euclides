@@ -202,7 +202,20 @@
   (La web de NCETM no se abre desde la nube, 7 oct: los dos puntos salen del índice de NCETM en el
   buscador; el resto del segmento, cuando Carlos pueda abrirlo en su PC.) → M.12.
 
+- **NCETM 2.19** (*Calculation: ×/÷ decimal fractions by whole numbers*, Year 5). Punto 1: los decimales
+  (con un número entero de décimas o centésimas) se multiplican por un entero con los hechos sabidos y
+  contando en décimas (*unitising*: 4 × 7 décimas = 28 décimas). Punto 2: × 0.1 es ÷ 10, × 0.01 es ÷ 100
+  (las cifras bajan uno o dos sitios). Punto 3: un número de una cifra por un decimal de hasta dos cifras
+  decimales: pasar a entero (× 10/100), calcular, ajustar (÷ 10/100). Punto 4: por menos de uno el
+  producto es menor; por más de uno, mayor. Punto 5: un decimal de hasta dos cifras decimales entre un
+  número de una cifra: pasar a entero, dividir, ajustar. **Common Core 5.NBT.B.7**: ×/÷ decimales hasta
+  las centésimas con estrategias de valor posicional y propiedades (la distributiva), relacionando la
+  estrategia con un método escrito. (La web de NCETM no se abre desde la nube, 7 oct: los cinco puntos
+  salen del índice de NCETM en el buscador.) → M.13.
+
 ## Enlaces
+- NCETM 2.19: https://ncetm.org.uk/classroom-resources/primm-219-calculation-decimal-fractions-by-whole-numbers/
+- Common Core 5.NBT.B.7: https://thecorestandards.org/Math/Content/5/NBT/B/7/
 - NCETM 2.18: https://www.ncetm.org.uk/classroom-resources/primm-218-using-equivalence-to-calculate/
 - NCETM 2.9: https://www.ncetm.org.uk/classroom-resources/primm-209-times-tables-7-and-patterns-withinacross-times-tables/
 - NCETM 2.10: https://www.ncetm.org.uk/classroom-resources/primm-210-connecting-multiplication-and-division-and-the-distributive-law/

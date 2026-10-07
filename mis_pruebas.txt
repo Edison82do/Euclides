@@ -287,6 +287,12 @@ equivalente: 375 : 25             | 15              | M.12: cambiar los dos igua
 verdad: 96 : 4 = 192 : 2          | FALSO           | M.12: en : los dos cambian IGUAL
 180 : 20 = 18 : ?                 | 2               | M.12: el hueco sin calcular
 
+0.3 x 4                           | 1.2             | M.13: 12 decimas, no 0.12
+1.5 x 4                           | 6               | M.13: no 4.20
+7.2 : 3                           | 2.4             | M.13: 72 decimas : 3
+1.3 : 4                           | 0.325           | M.13: sobra, se cambia a centesimas
+35 x 0.1                          | 3.5             | M.13: por 0.1 sale menos
+0.3 x 0.4                         | todavia_no      | M.13: decimal por decimal es de 6.o
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete
