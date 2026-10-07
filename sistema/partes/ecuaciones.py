@@ -239,6 +239,9 @@ def _resolver_balanza(e, r, saber):
             todo = aplicar("sumar", {"a": vc["valor"], "b": k}, saber)
             if todo["conclusion"] == "hecho":
                 candidatos.append((todo["valor"], "sumar todo lo que se ve"))
+        al_reves = _cmp_trampa_balanza_resta(completo, con_hueco, saber)     # P.7 (NCETM 1.29)
+        if al_reves:
+            candidatos.append(al_reves)
         for n, porque in candidatos:
             if n == v:
                 continue

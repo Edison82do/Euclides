@@ -62,7 +62,10 @@ try:
     comprobar("B4 ? - 3 = 9 - 3 -> 9", E("? - 3 = 9 - 3")[:2], (9, "balanza_mismo_numero"))
 
     print("\nC - CUANDO NO SE PUEDE COMPENSAR, SE CALCULA UN PLATO")
-    comprobar("C1 15 - 7 = ? - 6 -> 14 (resta: calculando)", E("15 - 7 = ? - 6")[:2], (14, "balanza_calculando_un_lado"))
+    # OBSOLETA POR MEJORA (P.7, 7 oct): antes era (14, "balanza_calculando_un_lado"): en E.2 la resta no se
+    # compensaba.  Desde P.7 (NCETM 1.29, la misma diferencia) si: el sustraendo baja 1, el minuendo tambien: 14.
+    comprobar("C1 15 - 7 = ? - 6 -> 14 (resta: la misma diferencia, P.7)", E("15 - 7 = ? - 6")[:2],
+              (14, "balanza_misma_diferencia"))
     comprobar("C2 8 + 4 = 15 - ? -> 3 (operaciones distintas)", E("8 + 4 = 15 - ?")[:2], (3, "balanza_calculando_un_lado"))
     comprobar("C3 8 + 4 = ? + 13 -> imposible (el otro plato ya pesa mas)", E("8 + 4 = ? + 13")[0], "imposible")
     comprobar("C4 30 + 40 = ? + 5: lejos para compensar -> calculando: 65", E("30 + 40 = ? + 5")[:2],

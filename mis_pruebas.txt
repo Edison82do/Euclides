@@ -331,3 +331,9 @@ perimetro: 30; lados: 8, 7, 6, ?  | 9 cm            | S.2: el perimetro es el to
 tenia: 20; gaste: 4.50, 7.25; queda: ? | 8.25 pesos | S.2: la misma estructura con dinero
 todo: 24; 4 partes iguales        | cada parte: 6   | S.2: partes iguales (multiplicativa)
 perimetro: 30; lados: 20, 15, ?   | no_se_puede     | S.2: ya pasan del todo
+4997 + 2456                       | 7453            | P.7: la misma suma (5000 + 2453)
+1000 - 397                        | 603             | P.7: la misma diferencia (1003 - 400)
+equivalente: 7.2 - 3.9            | 3.3             | P.7: con decimales, 7.3 - 4
+si 600 - 200 = 400: 600 - 201 = ? | 399             | P.7: el sustraendo sube, la diferencia BAJA
+verdad: 75 - 28 = 73 - 30         | falso           | P.7: sin calcular, la diferencia baja 4
+74 - 28 = 75 - ?                  | 29              | P.7: no 27

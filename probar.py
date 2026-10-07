@@ -568,6 +568,19 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         todo: 30; partes: 10, 10, 10    -> cuadra    (no falta nada: miro si las partes juntan el todo)
         Las partes se separan con coma y los decimales llevan punto.  Se comprueba con la contraria: 37 + 38 + 25 = 100.
 
+  COMPENSAR CON + Y -  ->  cambiar los numeros sin cambiar el resultado, o mover lo que ya se sabe (paso P.7; NCETM 1.29)
+        4997 + 2456            -> 7453   la MISMA SUMA: a 4997 le faltan 3 para 5000; se los quito al otro: 5000 + 2453
+        1000 - 397             -> 603    la MISMA DIFERENCIA: le sumo 3 a LOS DOS: 1003 - 400
+        999999 - 997           -> 999002 (sumar 3 pasaria del millon): quito 1000 y devuelvo los 3 de mas
+        equivalente: 1000 - 397 -> 603   ensena la cadena 1000 - 397 = 1003 - 400 = 603
+        equivalente: 7.2 - 3.9 -> 3.3    con decimales: 7.3 - 4;   equivalente: 5.003 - 1.998 -> 3.005 (5.005 - 2)
+        si 600 - 200 = 400: 600 - 201 = ?  -> 399  el sustraendo SUBE 1: la diferencia BAJA 1 (no 401: la trampa)
+        si 250 + 250 = 500: 251 + 250 = ?  -> 501  un sumando sube 1: la suma sube 1
+        verdad: 75 - 28 = 77 - 30  -> VERDADERO sin calcular (los dos suben 2)
+        verdad: 75 - 28 = 73 - 30  -> FALSO (el minuendo baja 2 y el sustraendo sube 2: la diferencia baja 4)
+        74 - 28 = 75 - ?       -> 29     en la resta los dos se mueven HACIA EL MISMO LADO (no 27, como en la suma)
+        Cada cuenta se comprueba con la contraria por las columnas: 603 + 397 = 1000.
+
   VECES  ->  comparar multiplicando: "K veces" y fracciones (paso S.1; NCETM 2.17; 4.OA.A.1-2)
         veces: 4 veces 6       -> 24   (4 veces mas NO es 4 mas: eso seria 10)
         cuantas veces: 24 y 6  -> 4    (24 es 4 veces 6; 6 es 1/4 de 24)
@@ -762,6 +775,11 @@ def preguntar(texto, saber):
         if t.lower().startswith("tabla del") or t.lower().startswith("mitad"):
             salida = (motor.explicar_tabla(t, saber) if t.lower().startswith("tabla")
                       else motor.explicar_mitad(t[len("mitad"):].lstrip(":").strip(), saber))
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
+        if motor.es_orden_derivar(t):                        # derivar de un hecho que se sabe (P.7; NCETM 1.29)
+            salida = motor.explicar_orden_derivar(t, saber)
             if salida.startswith("NO ENTIENDO"):
                 return "no_entiendo", None
             return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
@@ -1399,6 +1417,8 @@ def como_problema(texto):
     if motor.es_orden_factores(t):                        # factores, primos, multiplos (M.15): '?' no es un problema
         return t
     if motor.es_orden_parte_todo(t):                      # parte-parte-todo (S.2): el '?' es la parte que falta
+        return t
+    if motor.es_orden_derivar(t):                         # si 600 - 200 = 400: 600 - 201 = ? (P.7): no es una ecuacion
         return t
     if "=" in t and any(h in t for h in ("?", "_", "\u25a1")):   # una ECUACION con hueco (E.1, E.4)
         return "ecuacion: " + t

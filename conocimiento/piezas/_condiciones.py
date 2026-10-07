@@ -326,6 +326,53 @@ def _menor(s, u):
     return s["b"] if u.viene_despues(u.decir(s["a"]), u.decir(s["b"])) else s["a"]
 
 
+def _p7_redondo(u, n, ceros):
+    """P.7: el redondo de al lado de n (la pieza buscar_el_redondo_cercano), o None."""
+    try:
+        return u.usar("buscar_el_redondo_cercano", n=n, ceros=ceros)["resultado"]
+    except Exception:
+        return None
+
+
+def _p7_facil(u, p, q):
+    """P.7: de p a q hay un cambio FACIL: cabe en los dedos o son decenas/centenas justas (20, 300...)."""
+    if u.decir(p) is None or u.decir(q) is None:
+        return False
+    g, m = (p, q) if u.viene_despues(u.decir(p), u.decir(q)) else (q, p)
+    try:
+        d = u.usar("restar_por_columnas", a=g, b=m)["valor"]
+    except Exception:
+        return False
+    return u.levantar_dedos(u.decir(d)) is not None or u.cifras_de(d)[0] == 0
+
+
+def _p7_parejas(u, i, d):
+    """P.7: como se emparejan los numeros de dos sumas o dos restas para ver el cambio facil.  En la resta,
+    minuendo con minuendo y sustraendo con sustraendo; en la suma, tambien cruzados.  None si no hay."""
+    if i.get("op") not in ("+", "-") or d.get("op") != i["op"]:
+        return None
+    formas = [((i["a"], d["a"]), (i["b"], d["b"]))]
+    if i["op"] == "+":
+        formas.append(((i["a"], d["b"]), (i["b"], d["a"])))
+    for f in formas:
+        if all(_p7_facil(u, p, q) for p, q in f):
+            return f
+    return None
+
+
+def _p7_resta_valida(u, l):
+    return l.get("op") != "-" or not u.viene_despues(u.decir(l["b"]), u.decir(l["a"]))
+
+
+def _p7_balanza_de_restas(s, u):
+    if "completo" not in s or s["completo"]["op"] != "-" or s["con_hueco"]["op"] != "-":
+        return False
+    c, h = s["completo"], s["con_hueco"]
+    if h["a"] == "?" and h["b"] == "?":
+        return False
+    return _p7_facil(u, c["a"], h["a"]) if h["b"] == "?" else _p7_facil(u, c["b"], h["b"])
+
+
 CONDICIONES = {
     # ---- los pasos de un problema (resolvedor, R.1)
     "es_un_cambio": lambda s, u: _tipo(s) in ("cambio", "deshacer", "cambio_desconocido"),
@@ -489,6 +536,19 @@ CONDICIONES = {
     "falta_una_sola_parte": lambda s, u: _ppt_falta_una_sola(s),
     "se_saben_dos_partes_o_mas": lambda s, u: _ppt_se_saben_dos_o_mas(s),
     "faltan_todas_y_son_iguales": lambda s, u: _ppt_iguales_que_faltan(s),
+    # ---- la compensacion con numeros grandes (paso P.7; NCETM 1.29)
+    "el_numero_tiene_nombre": lambda s, u: u.decir(s["n"]) is not None,
+    "un_sumando_esta_cerca_de_un_redondo": lambda s, u: any(_p7_redondo(u, x, s.get("ceros", 2)) is not None
+                                                            for x in (s["a"], s["b"])),
+    "el_de_abajo_esta_cerca_de_un_redondo": lambda s, u: _p7_redondo(u, s["b"], s.get("ceros", 2)) is not None,
+    "dos_sumas_o_dos_restas_con_cambios_faciles": lambda s, u: len(s.get("lados", ())) == 2
+    and all(_p7_resta_valida(u, l) for l in s["lados"] if "op" in l)
+    and _p7_parejas(u, s["lados"][0], s["lados"][1]) is not None,
+    "los_dos_lados_son_restas_con_un_cambio_facil": lambda s, u: _p7_balanza_de_restas(s, u),
+    "se_sabe_un_hecho_de_la_misma_cuenta": lambda s, u: "hecho" in s and s["hecho"].get("op") in ("+", "-")
+    and s["nuevo"].get("op") == s["hecho"]["op"],
+    "los_cambios_desde_el_hecho_son_faciles": lambda s, u: _p7_parejas(u, s["hecho"], s["nuevo"]) is not None,
+    "la_cuenta_nueva_es_suma_o_resta": lambda s, u: s.get("nuevo", {}).get("op") in ("+", "-"),
     # ---- redondear (paso N.2; 3.NBT.A.1): el numero esta en la lista, y el sitio es decena o centena
     "se_puede_redondear": lambda s, u: u.decir(s["n"]) is not None and s.get("a") in (
         "decena", "centena", "millar", "decena de millar", "centena de millar"),

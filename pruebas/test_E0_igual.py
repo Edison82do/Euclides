@@ -53,7 +53,12 @@ try:
 
     print("\nB - LAS TRAMPAS")
     v, r = V("4 + 1 = 5 + 2")
-    comprobar("B1 4 + 1 = 5 + 2: dice la trampa ('el = no dice da')", "no dice 'da'" in r["resultado"]["cuenta"], True)
+    # OBSOLETA POR MEJORA (P.7, 7 oct): antes la decidia la pieza que calcula, y su cuenta decia la trampa
+    # ("no dice 'da'").  Desde P.7 se ve FALSO sin calcular (los dos sumandos suben 1: la suma sube 2).  Se
+    # sigue afirmando: es FALSO, y la pieza que calcula, pedida por su nombre, sigue diciendo la trampa.
+    rc = motor.aplicar("igual_calculando_los_lados", {"lados": r["lados"]}, SABER)
+    comprobar("B1 4 + 1 = 5 + 2: FALSO; calculando dice la trampa ('el = no dice da')",
+              (v, r["pieza"]["id"], "no dice 'da'" in rc["resultado"]["cuenta"]), ("falso", "igual_compensando", True))
     comprobar("B2 10 = 8 + 2: el resultado a la izquierda tambien vale", V("10 = 8 + 2")[0], "verdadero")
     v, r = V("7 = 7")
     comprobar("B3 7 = 7 sin ninguna operacion, y sin calcular", (v, r["pieza"]["id"]), ("verdadero", "igual_escrito_igual"))

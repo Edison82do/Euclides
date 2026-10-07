@@ -49,6 +49,10 @@ OBJETIVOS = {
                            "que_es": "parte-parte-todo (NCETM 1.28): falta el TODO; se juntan las partes (tres o mas)"},
     "parte_del_todo": {"elige": "la_mas_rapida",
                        "que_es": "parte-parte-todo (NCETM 1.28): se sabe el todo y falta UNA parte (o son iguales)"},
+    "redondo_cercano": {"elige": "la_mas_rapida",
+                        "que_es": "esta cerca de un redondo (100, 1000...)? cuanto le falta o le sobra (NCETM 1.29)"},
+    "derivar": {"elige": "la_mas_rapida",
+                "que_es": "sacar una suma o resta nueva de una que ya se sabe (NCETM 1.29, puntos 2, 4 y 5)"},
     "contar_hasta": {"elige": "la_mas_rapida",
                      "que_es": "cuantos pasos hay de un numero a otro (el hueco, 5.5)"},
 }

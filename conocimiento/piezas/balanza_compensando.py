@@ -15,7 +15,7 @@ PIEZA = {
         ("los_dos_lados_son_sumas", "no son dos sumas (en la resta la compensacion va de otra manera)"),
         ("hay_una_pareja_cerca", "ningun numero del otro lado esta cerca del conocido (no caben en los dedos)"),
     ],
-    "usa": [],
+    "usa": ["sumar"],
 }
 
 
@@ -40,6 +40,11 @@ def hacer(s, u):
     if r.get("resultado") is None:
         raise ValueError("no hay numero: el otro plato ya pesa mas")
     v = u.leer(r["resultado"])
+    # LA VUELTA (paso P.7: antes no comprobaba nada): ahora si se calculan los dos platos, con el numero
+    # en el hueco, y tienen que pesar lo mismo
+    vc = u.usar("sumar", a=c["a"], b=c["b"])["valor"]
+    vh = u.usar("sumar", a=k, b=v)["valor"]
     return {"valor": v, "metodo": "compensar (E.2)",
             "cuenta": frase % (k, d, p, d, otro, v),
-            "vuelta": "", "vuelta_ok": True}
+            "vuelta": "%d + %d = %d;  %d + %d = %d" % (c["a"], c["b"], vc, k, v, vh),
+            "vuelta_ok": vc == vh}

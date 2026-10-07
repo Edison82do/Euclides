@@ -1022,3 +1022,19 @@ todo: 10; partes: 4, 6, ?                  | 0 | (S.2) la parte que falta puede 
 todo: 30; partes: 10, 10, 11               | no_cuadra | (S.2) no falta nada, y no juntan el todo
 todo: 1000000; partes: 250000, ?, 250000, 250000 | 250000 | (S.2) cerca del techo
 partes: 999999, 2; todo: ?                 | no_alcanza | (S.2) se pasa del millon
+calcular: 4997 + 2456                      | 7453 | (P.7) la misma suma: 5000 + 2453
+calcular: 1000 - 397                       | 603 | (P.7) la misma diferencia: 1003 - 400
+calcular: 1000 - 403                       | 597 | (P.7) los dos bajan 3: 997 - 400
+calcular: 4997 + 2                         | 4999 | (P.7) redondear un sumando y quitar lo que sobra
+calcular: 999999 - 997                     | 999002 | (P.7) cerca del techo: quitar de mas y devolver
+equivalente: 7.2 - 3.9                     | 3.3 | (P.7) 7.3 - 4
+equivalente: 5.003 - 1.998                 | 3.005 | (P.7) milesimas: 5.005 - 2
+equivalente: 2.98 + 1.45                   | 4.43 | (P.7) 3 + 1.43
+equivalente: 345 + 123                     | no_encaja | (P.7) ninguno cerca de un redondo
+si 600 - 200 = 400: 600 - 201 = ?          | 399 | (P.7) la trampa del punto 5: no 401
+si 250 + 250 = 500: 251 + 250 = ?          | 501 | (P.7) un sumando sube 1
+si 600 - 200 = 500: 600 - 201 = ?          | hecho_falso | (P.7) un hecho falso no se usa
+verdad: 75 - 28 = 77 - 30                  | verdadero | (P.7) los dos suben 2
+verdad: 75 - 28 = 73 - 30                  | falso | (P.7) la diferencia baja 4
+ecuacion: 74 - 28 = 75 - ?                 | 29 | (P.7) no 27 (compensar como en la suma)
+ecuacion: 50 - 19 = ? - 20                 | 51 | (P.7) los dos suben 1

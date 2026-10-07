@@ -118,8 +118,13 @@ try:
               ("el segundo no son decenas justas (30, 40 ... 90)",
                "ninguno es de dos cifras acabado en nueve (19, 29 ... 89)"))
     r = motor.aplicar("sumar", {"a": 99, "b": 14}, SABER)
-    comprobar("E3 99 + 14: la decena siguiente del 99 es 100, no es de dos cifras -> columnas",
-              (r["pieza"]["id"], r["valor"]), ("sumar_por_columnas", 113))
+    # OBSOLETA POR MEJORA (P.7, 7 oct): antes era ("sumar_por_columnas", 113): la compensacion de P.4 no
+    # encaja (99 no es de dos cifras acabado en nueve), pero ahora la MISMA SUMA de P.7 (NCETM 1.29) si:
+    # 99 + 14 = 100 + 13.  Lo que se sigue afirmando: P.4 no encaja, y sale 113.
+    comprobar("E3 99 + 14: la decena siguiente del 99 es 100, no es de dos cifras -> P.4 no; la misma suma (P.7)",
+              ([c.get("descartado") for c in r["candidatos"] if c["id"] == "sumar_compensando"],
+               r["pieza"]["id"], r["valor"]),
+              (["ninguno es de dos cifras acabado en nueve (19, 29 ... 89)"], "sumar_misma_suma", 113))
     r = motor.aplicar("sumar", {"a": 29, "b": 0}, SABER)
     comprobar("E4 29 + 0: no hay nada que pasar de uno a otro",
               [c.get("descartado") for c in r["candidatos"] if c["id"] == "sumar_compensando"],

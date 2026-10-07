@@ -256,7 +256,21 @@
   no ver que las partes pasan del todo, creer que se sabe la parte cuando faltan dos. (La web de NCETM no se abre desde la nube,
   7 oct: los puntos salen del índice del buscador; falta leer los archivos de Year 5.) → S.2.
 
+- **NCETM 1.29** (*Using equivalence and the compensation property to calculate*, Year 5). Seis puntos: 1 la misma suma (un
+  sumando sube y el otro baja lo mismo); 2 si cambia un sumando, la suma cambia lo mismo; 3 la misma diferencia (minuendo y
+  sustraendo cambian lo mismo); 4 si cambia el minuendo, la diferencia cambia lo mismo; 5 si cambia el sustraendo, la
+  diferencia cambia AL REVÉS; 6 los dos lados del = valen lo mismo: equilibrar ecuaciones. **Guías de Upper KS2** (*Number,
+  Addition and Subtraction*, resúmenes): el punto 5 es el que más cuesta (creen que si el sustraendo sube, la diferencia
+  sube); con la misma diferencia la cuenta es fácil si el sustraendo es múltiplo de 10, 100, 1000; ante una ecuación, mirar
+  primero si se puede compensar y solo calcular si no. **NZ Maths, *Equal additions*** (483 − 397 = 486 − 400) y **Gynzy**
+  (625 − 398 = 625 − 400 + 2). (La web de NCETM y sus PDF no se abren desde la nube, 7 oct: los puntos salen del índice del
+  buscador; falta leer los archivos de Year 5.) → P.7.
+
 ## Enlaces
+- NCETM 1.29: https://ncetm.org.uk/classroom-resources/primm-129-using-equivalence-and-the-compensation-property-to-calculate/
+- NCETM, guías Upper KS2 (Number, Addition and Subtraction, 15–18): https://ncetm.org.uk/media/8d8533f8648fa18/pvltg_upper_ks2_number_addition_subtraction_pt1_15_to_18.pdf
+- NZ Maths / Meaningful Maths, Equal Additions: https://meaningfulmaths.nt.edu.au/mmws/nz/resource/equal-additions.html
+- Gynzy, restar compensando: https://gynzy.com/en-us/library/items/subtraction-to-1000-via-compensation-method
 - NCETM 1.28: https://www.ncetm.org.uk/classroom-resources/primm-128-common-structures-and-the-part-part-whole-relationship/
 - NCETM, The Bar Model: https://www.ncetm.org.uk/classroom-resources/ca-the-bar-model/
 - Oak National (parte-parte-todo, KS1): https://www.thenational.academy/teachers/programmes/maths-primary-ks1/units/additive-structures-addition/lessons/understanding-part-part-whole-relationships

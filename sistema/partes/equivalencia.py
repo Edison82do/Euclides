@@ -56,10 +56,12 @@ def explicar_orden_equivalente(texto, saber=None):
     if saber is None:
         saber = cargar_conocimiento()
     t = " ".join(texto.strip().lower().split())
+    if es_equivalente_suma_resta(t):                 # con + y - (paso P.7; NCETM 1.29): compensacion.py
+        return explicar_equivalente_suma_resta(t, saber)
     m = _EQ_ORDEN.match(t)
     if not m:
-        return ("NO ENTIENDO ESTO: dame una multiplicacion o una division.\n"
-                "   se escribe asi:  equivalente: 25 x 16     o     equivalente: 375 : 25")
+        return ("NO ENTIENDO ESTO: dame una multiplicacion, una division, una suma o una resta.\n"
+                "   se escribe asi:  equivalente: 25 x 16     o     equivalente: 375 : 25     o     equivalente: 1000 - 397")
     a, op, b = int(m.group(1)), m.group(2), int(m.group(3))
     por = op in "x*×"
     for n in (a, b):
