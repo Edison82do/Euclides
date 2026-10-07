@@ -71,6 +71,6 @@
   dice «todavía no» cuando debería decir que se pasa del millón.
 
 ## Dónde se quedó (7 oct 2026)
-Hecho hasta **M.15 factores, múltiplos, primos y compuestos** (NCETM 2.21). Siguiente en el orden de NCETM, 5.º
-(Year 5): **2.22 combinar operaciones**; y en Spine 1/3: 1.28, 1.29, 3.7 fracciones equivalentes,
-3.8 denominador común…
+Hecho hasta **M.16 combinar la multiplicación con la suma y la resta** (NCETM 2.22). Siguiente en el orden de NCETM,
+5.º (Year 5): **2.23** (su título no se pudo ver desde la nube: mirarlo en el índice de NCETM); y en Spine 1/3: 1.28, 1.29, 3.7 fracciones equivalentes,
+3.8 denominador común… (La división combinada con + y - es 2.28, de 6.º.)

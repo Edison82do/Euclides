@@ -236,7 +236,22 @@
   dónde parar. (La web de NCETM, Cambridge Maths y el PDF de Haylock no se abren desde la nube, 7 oct: los seis puntos
   y los errores salen del índice del buscador.) → M.15.
 
+- **NCETM 2.22** (*Combining multiplication with addition and subtraction*, Year 5). Objetivos: combinar la multiplicación con la
+  suma o la resta; usar los paréntesis para cambiar el orden; apoyarse en la distributiva. Punto 1: sin paréntesis, la multiplicación
+  antes que la suma o la resta; con paréntesis, primero lo de dentro. Punto 2: con un factor común, la distributiva. Lo que sigue: 2.28
+  (la división combinada, 6.º). **Common Core 5.OA.A.1–2**: paréntesis en expresiones; escribir e interpretar expresiones sin calcularlas
+  (2 × (8 + 7); 3 × (18932 + 921) es tres veces 18932 + 921). **Errores típicos** (NCETM, *Year 6 unit 12, Order of operations*; Mr
+  Barton, *Probing questions: order of operations*; Oak National, *the distributive law*): ir de izquierda a derecha sin mirar; creer
+  que la suma va antes que la resta (BIDMAS); juntar los factores comunes en vez de los otros; creer que la distributiva solo vale con
+  la suma. (La web de NCETM y thecorestandards.org no se abren desde la nube, 7 oct: los puntos salen del índice del buscador.) → M.16.
+
 ## Enlaces
+- NCETM 2.22: https://ncetm.org.uk/classroom-resources/primm-222-combining-multiplication-with-addition-and-subtraction/
+- NCETM 2.28 (lo siguiente, 6.º): https://ncetm.org.uk/classroom-resources/primm-228-combining-division-with-addition-and-subtraction
+- NCETM Year 6 unit 12 (order of operations): https://ncetm.org.uk/classroom-resources/cp-year-6-unit-12-order-of-operations/
+- Mr Barton, probing questions (order of operations): https://mrbartonmaths.com/?p=4739
+- Oak National (la distributiva, KS2): https://thenational.academy/teachers/programmes/maths-primary-ks2/units/order-of-operations/lessons/explain-how-the-distributive-law-applies-to-multiplication-expressions-with-a-common-factor
+- Common Core 5.OA: https://www.thecorestandards.org/Math/Content/5/OA/
 - NCETM 2.21: https://ncetm.org.uk/classroom-resources/primm-221-factors-multiples-prime-numbers-and-composite-numbers/
 - Common Core 4.OA.B.4 (tareas de Illustrative Mathematics): https://tasks.illustrativemathematics.org/content-standards/4/OA/B/4.html
 - Cambridge Maths Espresso 43: https://www.cambridgemaths.org/Images/espresso_43_factors_multiples_and_prime_numbers.pdf

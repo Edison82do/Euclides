@@ -113,6 +113,49 @@ def _m15_pareja_de_100(s, u):
     return any(f in (25, 50, 20) and _eq_pasa_de_doce(g, u) for f, g in ((a, b), (b, a)))
 
 
+# ---- combinar x con + y - (paso M.16; NCETM 2.22): situacion {"terminos": [["+", ["3"]], ["+", ["4", "5"]]]}
+#      (cada termino: su signo y sus factores; un factor es un numero en texto o un parentesis {"terminos": ...})
+def _m16_terminos(s):
+    t = s.get("terminos")
+    return t if isinstance(t, list) and t else []
+
+
+def _m16_productos(terminos):
+    """Todos los productos (listas de factores), tambien los de dentro de los parentesis."""
+    for _, fs in terminos:
+        yield fs
+        for f in fs:
+            if isinstance(f, dict):
+                for x in _m16_productos(f["terminos"]):
+                    yield x
+
+
+def _m16_hay_cuenta(s):
+    """Hay algo que hacer: dos terminos o mas, o un producto (de numeros o de parentesis)."""
+    t = _m16_terminos(s)
+    return len(t) >= 2 or any(len(fs) >= 2 for fs in _m16_productos(t))
+
+
+def _m16_un_decimal(s):
+    return all(len([f for f in fs if not isinstance(f, dict) and "." in f]) < 2
+               for fs in _m16_productos(_m16_terminos(s)))
+
+
+def _m16_factor_comun(s):
+    """Dos terminos de uno o dos numeros (sin parentesis), al menos uno con dos, que comparten un factor
+    entero que no es 0.  Comparar es LEER si dos numeros se escriben igual."""
+    t = _m16_terminos(s)
+    if len(t) != 2:
+        return False
+    f1, f2 = t[0][1], t[1][1]
+    if any(isinstance(f, dict) for x in (f1, f2) for f in x) or len(f1) > 2 or len(f2) > 2:
+        return False
+    if len(f1) == 1 and len(f2) == 1:
+        return False
+    limpio = [f.lstrip("0") or "0" for f in f1 if "." not in f]
+    return any(a != "0" and a in [g.lstrip("0") or "0" for g in f2 if "." not in g] for a in limpio)
+
+
 def _tipo(s):
     return s.get("tipo")
 
@@ -362,6 +405,10 @@ CONDICIONES = {
     "es_el_uno": lambda s, u: s.get("n") == 1,
     "pasa_de_uno": lambda s, u: _m15_entero_positivo(s, u) and s["n"] != 1,
     "un_factor_es_25_50_o_20_y_el_otro_grande": lambda s, u: _m15_pareja_de_100(s, u),
+    # ---- combinar x con + y - (paso M.16; NCETM 2.22)
+    "hay_alguna_cuenta": lambda s, u: _m16_hay_cuenta(s),
+    "cada_producto_con_un_decimal_como_mucho": lambda s, u: _m16_un_decimal(s),
+    "hay_un_factor_comun": lambda s, u: _m16_factor_comun(s),
     # ---- redondear (paso N.2; 3.NBT.A.1): el numero esta en la lista, y el sitio es decena o centena
     "se_puede_redondear": lambda s, u: u.decir(s["n"]) is not None and s.get("a") in (
         "decena", "centena", "millar", "decena de millar", "centena de millar"),

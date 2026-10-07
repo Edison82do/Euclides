@@ -755,6 +755,8 @@ def explicar_pregunta(texto, saber=None):
             return explicar_piezas(saber)
         if es_orden_factores(t):
             return explicar_orden_factores(t, saber)
+        if es_orden_combinar(t):
+            return explicar_orden_combinar(t, saber)
         if t.lower().startswith("divisible"):
             return explicar_divisible(t[len("divisible"):].lstrip(":").strip(), saber)
         if t.lower().startswith("tabla del"):

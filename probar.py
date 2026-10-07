@@ -543,6 +543,18 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         factores: 169, primo: 997 -> todavia_no (habria que dividir entre 13: la division larga, 6.o)
         Cada division se comprueba multiplicando: 5 x 7 + 1 = 36.
 
+  COMBINAR LA x CON LA + Y LA -  ->  el orden de siempre y el factor comun (paso M.16; NCETM 2.22; 5.OA.A.1)
+        3 + 4 x 5              -> 23     rodeo la x: 4 x 5 = 20; luego 3 + 20 (no 35: de izquierda a derecha esta MAL)
+        (3 + 4) x 5            -> 35     el parentesis primero: 3 + 4 = 7; luego 7 x 5
+        10 - 3 + 2             -> 9      la + y la - en el orden en que vienen (no 10 - 5: la suma NO va antes)
+        4 x 6 + 4 x 2          -> 32     FACTOR COMUN: 6 cuatros y 2 cuatros = 4 x 8 (no (4 + 4) x (6 + 2) = 64)
+        7 x 5 - 7 x 3          -> 14     tambien con la resta: 7 x 2;     5 x 4 + 5 -> 25 (el 5 suelto es 5 x 1)
+        0.5 x 4 + 1.25         -> 3.25   con decimales (M.13 y las columnas con el punto)
+        verdad: 3 + 4 x 5 = 35 -> FALSO  (y se puede escribir directamente: 3 + 4 x 5 = 23 -> verdadero)
+        calcular: 3 + 4 x 5    -> 23     (antes leia solo 3 + 4 y decia 7)
+        2 x 3 - 4 x 5 -> todavia_no (se baja de cero);  12 : 3 + 1 -> todavia_no (dividir: 2.28, 6.o)
+        Cada cuenta se comprueba con la contraria, de la ultima a la primera: 23 - 20 = 3, 20 : 4 = 5.
+
   VECES  ->  comparar multiplicando: "K veces" y fracciones (paso S.1; NCETM 2.17; 4.OA.A.1-2)
         veces: 4 veces 6       -> 24   (4 veces mas NO es 4 mas: eso seria 10)
         cuantas veces: 24 y 6  -> 4    (24 es 4 veces 6; 6 es 1/4 de 24)
@@ -718,6 +730,12 @@ def preguntar(texto, saber):
             if salida.startswith("NO ENTIENDO"):
                 return "no_entiendo", None
             return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
+        if motor.es_orden_combinar(t):                     # x con + y - (M.16): antes que calcular: y verdad:
+            salida = motor.explicar_orden_combinar(t, saber)
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            r = salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip()
+            return ({"VERDADERO": "verdadero", "FALSO": "falso"}.get(r, r)), None
         if t.lower().startswith("divisible"):
             salida = motor.explicar_divisible(t[len("divisible"):].lstrip(":").strip(), saber)
             if salida.startswith("NO ENTIENDO"):

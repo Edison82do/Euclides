@@ -307,6 +307,13 @@ primos hasta 100                  | 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 
 7 es multiplo de 21               | no              | M.15: es al reves
 multiplos comunes: 4 y 6          | 12, 24, 36, 48, 60, 72 | M.15
 con 100: 25 x 36                  | 900             | M.15: las parejas de 100
+3 + 4 x 5                         | 23              | M.16: la x primero, no 35
+(3 + 4) x 5                       | 35              | M.16: el parentesis manda
+10 - 3 + 2                        | 9               | M.16: de izquierda a derecha, no 5
+4 x 6 + 4 x 2                     | 32              | M.16: factor comun 4 x 8, no 64
+5 x 4 + 5                         | 25              | M.16: 5 x 5
+verdad: 3 + 4 x 5 = 35            | FALSO           | M.16
+12 : 3 + 1                        | todavia_no      | M.16: la division combinada es de 6.o
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete
