@@ -87,3 +87,12 @@ compara cifras (más cifras gana; si no, la primera distinta).
 **Prueba de dominio** `test_N4_hasta_un_millon` 41/41: nombres ida y vuelta en 316 números (fronteras +
 azar) contra un testigo escrito aparte; siguiente/anterior por 4 fronteras; 60 comparaciones; 40 sumas y
 40 restas por columnas; miles justos; 30 productos de dos cifras por la rejilla; redondeos.
+
+## ARREGLOS TRAS LA REVISIÓN DE M.12 (7 oct, mañana)
+- `250000 x 8` reventaba («se ha roto algo por dentro»): una condición de pieza llamaba a
+  `viene_despues` con un número sin nombre (más de un millón) → KeyError. Ahora `aplicar` lo trata
+  como «no cumple» y la pieza se descarta: dice «me paso de un millón».
+- `dividir_saltando` con divisores grandes contaba de uno en uno (241961 : 243225 tardaba 25-100 s).
+  Ahora, si el divisor pasa de doce, cada salto es una SUMA y el resto una RESTA (como un humano);
+  y más de cien saltos así es la división larga (6.º, NCETM 2.24): «todavía no».
+- Pruebas nuevas: N.4 F6-F7; M.12 C1b. Proyecto 2255/2255 + 643/643.

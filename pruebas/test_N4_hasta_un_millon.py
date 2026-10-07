@@ -164,6 +164,10 @@ try:
             mal.append((a, b))
     comprobar("F4 dos cifras por dos cifras contra el testigo (30)", mal[:3], [])
     comprobar("F5 99999 x 100 se pasa del millon", S("99999 x 100"), "no_se_puede")
+    comprobar("F6 250000 x 8 se pasa del millon (antes REVENTABA: una condicion con un numero sin nombre)",
+              S("250000 x 8"), "no_se_puede")
+    comprobar("F7 241961 : 243225 = 0 resto 241961, y rapido (los saltos grandes se SUMAN, no se cuentan)",
+              S("241961 : 243225"), "0 resto 241961")
 
     print("\nG - REDONDEAR A LA DECENA Y CENTENA DE MILLAR")
     comprobar("G1 redondear: 345678", S("redondear: 345678"),

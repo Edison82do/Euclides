@@ -104,7 +104,7 @@ try:
     print("\nC - DOMINIO: dividir cambiando los dos, contra el testigo")
     malos, salen, total = [], 0, 0
     for d in (5, 15, 25, 35, 45, 50, 75, 125, 250, 20, 30, 40, 60, 80, 200, 300, 400):
-        for q in list(range(1, 41, 3)) + [55, 99, 120]:
+        for q in list(range(1, 41, 3)) + [55, 99]:
             for resto in (0, 1):
                 t = q * d + (resto and d - 1)
                 total += 1
@@ -119,6 +119,9 @@ try:
                     malos.append(("todo", t, d, w))
     print("        %d divisiones; %d salen por la equivalencia (solo justas)" % (total, salen))
     comprobar("C1 ninguna division mal (%d)" % total, malos, [])
+    # Arreglo del 7 oct (revision): con divisor de mas de doce, mas de cien saltos es la division
+    # LARGA (6.o, NCETM 2.24): todavia no.  Antes se contaba de uno en uno y tardaba minutos.
+    comprobar("C1b 1814 : 15 (120 saltos y resto) -> todavia no (division larga, 6.o)", S("1814 : 15"), "no_se_puede")
     comprobar("C2 por la equivalencia solo salen las justas, y casi todas", salen > total // 3, True)
 
     print("\nD - DOMINIO: igualdades equivalentes (verdaderas sin calcular) y sus trampas")

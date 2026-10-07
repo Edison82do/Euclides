@@ -50,6 +50,17 @@
 - Al final de cada mensaje de commit:
   `Co-Authored-By: Claude <noreply@anthropic.com>`
 
+## Lecciones de las revisiones (las añade la sesión que revisa; leerlas antes de construir)
+- **Una pieza nueva debe COMPROBARSE a sí misma** (`vuelta` real con la operación contraria y
+  `vuelta_ok` según salga), no devolver `"vuelta": "", "vuelta_ok": True` sin comprobar nada.
+  (Revisión de M.12: las piezas `*_escalando` no lo hacen; queda pendiente.)
+- **Probar cerca del techo** (999 999, 1 000 000, productos que se pasan): una condición que llama a
+  `decir`/`viene_despues` con un número sin nombre lanzaba KeyError (ya lo atrapa `aplicar`).
+- **Nada de contar de uno en uno con números grandes**: un salto grande es una SUMA, no 243 225 pasos.
+  Medir el tiempo de casos grandes; si una pregunta tarda más de 2-3 s, algo no es humano.
+- **Respetar el año**: dividir entre números de dos cifras con muchos saltos es la división larga
+  (6.º, NCETM 2.24); hasta entonces, «todavía no».
+
 ## Dónde se quedó (7 oct 2026)
 Hecho hasta **M.12 usar la equivalencia** (NCETM 2.18). Siguiente en el orden de NCETM, 5.º (Year 5):
 **2.19 ×/÷ decimales por enteros** → 2.20 tres factores y volumen → 2.21 factores, múltiplos, primos →

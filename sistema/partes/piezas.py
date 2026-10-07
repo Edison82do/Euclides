@@ -186,7 +186,13 @@ def aplicar(pregunta, situacion, saber=None, base=None):
         fila = {"id": p["id"], "nombre": p["nombre"], "unidad": p["unidad"]}
         for k, c in enumerate(p["condiciones"]):
             u = _Lo_que_puede_usar(p, base, saber)
-            if not base["condiciones"][c[0]](situacion, u):
+            try:
+                cumple = base["condiciones"][c[0]](situacion, u)
+            except KeyError:
+                # PASO N.4 (arreglo): un numero que no tiene nombre (pasa de mi techo) no cumple
+                # ninguna condicion: la pieza se descarta en vez de reventar.
+                cumple = False
+            if not cumple:
                 fila["descartado"], fila["falla_en"], fila["pasadas"] = c[1], c[0], k
                 break
         else:

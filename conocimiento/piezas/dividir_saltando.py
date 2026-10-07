@@ -14,13 +14,29 @@ PIEZA = {
     "condiciones": [
         ("el_divisor_no_es_cero", "el divisor es cero: no se puede repartir entre nadie (y los grupos de cero nunca se llenan)"),
     ],
-    "usa": [],
+    "usa": ["sumar", "restar"],
 }
+
+# PASO N.4 (arreglo, 7 oct): con divisores de VARIAS cifras ya no se cuenta de uno en uno (un humano no
+# cuenta 243225 pasos para dar un salto): cada salto es una SUMA (+ el divisor) y el resto una RESTA.
+# Con un divisor que pasa de las tablas (mas de doce), mas de cien saltos ya es la division larga
+# (6.o, NCETM 2.24): todavia no.
+_MAX_SALTOS_GRANDES = "cien"
+
+
+def _grande(d, u):
+    return u.viene_despues(u.decir(d), "doce")
 
 
 def _saltar(v, d, u):
     if u.decir(d) in ("dos", "cinco", "diez", "cien"):
         return u.saltar(v, u.decir(d))
+    if _grande(d, u):
+        try:
+            r = u.usar("sumar", a=v, b=d)["valor"]
+        except Exception:                                # el salto se sale de mi lista
+            return None
+        return r if u.decir(r) is not None else None
     r = u.contar_adelante(u.decir(v), u.decir(d), con_dedos=False)
     return u.leer(r["resultado"]) if r.get("resultado") else None
 
@@ -32,10 +48,15 @@ def hacer(s, u):
         nuevo = _saltar(v, d, u)
         if nuevo is None or u.viene_despues(u.decir(nuevo), u.decir(t)):
             break
+        if _grande(d, u) and saltos == _MAX_SALTOS_GRANDES:
+            raise ValueError("son mas de cien saltos de %d: eso es la division larga (6.o), todavia no" % d)
         v = nuevo
         saltos = u.siguiente(saltos)
         camino.append(str(v))
-    resto = u.leer(u.contar_hasta(u.decir(v), u.decir(t)))
+    if _grande(d, u):
+        resto = u.usar("restar", a=t, b=v)["valor"] if v else t
+    else:
+        resto = u.leer(u.contar_hasta(u.decir(v), u.decir(t)))
     q = u.leer(saltos)
     return {"valor": q, "resto": resto, "metodo": "contar de %d en %d (M.3)" % (d, d),
             "cuenta": "de %d en %d: %s -> %d saltos%s"
