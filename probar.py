@@ -492,6 +492,17 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         Por la manana hace -6 grados y a mediodia 5 grados. Cuanto subio?     -> 11 grados
         3 - 8 sin la recta sigue siendo 'imposible': con cosas no se quitan 8 de 3.
 
+  EQUIVALENCIA  ->  cambiar los numeros sin cambiar el resultado (paso M.12; NCETM 2.18)
+        equivalente: 25 x 16   -> 400   25 x 16 = 50 x 8 = 100 x 4 (doblo uno, parto el otro por la mitad)
+        equivalente: 165 : 5   -> 33    165 : 5 = 330 : 10 (doblo LOS DOS: el cociente no cambia)
+        equivalente: 180 : 20  -> 9     180 : 20 = 18 : 2 (quito un cero a los dos)
+        verdad: 3 x 12 = 6 x 6 -> VERDADERO sin calcular (6 es 3 al doble, 6 es 12 a la mitad)
+        verdad: 3 x 12 = 4 x 11 -> FALSO  (uno mas aqui, uno menos alli es cosa de la SUMA)
+        verdad: 96 : 4 = 192 : 2 -> FALSO (en : los dos cambian IGUAL, no al reves)
+        24 x 5 = 12 x ?        -> 10    (12 es 24 a la mitad: el hueco es 5 al doble)
+        180 : 20 = 18 : ?      -> 2     (el dividendo diez veces mas pequeno: el divisor tambien)
+        Y 25 x 16, 165 : 5 ... sin decir 'equivalente' tambien lo usan si es lo mas corto.
+
   VECES  ->  comparar multiplicando: "K veces" y fracciones (paso S.1; NCETM 2.17; 4.OA.A.1-2)
         veces: 4 veces 6       -> 24   (4 veces mas NO es 4 mas: eso seria 10)
         cuantas veces: 24 y 6  -> 4    (24 es 4 veces 6; 6 es 1/4 de 24)
@@ -670,6 +681,11 @@ def preguntar(texto, saber):
         if t.lower().startswith("tabla del") or t.lower().startswith("mitad"):
             salida = (motor.explicar_tabla(t, saber) if t.lower().startswith("tabla")
                       else motor.explicar_mitad(t[len("mitad"):].lstrip(":").strip(), saber))
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
+        if motor.es_orden_equivalente(t):
+            salida = motor.explicar_orden_equivalente(t, saber)
             if salida.startswith("NO ENTIENDO"):
                 return "no_entiendo", None
             return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None

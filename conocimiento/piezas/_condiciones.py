@@ -6,9 +6,46 @@ Cada una recibe (s, u): la SITUACION y lo que se puede usar (el mecanismo: u.vie
 u.levantar_dedos, ...).  Devuelve cierto o falso.  Ninguna hace cuentas de Python: comparan,
 miran que hay en la situacion, o preguntan al mecanismo.
 
+
 DE_APLICACION: las que, si fallan, no dicen "esto no es lo mio" sino "esto es lo mio, pero es
 IMPOSIBLE" (quitar mas de lo que hay).  Entonces el problema no tiene solucion, y se dice.
 """
+
+
+# ---- usar la equivalencia (paso M.12; NCETM 2.18)
+def _eq_sin_ceros_acaba_en_5(n, u):
+    c = u.cifras_de(n)
+    while len(c) > 1 and c[0] == 0:
+        c = c[1:]
+    return c[0] == 5
+
+
+def _eq_es_par(n, u):
+    return n != 0 and u.cifras_de(n)[0] in (0, 2, 4, 6, 8)
+
+
+def _eq_pasa_de_doce(n, u):
+    """No es un factor de las tablas (hasta el doce): ahi manda la tabla."""
+    p = u.decir(n)
+    return p is None or u.viene_despues(p, "doce")
+
+
+def _eq_doblar_y_partir(s, u):
+    a, b = s.get("a"), s.get("b")
+    if not isinstance(a, int) or not isinstance(b, int) or 0 in (a, b):
+        return False
+    if not (_eq_pasa_de_doce(a, u) or _eq_pasa_de_doce(b, u)):
+        return False
+    return any(_eq_sin_ceros_acaba_en_5(f, u) and _eq_es_par(g, u) for f, g in ((a, b), (b, a)))
+
+
+def _eq_escalar_division(s, u):
+    t, d = s.get("total"), s.get("divisor")
+    if not isinstance(t, int) or not isinstance(d, int) or t == 0 or d in (0, 1, 10, 100):
+        return False
+    if len(u.cifras_de(d)) == 1 and len(u.cifras_de(t)) < 3:     # una division de las tablas
+        return False
+    return (u.cifras_de(t)[0] == 0 and u.cifras_de(d)[0] == 0) or _eq_sin_ceros_acaba_en_5(d, u)
 
 
 def _tipo(s):
@@ -236,6 +273,13 @@ CONDICIONES = {
     "mismo_denominador": lambda s, u: s["a"][1] == s["b"][1],
     "mismo_numerador": lambda s, u: s["a"][0] == s["b"][0],
     "comparten_arriba_o_abajo": lambda s, u: s["a"][0] == s["b"][0] or s["a"][1] == s["b"][1],
+    # ---- usar la equivalencia (paso M.12; NCETM 2.18)
+    "un_factor_acaba_en_cinco_y_el_otro_es_par": lambda s, u: _eq_doblar_y_partir(s, u),
+    "se_puede_escalar_la_division": lambda s, u: _eq_escalar_division(s, u),
+    "dos_lados_por_o_entre": lambda s, u: len(s.get("lados", ())) == 2
+    and s["lados"][0].get("op") in ("x", ":") and s["lados"][1].get("op") == s["lados"][0].get("op"),
+    "la_balanza_es_de_por_o_entre": lambda s, u: s["completo"].get("op") in ("x", ":")
+    and s["con_hueco"].get("op") == s["completo"]["op"],
     # ---- redondear (paso N.2; 3.NBT.A.1): el numero esta en la lista, y el sitio es decena o centena
     "se_puede_redondear": lambda s, u: u.decir(s["n"]) is not None and s.get("a") in (
         "decena", "centena", "millar", "decena de millar", "centena de millar"),

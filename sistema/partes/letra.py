@@ -220,18 +220,25 @@ def decidir_ecuacion_letra(texto, saber=None):
         r["nota_orden"] = ("OJO, el orden de siempre (3.OA.D.8): sin parentesis, PRIMERO x y :, LUEGO + y -; "
                            "no se va sin mas de izquierda a derecha")
     pasos = []
-    try:
-        objetivo = _valor(sin, saber, pasos)
-        r["lado_conocido"] = objetivo
-        if con[0] == "letra":
-            r["como"] = "calcular el otro lado en el orden de siempre (primero x y :, luego + y -)"
-            v = objetivo
-        else:
-            r["como"] = "DESHACER de fuera hacia dentro (trabajar hacia atras)"
-            v = _deshacer(con, objetivo, saber, pasos)
-    except _NoSale as ex:
-        r.update(conclusion="no_sale", porque=str(ex), pasos=pasos)
-        return r
+    eq = _eq_balanza_por(izq, der, saber)           # M.12 (NCETM 2.18): sin calcular los lados
+    if eq is not None:
+        r["como"] = "SIN CALCULAR LOS LADOS: la equivalencia (NCETM 2.18)"
+        r["equivalencia"] = True
+        pasos.append(eq["resultado"]["cuenta"])
+        v = eq["valor"]
+    else:
+        try:
+            objetivo = _valor(sin, saber, pasos)
+            r["lado_conocido"] = objetivo
+            if con[0] == "letra":
+                r["como"] = "calcular el otro lado en el orden de siempre (primero x y :, luego + y -)"
+                v = objetivo
+            else:
+                r["como"] = "DESHACER de fuera hacia dentro (trabajar hacia atras)"
+                v = _deshacer(con, objetivo, saber, pasos)
+        except _NoSale as ex:
+            r.update(conclusion="no_sale", porque=str(ex), pasos=pasos)
+            return r
     r.update(valor=v, pasos=pasos)
     # LA COMPROBACION: se pone el numero en la letra y se calcula todo
     comp = []

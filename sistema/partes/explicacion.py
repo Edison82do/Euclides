@@ -759,6 +759,8 @@ def explicar_pregunta(texto, saber=None):
             return explicar_tabla(t, saber)
         if t.lower().startswith("mitad"):
             return explicar_mitad(t[len("mitad"):].lstrip(":").strip(), saber)
+        if es_orden_equivalente(t):
+            return explicar_orden_equivalente(t, saber)
         if es_orden_negativos(t):
             return explicar_orden_negativos(t, saber)
         if es_orden_escala(t):

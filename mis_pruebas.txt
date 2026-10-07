@@ -282,6 +282,10 @@ millar: 345678                    | 300000 + 40000 + 5000 + 600 + 70 + 8 | N.4: 
 comparar: -3 y -7                 | -3 > -7         | N.5: -7 esta mas lejos del cero
 recta: 3 - 8                      | -5              | N.5: cruzar el cero
 intervalo: -9 y -2                | 7               | N.5: los dos del mismo lado
+equivalente: 25 x 16              | 400             | M.12: doblar uno y partir el otro
+equivalente: 375 : 25             | 15              | M.12: cambiar los dos igual
+verdad: 96 : 4 = 192 : 2          | FALSO           | M.12: en : los dos cambian IGUAL
+180 : 20 = 18 : ?                 | 2               | M.12: el hueco sin calcular
 
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades

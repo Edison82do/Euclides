@@ -25,6 +25,8 @@ OBJETIVOS = {
                 "que_es": "par o impar? (se emparejan de dos en dos y no sobra ninguno?)"},
     "balanza": {"elige": "la_mas_rapida",
                 "que_es": "el = como balanza: que va en el hueco si hay cuentas a los dos lados?"},
+    "balanza_por": {"elige": "la_mas_rapida",
+                    "que_es": "la balanza con x o : (NCETM 2.18): que va en el hueco sin calcular los lados?"},
     "igualdad": {"elige": "la_mas_rapida",
                  "que_es": "el = : los lados son el mismo numero? (verdadero o falso)"},
     "comparar_fracciones": {"elige": "todas_iguales",

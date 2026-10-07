@@ -195,7 +195,15 @@
   través del cero; coordenadas. **Common Core 6.NS.C.5–7** (−3 °C es más caliente que −7 °C; el valor
   absoluto como distancia al cero). → N.5.
 
+- **NCETM 2.18** (*Using equivalence to calculate*, Year 5): ser más eficiente usando la equivalencia,
+  ajustando los factores (en ×) y el dividendo y el divisor (en ÷). Punto 1: si un factor aumenta
+  multiplicativamente y el otro disminuye de la misma manera, el producto no cambia. Punto 2: si el
+  dividendo cambia multiplicativamente y el divisor cambia de la misma manera, el cociente no cambia.
+  (La web de NCETM no se abre desde la nube, 7 oct: los dos puntos salen del índice de NCETM en el
+  buscador; el resto del segmento, cuando Carlos pueda abrirlo en su PC.) → M.12.
+
 ## Enlaces
+- NCETM 2.18: https://www.ncetm.org.uk/classroom-resources/primm-218-using-equivalence-to-calculate/
 - NCETM 2.9: https://www.ncetm.org.uk/classroom-resources/primm-209-times-tables-7-and-patterns-withinacross-times-tables/
 - NCETM 2.10: https://www.ncetm.org.uk/classroom-resources/primm-210-connecting-multiplication-and-division-and-the-distributive-law/
 - NCETM 2.8: https://www.ncetm.org.uk/classroom-resources/primm-208-times-tables-3-6-and-9-and-the-relationship-between-them/

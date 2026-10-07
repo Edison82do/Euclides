@@ -51,7 +51,6 @@
   `Co-Authored-By: Claude <noreply@anthropic.com>`
 
 ## Dónde se quedó (7 oct 2026)
-Hecho hasta **N.5 los negativos** (NCETM 1.27). Siguiente en el orden de NCETM, 5.º (Year 5):
-**2.18 Using equivalence to calculate** → 2.19 ×/÷ decimales por enteros → 2.20 tres factores y
-volumen → 2.21 factores, múltiplos, primos → 2.22 combinar operaciones; y en Spine 1/3: 1.28, 1.29,
-3.7 fracciones equivalentes, 3.8 denominador común…
+Hecho hasta **M.12 usar la equivalencia** (NCETM 2.18). Siguiente en el orden de NCETM, 5.º (Year 5):
+**2.19 ×/÷ decimales por enteros** → 2.20 tres factores y volumen → 2.21 factores, múltiplos, primos →
+2.22 combinar operaciones; y en Spine 1/3: 1.28, 1.29, 3.7 fracciones equivalentes, 3.8 denominador común…

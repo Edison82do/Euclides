@@ -929,3 +929,10 @@ recta: -4 + 7                              | 3 | (N.5) cruzar el cero subiendo
 intervalo: -4 y 7                          | 11 | (N.5) uno a cada lado
 recta: desde 2 bajando 4                   | 1, 0, -1, -2 | (N.5) contar hacia atras pasando el cero
 La temperatura es -4 grados. Sube 7 grados. Cual es ahora? | 3 grados | (N.5) la temperatura
+# --- paso M.12: usar la equivalencia (NCETM 2.18)
+equivalente: 25 x 16                       | 400 | (M.12) 50 x 8 = 100 x 4
+equivalente: 165 : 5                       | 33 | (M.12) doblar los dos: 330 : 10
+equivalente: 180 : 20                      | 9 | (M.12) quitar un cero a los dos
+verdad: 3 x 12 = 6 x 6                     | VERDADERO | (M.12) sin calcular
+verdad: 3 x 12 = 4 x 11                    | FALSO | (M.12) la compensacion de la suma no vale en x
+24 x 5 = 12 x ?                            | 10 | (M.12) la balanza con x
