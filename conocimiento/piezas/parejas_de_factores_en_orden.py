@@ -29,14 +29,14 @@ def hacer(s, u):
     while True:
         if u.viene_despues(u.decir(d), "doce"):          # ya no es de las tablas
             dd = u.usar("multiplicar", a=d, b=d)["valor"]
-            if dd > n:
+            if u.viene_despues(u.decir(dd), u.decir(n)):      # se pasa (mirado con el mecanismo)
                 por_si_mismo = "%d x %d = %d ya se pasa de %d: no hace falta seguir" % (d, d, dd, n)
                 break
             raise ValueError("para llegar al medio de %d habria que dividir entre %d: eso es la division larga "
                              "(6.o); con las tablas llego hasta el 12" % (n, d))
         r = u.usar("dividir", total=n, divisor=d)
         q, resto = r["valor"], r["resultado"].get("resto", 0)
-        if q < d:                                         # el companero ya es mas pequeno: me cruzo
+        if u.viene_despues(u.decir(d), u.decir(q)):       # el companero ya es mas pequeno: me cruzo
             cruce = (d, q, resto)
             break
         probados.append((d, q, resto))

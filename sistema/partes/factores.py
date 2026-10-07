@@ -34,6 +34,16 @@ _FM_CON100 = re.compile(r"^con\s+(?:las\s+parejas\s+de\s+)?(?:el\s+)?100:?\s*" +
 _FM_ORDENES = (_FM_FACTORES, _FM_PRIMO, _FM_CRIBA, _FM_MULTIPLOS, _FM_ES, _FM_COMUNES, _FM_PRIMOS_DE, _FM_CON100)
 
 
+
+def _fm_pasa(a, b, saber):
+    """a es MAYOR que b: se mira con el mecanismo (viene despues en la lista / mas cifras), no con el '>' de
+    Python.  (Arreglo tras la revision de M.15.)"""
+    pa, pb = decir(a, saber), decir(b, saber)
+    if pa is None or pb is None:
+        return pa is None and pb is not None          # el que no tiene nombre es el que se pasa del techo
+    return viene_despues(pa, pb, saber)
+
+
 def _fm_limpio(texto):
     t = texto.lower()
     for a, b in (("á", "a"), ("é", "e"), ("í", "i"), ("ó", "o"), ("ú", "u"), ("¿", "")):
@@ -205,13 +215,13 @@ def decidir_criba(hasta, saber=None):
         if p in tachado:
             continue
         pp = aplicar("multiplicar", {"a": p, "b": p}, saber)["valor"]
-        if pp > hasta:
+        if _fm_pasa(pp, hasta, saber):
             pasos.append("el %d: %d x %d = %d ya se pasa de %d -> PARO: lo que queda sin tachar es primo" % (p, p, p, pp, hasta))
             break
         v, nuevos = p, []
         while True:
             v = _fm_saltar(v, p, saber)
-            if v is None or v > hasta:
+            if v is None or _fm_pasa(v, hasta, saber):
                 break
             if v not in tachado:
                 tachado[v] = p
@@ -246,7 +256,7 @@ def decidir_multiplos(d, hasta=None, saber=None):
     if d == 0:
         return {"conclusion": "hecho", "lista": [0], "cero": True}
     lista, k, v = [], "uno", d
-    if hasta is not None and v > hasta:
+    if hasta is not None and _fm_pasa(v, hasta, saber):
         return {"conclusion": "hecho", "lista": lista}
     while True:
         lista.append(v)
@@ -255,7 +265,7 @@ def decidir_multiplos(d, hasta=None, saber=None):
         v = _fm_saltar(v, d, saber)
         if v is None:
             return {"conclusion": "hecho", "lista": lista, "techo": True}
-        if hasta is not None and v > hasta:
+        if hasta is not None and _fm_pasa(v, hasta, saber):
             break
         if k == "cien":
             return {"conclusion": "todavia_no", "porque": "son mas de cien multiplos: no los digo uno a uno "
@@ -316,7 +326,7 @@ def explicar_es_multiplo(a, que, b, saber):
                  % (a, b, a, b, b, a))
     if n == 0:
         return "\n".join(L + ["  %d x 0 = 0: si" % d, "", "RESULTADO: si"])
-    if d > n:
+    if _fm_pasa(d, n, saber):
         L.append("  %d es mas pequeno que %d: %d x 1 ya es %d, que se pasa: NO" % (n, d, d, d))
         r2, _ = _fm_divide(d, n, saber)
         if r2 == "si":
@@ -354,7 +364,7 @@ def explicar_multiplos_comunes(a, b, saber):
     L = ["PREGUNTA (M.15): los MULTIPLOS COMUNES de %d y %d  (NCETM 2.21, punto 5)" % (a, b), ""]
     if 0 in (a, b):
         return "\n".join(L + ["  con el 0 el unico multiplo es el 0", "", "RESULTADO: 0"])
-    g, p = (a, b) if a > b else (b, a)
+    g, p = (a, b) if _fm_pasa(a, b, saber) else (b, a)
     r = decidir_multiplos(g, None, saber)
     L.append("  cuento los del MAS GRANDE, de %d en %d: %s" % (g, g, _fm_lista(r["lista"])))
     L.append("  y miro cuales son tambien multiplos de %d (se reparten en grupos de %d sin que sobre):" % (p, p))

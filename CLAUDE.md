@@ -60,6 +60,15 @@
   Medir el tiempo de casos grandes; si una pregunta tarda más de 2-3 s, algo no es humano.
 - **Respetar el año**: dividir entre números de dos cifras con muchos saltos es la división larga
   (6.º, NCETM 2.24); hasta entonces, «todavía no».
+- **Comparar tamaños con el mecanismo** (`viene_despues(decir(a), decir(b), saber)`, o `u.viene_despues`
+  en las piezas), no con `<`/`>` de Python, en el código NUEVO. (Revisión de M.15: `factores.py` y
+  `parejas_de_factores_en_orden.py` ya corregidos.) **DEUDA conocida:** el código viejo tiene ~90
+  comparaciones con Python (muchas son legítimas: índices, sangrías, leer archivos; otras miran el tamaño
+  de números, p. ej. `primitivas.py`, `nivel_5.py`, `nivel_6.py`). La auditoría aún no las vigila.
+  Pasarlas al mecanismo y ampliar `test_sin_calculadora.py` con su lista blanca será un paso aparte.
+- **Pendientes de la revisión de M.14:** `99 x 99 x 99` dice «todavía no» aunque calcula 970299 (porque
+  no puede comprobarlo dividiendo): podría comprobarlo multiplicando en otro orden. `101 x 100 x 100`
+  dice «todavía no» cuando debería decir que se pasa del millón.
 
 ## Dónde se quedó (7 oct 2026)
 Hecho hasta **M.15 factores, múltiplos, primos y compuestos** (NCETM 2.21). Siguiente en el orden de NCETM, 5.º
