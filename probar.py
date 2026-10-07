@@ -528,6 +528,21 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         volumen: caja 2 m x 30 cm x 4 cm -> todavia_no (la misma unidad);  0.3 x 0.2 x 5 -> todavia_no
         Cada producto se comprueba DIVIDIENDO entre los factores, uno a uno: 700 : 7 = 100, 100 : 4 = 25.
 
+  FACTORES, MULTIPLOS Y PRIMOS  ->  (paso M.15; NCETM 2.21; 4.OA.B.4)
+        factores: 36           -> 1, 2, 3, 4, 6, 9, 12, 18, 36   pruebo 1, 2, 3 ... dividiendo y paro al cruzarme;
+                                  9 factores (impar): 6 x 6, 36 es un CUADRADO
+        primo: 91              -> compuesto   (7 x 13: impar y NO primo)
+        primo: 1               -> ni_primo_ni_compuesto   (un solo factor; el error tipico)
+        primo: 1000            -> compuesto   (es par: 2 x 500, la regla corta)
+        primos hasta 100       -> los 25 primos   (la criba: tacho de 2 en 2, de 3 en 3, de 5 en 5, de 7 en 7)
+        multiplos de 7         -> 7, 14 ... 84   (contando de 7 en 7);   multiplos de 7 hasta 50
+        21 es multiplo de 7 -> si;   7 es multiplo de 21 -> no (es al reves: 7 es FACTOR de 21)
+        factores comunes: 24 y 36  -> 1, 2, 3, 4, 6, 12      multiplos comunes: 4 y 6 -> 12, 24 ...
+        factores primos: 60    -> 2, 3, 5
+        con 100: 25 x 36       -> 900   (las parejas de 100: 36 = 9 x 4 y 25 x 4 = 100)
+        factores: 169, primo: 997 -> todavia_no (habria que dividir entre 13: la division larga, 6.o)
+        Cada division se comprueba multiplicando: 5 x 7 + 1 = 36.
+
   VECES  ->  comparar multiplicando: "K veces" y fracciones (paso S.1; NCETM 2.17; 4.OA.A.1-2)
         veces: 4 veces 6       -> 24   (4 veces mas NO es 4 mas: eso seria 10)
         cuantas veces: 24 y 6  -> 4    (24 es 4 veces 6; 6 es 1/4 de 24)
@@ -698,6 +713,11 @@ def preguntar(texto, saber):
     try:
         if t.lower().strip() in ("piezas", "mapa"):
             return "las_piezas", None
+        if motor.es_orden_factores(t):
+            salida = motor.explicar_orden_factores(t, saber)
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
         if t.lower().startswith("divisible"):
             salida = motor.explicar_divisible(t[len("divisible"):].lstrip(":").strip(), saber)
             if salida.startswith("NO ENTIENDO"):
@@ -1339,6 +1359,8 @@ def como_problema(texto):
     if motor.es_ecuacion_con_letra(t):                    # una ecuacion con LETRA o de dos pasos (E.5)
         return t
     if t.lower().startswith("volumen"):                   # el volumen con hueco (M.14) lleva su orden
+        return t
+    if motor.es_orden_factores(t):                        # factores, primos, multiplos (M.15): '?' no es un problema
         return t
     if "=" in t and any(h in t for h in ("?", "_", "\u25a1")):   # una ECUACION con hueco (E.1, E.4)
         return "ecuacion: " + t

@@ -300,6 +300,13 @@ verdad: 2 x 3 x 4 = 4 x 3 x 2     | verdadero       | M.14: los mismos factores 
 volumen: caja 5 x 3 x 2 cm        | 30 cm cubicos   | M.14: la capa de 15 por 2 capas
 volumen: cubo de 3                | 27 unidades cubicas | M.14: no 26, el de dentro cuenta
 volumen: 5 x 3 x ? = 60           | 4               | M.14: dividir uno a uno
+factores: 36                      | 1, 2, 3, 4, 6, 9, 12, 18, 36 | M.15: por parejas; 6 x 6 una vez
+primo: 1                          | ni_primo_ni_compuesto | M.15: el 1 no es primo
+primo: 91                         | compuesto       | M.15: 7 x 13, impar y compuesto
+primos hasta 100                  | 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97 | M.15: la criba
+7 es multiplo de 21               | no              | M.15: es al reves
+multiplos comunes: 4 y 6          | 12, 24, 36, 48, 60, 72 | M.15
+con 100: 25 x 36                  | 900             | M.15: las parejas de 100
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete

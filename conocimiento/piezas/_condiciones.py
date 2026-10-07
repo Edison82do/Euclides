@@ -100,6 +100,19 @@ def _m14_hay_pareja_facil(s):
     return any(_m14_amigos(f, g) for i, f in enumerate(fs) for g in fs[i + 1:])
 
 
+# ---- factores, multiplos y primos (paso M.15; NCETM 2.21): situacion {"n": 36}
+def _m15_entero_positivo(s, u):
+    n = s.get("n")
+    return isinstance(n, int) and not isinstance(n, bool) and n != 0 and u.decir(n) is not None
+
+
+def _m15_pareja_de_100(s, u):
+    a, b = s.get("a"), s.get("b")
+    if not isinstance(a, int) or not isinstance(b, int):
+        return False
+    return any(f in (25, 50, 20) and _eq_pasa_de_doce(g, u) for f, g in ((a, b), (b, a)))
+
+
 def _tipo(s):
     return s.get("tipo")
 
@@ -344,6 +357,11 @@ CONDICIONES = {
     "algun_factor_es_cero": lambda s, u: "0" in _m14_factores(s),
     "ningun_factor_es_cero": lambda s, u: "0" not in _m14_factores(s),
     "hay_una_pareja_facil": lambda s, u: _m14_hay_pareja_facil(s),
+    # ---- factores, multiplos y primos (paso M.15; NCETM 2.21)
+    "es_un_entero_positivo": lambda s, u: _m15_entero_positivo(s, u),
+    "es_el_uno": lambda s, u: s.get("n") == 1,
+    "pasa_de_uno": lambda s, u: _m15_entero_positivo(s, u) and s["n"] != 1,
+    "un_factor_es_25_50_o_20_y_el_otro_grande": lambda s, u: _m15_pareja_de_100(s, u),
     # ---- redondear (paso N.2; 3.NBT.A.1): el numero esta en la lista, y el sitio es decena o centena
     "se_puede_redondear": lambda s, u: u.decir(s["n"]) is not None and s.get("a") in (
         "decena", "centena", "millar", "decena de millar", "centena de millar"),

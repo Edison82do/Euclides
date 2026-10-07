@@ -224,7 +224,23 @@
   contar dos veces los de las aristas, contar caras en vez de cubos. (La web de NCETM no se abre desde la nube,
   7 oct: los cinco puntos salen del índice de NCETM en el buscador.) → M.14.
 
+- **NCETM 2.21** (*Factors, multiples, prime numbers and composite numbers*, Year 5). Punto 1: los factores son
+  enteros positivos que se multiplican para dar un número. Punto 2: métodos sistemáticos para encontrar todos los
+  factores; van por parejas; todos tienen un número par de factores salvo los cuadrados (impar); con más de dos
+  factores, compuesto. Punto 3: un primo tiene exactamente dos factores. Punto 4: factor común; factor primo.
+  Punto 5: múltiplo (el número por un entero); múltiplo común. Punto 6: las parejas de factores de 100 sirven para
+  calcular. **Common Core 4.OA.B.4**: todas las parejas de factores de 1 a 100 (los lados de rectángulos); múltiplo de
+  cada factor; ¿múltiplo de un número de una cifra?; ¿primo o compuesto? (1 a 100). **Errores típicos** (Cambridge
+  Maths *Espresso 43*; Haylock cap. 14; Oak National, «checking understanding of prime numbers»): «el 1 es primo»,
+  confundir factor y múltiplo, olvidar el 1 y el propio número, «los impares son primos», dejarse parejas o no saber
+  dónde parar. (La web de NCETM, Cambridge Maths y el PDF de Haylock no se abren desde la nube, 7 oct: los seis puntos
+  y los errores salen del índice del buscador.) → M.15.
+
 ## Enlaces
+- NCETM 2.21: https://ncetm.org.uk/classroom-resources/primm-221-factors-multiples-prime-numbers-and-composite-numbers/
+- Common Core 4.OA.B.4 (tareas de Illustrative Mathematics): https://tasks.illustrativemathematics.org/content-standards/4/OA/B/4.html
+- Cambridge Maths Espresso 43: https://www.cambridgemaths.org/Images/espresso_43_factors_multiples_and_prime_numbers.pdf
+- Oak National (primos): https://thenational.academy/teachers/programmes/maths-secondary-ks3/units/properties-of-number-factors-multiples-squares-and-cubes/lessons/checking-understanding-of-prime-numbers
 - NCETM 2.20: https://ncetm.org.uk/classroom-resources/primm-220-multiplication-with-three-factors-and-volume/
 - Common Core 5.MD: https://www.thecorestandards.org/Math/Content/5/MD/
 - Contar cubos en una caja (MERJ 2021): https://link.springer.com/article/10.1007/s13394-021-00405-7

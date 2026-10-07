@@ -966,3 +966,26 @@ volumen: 5 x 3 x ? = 60                    | 4 | (M.14) el problema inverso: div
 volumen: 5 x 3 x ? = 62                    | no_sale | (M.14) ni en milesimas
 volumen: caja 2 m x 30 cm x 4 cm           | todavia_no | (M.14) la misma unidad
 1000000 : 2                                | 500000 | (M.14, arreglo) la mitad por sitios, no 500 000 parejas
+# --- paso M.15: factores, multiplos, primos y compuestos (NCETM 2.21; 4.OA.B.4)
+factores: 36                               | 1, 2, 3, 4, 6, 9, 12, 18, 36 | (M.15) nueve: el 6 va consigo mismo (cuadrado)
+factores: 12                               | 1, 2, 3, 4, 6, 12 | (M.15) con el 1 y el 12
+factores: 168                              | 1, 2, 3, 4, 6, 7, 8, 12, 14, 21, 24, 28, 42, 56, 84, 168 | (M.15) 13 x 13 ya se pasa
+factores: 169                              | todavia_no | (M.15) dividir entre 13: la division larga
+primo: 1                                   | ni_primo_ni_compuesto | (M.15) un solo factor
+primo: 2                                   | primo | (M.15) par y primo
+primo: 91                                  | compuesto | (M.15) 7 x 13: impar y compuesto
+primo: 51                                  | compuesto | (M.15) 5 + 1 = 6: 3 x 17
+primo: 97                                  | primo | (M.15) solo 1 x 97
+primo: 1000                                | compuesto | (M.15) par: 2 x 500
+primo: 997                                 | todavia_no | (M.15) sin regla corta, pide la division larga
+es 37 primo?                               | primo | (M.15) escrito directamente
+primos hasta 30                            | 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 | (M.15) la criba
+multiplos de 7                             | 7, 14, 21, 28, 35, 42, 49, 56, 63, 70, 77, 84 | (M.15) contando de 7 en 7
+multiplos de 9 hasta 50                    | 9, 18, 27, 36, 45 | (M.15)
+21 es multiplo de 7                        | si | (M.15)
+7 es multiplo de 21                        | no | (M.15) al reves: 7 es factor de 21
+7 es factor de 91                          | si | (M.15)
+factores comunes: 24 y 36                  | 1, 2, 3, 4, 6, 12 | (M.15) el mayor: 12
+multiplos comunes: 4 y 6                   | 12, 24, 36, 48, 60, 72 | (M.15) el menor: 12
+factores primos: 60                        | 2, 3, 5 | (M.15)
+con 100: 25 x 36                           | 900 | (M.15) 36 = 9 x 4; 25 x 4 = 100
