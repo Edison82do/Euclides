@@ -1,0 +1,211 @@
+id: frases
+nombre: El vocabulario del lector de palabras - de las frases a las proposiciones (plan U, fase U.3)
+tipo: lenguaje
+categoria: FIJADO
+definicion: |
+  EL LECTOR DE PALABRAS (fase U.3 del plan U, 8 oct 2026: diario/2026-10-08-paso-U3-lector-de-palabras.md).
+  Como STUDENT (Bobrow 1964) y ROBUST (Bakman 2007): el enunciado se parte en frases NUCLEO y cada una da
+  proposiciones pequenas (una cantidad, una suma, una comparacion, un cambio) que van al MODELO del problema.
+  Aqui esta SOLO el vocabulario (datos): una palabra nueva se anade aqui y entra sin tocar el codigo.
+  Las ESTRUCTURAS que se saben sin que el texto las diga (figuras, consecutivos, grupos iguales...) estan en
+  relaciones.kn.
+
+  REGLA FIJADA 1 - LEER NO ES ELEGIR LA OPERACION.  Las palabras dan RELACIONES (lapiz = 2 x goma; ana = luis + 3),
+  nunca la cuenta: la cuenta la elige el buscador (U.2).  Por eso 'mas' puede acabar en resta y 'el doble' en repartir.
+
+  REGLA FIJADA 2 - LA FRASE NUCLEO.  Cada frase se parte por 'y' y por la coma cuando el trozo de la derecha trae un
+  dato; un trozo sin verbo toma el verbo (y el sujeto, si le falta) del de antes: 'mide 8 de largo y 5 de ancho'.
+
+  REGLA FIJADA 3 - LA PREGUNTA ES UNA FRASE MAS, con '?' en el sitio de lo que se busca: 'cuanto cuesta la goma' es
+  'la goma cuesta ?'.  Puede ir en cualquier sitio del texto.
+
+  REGLA FIJADA 4 - LAS MISMAS PALABRAS SON LA MISMA CANTIDAD (singular o plural; 'la roja' es 'la cuerda roja').
+  Sin sujeto: el ultimo que se nombro (una PERSONA para 'gana', 'saca', 'le dan'; cualquiera para 'sube', 'se van').
+  Si no hay a quien, la frase no se entiende (no se adivina).
+
+  REGLA FIJADA 5 - LO QUE SOBRA NO ESTORBA.  Solo pasan al buscador las relaciones CONECTADAS con lo que se pregunta.
+  Una frase que no se entiende se dice; si con el resto basta, se resuelve igual, salvo que traiga un CAMBIO o nombre
+  lo que se pregunta (podria cambiar la respuesta): entonces no se contesta.
+
+# --------------------------------------------------------------------- las clases de palabras
+# Cada linea: clave: lista separada por comas (frases de una o varias palabras; sin tildes, en minusculas).
+
+articulos: el, la, los, las, un, una, unos, unas
+posesivos: su, sus
+relleno: si, entonces, pero, luego, despues, mas tarde, y luego, y despues, tambien, solo, ya, le, se, lo que, de lo que
+iguales: iguales, igual, cada una igual, todas iguales
+
+# Los verbos de VALOR: 'sujeto VERBO dato' es 'sujeto = dato'.  En pasado: es lo de AL PRINCIPIO.
+verbos_valor: |
+  tiene, tienen, cuesta, cuestan, mide, miden, pesa, pesan, vale, valen, es, son, es igual a, son iguales a,
+  resulta, mide de, hay, salen, hacen falta, caben, cabe, esta a, marca, hace, contiene, contienen, lleva, llevan,
+  ocupa, viajan, viaja, tengo, tenemos, tienes
+verbos_valor_pasado: |
+  tenia, tenian, tenias, teniamos, costaba, costaban, media, median, pesaba, pesaban, valia, valian, era, eran, habia,
+  hacia, marcaba
+# 'quedan' es lo de AL FINAL (despues de los cambios)
+verbos_quedan: queda, quedan, le queda, le quedan
+# a quien le toca algo al repartir: es lo de CADA uno
+verbos_toca: le toca, le tocan, toca, tocan
+# el sujeto que se sobreentiende (la temperatura 'hace', el termometro 'marca')
+sujeto_de_verbo:
+  hace: temperatura
+  hacia: temperatura
+  esta a: temperatura
+
+# 'suman': los del sujeto, juntos.  'se diferencian en': el primero menos el segundo.
+verbos_suman: suman, juntan, suman entre los dos, hacen en total
+verbos_diferencia: se diferencian en, se llevan, de diferencia hay
+
+# Los verbos de CAMBIO (Riley, Greeno y Heller: cambio).  Los 'de alguien' necesitan QUIEN (una persona);
+# los 'le' son para el ultimo que se nombro; los 'de algo' valen para cualquier cosa (la temperatura sube).
+cambio_mas_de_alguien: |
+  gana, ganan, recibe, reciben, encuentra, consigue, junta, recoge, coge, pesca, saca, ahorra,
+  gano, recibio, encontro, consiguio, junto, recogio, cogio, pesco, saco, ahorro, cobra, cobro
+cambio_mas_le: le dan, le regalan, le traen, le dieron, le regalaron, le trajeron, le pagan, le pagaron, le anaden
+cambio_mas_de_algo: |
+  llegan, vienen, entran, nacen, aparecen, sube, suben, subio, subieron, aumenta, aumento, crece,
+  crecio, llegaron, vinieron, entraron, nacieron, aparecieron, se anaden, anaden
+cambio_menos_de_alguien: |
+  pierde, vende, rompe, tira, come, usa, se come, se gasta, se bebe,
+  perdio, vendio, rompio, tiro, comio, uso, se comio, se gasto
+# DAR: el que da pierde y, si se dice A QUIEN ('le da 2 a Luis'), ese gana (un traspaso: dos cambios).
+# 'da' sin persona que de es 'es igual a' (STUDENT: 'si a un numero le sumas 5 da 12').
+verbos_dar: |
+  da, le da, regala, le regala, presta, le presta, pasa, le pasa, le entrega, dio, le dio, regalo,
+  le regalo, presto, le presto
+cambio_menos_de_algo: |
+  se van, se escapan, se caen, se rompen, se comen, se fueron, se escaparon, se cayeron,
+  se rompieron, se comieron, se van a, se beben, se bebieron, se bajan, se bajaron, baja, bajan, bajo, bajaron, disminuye, disminuyo, se derriten, se pierden,
+  se gastan, se venden, se vendieron, quitan, quitaron, sacan, sacaron
+# comprar cosas que tienen precio (dinero): lo que paga es lo que cuestan; 'paga con' es lo que entrega
+verbos_compra: compra, compran, compro, se compra, se lleva
+verbos_pago_con: paga con, pagan con, pago con, entrega, da para pagar
+verbos_vuelta: |
+  le devuelven, le dan de vuelta, le dan de cambio, recibe de vuelta, recibe de cambio,
+  devuelven, de vuelta, de cambio
+verbos_paga: paga, pagan, pago, gasta, gastan, gasto, tiene que pagar
+
+# Repartir (R.2): 'reparte 12 caramelos entre 3 ninos'.  Agrupar: 'mete 12 caramelos en bolsas de 4'.
+verbos_reparte: reparte, reparten, repartimos, se reparten, divide, dividen
+verbos_agrupa: mete, meten, guarda, guardan, pone, ponen, empaqueta, empaquetan, coloca, colocan
+
+# --------------------------------------------------------------------- las relaciones
+# lo que JUNTA (parte + parte = todo)
+juntos: |
+  entre los dos, entre las dos, entre los tres, entre las tres, entre todos, entre todas, entre ambos,
+  entre ambas, juntos, juntas, en total, en conjunto, entre los cuatro, entre las cuatro
+# la comparacion ADITIVA: 'N mas que' (el sujeto es el grande), 'N menos que' (el pequeno)
+mas: mas, mayor
+menos: menos, menor
+# los adjetivos que DAN LA VUELTA a 'mas' ('2 pesos mas barato que' = 2 menos)
+al_reves: |
+  barato, barata, baratos, baratas, corto, corta, cortos, cortas, bajo, baja, bajos, bajas, ligero, ligera,
+  pequeno, pequena, joven, jovenes, estrecho, estrecha, delgado, delgada, lento, lenta
+# la comparacion MULTIPLICATIVA (NCETM 2.17): los MULTIPLICADORES con su numero
+multiplicadores:
+  el doble: 2
+  doble: 2
+  el triple: 3
+  triple: 3
+  el cuadruple: 4
+  cuadruple: 4
+  el quintuple: 5
+  la mitad: 1/2
+  mitad: 1/2
+  la tercera parte: 1/3
+  tercera parte: 1/3
+  la cuarta parte: 1/4
+  cuarta parte: 1/4
+  la quinta parte: 1/5
+  la decima parte: 1/10
+veces: veces, vez
+# los denominadores con palabra: 'dos tercios' = 2/3, 'un cuarto' = 1/4 (F.1)
+denominadores:
+  medio: 2
+  medios: 2
+  tercio: 3
+  tercios: 3
+  cuarto: 4
+  cuartos: 4
+  quinto: 5
+  quintos: 5
+  sexto: 6
+  sextos: 6
+  septimo: 7
+  septimos: 7
+  octavo: 8
+  octavos: 8
+  noveno: 9
+  novenos: 9
+  decimo: 10
+  decimos: 10
+
+# --------------------------------------------------------------------- las operaciones (STUDENT)
+operaciones:
+  por: x
+  multiplicado por: x
+  dividido entre: :
+  dividido por: :
+  entre: :
+  le sumas: +
+  le sumamos: +
+  le anades: +
+  le restas: -
+  le restamos: -
+  le quitas: -
+  lo multiplicas por: x
+  lo divides entre: :
+funciones:
+  la suma de: +
+  suma de: +
+  la diferencia entre: -
+  la diferencia de: -
+  diferencia: -
+  el producto de: x
+  producto: x
+  el cociente de: :
+  la suma: +
+  suma: +
+  el producto: x
+  la diferencia: -
+
+cada: cada, por cada, cada uno de, cada una de
+# 'la edad de Juan' es Juan (lo que se mide de el); 'el dinero de Ana' es Ana
+lo_de: |
+  la de, el de, los de, las de, la edad de, el dinero de, el precio de, el peso de, la altura de, lo que tiene, lo que pesa, lo que mide,
+  lo que cuesta, los anos de, los ahorros de
+cada_uno: cada uno, cada una, a cada uno, a cada una, para cada uno, para cada una
+
+# --------------------------------------------------------------------- el tiempo y las preguntas
+momento_inicio: al principio, antes, al empezar, al comenzar, primero, al inicio
+momento_final: ahora, al final, al terminar, despues de todo, por fin
+momentos: |
+  de madrugada, por la manana, a mediodia, al mediodia, por la tarde, por la noche, ayer, hoy, el lunes, el martes,
+  el miercoles, el jueves, el viernes, el sabado, el domingo, en enero, en febrero, en marzo, en abril, en mayo
+# (los MOMENTOS van en el orden en que pasan: asi se sabe cual fue antes)
+preguntas: cuanto, cuanta, cuantos, cuantas, cual, cuales, que numero, que numeros, a cuanto, de cuanto
+desconocidos: algunos, algunas, unos cuantos, unas cuantas, varios, varias, cierta cantidad
+# los numeros sin nombre: 'un numero' es nuevo; 'el numero' es el de antes; 'uno' y 'el otro' son los de un grupo
+genericos: numero, numeros, cantidad, cantidades
+cual_de_un_grupo:
+  uno: 1
+  el primero: 1
+  la primera: 1
+  el segundo: 2
+  la segunda: 2
+  el tercero: 3
+  la tercera: 3
+  el otro: 2
+  la otra: 2
+  otro: 2
+  otra: 2
+# las UNIDADES (se dicen con la respuesta); las cuadradas y cubicas, para el area y el volumen
+unidades: |
+  cm, m, mm, km, dm, metros, metro, centimetros, centimetro, kilometros, milimetros, kilos, kilo, kg, gramos,
+  g, litros, litro, l, ml, pesos, peso, euros, euro, dolares, dolar, grados, grado, anos, ano, minutos, horas, dias,
+  semanas, meses, cm2, m2, cm3, m3, unidades
+complementos: en, para, por, de, del, con, a, al
+# lo que SI puede ser negativo (la temperatura, N.5); lo demas (cosas, precios, medidas) no: si sale negativo, no
+# es razonable (E.6) y no se da la respuesta.  Las CUENTAS de cosas (cuantos pajaros, cuantas bolsas) son enteras.
+pueden_ser_negativos: grados, grado, temperatura

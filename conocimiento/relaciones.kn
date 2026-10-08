@@ -1,0 +1,79 @@
+id: relaciones
+nombre: Las relaciones que se saben - las estructuras de los problemas (plan U, fase U.3)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  LAS ESTRUCTURAS (fase U.3 del plan U, 8 oct 2026: diario/2026-10-08-paso-U3-lector-de-palabras.md).
+  Un esquema NO es la solucion de una familia de problemas: es una RELACION entre cantidades (Riley, Greeno y Heller
+  1983; NCETM 1.28: la misma estructura en contextos distintos).  Cada una se escribe UNA vez, con nombres; el lector
+  de palabras pone en cada nombre la cantidad que toca y el buscador (U.2) hace el resto.  Las formulas se leen con
+  el lector de U.1 (los nombres son cantidades; + - x : y parentesis).
+
+  REGLA FIJADA 1 - LAS ESTRUCTURAS DE LAS FRASES.  Juntar (parte-todo), el cambio (al principio, cambio, despues),
+  comparar sumando (grande = pequeno + diferencia), comparar multiplicando (grande = veces x pequeno), los grupos
+  iguales (todo = grupos x cada grupo), lo que se paga y la vuelta.  'Parte' se repite tantas veces como partes haya.
+
+  REGLA FIJADA 2 - LO QUE SE SABE SIN QUE EL TEXTO LO DIGA.  Cuando sale la palabra de una FIGURA, sus formulas
+  (perimetro, area, volumen) entran en el modelo; cuando sale 'consecutivos', el siguiente es el anterior y uno mas.
+  Son conocimiento del mundo (Bakman 2007), no datos del enunciado.
+
+  REGLA FIJADA 3 - LAS UNIDADES.  Lo que es 'cuadrada' (el area) se dice en unidades cuadradas; lo 'cubica' (el
+  volumen), en cubicas (G.1, M.14).
+
+estructuras:
+  parte_todo: parte + parte = todo
+  cambio_gana: despues = antes + cambio
+  cambio_pierde: despues = antes - cambio
+  comparacion_aditiva: grande = pequeno + diferencia
+  comparacion_multiplicativa: grande = veces x pequeno
+  grupos_iguales: todo = grupos x cada_grupo
+  vuelta: vuelta = pago - lo_que_paga
+
+figuras:
+  - nombre: rectangulo
+    palabras: rectangulo, rectangulos, rectangular
+    medidas: largo, ancho, perimetro, area
+    otros_nombres: base=largo, altura=ancho, longitud=largo
+    formulas: perimetro = 2 x largo + 2 x ancho; area = largo x ancho
+    cuadradas: area
+  - nombre: cuadrado
+    palabras: cuadrado, cuadrados, cuadrada
+    medidas: lado, perimetro, area
+    otros_nombres: []
+    formulas: perimetro = 4 x lado; area = lado x lado
+    cuadradas: area
+  - nombre: triangulo equilatero
+    palabras: triangulo equilatero, equilatero
+    medidas: lado, perimetro
+    otros_nombres: []
+    formulas: perimetro = 3 x lado
+    cuadradas: []
+  - nombre: caja
+    palabras: caja, cajas, cuboide, prisma, ortoedro, piscina, acuario
+    medidas: largo, ancho, alto, volumen
+    otros_nombres: altura=alto, fondo=alto, profundidad=alto, longitud=largo
+    formulas: volumen = largo x ancho x alto
+    cubicas: volumen
+  - nombre: cubo
+    palabras: cubo, cubos
+    medidas: arista, volumen
+    otros_nombres: lado=arista
+    formulas: volumen = arista x arista x arista
+    cubicas: volumen
+
+palabras:
+  - nombre: consecutivos
+    palabras: consecutivos, consecutivas, seguidos, seguidas
+    formula: siguiente = anterior + 1
+  - nombre: pares consecutivos
+    palabras: pares consecutivos, impares consecutivos
+    formula: siguiente = anterior + 2
+
+errores_tipicos:
+  - Tomar el perimetro por largo x ancho (o el area por la suma de los lados): son relaciones distintas.
+  - Leer 'el doble' como 'dos mas' (comparacion multiplicativa no es aditiva; NCETM 2.17).
+  - Elegir la operacion por la palabra ('mas' -> sumar) en vez de por la relacion.
+fuentes:
+  - Riley, Greeno y Heller (1983): cambio, combinacion, comparacion.  NCETM 1.28, 2.17, 1.31.
+  - Bakman (2007): el conocimiento del mundo (las relaciones que no dice el texto) en el modelo.
+  - Common Core 3.MD.D.8 (perimetro), 3.MD.C.7 (area), 5.MD.C.5 (volumen); NCETM 2.16, 2.20.

@@ -92,7 +92,12 @@ sabe, factor común—, probar en orden con tope y sabiendo cuándo parar, el co
 seguridad, en las dos cadenas: si una puerta vieja dice NO ENTIENDO, o TODAVÍA NO a algo con una relación con letras, y el
 resolvedor lo resuelve y lo comprueba, contesta él (las cuentas sin letras siguen respetando el año). «de» tras una
 fracción o un decimal es POR.
-**Siguiente: U.3 — el lector de palabras** (frases → proposiciones con `frases.kn` y `relaciones.kn`).
+Hecho **U.3 el lector de palabras** (parte `palabras.py`, prefijo `_pa_`; el vocabulario en `conocimiento/frases.kn` y las
+estructuras y lo que se sabe —figuras, consecutivos— en `conocimiento/relaciones.kn`): frase a frase → relaciones del mismo
+MODELO, que busca U.2. Entra por `resolver:` con palabras y por la red de seguridad de las palabras (si R.1, R.2, la escala...
+no llegan). Una palabra nueva se añade en `frases.kn`, nunca en el código; una palabra no puede tener dos sentidos (se avisa).
+**Siguiente: U.4 — una sola tabla de puertas** (juntar `explicar_pregunta` y `preguntar`; las puertas viejas que ya equivalen
+al modelo, a traductores; la división con resto de R.2 todavía no es vocabulario del modelo).
 Antes: S.3 problemas con dos incógnitas (NCETM 1.31), N.6 hasta diez millones (NCETM 1.30), F.7, F.6, P.7.
 Al acabar el plan U se vuelve a NCETM (Spine 2: **2.23**; la división larga 2.24; Spine 3 tras 3.8).
 La balanza y `verdad:` con decimales: todavía no (solo enteros) por sus puertas viejas; por `resolver:` sí.

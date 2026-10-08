@@ -330,6 +330,15 @@
   orden de forma sistemática: una, varias o ninguna), NCETM 2.20–2.22 y M.12 (la distributiva: sacar factor común), F.6
   (simplificar repartiendo todo entre lo mismo) y **F.1 / 5.NF.B.4** («3/4 de 20» = 3/4 x 20). → U.2.
 
+- **La fase U.3 (el lector de palabras; 8 oct)** usa las del plan U: **Bobrow (1964), STUDENT** (frases núcleo con un
+  dato cada una; «es» → =, «más» → +, «el doble de» → 2 x, «la suma de A y B»; lo que se pregunta es una ecuación más;
+  sus reglas a mano → aquí en datos, `frases.kn`), **Bakman (2007), ROBUST** (proposiciones pequeñas; robusto ante el
+  orden y lo que sobra; el conocimiento del mundo —figuras, consecutivos— en el modelo), **Riley, Greeno y Heller (1983)**
+  y **Kintsch y Greeno (1985)** (cambio, combinación, comparación: las estructuras de `relaciones.kn`), **Mayer (1992)**
+  (traducir e integrar; comprobar si es razonable), NCETM 2.17 (comparar multiplicando no es sumar), Common Core
+  3.MD.D.8, 3.MD.C.7, 5.MD.C.5 (perímetro, área, volumen) y la nota del NC2ML de METODO §5 (contra las palabras clave: la
+  palabra da la relación, no la operación). → U.3.
+
 ## Enlaces
 - NCETM 1.29: https://ncetm.org.uk/classroom-resources/primm-129-using-equivalence-and-the-compensation-property-to-calculate/
 - NCETM, guías Upper KS2 (Number, Addition and Subtraction, 15–18): https://ncetm.org.uk/media/8d8533f8648fa18/pvltg_upper_ks2_number_addition_subtraction_pt1_15_to_18.pdf

@@ -1149,3 +1149,14 @@ resolver: a x b = 12; a x c = 8; b + c = 5 | a = 4, b = 3, c = 2 | (U.2) dos rel
 x + y + z = 12; x - y = 2; x x y = 15      | x = 5, y = 3, z = 4 | (U.2) la red de seguridad: la puerta vieja decia todavia no
 resolver: 1/2 de n = 6                     | n = 12 | (U.2) 'de' es POR tras una fraccion
 12 : 3 + 1                                 | todavia_no | (U.2) una cuenta sin letras sigue respetando el ano
+
+# --- fase U.3 del plan U: el lector de palabras (frases -> relaciones; las busca U.2)
+problema: Un lapiz y una goma cuestan 12 pesos. El lapiz cuesta el doble que la goma. Cuanto cuesta la goma? | 4 pesos | (U.3) R.1 no entiende; el lector de palabras: lapiz + goma = 12; lapiz = 2 x goma
+problema: Cuanto cuesta la goma? Un lapiz y una goma cuestan 12 pesos. Ana tiene 9 anos. El lapiz cuesta el doble que la goma. | 4 pesos | (U.3) la pregunta primero y una frase que sobra
+problema: Un rectangulo mide 8 cm de largo. Su perimetro es 26 cm. Cuanto mide de ancho? | 5 cm | (U.3) lo que se sabe del rectangulo (relaciones.kn)
+problema: Dos numeros consecutivos suman 31. Cuales son? | 15 y 16 | (U.3) 'consecutivos': el siguiente es el anterior y uno mas
+problema: Ana tiene 6 caramelos y Luis tiene 4. Ana le da 2 a Luis. Cuantos tiene Luis? | 6 caramelos | (U.3) TRAMPA: un traspaso (Ana pierde, Luis gana)
+problema: Hay 25 alumnos en la clase. 13 son ninas. Cuantos son ninos? | 12 ninos | (U.3) las partes de un todo
+problema: Una caja mide 5 cm de largo, 3 cm de ancho y 2 cm de alto. Cual es su volumen? | 30 cm cubicos | (U.3) la elipsis por comas; volumen = largo x ancho x alto
+problema: Ana tiene 5 cromos. Adquiere 4. Cuantos tiene ahora? | no_entiendo | (U.3) 'adquiere' no esta en frases.kn: la frase trae un numero, no se adivina
+resolver: Hay 4 peces. Se van 9. Cuantos quedan?  | no_razonable | (U.3) no se puede quitar mas de lo que hay (por problema: sigue R.1, sin_solucion)

@@ -498,6 +498,22 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         n + n = 10 -> n = 5;  x + y + z = 12; x - y = 2; x x y = 15 -> x = 5, y = 3, z = 4.  Una cuenta sin letras
         sigue respetando el ano (12 : 3 + 1 -> todavia no).  La explicacion dice lo que MIRO y por que lo ELIGIO.
 
+  EL LECTOR DE PALABRAS  ->  frases -> relaciones (como STUDENT); las busca U.2 (plan U, fase U.3)
+        Un lapiz y una goma cuestan 12 pesos. El lapiz cuesta el doble que la goma. Cuanto cuesta la goma?
+                                                 -> 4 pesos   (lapiz + goma = 12;  lapiz = 2 x goma)
+        Cuanto cuesta la goma? Un lapiz y ...    -> lo mismo: la pregunta puede ir primero; lo que sobra no estorba
+        Pablo tenia algunas canicas. Regala 6. Ahora tiene 9. Cuantas tenia al principio?  -> 15 (el tiempo)
+        Un rectangulo mide 8 cm de largo. Su perimetro es 26 cm. Cuanto mide de ancho?     -> 5 cm (se SABE el perimetro)
+        Dos numeros consecutivos suman 31. Cuales son?                                      -> 15 y 16
+        Ana tiene 6 caramelos y Luis tiene 4. Ana le da 2 a Luis. Cuantos tiene Luis?       -> 6 caramelos (un traspaso)
+        Hay 25 alumnos en la clase. 13 son ninas. Cuantos son ninos?                        -> 12 ninos (partes de un todo)
+        Pedro ahorra 5 pesos cada semana. Cuanto ahorra en 6 semanas?                       -> 30 pesos
+        El vocabulario esta en conocimiento/frases.kn y las estructuras (parte-todo, cambio, comparar, grupos iguales,
+        figuras, consecutivos) en conocimiento/relaciones.kn.  Si una puerta vieja (R.1, R.2, la escala...) no lo
+        entiende, lo lee el lector de palabras; si la puerta vieja contesta, se queda lo suyo.  Una frase que no se
+        entiende se dice; si trae un numero o un cambio, no se adivina.  Lo que no es razonable (quitar mas de lo que
+        hay, media bolsa) no se da.  Con 'resolver:' delante se va directo al lector nuevo.
+
   MAS DE UN ENTERO  ->  numeros mixtos y fracciones impropias (paso F.4; NCETM 3.5; 4.NF.B.3)
         fraccion: 7/4          -> siete cuartos = 1 3/4   (agrupo 7 cuartos de 4 en 4: 1 entero y sobran 3)
         mixto: 2 3/4           -> 11/4   (2 enteros son 8 cuartos, y 3 mas)
@@ -840,6 +856,9 @@ def preguntar(texto, saber):
     resp = _preguntar_por_las_puertas(t, saber)
     vieja = {"no_entiendo": "no_entiendo", "no_entendido": "no_entiendo", "todavia_no": "todavia_no"}.get(resp[0])
     if vieja and motor._u_le_toca_al_resolvedor(t, vieja, saber):     # la red de seguridad (U.1-U.2)
+        return _respuesta_resolver(t, saber)
+    con = {"no_entendido": "no_entiendo"}.get(resp[0], resp[0])
+    if motor._pa_le_toca(t, con, saber):                                # con palabras (U.3)
         return _respuesta_resolver(t, saber)
     return resp
 

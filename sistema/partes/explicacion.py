@@ -750,6 +750,10 @@ def explicar_pregunta(texto, saber=None):
     if vieja and _u_le_toca_al_resolvedor(t, vieja, saber):
         return "(la puerta vieja decia: %s; lo lee el lector simbolico y lo resuelve el resolvedor, U.1-U.2)\n\n%s" % (
             vieja.upper().replace("_", " "), explicar_orden_resolver(t, saber))
+    con = _pa_conclusion_de_salida(salida)           # con palabras (U.3): el lector de palabras y el buscador
+    if _pa_le_toca(t, con, saber):
+        return "(la puerta vieja decia: %s; lo lee el lector de palabras y lo resuelve el buscador, U.3)\n\n%s" % (
+            con.upper().replace("_", " "), explicar_orden_resolver(t, saber))
     return salida
 
 
