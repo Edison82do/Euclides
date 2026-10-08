@@ -103,7 +103,7 @@ def es_orden_dos_incognitas(texto):
         if ls is None:
             return False
         letras += ls
-    return len(set(letras)) >= 2
+    return len(set(letras)) == 2                    # con tres o mas, el resolvedor universal (U.1)
 
 
 # ---------------------------------------------------------------- leer cada ecuacion: de que FORMA es

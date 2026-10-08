@@ -85,15 +85,16 @@ solo relaciones generales (datos), operadores generales (piezas) y búsqueda con
 respuesta; lo nuevo, con pocas pruebas representativas. Si la batería tarda demasiado, `--parte 1/3`, `2/3`, `3/3`.
 
 ## Dónde se quedó (8 oct 2026)
-Hecho hasta **S.3 problemas con dos incógnitas** (NCETM 1.31, Year 6): `a + b = 30; a - b = 8` con la barra (quitar la
-diferencia y repartir en dos), suma y múltiplo (3 + 1 = 4 trozos), diferencia y múltiplo, probar en orden (tope de 30 pruebas
-en `conocimiento/dos_incognitas.kn`), una suma sola (una pareja más que la suma), una relación sola (infinitas); y R.1 con
-«entre los dos» + «más que». Parte `dos_incognitas.py`; preguntas `dos_incognitas` y `cumplen_las_ecuaciones`.
-Antes: N.6 hasta diez millones (NCETM 1.30): el techo de los NÚMEROS es **diez millones** (`numero_maximo`, de
-`conocimiento/los_millones.kn`); contar objetos sigue en diez mil. F.7, F.6, P.7.
-Siguiente: mirar en el índice de NCETM lo que sigue en Year 6 de Spine 1 (tras 1.31), lo que queda de Year 5 (Spine 2:
-**2.23**, cuyo título no se pudo ver desde la nube; Spine 3 tras 3.8). (La división combinada con + y - es 2.28, de 6.º;
-la división larga, 2.24.)
-La balanza y `verdad:` con decimales: todavía no (solo enteros). Las fracciones de partida en `comparar:` y en las cuentas
-siguen limitadas a medios…doceavos, décimos, centésimos y milésimos (el de abajo común puede ser cualquiera hasta el techo).
-`comparar:` por el mismo de arriba no sale si pide dividir entre dos cifras (la división larga, 6.º); el del mismo de abajo sí.
+Hecho **U.1 el modelo y el lector simbólico** (plan U, primera fase): partes `numero.py` (el NÚMERO común, prefijo `_nu_`)
+y `universal.py` (el lector único, el modelo, calcular despejando y sustituir, la comprobación; prefijo `_u_`), puerta
+`resolver:` y red de seguridad en las dos cadenas (antes de 0.1/0.2, y cuando una puerta vieja dice NO ENTIENDO y el
+resolvedor lo resuelve). S.3 solo coge ecuaciones con DOS letras. Presupuesto en `conocimiento/universal.kn`.
+**Siguiente: U.2 — buscar con control** (operadores 3, 4 y 5: juntar relaciones, reescribir, probar en orden; el control por
+medios y fines; la explicación con barras; `dos_incognitas` y `parte_todo` como traductores al modelo).
+Antes: S.3 problemas con dos incógnitas (NCETM 1.31), N.6 hasta diez millones (NCETM 1.30), F.7, F.6, P.7.
+Al acabar el plan U se vuelve a NCETM (Spine 2: **2.23**; la división larga 2.24; Spine 3 tras 3.8).
+La balanza y `verdad:` con decimales: todavía no (solo enteros) por sus puertas viejas; por `resolver:` sí.
+Las fracciones de partida en `comparar:` y en las cuentas (puertas viejas) siguen limitadas a medios…doceavos, décimos,
+centésimos y milésimos (el de abajo común puede ser cualquiera hasta el techo). `comparar:` por el mismo de arriba no sale
+si pide dividir entre dos cifras (la división larga, 6.º); el del mismo de abajo sí.
+Ojo: `test_F7` tiene una prueba de tiempo (`999 1/2 + 999 1/3` < 2 s) que en la nube a veces da 2,1 s (ya pasaba antes de U.1).

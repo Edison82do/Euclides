@@ -314,6 +314,15 @@
   de medios y fines; Pólya, *How to Solve It*; Schoenfeld (1979), las heurísticas no bastan sin el CONTROL (cuándo
   usar cada una). → diario/2026-10-08-PLAN-U-volverlo-universal.md
 
+- **La fase U.1 (el modelo y el lector simbólico; 8 oct)** usa, además de las del plan U: **Common Core 6.EE.B.7** y
+  **7.EE.B.4** (despejar `x + p = q`, `px = q`, `px + q = r`, `p(x + q) = r`: deshacer de fuera hacia dentro, como E.5);
+  **7.NS.A.1–3** (sumar, restar, multiplicar y dividir números racionales: con signos distintos, quitar el pequeño del
+  grande y el signo del grande; pasar entre fracción y decimal); **5.NF.B.3** (la fracción es una división: 7 : 2 = 7/2),
+  **5.NF.B.4 y 5.NF.B.7** (multiplicar fracciones; dividir una fracción entre un entero), **6.NS.A.1** (dividir entre una
+  fracción: con el mismo de abajo, cuántas veces cabe); NCETM 1.23–1.24 (el decimal es décimas, centésimas, milésimas),
+  3.7–3.8 (equivalentes, el mismo de abajo), 1.27 (negativos) y 1.31 (la barra: contar trozos). (Las webs de NCETM siguen
+  sin abrirse desde la nube; se usan los puntos ya recogidos en los pasos anteriores.) → U.1.
+
 ## Enlaces
 - NCETM 1.29: https://ncetm.org.uk/classroom-resources/primm-129-using-equivalence-and-the-compensation-property-to-calculate/
 - NCETM, guías Upper KS2 (Number, Addition and Subtraction, 15–18): https://ncetm.org.uk/media/8d8533f8648fa18/pvltg_upper_ks2_number_addition_subtraction_pt1_15_to_18.pdf
@@ -323,6 +332,9 @@
 - NCETM, The Bar Model: https://www.ncetm.org.uk/classroom-resources/ca-the-bar-model/
 - Oak National (parte-parte-todo, KS1): https://www.thenational.academy/teachers/programmes/maths-primary-ks1/units/additive-structures-addition/lessons/understanding-part-part-whole-relationships
 - NCETM 2.22: https://ncetm.org.uk/classroom-resources/primm-222-combining-multiplication-with-addition-and-subtraction/
+- Common Core 6.EE: https://www.thecorestandards.org/Math/Content/6/EE/
+- Common Core 7.EE: https://www.thecorestandards.org/Math/Content/7/EE/
+- Common Core 7.NS: https://www.thecorestandards.org/Math/Content/7/NS/
 - NCETM 2.28 (lo siguiente, 6.º): https://ncetm.org.uk/classroom-resources/primm-228-combining-division-with-addition-and-subtraction
 - NCETM Year 6 unit 12 (order of operations): https://ncetm.org.uk/classroom-resources/cp-year-6-unit-12-order-of-operations/
 - Mr Barton, probing questions (order of operations): https://mrbartonmaths.com/?p=4739

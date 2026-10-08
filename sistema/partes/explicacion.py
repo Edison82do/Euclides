@@ -738,6 +738,23 @@ def explicar_3_3_listas(saber=None):
 
 
 def explicar_pregunta(texto, saber=None):
+    """La puerta 'resolver:' (U.1) y la RED DE SEGURIDAD: lo que una puerta vieja no entiende pero el lector
+    simbolico lee entero, y el resolvedor resuelve, va al resolvedor (si no lo resuelve, se queda lo de la puerta)."""
+    if saber is None:
+        saber = cargar_conocimiento()
+    t = texto.strip()
+    if es_orden_resolver(t):                         # el resolvedor universal (plan U, fase U.1)
+        return explicar_orden_resolver(t, saber)
+    salida = _explicar_por_las_puertas(t, saber)
+    if salida.startswith("NO ENTIENDO") and es_expresion_simbolica(t):
+        nueva = explicar_orden_resolver(t, saber)
+        if not nueva.startswith("NO ENTIENDO") and nueva.strip().splitlines()[-1].startswith("RESULTADO: ") \
+                and decidir_resolver(t, saber)["conclusion"] == "hecho":
+            return "(la puerta vieja decia: NO ENTIENDO; lo lee el lector simbolico, U.1)\n\n" + nueva
+    return salida
+
+
+def _explicar_por_las_puertas(texto, saber=None):
     """
     Despacha segun lo que se escriba:
       'color=rojo: a(...); b(...)'   -> 0.2 formar
@@ -1181,6 +1198,8 @@ def explicar_pregunta(texto, saber=None):
         if ":" in t and "=" in t.split(":", 1)[0] and "(" not in t.split(":", 1)[0]:
             izq, _, der = t.partition(":")
             return explicar_0_2_formar(escena_cantidad(der, saber), parsear_criterio(izq), saber)
+        if es_expresion_simbolica(t):                # la red de seguridad (U.1): numeros y letras, no objetos
+            return explicar_orden_resolver(t, saber)
         if "(" in t or ";" in t:
             return explicar_0_2_reconocer(escena_cantidad(t, saber), saber)
         return explicar(escena_0_1(t), saber)

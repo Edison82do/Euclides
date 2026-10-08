@@ -470,6 +470,20 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         Con palabras: Ana y Luis tienen 30 entre los dos. Ana tiene 8 mas que Luis. Cuantas tiene Luis?  -> 11
         Mas de 30 pruebas -> todavia no (un humano no prueba tantas).  Se comprueba poniendo los numeros en las ecuaciones.
 
+  EL RESOLVEDOR UNIVERSAL  ->  el modelo y el lector simbolico (plan U, fase U.1; todo lo que se escribe con simbolos)
+        resolver: a + b = 1/2; a - b = 1/4  -> a = 3/8, b = 1/8   SUSTITUYE a = 1/2 - b; cuenta los trozos de b
+        3 x n = 4.5            -> n = 1.5    DESHACE el x 3: 45 decimas : 3 = 15 decimas
+        resolver: (a + 5) x 2 = 26  -> a = 8  (sin la orden sigue saliendo por E.5)
+        x + y + z = 40; x = y; z = 2 x y  -> x = 10, y = 10, z = 20   1 + 1 + 2 = 4 trozos de y = 40
+        1/2 + 0.25             -> 3/4 (= 0.75)  el NUMERO COMUN: 0.25 = 25/100 = 1/4; el mismo de abajo
+        -3 + 2 x 4             -> 5      primero el x; luego signos distintos: 8 - 3, con el signo del 8
+        resolver: 3/4 : 1/8    -> 6      con el mismo de abajo, cuantas veces cabe
+        resolver: 7 : 2        -> 7/2    lo que no se reparte justo es una fraccion
+        resolver: a + b = 10; a + b = 12  -> ninguna (se contradicen)     resolver: 0 x n = 5  -> ninguna
+        Enteros, decimales (4.5 o 4,5), fracciones (1/2), negativos (-3), parentesis, varias letras, ';' entre
+        relaciones, 2n = 2 x n.  Al final COMPRUEBA en las relaciones de PARTIDA.  Lo que una puerta vieja no
+        entiende y esto si, va aqui solo.  Faltan relaciones, o la letra por si misma (n x n) -> todavia no (U.2).
+
   MAS DE UN ENTERO  ->  numeros mixtos y fracciones impropias (paso F.4; NCETM 3.5; 4.NF.B.3)
         fraccion: 7/4          -> siete cuartos = 1 3/4   (agrupo 7 cuartos de 4 en 4: 1 entero y sobran 3)
         mixto: 2 3/4           -> 11/4   (2 enteros son 8 cuartos, y 3 mas)
@@ -800,7 +814,35 @@ AYUDA = (__doc__ or "").rstrip() + """
 # ------------------------------------------------------------------ preguntar
 
 def preguntar(texto, saber):
-    """Devuelve (respuesta normalizada, resultado completo).  Nunca revienta."""
+    """Devuelve (respuesta normalizada, resultado completo).  Nunca revienta.
+    La puerta 'resolver:' (U.1) y la RED DE SEGURIDAD: lo que una puerta vieja no entiende pero el lector
+    simbolico lee entero, y el resolvedor resuelve, va al resolvedor (si no, se queda lo de la puerta)."""
+    t = texto.strip()
+    try:
+        if motor.es_orden_resolver(t):
+            return _respuesta_resolver(t, saber)
+    except Exception:
+        return "no_entendido", None
+    resp = _preguntar_por_las_puertas(t, saber)
+    if resp[0] in ("no_entiendo", "no_entendido"):
+        try:
+            if motor.es_expresion_simbolica(t) and motor.decidir_resolver(t, saber)["conclusion"] == "hecho":
+                return _respuesta_resolver(t, saber)
+        except Exception:
+            pass
+    return resp
+
+
+def _respuesta_resolver(t, saber):
+    r = motor.decidir_resolver(t, saber)
+    if r["conclusion"] == "no_entiendo":
+        return "no_entiendo", r
+    if r["conclusion"] == "hecho":
+        return r["respuesta"], r
+    return r["conclusion"], r
+
+
+def _preguntar_por_las_puertas(texto, saber):
     t = texto.strip()
     try:
         if t.lower().strip() in ("piezas", "mapa"):
@@ -1352,6 +1394,8 @@ def preguntar(texto, saber):
             if r["conclusion"] == "grupo_formado":
                 return "tiene:" + ",".join(r["miembros"]), r
             return r["conclusion"], r
+        if motor.es_expresion_simbolica(t):                  # la red de seguridad (U.1): numeros y letras, no objetos
+            return _respuesta_resolver(t, saber)
         if "(" in t or ";" in t:
             r = motor.decidir_0_2_reconocer(motor.escena_cantidad(t, saber), saber)
             if r["conclusion"] == "grupo_atributo":

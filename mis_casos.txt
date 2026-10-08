@@ -1128,3 +1128,14 @@ a + b = 1.235; a - b = 0.115               | a = 0.675, b = 0.56 | (S.3) con mil
 a + b = 9999999; a - b = 1                 | a = 5000000, b = 4999999 | (S.3) cerca del techo
 a + b = 500; 2 x a + 5 x b = 1600          | todavia_no | (S.3) demasiadas pruebas para un humano
 problema: Ana y Luis tienen 30 entre los dos. Ana tiene 8 mas que Luis. Cuantas tiene Luis? | 11 | (S.3) el contexto: suma y diferencia con palabras
+resolver: a + b = 1/2; a - b = 1/4         | a = 3/8, b = 1/8 | (U.1) sustituir a = 1/2 - b; dos trozos de b
+a + b = 1/2; a - b = 1/4                   | a = 3/8, b = 1/8 | (U.1) la red de seguridad (antes caia en 0.2)
+3 x n = 4.5                                | n = 1.5 | (U.1) deshacer con decimales (45 decimas : 3)
+resolver: (a + 5) x 2 = 26                 | a = 8 | (U.1) deshacer de fuera hacia dentro
+x + y + z = 40; x = y; z = 2 x y           | x = 10, y = 10, z = 20 | (U.1) sustituir y contar trozos: 4 trozos = 40
+1/2 + 0.25                                 | 3/4 | (U.1) el numero comun: 0.25 = 1/4
+-3 + 2 x 4                                 | 5 | (U.1) primero el x; signos distintos (N.5)
+resolver: 3/4 : 1/8                        | 6 | (U.1) con el mismo de abajo, cuantas veces cabe
+resolver: a + b = 10; a + b = 12           | ninguna | (U.1) las relaciones se contradicen
+resolver: 0 x n = 5                        | ninguna | (U.1) 0 por algo es 0 siempre
+resolver: a + b + c = 10                   | todavia_no | (U.1) faltan relaciones (U.2)

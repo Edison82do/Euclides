@@ -341,3 +341,7 @@ Antes de seguir con NCETM 2.23, se hace universal lo que hay: una representació
 que se pide), un lector único, un buscador con control y un examen de transferencia con problemas no vistos.
 Plan entero: `diario/2026-10-08-PLAN-U-volverlo-universal.md`. Fases: U.1 el modelo y el lector simbólico · U.2
 buscar con control · U.3 el lector de palabras · U.4 una sola tabla de puertas · U.5 el examen de transferencia.
+
+| Fase | Estado | Qué | Prueba |
+|---|---|---|---|
+| U.1 | ✅ **HECHO (8 oct), falta la prueba de Carlos** — `diario/2026-10-08-paso-U1-modelo-y-lector-simbolico.md` | El NÚMERO común (entero, decimal, fracción, negativo; las cuentas con las piezas de siempre), el lector único (varias letras, `;`, paréntesis, fracciones, decimales, negativos, `2n`), calcular despejando (deshacer o contar trozos), sustituir, la comprobación en las relaciones de partida, el presupuesto; puerta `resolver:` y red de seguridad | `test_U1` 63/63 (los seis ejemplos del plan, el lector, 40 cuentas mezcladas contra el testigo, trampas, puertas viejas sin cambiar, despeje trucado, tiempo) |

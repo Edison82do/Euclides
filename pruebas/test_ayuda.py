@@ -88,6 +88,7 @@ ORDENES = [
     "25 x 7 x 4", "volumen: caja 5 x 3 x 2", "volumen: cubo de 3", "volumen: 5 x 3 x ? = 60", "verdad: 2 x 3 x 4",
     "simplificar: 12/18", "equivalentes: 2/3", "2/3 = ?/12", "4/12 = 5/?", "equivalentes: 2/3 y 3/4",
     "partes: 37, 25, 63; todo: ?", "todo: 100; partes: 37, ?, 25", "perimetro: 30; lados", "4 partes iguales",
+    "resolver:",
 ]
 for o in ORDENES:
     check("C la ayuda menciona la orden '%s'" % o, o in AYUDA)

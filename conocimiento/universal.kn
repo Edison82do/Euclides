@@ -1,0 +1,43 @@
+id: universal
+nombre: El resolvedor universal - el modelo, el numero comun y los operadores (plan U, fase U.1)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  EL RESOLVEDOR UNIVERSAL, FASE U.1 (plan U, 8 oct 2026: diario/2026-10-08-PLAN-U-volverlo-universal.md).
+  Prohibido memorizar problemas o familias de problemas: solo relaciones generales, operadores generales y
+  busqueda con control.
+
+  REGLA FIJADA 1 - EL MODELO.  Todo lo que se escribe con simbolos se lee a: las CANTIDADES que faltan (las
+  letras), las RELACIONES entre ellas (igualdades con + - x : y parentesis, separadas por ';') y lo que SE PIDE.
+  Sin '=' es una cuenta para calcular.
+
+  REGLA FIJADA 2 - EL NUMERO COMUN.  Un numero es entero, decimal, fraccion o negativo, y es UNA cosa: un decimal
+  es una fraccion de diez, cien o mil (0.25 = 25/100 = 1/4); si se mezclan, se pasan al mismo de abajo (F.7); con
+  signos distintos se quita el pequeno del grande y queda el signo del grande (N.5).  Las cuentas las hacen las
+  piezas de siempre.
+
+  REGLA FIJADA 3 - CALCULAR DESPEJANDO.  En una relacion en la que falta UNA sola cantidad: si sale una vez, se
+  deshace de fuera hacia dentro (Polya: trabajar hacia atras); si sale varias veces, se cuentan los TROZOS (la
+  barra) y se reparte.
+
+  REGLA FIJADA 4 - SUSTITUIR.  Si en ninguna falta una sola, una cantidad dicha con las otras (x = y) o aislada
+  deshaciendo (a + b = 1/2 -> a = 1/2 - b) se pone en las demas: faltan menos.
+
+  REGLA FIJADA 5 - COMPROBAR.  Al final, los numeros se ponen en TODAS las relaciones de PARTIDA (no en las
+  transformadas).  Si no cuadra, no se da la respuesta.
+
+  REGLA FIJADA 6 - EL PRESUPUESTO.  Un humano no da cien vueltas: si se pasa de los pasos de abajo, todavia no,
+  diciendo hasta donde llego.  Si faltan relaciones (mas letras que datos), todavia no (U.2: infinitas, probar
+  en orden).
+errores_tipicos:
+  - Mezclar 1/2 + 0.25 sin pasarlos a lo mismo (1.25/2, 1/2.25).
+  - Hacer -3 + 2 x 4 de izquierda a derecha (-1 x 4 = -4): primero el x.
+  - Comprobar en las relaciones transformadas en vez de en las de partida (un error al transformar no se ve).
+fuentes:
+  - Mayer (1992); Kintsch y Greeno (1985): traducir, integrar en un modelo, planear, ejecutar, comprobar.
+  - Polya, Como plantear y resolver problemas: trabajar hacia atras.
+  - Newell y Simon (GPS): medios y fines; Schoenfeld (1979): el control.
+  - NCETM 1.31 (la barra); Common Core 6.EE.B.7, 7.EE.B.4 (despejar), 7.NS.A.1-3 (cuentas con racionales),
+    5.NF.B.3-7 (fraccion como division; multiplicar y dividir fracciones), 6.NS.A.1 (dividir entre una fraccion).
+
+presupuesto_de_pasos: 20
