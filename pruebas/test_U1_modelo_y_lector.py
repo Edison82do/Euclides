@@ -130,7 +130,7 @@ def main():
                          "a = 0, b = 10; a = 1, b = 9; a = 2, b = 8; a = 3, b = 7; a = 4, b = 6; a = 5, b = 5; "
                          "a = 6, b = 4; a = 7, b = 3; a = 8, b = 2; a = 9, b = 1; a = 10, b = 0"),  # y prueba en orden
                         ("resolver: 0 x n = 5", "ninguna"),
-                        ("resolver: 0 x n = 0", "todavia_no"),
+                        ("resolver: 0 x n = 0", "cualquiera"),        # U.4: una identidad (0 = 0): cualquier numero
                         ("resolver: 5 : 0", "no_se_puede"),
                         ("resolver: n x n = 49", "n = 7"),                    # no lineal: probar en orden (U.2)
                         ("resolver: n + 1 = 10000000", "n = 9999999"),        # cerca del techo

@@ -338,6 +338,9 @@
   (traducir e integrar; comprobar si es razonable), NCETM 2.17 (comparar multiplicando no es sumar), Common Core
   3.MD.D.8, 3.MD.C.7, 5.MD.C.5 (perímetro, área, volumen) y la nota del NC2ML de METODO §5 (contra las palabras clave: la
   palabra da la relación, no la operación). → U.3.
+- **La fase U.4 (una sola tabla de puertas; 8 oct)** usa: **Common Core 8.EE.C.7a** (una ecuación lineal tiene una solución, ninguna o infinitas; se ve transformándola hasta `x = a`, `a = a` o `a = b`) y **6.EE.A.3-4** con **NCETM 2.20-2.22** (expresiones equivalentes: la distributiva y juntar términos iguales) → las identidades; **Mayer (1992)** (un solo modelo: dos traductores distintos de lo mismo son dos verdades) y **Schoenfeld (1979)** (el control: no rendirse con una técnica que no sirve si hay otra) → una sola tabla y la red; **METODO §2.4 y §8** (no se adivina; mejor «no entiendo» que una respuesta falsa) → la prudencia con palabras. → U.4.
+  - Common Core 8.EE.C.7: https://www.thecorestandards.org/Math/Content/8/EE/C/7/
+  - Common Core 6.EE.A.3-4: https://www.thecorestandards.org/Math/Content/6/EE/A/
 - **La fase U.3b (la cosa de cada cantidad; 8 oct)** usa: **Schwartz (1988), «Intensive quantity and referent
   transforming arithmetic operations»** (en Hiebert y Behr, eds., *Number Concepts and Operations in the Middle Grades*,
   NCTM, pp. 41–52; leído por resúmenes que lo citan): una cantidad es un número con su REFERENTE; sumar y restar lo

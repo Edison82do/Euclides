@@ -275,7 +275,8 @@ def explicar_calculo(texto, saber=None):
         saber = cargar_conocimiento()
     t = texto.strip().lower()
     sin_memoria = "sin memoria" in t
-    m = re.search(r"(\d+)\s*([+-])\s*(\d+)", t)
+    cuenta = re.sub(r"^\s*sin memoria\s*", "", t).lstrip(":").strip()
+    m = re.fullmatch(r"(\d+)\s*([+-])\s*(\d+)", cuenta)      # U.4: la cuenta ENTERA ('1/2 + 0.25' no es '2 + 0')
     if not m:
         return ("NO ENTIENDO ESTO: dame una suma o una resta.\n"
                 "   se escribe asi:  calcular: 47 + 30     o     calcular sin memoria: 6 + 7")

@@ -1171,3 +1171,14 @@ problema: Tengo 50 pesos. Gasto 32 pesos. Cuanto me sobra? | 18 pesos | (U.3b) '
 problema: Una caja mide 5 cm por 4 cm por 3 cm. Cual es su volumen? | 60 cm cubicos | (U.3b) las dimensiones con 'por'
 problema: Ana tenia 40 canicas. Pierde la mitad de lo que tenia. Cuantas le quedan? | 20 canicas | (U.3b) un cambio de lo que habia
 problema: La temperatura bajo 8 grados y luego subio 3/4 de lo que habia bajado. Al principio hacia 20 grados. Que temperatura hace ahora? | 18 grados | (U.3b) 3/4 del cambio de antes
+# --- fase U.4 del plan U: una sola tabla de puertas; identidades; la prudencia con palabras
+1/2 x n = 3                                 | n = 6 | (U.4) antes E.5 leia 1/2 como 1 : 2 y decia no_sale
+a + b = 9; a : b = 2                        | a = 6, b = 3 | (U.4) antes lo cogia la puerta de los objetos (0.2)
+2 x (n + 3) = 2 x n + 6                     | cualquiera | (U.4) una identidad: cualquier numero
+5 x (a - 1) = 5 x a - 3                     | ninguna | (U.4) una contradiccion
+(n + 1) x (n + 1) = n x n + 2 x n + 1       | cualquiera | (U.4) identidad no lineal (la distributiva)
+calcular: 1/2 + 0.25                        | 3/4 | (U.4) TRAMPA: la puerta vieja decia 2 (leia '2 + 0')
+ecuacion: 0.5 + ? = 12                      | el hueco = 11.5 | (U.4) TRAMPA: la puerta vieja decia 7
+x + y + z = 12; x - y = 1; y - z = 1        | x = 5, y = 4, z = 3 | (U.4) tres incognitas, sin la orden
+problema: Un camion lleva 12 cajas. Cada caja pesa 96 kilos. Cuanto pesan las cajas? | no_entiendo | (U.4) PRUDENCIA: el 12 se quedaba sin usar (decia 96 kilos)
+problema: Tengo 50 pesos. Gaste la mitad. Cuanto me queda? | no_entiendo | (U.4) PRUDENCIA: 'gaste la mitad' se ignoraba (decia 50 pesos)

@@ -345,6 +345,9 @@ def _u_deshacer(e, objetivo, saber, pasos):
         otro = _u_valor(der, saber, pasos)
         if op == "x" and _nu_es_cero(otro):
             _u_por_cero(objetivo, izq)
+        if op == ":" and _nu_es_cero(otro):          # U.4: entre 0 no se reparte (M.3): ningun numero cumple
+            raise _UNoSale("ninguna", "%s : 0 no se puede hacer (entre 0 no se reparte): ningun numero cumple"
+                           % _u_texto(izq))
         inv = _U_CONTRARIA[op]
         pasos.append("deshago '%s %s': %s = %s %s %s" % (op, _nu_parentesis(otro), _u_texto(izq),
                                                          _nu_parentesis(objetivo), inv, _nu_parentesis(otro)))
@@ -535,7 +538,7 @@ def decidir_resolver(texto, saber=None):
     try:
         if modelo["expresion"] is not None:
             pasos = []
-            v = _u_valor(modelo["expresion"], saber, pasos)
+            v = _u_simple(_u_valor(modelo["expresion"], saber, pasos), saber, pasos)
             r["etapas"].append(("CALCULO en el orden de siempre (primero x y :, luego + y -)", pasos))
             r.update(conclusion="hecho", valor=v, respuesta=_nu_texto(v))
             _u_tambien_decimal(r, v, modelo, saber)
@@ -551,6 +554,10 @@ def decidir_resolver(texto, saber=None):
         return r
     if r.get("probado"):                         # probar en orden (U.2): una, varias o ninguna
         return _u_probado(r, valores, modelo, saber)
+    sub = []
+    valores = dict((l, _u_simple(v, saber, sub)) for l, v in valores.items())
+    if sub:
+        r["etapas"].append(("ESCRIBO la respuesta en su forma mas simple (F.6)", sub))
     r["valores"] = valores
     _u_comprobar(modelo, valores, saber, r)
     raro = _pa_razonable(valores, modelo, saber) if modelo.get("palabras") and r["comprobacion_ok"] else None
@@ -562,6 +569,16 @@ def decidir_resolver(texto, saber=None):
     else:
         r.update(conclusion="no_cuadra", porque="al poner los numeros en las relaciones de partida no cuadra")
     return r
+
+
+def _u_simple(v, saber, pasos):
+    """Una fraccion que se lee tal cual (n = 12/3) se dice en su forma mas simple (F.6), como las que salen de cuentas."""
+    if v[3] != "fraccion":
+        return v
+    try:
+        return _nu_simple(v, saber, pasos)
+    except (_NuNoSale, KeyError):
+        return v
 
 
 def _u_escribir_valores(valores, modelo):
@@ -612,7 +629,9 @@ def _u_buscar(modelo, saber, r):
         r["etapas"].append(("CALCULO cada lado", pasos))
         r.update(conclusion="hecho", respuesta="VERDADERO" if ok else "FALSO", verdad=ok)
         return None
-    soluciones = _bu_resolver(rels, saber, r["etapas"], modelo["relaciones"])     # U.2: buscar con control
+    rels, siempre = _bu_identidades(rels, saber, r["etapas"])                # U.4: identidades y contradicciones
+    originales = [x for x in modelo["relaciones"] if x not in siempre]
+    soluciones = _bu_resolver(rels, saber, r["etapas"], originales)          # U.2: buscar con control
     probado = any(t.startswith("PRUEBO EN ORDEN") for t, _ in r["etapas"])
     if not probado:
         faltan = [l for l in (modelo.get("pide") or modelo["cantidades"]) if l not in soluciones[0]]
@@ -620,6 +639,10 @@ def _u_buscar(modelo, saber, r):
             raise _UNoSale("todavia_no", "faltan relaciones: %s puede valer cualquier cosa (infinitas)"
                            % ", ".join(_u_nombre(l) for l in faltan))
         return soluciones[0]
+    faltan = [l for l in (modelo.get("pide") or modelo["cantidades"]) if soluciones and l not in soluciones[0]]
+    if faltan:                                   # una letra que solo salia en una identidad (U.4): puede ser cualquiera
+        raise _UNoSale("todavia_no", "faltan relaciones: %s puede valer cualquier cosa (infinitas)"
+                       % ", ".join(_u_nombre(l) for l in faltan))
     r["probado"] = True
     r["soluciones"] = soluciones
     return soluciones
@@ -691,6 +714,7 @@ def explicar_resolver(texto, saber=None):
         L.append("RESULTADO: %s" % r["respuesta"])
     else:
         etiqueta = {"ninguna": "NINGUNA", "no_se_puede": "NO SE PUEDE", "no_cuadra": "NO CUADRA",
+                    "cualquiera": "CUALQUIER NUMERO",
                     "no_razonable": "NO ES RAZONABLE"}.get(
             r["conclusion"], "TODAVIA NO")
         L.append("  %s: %s" % (etiqueta, r.get("porque", "")))

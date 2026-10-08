@@ -17,96 +17,94 @@ _OPS = {"+": "sumar", "-": "restar", "x": "multiplicar", ":": "dividir"}
 _FUERTES = ("x", ":")
 
 
-def _tokens(texto):
-    t = texto.lower().replace("−", "-").replace("×", " x ").replace("*", " x ") \
-        .replace("÷", ":").replace("/", ":")
-    if re.search(r"[a-z]{2,}", t):
-        return None                                      # hay palabras: no es una ecuacion sola
-    crudos = re.findall(r"\d+|[a-z]|[()+\-:=?_]", t)
-    if "".join(crudos) != re.sub(r"\s+", "", t):
-        return None                                      # hay algo que no es de una ecuacion
-    out, prev = [], None
-    for c in crudos:
-        if c.isdigit():
-            tok = ("n", int(c))
-        elif c in "?_":
-            tok = ("letra", "?")
-        elif c == "x" and prev is not None and prev[0] in ("n", "letra", ")"):
-            tok = ("op", "x")                            # entre dos cosas: es POR
-        elif c.isalpha():
-            tok = ("letra", c)                           # donde va un numero: es una LETRA
-        elif c in "+-:":
-            tok = ("op", c)
-        elif c == "(":
-            tok = ("(", c)
-        elif c == ")":
-            tok = (")", c)
-        else:
-            tok = ("=", c)
-        out.append(tok)
-        prev = tok
+_LE_IMPLICITO = re.compile(r"\d\s*[a-wyz(]|\)\s*[a-wyz(\d]|(?<![a-z])[a-wyz]\s*\(|\dx(?![a-z(\d])|\d\s*x\s*(=|$|[+\-:;)])")
+
+
+def _le_traducir(e):
+    """Un arbol del MODELO comun (U.1) -> el arbol de E.5, si es de su forma: numeros para contar (enteros, sin signo)."""
+    if e[0] == "num":
+        n = e[1]
+        if n[3] != "entero" or n[2] != 1 or (n[0] == "-" and n[1] != 0):
+            raise ValueError("no es de E.5: %s no es un numero para contar" % _nu_texto(n))
+        return ("n", n[1])
+    if e[0] == "letra":
+        return ("letra", e[1])
+    if e[0] == "par":
+        return ("par", _le_traducir(e[1]))
+    if e[0] == "neg":
+        raise ValueError("no es de E.5: un numero negativo")
+    return ("op", e[1], _le_traducir(e[2]), _le_traducir(e[3]))
+
+
+def _le_leer(texto):
+    """E.5 es un TRADUCTOR al modelo (U.4): lee con el lector UNICO (_u_leer) y reconoce SU forma: UNA relacion, con
+    numeros para contar, escrita con todos sus signos.  Lo que no es de su forma (fracciones, decimales, negativos,
+    '2n') no es de E.5: va al resolvedor universal.  (Antes tenia su propio lector, que leia 1/2 como 1 : 2.)
+    Devuelve (izq, der) en el arbol de E.5, o None."""
+    t = texto.lower().replace("\u2212", "-").replace("\u00d7", " x ").replace("*", " x ").replace("\u00f7", ":")
+    if _LE_IMPLICITO.search(t):
+        return None                                      # '2n', '2(n + 1)': por sin escribir, no es de E.5
+    try:
+        m = _u_leer(t)
+        if len(m["relaciones"]) != 1 or m["expresion"] is not None:
+            return None
+        izq, der = m["relaciones"][0]
+        return _le_traducir(izq), _le_traducir(der)
+    except (ValueError, IndexError, _NuNoSale):
+        return None
+
+
+def _le_ops(e):
+    """Las operaciones de un arbol de E.5, en orden."""
+    if e[0] in ("n", "letra"):
+        return []
+    if e[0] == "par":
+        return _le_ops(e[1])
+    out = _le_ops(e[2])
+    out.append(e[1])
+    out.extend(_le_ops(e[3]))
     return out
+
+
+def _le_letras(e):
+    if e[0] == "letra":
+        return [e[1]]
+    if e[0] == "n":
+        return []
+    if e[0] == "par":
+        return _le_letras(e[1])
+    out = _le_letras(e[2])
+    out.extend(_le_letras(e[3]))
+    return out
+
+
+def _le_hay_par(e):
+    if e[0] == "par":
+        return True
+    if e[0] == "op":
+        return _le_hay_par(e[2]) or _le_hay_par(e[3])
+    return False
 
 
 def es_ecuacion_con_letra(texto):
     """Una ecuacion (con =) escrita sola, con una LETRA o con dos o mas operaciones o parentesis."""
-    toks = _tokens(texto)
-    if not toks or sum(1 for t in toks if t[0] == "=") != 1:
+    rel = _le_leer(texto)
+    if rel is None:
         return False
-    if not any(t[0] == "letra" for t in toks):          # sin letra ni hueco es una igualdad (E.0): verdad o no
+    izq, der = rel
+    todas = _le_letras(izq)
+    todas.extend(_le_letras(der))
+    if not todas:                                        # sin letra ni hueco es una igualdad (E.0): verdad o no
         return False
-    letras = [t for t in toks if t[0] == "letra" and t[1] != "?"]
-    k = [i for i, t in enumerate(toks) if t[0] == "="][0]
-    ops_i = [t[1] for t in toks[:k] if t[0] == "op"]
-    ops_d = [t[1] for t in toks[k + 1:] if t[0] == "op"]
-    if letras or any(t[0] == "(" for t in toks) or len(ops_i) >= 2 or len(ops_d) >= 2:
+    letras = [l for l in todas if l != "?"]
+    ops_i, ops_d = _le_ops(izq), _le_ops(der)
+    if letras or _le_hay_par(izq) or _le_hay_par(der) or len(ops_i) >= 2 or len(ops_d) >= 2:
         return True
     # con un hueco '?' y una cuenta por lado: + y - es la balanza (E.2); con x o : a los dos lados, aqui
     return bool(ops_i and ops_d and set(ops_i).union(ops_d) & {"x", ":"})
 
 
-# --- el arbol de la expresion (con el orden de siempre)
-
-def _parse(toks):
-    quedan = list(toks)                                  # se van tomando por delante, de uno en uno
-
-    def ver():
-        return quedan[0] if quedan else (None, None)
-
-    def tomar():
-        return quedan.pop(0)
-
-    def atomo():
-        t = tomar()
-        if t[0] == "n":
-            return ("n", t[1])
-        if t[0] == "letra":
-            return ("letra", t[1])
-        if t[0] == "(":
-            e = suma()
-            if tomar()[0] != ")":
-                raise ValueError("falta cerrar un parentesis")
-            return ("par", e)
-        raise ValueError("no entiendo '%s'" % (t[1],))
-
-    def producto():
-        e = atomo()
-        while ver()[0] == "op" and ver()[1] in _FUERTES:
-            op = tomar()[1]
-            e = ("op", op, e, atomo())
-        return e
-
-    def suma():
-        e = producto()
-        while ver()[0] == "op" and ver()[1] in "+-":
-            op = tomar()[1]
-            e = ("op", op, e, producto())
-        return e
-
-    e = suma()
-    if quedan:
-        raise ValueError("sobra algo al final")
-    return e
+# --- el arbol de la expresion (con el orden de siempre): el del MODELO comun, traducido (_le_leer)
 
 
 def _texto(e, valor_letra=None):
@@ -195,17 +193,12 @@ def _deshacer(e, objetivo, saber, pasos):
 def decidir_ecuacion_letra(texto, saber=None):
     if saber is None:
         saber = cargar_conocimiento()
-    toks = _tokens(texto)
-    if not toks:
-        return {"conclusion": "no_entiendo", "porque": "no es una ecuacion"}
-    k = [i for i, t in enumerate(toks) if t[0] == "="]
-    if len(k) != 1:
-        return {"conclusion": "no_entiendo", "porque": "hace falta UN signo ="}
-    try:
-        izq, der = _parse(toks[:k[0]]), _parse(toks[k[0] + 1:])
-    except (ValueError, IndexError) as ex:
-        return {"conclusion": "no_entiendo", "porque": str(ex)}
-    letras = [t[1] for t in toks if t[0] == "letra"]
+    rel = _le_leer(texto)
+    if rel is None:
+        return {"conclusion": "no_entiendo", "porque": "no es una ecuacion de E.5 (una relacion con numeros para contar)"}
+    izq, der = rel
+    letras = _le_letras(izq)
+    letras.extend(_le_letras(der))
     r = {"ecuacion": "%s = %s" % (_texto(izq), _texto(der)), "letra": letras[0] if letras else None}
     if not letras:
         r.update(conclusion="sin_letra", porque="no hay letra ni hueco: para saber si es verdad, 'verdad:'")
@@ -215,8 +208,8 @@ def decidir_ecuacion_letra(texto, saber=None):
                  % len(letras))
         return r
     con, sin = (izq, der) if _tiene_letra(izq) else (der, izq)
-    hay = {t[1] for t in toks if t[0] == "op"}
-    if hay & {"x", ":"} and hay & {"+", "-"} and not any(t[0] == "(" for t in toks):
+    hay = set(_le_ops(izq)).union(_le_ops(der))
+    if hay & {"x", ":"} and hay & {"+", "-"} and not (_le_hay_par(izq) or _le_hay_par(der)):
         r["nota_orden"] = ("OJO, el orden de siempre (3.OA.D.8): sin parentesis, PRIMERO x y :, LUEGO + y -; "
                            "no se va sin mas de izquierda a derecha")
     pasos = []

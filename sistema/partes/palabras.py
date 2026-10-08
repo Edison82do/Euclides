@@ -1748,7 +1748,7 @@ def _pa_leer_frase(frase, toks, ctx, pregunta):
         leido["cambio"] = any(t[0] == "verbo" and t[1]["tipo"] in ("cambio", "compra", "paga", "reparte", "agrupa", "dar")
                               for t in toks)
         leido["palabras"] = set(t[2] for t in toks if t[0] == "palabra")
-        leido["dato"] = any(t[0] in ("num", "algo") for t in toks)
+        leido["dato"] = any(t[0] in ("num", "algo", "mult") for t in toks)     # U.4: 'la mitad' tambien es un dato
     leido["hasta"] = len(ctx["rels"])
     ctx["cosa_heredada"] = ctx["cosa_frase"] = None
     return leido
@@ -1863,6 +1863,7 @@ def _pa_modelo(texto, ctx, lecturas):
                 conectadas.append(r)
                 letras |= ls
                 cambia = True
+    _pa_prudencia(ctx, conectadas, pide)                  # U.4: un numero que sobra sin saber por que
     _pa_sin_callejones(conectadas, pide)
     _pa_comprobar_cosas(ctx, conectadas)                  # U.3b: nada junta cosas distintas
     for r in list(conectadas):
@@ -1899,6 +1900,64 @@ def _pa_modelo(texto, ctx, lecturas):
             "expresion": None, "texto": " ".join(_pa_normal(texto).split()), "pide": pide, "palabras": True,
             "lecturas": lecturas, "apuntes": ctx["rels"], "conectadas": conectadas, "unidades": unidades,
             "cosas": {l: c for l, c in _pa_cosas_de_letras(ctx).items() if l in cantidades}}
+
+
+def _pa_hay_numero(e):
+    if e[0] == "num":
+        return True
+    if e[0] in ("par", "neg"):
+        return _pa_hay_numero(e[1])
+    if e[0] == "op":
+        return _pa_hay_numero(e[2]) or _pa_hay_numero(e[3])
+    return False
+
+
+def _pa_numeros_de(e):
+    if e[0] == "num":
+        return [_nu_texto(e[1])]
+    if e[0] in ("par", "neg"):
+        return _pa_numeros_de(e[1])
+    if e[0] == "op":
+        out = _pa_numeros_de(e[2])
+        out.extend(_pa_numeros_de(e[3]))
+        return out
+    return []
+
+
+def _pa_prudencia(ctx, conectadas, pide):
+    """LA REGLA DE PRUDENCIA (U.4, decision de Carlos): nunca una respuesta falsa.  Un dato que se queda FUERA (su
+    relacion no esta conectada con lo que se pide) sobra de verdad si es de otra cosa (la edad en un problema de
+    canicas) o de otro dueno (los caramelos de Ana cuando se pregunta por los de Luis).  Pero si CUENTA las mismas cosas
+    por las que se pregunta ('un camion lleva 12 CAJAS' cuando se pregunta lo que pesan las cajas), no se sabe por que
+    sobra: algo se leyo mal, y se dice que numero y que frase."""
+    cosas = _pa_cosas_de_letras(ctx)
+
+    def claves(letras):                                    # los nombres de las COSAS (no personas, no 'lo de alguien')
+        out = []
+        for e in ctx["entes"]:
+            if set(e["versiones"]) & set(letras) and not e.get("dueno") and not e.get("persona"):
+                out.append(tuple(e["clave"]))
+        return out
+
+    dentro = set(pide)
+    for r in conectadas:
+        dentro.update(_u_letras_rel(r["rel"]))
+    cosas_dentro = [cosas[l] for l in dentro if cosas.get(l)]
+    claves_dentro = claves(dentro)
+    for r in ctx["rels"]:
+        if r in conectadas or r.get("pedido") or r.get("sabido") or not (
+                _pa_hay_numero(r["rel"][0]) or _pa_hay_numero(r["rel"][1])):
+            continue
+        letras = _u_letras_rel(r["rel"])
+        mias = [(cosas[l], claves_dentro) for l in letras if cosas.get(l)]
+        mias.extend((c, claves_dentro) for c in claves(letras))
+        mias.extend((c, cosas_dentro) for c in claves(letras))
+        for c, contra in mias:
+            if c and any(d and _pa_misma_cosa(ctx, c, d) for d in contra):
+                numeros = _pa_numeros_de(r["rel"][0])
+                numeros.extend(_pa_numeros_de(r["rel"][1]))
+                raise ValueError("no se que hacer con el %s de '%s': cuenta %s, lo mismo que la pregunta, y no lo uso "
+                                 "(algo he leido mal)" % (" y el ".join(numeros), r["frase"], " ".join(c)))
 
 
 def _pa_sin_callejones(conectadas, pide):

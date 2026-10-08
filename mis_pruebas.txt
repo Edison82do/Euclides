@@ -383,3 +383,8 @@ problema: Maria tiene 8 anos y 15 lapices. Luis tiene 6 lapices. Cuantos lapices
 problema: 3 cuadernos cuestan 12 pesos. Cuanto cuestan 5 cuadernos? | 20 pesos | U.3b: la proporcion simple
 problema: Un camion lleva 12 cajas. Cada caja pesa 8 kilos. Cuantos kilos lleva el camion? | 96 kilos | U.3b: 'cada' multiplica los grupos
 problema: Un rectangulo tiene 30 cm de perimetro. Un lado mide 8 cm. Cuanto mide el otro? | 7 cm | U.3b: un lado / el otro
+1/2 x n = 3                       | n = 6 | U.4: una sola tabla (antes no_sale)
+a + b = 9; a : b = 2              | a = 6, b = 3 | U.4: antes la puerta de los objetos
+2 x (n + 3) = 2 x n + 6           | cualquiera | U.4: identidad
+5 x (a - 1) = 5 x a - 3           | ninguna | U.4: contradiccion
+Un camion lleva 12 cajas. Cada caja pesa 96 kilos. Cuanto pesan las cajas? | no_entiendo | U.4: prudencia (el 12)

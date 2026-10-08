@@ -138,6 +138,95 @@ def _bu_barra(c, k, saber):
     return "%s = %s" % (t, _nu_texto(k))
 
 
+# ------------------------------------------------------------- U.4: DESARROLLAR (identidades y contradicciones)
+
+def _bu_desarrollar(e, saber):
+    """La expresion DESARROLLADA con la distributiva y con los terminos iguales agrupados (NCETM 2.20-2.22; Common Core
+    6.EE.A.3-4): {monomio: cuantos}, donde el monomio es la tupla ordenada de sus letras (() lo suelto, ('n',) los
+    trozos de n, ('n', 'n') los de n x n, ('a', 'b') los de a x b).  Las cuentas, con el numero comun.  _UNoLineal si
+    una letra divide (una letra en la division podria valer 0: no se desarrolla)."""
+    if e[0] == "num":
+        return {} if _nu_es_cero(e[1]) else {(): e[1]}
+    if e[0] == "letra":
+        return {(e[1],): _BU_UNO}
+    if e[0] == "par":
+        return _bu_desarrollar(e[1], saber)
+    if e[0] == "neg":
+        return dict((m, _nu_opuesto(v)) for m, v in _bu_desarrollar(e[1], saber).items())
+    op, izq, der = e[1], e[2], e[3]
+    a = _bu_desarrollar(izq, saber)
+    if op == ":":
+        if _u_letras(der):
+            raise _UNoLineal("una letra divide")
+        v = _u_valor(der, saber, [])
+        if _nu_es_cero(v):
+            raise _UNoLineal("dividir entre cero")
+        return dict((m, _u_cuenta(":", c, v, saber, [])) for m, c in a.items())
+    b = _bu_desarrollar(der, saber)
+    if op in "+-":
+        return _bu_mezclar(a, b, op, saber)
+    out = {}
+    for m1, c1 in a.items():                             # la distributiva: cada trozo por cada trozo
+        for m2, c2 in b.items():
+            junto = list(m1)
+            junto.extend(m2)
+            m = tuple(sorted(junto))
+            c = _u_cuenta("x", c1, c2, saber, [])
+            out = _bu_mezclar(out, {m: c}, "+", saber)
+    return out
+
+
+def _bu_monomio_texto(m, c):
+    cuanto = _nu_texto(c)
+    if not m:
+        return cuanto
+    letras = " x ".join(_u_nombre(l) for l in m)
+    return letras if cuanto == "1" else ("-%s" % letras if cuanto == "-1" else "%s x %s" % (cuanto, letras))
+
+
+def _bu_desarrollado_texto(d):
+    if not d:
+        return "0"
+    return " + ".join(_bu_monomio_texto(m, c) for m, c in d.items()).replace("+ -", "- ")
+
+
+def _bu_identidades(rels, saber, etapas):
+    """Antes de buscar: cada relacion se DESARROLLA a los dos lados.  Si quedan iguales, es verdad SIEMPRE y no dice
+    nada (si todas son asi, vale CUALQUIER numero: infinitas soluciones; Common Core 8.EE.C.7a); si quedan iguales
+    salvo lo suelto, se contradice: ninguna.  Devuelve (las relaciones que si dicen algo, las que son verdad siempre)."""
+    quedan, siempre = [], []
+    for rel in rels:
+        if not _u_letras_rel(rel):
+            quedan.append(rel)
+            continue
+        try:
+            di, dd = _bu_desarrollar(rel[0], saber), _bu_desarrollar(rel[1], saber)
+            resta = _bu_mezclar(di, dd, "-", saber)
+        except (_UNoLineal, _UNoSale, _NuNoSale, KeyError):
+            quedan.append(rel)                           # no se deja desarrollar: la buscan los otros operadores
+            continue
+        lado = ["%s  es  %s" % (_u_texto(rel[0]), _bu_desarrollado_texto(di)),
+                "%s  es  %s" % (_u_texto(rel[1]), _bu_desarrollado_texto(dd))]
+        if not resta:
+            etapas.append(("DESARROLLO %s (la distributiva, y junto los terminos iguales)" % _u_rel_texto(rel),
+                           lado + ["los dos lados son LO MISMO: es verdad ponga lo que ponga en %s; no dice nada nuevo"
+                                   % " y ".join(_u_nombre(l) for l in _u_distintas(_u_letras_rel(rel)))]))
+            siempre.append(rel)
+            continue
+        if list(resta) == [()]:
+            etapas.append(("DESARROLLO %s (la distributiva, y junto los terminos iguales)" % _u_rel_texto(rel),
+                           lado + ["las letras son LO MISMO a los dos lados y lo suelto no (%s no es %s): nunca se cumple"
+                                   % (_nu_texto(di.get((), _NU_CERO)), _nu_texto(dd.get((), _NU_CERO)))]))
+            raise _UNoSale("ninguna", "los dos lados solo se diferencian en lo suelto: %s nunca es igual a %s, ponga lo "
+                           "que ponga (ninguna solucion)" % (_u_texto(rel[0]), _u_texto(rel[1])))
+        quedan.append(rel)
+    if siempre and not [r for r in quedan if _u_letras_rel(r)]:
+        letras = _u_distintas([l for r in siempre for l in _u_letras_rel(r)])
+        raise _UNoSale("cualquiera", "los dos lados son la misma expresion: %s puede valer CUALQUIER numero (infinitas "
+                       "soluciones)" % ", ".join(_u_nombre(l) for l in letras))
+    return quedan, siempre
+
+
 # ------------------------------------------------------------- los candidatos de cada operador
 
 def _bu_candidatos(rels, saber):

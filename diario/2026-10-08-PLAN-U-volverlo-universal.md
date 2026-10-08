@@ -138,3 +138,10 @@ se da la respuesta.
   hacer. Comparar tamaños con el mecanismo.
 - Puede tardar más (aceptado por Carlos), pero con presupuesto: si se agota, «todavía no» y hasta dónde llegó.
 - Al acabar el plan U se vuelve al orden de NCETM (2.23), y cada paso nuevo entrará ya por el modelo.
+
+## 6. DECISIÓN DE CARLOS (8 oct, antes de U.4): «cuanto más se avanza en matemáticas, menos se habla»
+
+El centro es el problema escrito con **NÚMEROS Y SÍMBOLOS**. La parte hablada (U.3 y U.3b) **NO se sigue ampliando**: se
+queda como está, salvo una REGLA DE PRUDENCIA (nunca dar una respuesta falsa: si un número del enunciado se queda sin
+usar y no se sabe si sobra, si una frase con un cambio no se entendió o no se aplicó, o si la respuesta mezcla cosas
+distintas, se contesta «no entiendo» diciendo qué frase o qué número). **La fase U.3c queda descartada.**

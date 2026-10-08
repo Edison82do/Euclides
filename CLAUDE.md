@@ -83,8 +83,12 @@ El avance por años está en PAUSA. Se trabaja el **plan U** (`diario/2026-10-08
 una fase por sesión, en orden. Regla de oro del plan: **prohibido memorizar problemas o familias de problemas**;
 solo relaciones generales (datos), operadores generales (piezas) y búsqueda con control. Nada viejo cambia de
 respuesta; lo nuevo, con pocas pruebas representativas. Si la batería tarda demasiado, `--parte 1/3`, `2/3`, `3/3`.
+**DECISIÓN DE CARLOS (8 oct): «cuanto más se avanza en matemáticas, menos se habla».** El centro es el problema escrito
+con NÚMEROS Y SÍMBOLOS; la parte hablada (U.3, U.3b) NO se sigue ampliando (se queda como está), salvo la REGLA DE
+PRUDENCIA: nunca una respuesta falsa (un número que se queda sin usar y no se sabe si sobra, una frase con un cambio que no
+se entendió, una respuesta que mezcla cosas → «no entiendo», diciendo qué frase o qué número). La fase U.3c, descartada.
 
-## Dónde se quedó (8 oct 2026)
+## Dónde se quedó (8 oct 2026, tras U.4)
 Hecho **U.1 el modelo y el lector simbólico** (partes `numero.py`, prefijo `_nu_`, y `universal.py`, prefijo `_u_`; puerta
 `resolver:`) y **U.2 buscar con control** (parte `buscar.py`, prefijo `_bu_`: juntar relaciones, reescribir —bloque que ya se
 sabe, factor común—, probar en orden con tope y sabiendo cuándo parar, el control por medios y fines con costes en
@@ -100,8 +104,16 @@ Hecho **U.3b la cosa de cada cantidad** (en `palabras.py`; tras la revisión de 
 es (de quién, de qué cosa) —la primera cosa conserva el nombre (`maria`), otra es `maria_lapiz`—; solo se suman o restan las de
 la misma cosa (`_pa_comprobar_cosas`, en el modelo); «cada», «N u por X» y los verbos de cada (`frases.kn`) son grupos iguales;
 comprar con dinero es gastar; las cosas genéricas (dinero, edad...), las parejas y dimensiones de las figuras, en datos.
-**Siguiente: U.4 — una sola tabla de puertas** (juntar `explicar_pregunta` y `preguntar`; las puertas viejas que ya equivalen
-al modelo, a traductores; la división con resto de R.2 todavía no es vocabulario del modelo).
+Hecho **U.4 una sola tabla de puertas** (parte `puertas.py`, prefijo `_pu_`, la última del orden): la tabla `PUERTAS`, la
+misma para `explicar_pregunta` y `responder_pregunta` (`probar.preguntar` es una línea). **Una puerta nueva se añade en esa
+tabla, en su sitio del orden** (ya no en dos cadenas). La regla de la red, una sola (`_pu_decidir`): lo simbólico no lo cogen
+las puertas de los objetos; si una puerta vieja no da una respuesta y es una relación con letras, decide el resolvedor;
+«ningún número para contar» (no_sale, imposible, no_entero, ninguna) es respuesta del año y la explicación enseña también lo
+del resolvedor; una cuenta sin letras respeta el año. E.5 es traductor (lee con `_u_leer`); `ecuacion:` y `calcular:` son
+«solo para contar». Identidades (desarrollar con la distributiva, `_bu_identidades`) → `cualquiera`. La prudencia con
+palabras (`_pa_prudencia`). `herramientas/comparar_puertas.py` compara las puertas viejas con el resolvedor (0 sin explicar).
+**Siguiente: U.5 — el examen de transferencia** (secreto, fuera del repositorio). Preguntas abiertas para Carlos (diario de
+U.4): si los «no hay número para contar» pasan ya a fracción/negativo; si dos `?` son el mismo número.
 Antes: S.3 problemas con dos incógnitas (NCETM 1.31), N.6 hasta diez millones (NCETM 1.30), F.7, F.6, P.7.
 Al acabar el plan U se vuelve a NCETM (Spine 2: **2.23**; la división larga 2.24; Spine 3 tras 3.8).
 La balanza y `verdad:` con decimales: todavía no (solo enteros) por sus puertas viejas; por `resolver:` sí.

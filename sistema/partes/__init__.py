@@ -19,6 +19,7 @@ por NIVELES para que cada unidad nueva se escriba en su sitio y se pueda leer si
     piezas.py       el MOTOR DE PIEZAS: carga conocimiento/piezas/, prueba, descarta, aplica
     memoria.py      la MEMORIA de hechos, GANADA: aprender, recordar, olvidar (paso 3)
     resolver.py     el RESOLVEDOR: leer, montar la situacion, pedir pasos a las piezas (R.1)
+    puertas.py      UNA SOLA TABLA DE PUERTAS (U.4): explicar_pregunta y responder_pregunta
 
 COMO FUNCIONA (y por que asi):
   Las funciones de una parte llaman a funciones de otras (la 5.3 usa las columnas de la 7.3, la
@@ -33,7 +34,7 @@ dos partes definen lo mismo (serian dos verdades: la que gane dependeria del ord
 import importlib
 
 ORDEN = ["nucleo", "primitivas", "mecanismo", "decision", "nivel_2", "nivel_3", "nivel_4", "nivel_5",
-         "nivel_6", "nivel_7", "millar", "explicacion", "piezas", "memoria", "igualdad", "ecuaciones", "saltos", "filas", "multiplicar", "dividir", "letra", "redondear", "estimar", "fracciones", "decimales", "decimales_por", "dinero", "geometria", "escala", "negativos", "equivalencia", "volumen", "factores", "combinar", "parte_todo", "compensacion", "equivalentes", "comun_denominador", "dos_incognitas", "resolver", "resolver_r2", "numero", "universal", "buscar", "palabras"]
+         "nivel_6", "nivel_7", "millar", "explicacion", "piezas", "memoria", "igualdad", "ecuaciones", "saltos", "filas", "multiplicar", "dividir", "letra", "redondear", "estimar", "fracciones", "decimales", "decimales_por", "dinero", "geometria", "escala", "negativos", "equivalencia", "volumen", "factores", "combinar", "parte_todo", "compensacion", "equivalentes", "comun_denominador", "dos_incognitas", "resolver", "resolver_r2", "numero", "universal", "buscar", "palabras", "puertas"]
 
 _IGNORAR = {"os", "sys", "__builtins__", "__cached__", "__doc__", "__file__", "__loader__",
             "__name__", "__package__", "__spec__"}
