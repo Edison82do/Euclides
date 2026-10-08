@@ -57,6 +57,8 @@ OBJETIVOS = {
                              "que_es": "la forma mas simple de una fraccion (NCETM 3.7, punto 3): 12/18 = 2/3"},
     "hueco_equivalente": {"elige": "la_mas_rapida",
                           "que_es": "el numero que falta en dos fracciones equivalentes (NCETM 3.7, punto 2): 2/3 = ?/12"},
+    "mismo_de_abajo": {"elige": "la_mas_rapida",
+                       "que_es": "pasar dos fracciones al mismo de abajo (NCETM 3.8): 1/2 y 1/4 -> 2/4 y 1/4"},
     "contar_hasta": {"elige": "la_mas_rapida",
                      "que_es": "cuantos pasos hay de un numero a otro (el hueco, 5.5)"},
 }

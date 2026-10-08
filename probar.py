@@ -487,6 +487,16 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         2/3 = 8/12             -> VERDADERO
         Cada respuesta se comprueba: multiplicando de vuelta, o simplificando las dos a la misma.
 
+  EL MISMO DE ABAJO  ->  sumar, restar y comparar con distinto de abajo (paso F.7; NCETM 3.8; 5.NF.A.1-2)
+        1/2 + 1/4              -> 3/4     relacionadas (4 : 2 = 2, justo): cambio solo una, 1/2 = 2/4
+        1/3 + 1/4              -> 7/12    no relacionadas: 3 x 4 = 12;  4/12 + 3/12
+        1/2 + 1/3              -> 5/6     y dice el error tipico: NO es 2/5 (2/5 es menor que 1/2)
+        5/6 - 1/3              -> 1/2     5/6 - 2/6 = 3/6, y se simplifica al final
+        2/3 + 3/4              -> 1 5/12  17/12, mas de un entero;   1/4 - 1/2 -> imposible
+        2 1/2 + 1 1/4          -> 3 3/4   los mixtos, a impropias y al mismo de abajo
+        comparar: 2/3 y 3/4    -> 2/3 < 3/4   por el mismo de abajo (8/12, 9/12) y el de arriba (6/9, 6/8)
+        Cada paso se comprueba: dividiendo de vuelta lo que se multiplico, y la cuenta contraria.
+
   AREA Y PERIMETRO  ->  la superficie y el borde (paso G.1; NCETM 2.16; 3.MD.C.7, 3.MD.D.8)
         area: rectangulo 5 x 3       -> 15 unidades cuadradas  (3 filas de 5 cuadraditos = 5 x 3)
         perimetro: rectangulo 5 x 3  -> 16   (5 + 3 + 5 + 3: el borde, en unidades de longitud)

@@ -2,7 +2,7 @@
 """Pieza de COMPARAR FRACCIONES (paso F.6; NCETM 3.7, punto 1): dos fracciones que no comparten ni el de arriba ni
 el de abajo pueden ser EQUIVALENTES: 3/12 y 1/4 se simplifican a la misma (1/4) -> son IGUALES.  (La trampa del
 audit de NCETM: creer que 3/12 es mayor porque sus numeros son mas grandes.)  Si no son equivalentes, para saber
-cual es mayor hace falta el mismo de abajo: eso es del paso siguiente (NCETM 3.8): no sale.
+cual es mayor hace falta el mismo de abajo (F.7, NCETM 3.8): esta pieza no sale.
 LA VUELTA: desde la forma mas simple se multiplica de vuelta hasta cada una (la contraria de simplificar)."""
 
 PIEZA = {
@@ -24,8 +24,8 @@ def hacer(s, u):
     ra = u.usar("simplificar_fraccion", a=fa[0], b=fa[1])["resultado"]
     rb = u.usar("simplificar_fraccion", a=fb[0], b=fb[1])["resultado"]
     if ra["valor"] != rb["valor"]:
-        raise ValueError("no son equivalentes (%d/%d = %s y %d/%d = %s); para saber cual es mayor hace falta el mismo "
-                         "de abajo (NCETM 3.8): todavia no" % (fa[0], fa[1], ra["valor"], fb[0], fb[1], rb["valor"]))
+        raise ValueError("no son equivalentes (%d/%d = %s y %d/%d = %s); eso no dice cual es mayor: para eso, el mismo "
+                         "de abajo (F.7)" % (fa[0], fa[1], ra["valor"], fb[0], fb[1], rb["valor"]))
     sa, sb = ra["arriba"], ra["abajo"]
     vuelta, ok = [], True
     for f in (fa, fb):                     # la forma mas simple, por k, tiene que dar cada una

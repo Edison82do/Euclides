@@ -12,6 +12,21 @@ IMPOSIBLE" (quitar mas de lo que hay).  Entonces el problema no tiene solucion, 
 """
 
 
+# ---- el mismo de abajo (paso F.7; NCETM 3.8): {"a": (arriba, abajo), "b": (arriba, abajo)}
+def _f7_relacionadas(s, u):
+    """Un de abajo cabe justo en el otro (los cuartos caben en los medios: 4 : 2 = 2)?  Se mira DIVIDIENDO (M.3/M.8).
+    Si son iguales o no se sabe hacer la division, no encaja."""
+    da, db = s["a"][1], s["b"][1]
+    if da == db or 0 in (da, db):
+        return False
+    chico, grande = (db, da) if u.viene_despues(u.decir(da), u.decir(db)) else (da, db)
+    try:
+        r = u.usar("dividir", total=grande, divisor=chico)
+    except Exception:
+        return False
+    return not r["resultado"].get("resto", 0)
+
+
 # ---- fracciones equivalentes y simplificar (paso F.6; NCETM 3.7)
 def _f6_cabe_justo(s, u):
     """El mas pequeno de los dos (arriba o abajo) se reparte justo en el otro?  Se mira DIVIDIENDO (M.3/M.8).
@@ -531,6 +546,10 @@ CONDICIONES = {
     "el_pequeno_cabe_justo_en_el_grande": lambda s, u: _f6_cabe_justo(s, u),
     "hay_un_hueco_y_una_fraccion_completa": lambda s, u: _f6_un_hueco(s),
     "no_comparten_arriba_ni_abajo": lambda s, u: s["a"][0] != s["b"][0] and s["a"][1] != s["b"][1],
+    # ---- el mismo de abajo (paso F.7; NCETM 3.8)
+    "los_de_abajo_son_distintos": lambda s, u: s["a"][1] != s["b"][1] and 0 not in (s["a"][1], s["b"][1]),
+    "un_de_abajo_cabe_justo_en_el_otro": lambda s, u: _f7_relacionadas(s, u),
+    "ninguno_de_arriba_es_cero": lambda s, u: s["a"][0] != 0 and s["b"][0] != 0,
     # ---- usar la equivalencia (paso M.12; NCETM 2.18)
     "un_factor_acaba_en_cinco_y_el_otro_es_par": lambda s, u: _eq_doblar_y_partir(s, u),
     "se_puede_escalar_la_division": lambda s, u: _eq_escalar_division(s, u),

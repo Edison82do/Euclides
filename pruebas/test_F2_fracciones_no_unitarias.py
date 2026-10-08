@@ -57,7 +57,8 @@ try:
     comprobar("A4 fraccion: 0/4 -> cero;  3/1 -> 3 enteros", (S("fraccion: 0/4"), S("fraccion: 3/1")), ("cero", "3 enteros"))
     comprobar("A5 comparar 2/5 y 3/5 -> 3/5 mayor", S("comparar: 2/5 y 3/5"), "2/5 < 3/5")
     comprobar("A6 comparar 2/3 y 2/5 -> 2/3 mayor (no 'cinco es mas')", S("comparar: 2/3 y 2/5"), "2/3 > 2/5")
-    comprobar("A7 comparar 2/3 y 3/5 -> todavia no (5.o)", S("comparar: 2/3 y 3/5"), "todavia_no")
+    # OBSOLETA POR MEJORA (F.7, 8 oct; NCETM 3.8). Antes: comprobar("A7 comparar 2/3 y 3/5 -> todavia no (5.o)", ..., "todavia_no")
+    comprobar("A7 comparar 2/3 y 3/5 -> desde F.7, con el mismo de abajo: 2/3 > 3/5", S("comparar: 2/3 y 3/5"), "2/3 > 3/5")
     comprobar("A8 3/4 de 12 -> 9", S("3/4 de 12"), "9")
     comprobar("A9 2/3 de 10 -> no sale justo", S("2/3 de 10"), "no_sale")
     comprobar("A10 entero: 3/4 es 9 -> 12;  es 10 -> no sale",
@@ -83,13 +84,11 @@ try:
             else:
                 otras += 1
                 # OBSOLETA POR MEJORA (F.6, 8 oct; NCETM 3.7): antes, sin nada en comun -> nunca se atrevia.
-                # Ahora, si son EQUIVALENTES (1/2 y 2/4) dice '=' simplificando las dos; si no, sigue sin atreverse.
-                if Fraction(*x) == Fraction(*y):
-                    if r["conclusion"] != "hecho" or r["valor"] != "=":
-                        malos.append((x, y, "equivalentes y no dijo '='", r.get("valor")))
-                elif r["conclusion"] == "hecho":
-                    malos.append((x, y, "se atrevio", r.get("valor")))
-    comprobar("B1 %d parejas bien, con dos caminos o mas; %d sin nada en comun -> no se atreve (salvo las equivalentes: '=', F.6)" % (n, otras),
+                # F.6: si eran EQUIVALENTES (1/2 y 2/4) decia '='; si no, seguia sin atreverse ("se atrevio" era fallo).
+                # OBSOLETA OTRA VEZ (F.7, 8 oct; NCETM 3.8): ahora TODAS salen, con el mismo de abajo y el de arriba.
+                if r["conclusion"] != "hecho" or r["valor"] != signo(Fraction(*x), Fraction(*y)) or len(r["todos"]) < 2:
+                    malos.append((x, y, r.get("valor"), signo(Fraction(*x), Fraction(*y))))
+    comprobar("B1 %d parejas bien, con dos caminos o mas; %d sin nada en comun, tambien (F.7: el mismo de abajo)" % (n, otras),
               malos[:3], [])
 
     print("\nC - a/b DE n (muestra)")

@@ -90,8 +90,10 @@ try:
     t = motor.explicar_pregunta("simplificar: 3/4", SABER)
     comprobar("A simplificar 3/4 avisa: no solo las unitarias", "no solo las unitarias" in t, True)
     t = motor.explicar_pregunta("comparar: 2/3 y 3/4", SABER)
-    comprobar("A comparar 2/3 y 3/4 -> todavia no, y dice que es de 3.8",
-              (S("comparar: 2/3 y 3/4"), "NCETM 3.8" in t), ("todavia_no", True))
+    # OBSOLETA POR MEJORA (F.7, 8 oct; NCETM 3.8). Antes: "A comparar 2/3 y 3/4 -> todavia no, y dice que es de 3.8"
+    # (S(...) == "todavia_no" y "NCETM 3.8" en la explicacion).  Ahora sale con el mismo de abajo (F.7).
+    comprobar("A comparar 2/3 y 3/4 -> desde F.7: 2/3 < 3/4, con el mismo de abajo",
+              (S("comparar: 2/3 y 3/4"), "el mismo de abajo (F.7)" in t), ("2/3 < 3/4", True))
 
     print("\nB - SIMPLIFICAR, CONTRA EL TESTIGO")
     malos = [(a, b, simplificar(a, b)) for a in range(1, 25) for b in range(1, 25)
@@ -296,7 +298,7 @@ try:
     print("\nI - LO DE ANTES SIGUE IGUAL")
     for texto, esperado in (("3 x 2/5", "1 1/5"), ("2/7 + 3/7", "5/7"), ("3/4 de 12", "9"), ("fraccion: 3/4", "tres cuartos"),
                             ("equivalente: 25 x 16", "400"), ("equivalente: 1000 - 397", "603"), ("12 : 3", "4"),
-                            ("8 + 4 = ? + 5", "7"), ("comparar: 1/3 y 2/3", "1/3 < 2/3"), ("1/4 + 1/2", "todavia_no")):
+                            ("8 + 4 = ? + 5", "7"), ("comparar: 1/3 y 2/3", "1/3 < 2/3"), ("1/4 + 1/2", "3/4")):    # antes ("1/4 + 1/2", "todavia_no"): F.7
         comprobar("I %s -> %s" % (texto, esperado), S(texto), esperado)
 
     print("\nJ - CERCA DEL TECHO, y el TIEMPO (cada pregunta, con su explicacion, en menos de 2 s)")

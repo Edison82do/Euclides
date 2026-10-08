@@ -55,7 +55,8 @@ try:
     comprobar("A6 3/8 - 3/8 -> 0", S("3/8 - 3/8"), "0")
     comprobar("A7 4/7 + 5/7 -> desde F.4 pasa de un entero: 1 2/7", S("4/7 + 5/7"), "1 2/7")
     comprobar("A8 2/7 - 5/7 -> imposible", S("2/7 - 5/7"), "imposible")
-    comprobar("A9 1/2 + 1/4 -> todavia no (5.o)", S("1/2 + 1/4"), "todavia_no")
+    # OBSOLETA POR MEJORA (F.7, 8 oct; NCETM 3.8). Antes: comprobar("A9 1/2 + 1/4 -> todavia no (5.o)", ..., "todavia_no")
+    comprobar("A9 1/2 + 1/4 -> desde F.7, con el mismo de abajo: 3/4", S("1/2 + 1/4"), "3/4")
     comprobar("A10 la vuelta: 5/7 - 3/7 = 2/7", "5/7 - 3/7 = 2/7 ... SI" in t, True)
 
     print("\nB - TODAS LAS CUENTAS a/b + c/b y a/b - c/b (b de 2 a 12) CONTRA EL TESTIGO")

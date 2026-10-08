@@ -796,7 +796,7 @@ fraccion: 4/4                              | un entero | arriba = abajo
 entero: 3/4 es 9                           | 12 | una parte es 3
 comparar: 2/5 y 3/5                        | 2/5 < 3/5 | mismo de abajo
 comparar: 2/3 y 2/5                        | 2/3 > 2/5 | mismo de arriba, al reves
-comparar: 2/3 y 3/5                        | todavia_no | 5.o
+comparar: 2/3 y 3/5                        | 2/3 > 3/5 | MEJORA F.7 (antes todavia_no, 5.o): el mismo de abajo
 fraccion: 5/4                              | cinco cuartos = 1 1/4 | MEJORA F.4 (4.o)
 # ---------------------------------------------------------------------------
 # PASO F.3 - SUMAR Y RESTAR FRACCIONES DENTRO DE UN ENTERO (NCETM 3.4)
@@ -806,7 +806,7 @@ fraccion: 5/4                              | cinco cuartos = 1 1/4 | MEJORA F.4 
 1 - 3/8                                    | 5/8 | 1 = 8/8
 3/8 + 5/8                                  | 1 | un entero
 4/7 + 5/7                                  | 1 2/7 | MEJORA F.4: pasa de un entero
-1/2 + 1/4                                  | todavia_no | distinto abajo
+1/2 + 1/4                                  | 3/4 | MEJORA F.7 (antes todavia_no, distinto abajo): 2/4 + 1/4
 # ---------------------------------------------------------------------------
 # PASO N.3 - EL 1000 Y LOS NUMEROS DE CUATRO CIFRAS (NCETM 1.22; 4.NBT.A)
 # ---------------------------------------------------------------------------
@@ -1055,3 +1055,20 @@ equivalentes: 2/3 y 4/9                    | no | (F.6) arriba x 2 y abajo x 3
 equivalentes: 3/12 y 1/4                   | si | (F.6) la trampa del audit
 comparar: 3/12 y 1/4                       | 3/12 = 1/4 | (F.6) sus numeros mas grandes no la hacen mayor
 2/3 = 8/12                                 | verdadero | (F.6) sin hueco: verdadero o falso
+# ---------------------------------------------------------------------------
+# PASO F.7 - EL MISMO DE ABAJO: SUMAR, RESTAR Y COMPARAR CON DISTINTO DE ABAJO (NCETM 3.8; 5.NF.A.1-2)
+# ---------------------------------------------------------------------------
+1/2 + 1/3                                  | 5/6 | (F.7) no 2/5: 3 x 2 = 6, 3/6 + 2/6
+3/4 - 1/2                                  | 1/4 | (F.7) relacionadas: 3/4 - 2/4; no 2/2
+3/4 + 5/8                                  | 1 3/8 | (F.7) no unitarias relacionadas: 6/8 + 5/8
+1/3 + 1/4                                  | 7/12 | (F.7) no relacionadas: 4/12 + 3/12
+5/6 - 1/3                                  | 1/2 | (F.7) 3/6, simplificada al final
+2/3 + 3/4                                  | 1 5/12 | (F.7) mas de un entero
+1/4 - 1/2                                  | imposible | (F.7) se quita mas de lo que hay
+1/2 - 2/4                                  | 0 | (F.7) lo mismo
+comparar: 2/3 y 3/4                        | 2/3 < 3/4 | (F.7) 8/12 y 9/12; y 6/9 y 6/8
+comparar: 5/8 y 7/12                       | 5/8 > 7/12 | (F.7) no relacionadas
+2 1/2 + 1 1/4                              | 3 3/4 | (F.7) mixtos
+3 1/3 - 1 1/2                              | 1 5/6 | (F.7) mixtos: 20/6 - 9/6
+1/7 + 1/1000                               | 1007/7000 | (F.7) el de abajo comun puede ser grande
+1/2 + 1/13                                 | todavia_no | (F.7) los de abajo de partida: los que tienen nombre

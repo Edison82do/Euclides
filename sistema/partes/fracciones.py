@@ -321,7 +321,6 @@ def explicar_comparar_fracciones(fa, fb, saber):
                                             r["porque"]), "", "RESULTADO: %s" % r["conclusion"]])
     if r["conclusion"] != "hecho":
         return "\n".join(L + ["  TODAVIA NO: %s" % (r.get("porque") or "arriba y abajo son distintos en las dos"),
-                              "  (para ver cual es mayor hace falta el mismo de abajo: NCETM 3.8, el paso siguiente)",
                               "", "RESULTADO: todavia_no"])
     for pid, res in sorted(r.get("todos", []), key=lambda x: x[1]["metodo"]):
         L.append("    %-28s %s" % (res["metodo"] + ":", res["cuenta"]))
@@ -467,10 +466,8 @@ def decidir_cuenta_fracciones(fa, signo, fb, saber=None):
         if p:
             r.update(conclusion=p[0], porque=p[1])
             return r
-    if fa[1] != fb[1]:
-        r.update(conclusion="todavia_no", porque="las partes son de tamanos distintos (1/%d y 1/%d): hay que "
-                 "buscar el mismo de abajo (NCETM 3.8, 5.o)" % (fa[1], fb[1]))
-        return r
+    if fa[1] != fb[1]:                       # F.7 (NCETM 3.8): primero el mismo de abajo
+        return decidir_cuenta_distintas(fa, signo, fb, saber)
     b = fa[1]
     preg = "sumar" if signo == "+" else "restar"
     x = aplicar(preg, {"a": fa[0], "b": fb[0]}, saber)
@@ -498,6 +495,8 @@ def _fr_texto_valor(v, saber=None):
 
 
 def explicar_cuenta_fracciones(fa, signo, fb, saber):
+    if fa is not None and fa[1] != fb[1]:    # F.7 (NCETM 3.8): con distinto de abajo
+        return explicar_cuenta_distintas(fa, signo, fb, saber)
     r = decidir_cuenta_fracciones(fa, signo, fb, saber)
     izq = "1" if fa is None else "%d/%d" % fa
     L = ["PREGUNTA (F.3): %s %s %d/%d  (NCETM 3.4: sumar y restar dentro de un entero)" % (izq, signo, fb[0], fb[1]), ""]
@@ -561,9 +560,15 @@ def decidir_cuenta_mixta(x, op, y, saber=None):
     if saber is None:
         saber = cargar_conocimiento()
     bs = {t[2] for t in (x, y) if t[2] is not None}
-    if len(bs) != 1:
-        return {"conclusion": "todavia_no", "porque": "las partes son de tamanos distintos: hay que buscar el mismo "
-                "de abajo (NCETM 3.8, 5.o)"}
+    if len(bs) != 1:                         # F.7 (NCETM 3.8; 5.NF.A.1): a impropias y el mismo de abajo
+        for t in (x, y):
+            p = _fr_problema(t[1], t[2], saber)
+            if p:
+                return {"conclusion": p[0], "porque": p[1]}
+        fx, fy = (_fr_impropia(x[0], x[1], x[2], saber), x[2]), (_fr_impropia(y[0], y[1], y[2], saber), y[2])
+        r = decidir_cuenta_distintas(fx, op, fy, saber)
+        r["impropias"] = (fx, fy)
+        return r
     b = bs.pop()
     for t in (x, y):
         p = _fr_problema(t[1], b, saber)
@@ -612,6 +617,8 @@ def _fr_texto_termino(t):
 
 def explicar_cuenta_mixta(x, op, y, saber):
     r = decidir_cuenta_mixta(x, op, y, saber)
+    if r.get("distintas"):                   # F.7: con distinto de abajo
+        return explicar_cuenta_distintas(r["impropias"][0], op, r["impropias"][1], saber, mixtos=(x, y))
     L = ["PREGUNTA (F.4): %s %s %s  (NCETM 3.5: numeros mixtos e impropias)" % (_fr_texto_termino(x), op,
                                                                               _fr_texto_termino(y)), ""]
     if r["conclusion"] != "hecho":

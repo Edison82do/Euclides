@@ -68,7 +68,8 @@ try:
     comprobar("A8 3 - 1/4 -> 2 3/4", S("3 - 1/4"), "2 3/4")
     comprobar("A9 comparar 2 1/4 y 1 3/4 -> por los enteros", S("comparar: 2 1/4 y 1 3/4"), "2 1/4 > 1 3/4")
     comprobar("A10 comparar 2 1/4 y 2 3/4 -> por las partes", S("comparar: 2 1/4 y 2 3/4"), "2 1/4 < 2 3/4")
-    comprobar("A11 1/2 + 1/4 -> sigue todavia no (5.o)", S("1/2 + 1/4"), "todavia_no")
+    # OBSOLETA POR MEJORA (F.7, 8 oct; NCETM 3.8). Antes: comprobar("A11 1/2 + 1/4 -> sigue todavia no (5.o)", ..., "todavia_no")
+    comprobar("A11 1/2 + 1/4 -> desde F.7: 3/4", S("1/2 + 1/4"), "3/4")
     comprobar("A12 3 - 1 sigue siendo una resta de enteros", S("3 - 1"), "2")
 
     print("\nB - IMPROPIA <-> MIXTO (b de 2 a 12, hasta 5 enteros), IDA Y VUELTA")
@@ -114,13 +115,11 @@ try:
         y = (rnd.randint(0, 4), rnd.randint(1, b2 - 1), b2)
         fx, fy = x[0] + Fraction(x[1], b), y[0] + Fraction(y[1], b2)
         r = motor.decidir_comparar_mixtos(x, y, SABER)
-        comun = b == b2 or x[1] == y[1]
-        if x[0] != y[0] or comun:
-            if r["conclusion"] != "hecho" or r["valor"] != signo(fx, fy):
-                malos.append((x, y, r.get("valor"), signo(fx, fy)))
-        elif r["conclusion"] == "hecho":
-            malos.append((x, y, "se atrevio"))
-    comprobar("D1 200 parejas: enteros primero; si no, las partes (o todavia no)", malos[:3], [])
+        # OBSOLETA POR MEJORA (F.7, 8 oct; NCETM 3.8): antes, los mismos enteros y las partes sin nada en comun ->
+        # todavia no ("se atrevio" era fallo).  Ahora las partes se comparan con el mismo de abajo: TODAS salen.
+        if r["conclusion"] != "hecho" or r["valor"] != signo(fx, fy):
+            malos.append((x, y, r.get("valor"), signo(fx, fy)))
+    comprobar("D1 200 parejas: enteros primero; si no, las partes (F.7: tambien sin nada en comun)", malos[:3], [])
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 

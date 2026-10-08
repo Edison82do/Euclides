@@ -278,6 +278,15 @@
   error aditivo (sumar lo mismo arriba y abajo), de las *Progressions* 3–5 NF. (La web de NCETM y sus PDF no se abren desde la
   nube, 8 oct: los puntos salen del buscador; falta leer el segmento entero.) → F.6.
 
+- **NCETM 3.8** (*Common denomination: more adding and subtracting*, Year 5). Introducción: sumar y restar fracciones con
+  distinto denominador buscando primero un denominador común, y comparar con varios métodos. Cinco puntos: 1 y 2 sumar y restar
+  fracciones **relacionadas** cambiando una para que tengan el mismo de abajo (el «denominador común»); 3 lo mismo con no
+  unitarias; 4 con las **no relacionadas**, el **producto** de los de abajo sirve; 5 pasarlas a un denominador común es uno de
+  varios métodos para comparar. **Common Core 5.NF.A.1** (2/3 + 5/4 = 8/12 + 15/12 = 23/12; también con mixtos; no hace falta
+  simplificar) y **5.NF.A.2** (estimar con fracciones de referencia: 2/5 + 1/2 = 3/7 está mal porque 3/7 < 1/2). Oak National
+  (por el buscador): «relacionadas» = un de abajo es múltiplo del otro; el error de sumar o restar los de abajo. (La web de NCETM
+  y la de Oak no se abren desde la nube, 8 oct: los puntos salen del buscador; falta leer el segmento entero.) → F.7.
+
 ## Enlaces
 - NCETM 1.29: https://ncetm.org.uk/classroom-resources/primm-129-using-equivalence-and-the-compensation-property-to-calculate/
 - NCETM, guías Upper KS2 (Number, Addition and Subtraction, 15–18): https://ncetm.org.uk/media/8d8533f8648fa18/pvltg_upper_ks2_number_addition_subtraction_pt1_15_to_18.pdf
@@ -341,3 +350,6 @@
 - NCETM, guías Upper KS2 (Fractions, 17–20): https://ncetm.org.uk/media/8d8533f30926e14/pvltg_upper_ks2_fractions_pt1_17_to_20.pdf
 - Common Core 4.NF.A.1: https://www.thecorestandards.org/Math/Content/4/NF/A/1/
 - TeacherVision, equivalentes y forma más simple: https://www.teachervision.com/operations/finding-equivalent-fractions-simplest-form
+- NCETM 3.8: https://www.ncetm.org.uk/classroom-resources/primm-308-common-denomination-more-adding-and-subtracting/
+- Common Core 5.NF.A (Illustrative Mathematics): https://tasks.illustrativemathematics.org/5.NF.html
+- Oak National, fracciones no relacionadas: https://www.thenational.academy/teachers/programmes/maths-primary-ks2/units/addition-and-subtraction-of-fractions/lessons/add-and-subtract-non-related-fractions-with-different-denominators
