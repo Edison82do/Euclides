@@ -78,6 +78,12 @@
   barata entre las aprendidas; una regla general («nadie repite algo cientos de veces si sabe otra manera»)
   en lugar de los topes. Carlos (7 oct): «en el futuro vemos si es necesario; si no, no».
 
+## ⏸️ AHORA: EL PLAN U (8 oct) — leerlo ENTERO antes de nada
+El avance por años está en PAUSA. Se trabaja el **plan U** (`diario/2026-10-08-PLAN-U-volverlo-universal.md`),
+una fase por sesión, en orden. Regla de oro del plan: **prohibido memorizar problemas o familias de problemas**;
+solo relaciones generales (datos), operadores generales (piezas) y búsqueda con control. Nada viejo cambia de
+respuesta; lo nuevo, con pocas pruebas representativas. Si la batería tarda demasiado, `--parte 1/3`, `2/3`, `3/3`.
+
 ## Dónde se quedó (8 oct 2026)
 Hecho hasta **S.3 problemas con dos incógnitas** (NCETM 1.31, Year 6): `a + b = 30; a - b = 8` con la barra (quitar la
 diferencia y repartir en dos), suma y múltiplo (3 + 1 = 4 trozos), diferencia y múltiplo, probar en orden (tope de 30 pruebas

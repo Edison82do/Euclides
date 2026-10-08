@@ -335,3 +335,9 @@ típicos, para diseñar las pruebas de dominio con eso.**
   (y sigue: 6.2 agrupar de diez → 6.6 calcular con decenas y unidades).
 - **(3 oct 2026) No hay atajos de sintaxis que parezcan notación de otro nivel** (p. ej. rangos `a..j`
   para no escribir los objetos: se escriben uno a uno).
+
+## ⏸️ PAUSA DEL AVANCE POR AÑOS (8 oct, decisión de Carlos): PLAN U — volver universal lo que ya sabe
+Antes de seguir con NCETM 2.23, se hace universal lo que hay: una representación común (cantidades, relaciones, lo
+que se pide), un lector único, un buscador con control y un examen de transferencia con problemas no vistos.
+Plan entero: `diario/2026-10-08-PLAN-U-volverlo-universal.md`. Fases: U.1 el modelo y el lector simbólico · U.2
+buscar con control · U.3 el lector de palabras · U.4 una sola tabla de puertas · U.5 el examen de transferencia.

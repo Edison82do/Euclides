@@ -306,6 +306,14 @@
   (por el buscador): «relacionadas» = un de abajo es múltiplo del otro; el error de sumar o restar los de abajo. (La web de NCETM
   y la de Oak no se abren desde la nube, 8 oct: los puntos salen del buscador; falta leer el segmento entero.) → F.7.
 
+- **El plan U (volver universal lo que sabe; 8 oct)** se apoya en: Riley, Greeno y Heller (1983), los esquemas de
+  cambio, combinación y comparación; Mayer (1992) y Passolunghi y otros (1996), las fases traducir, integrar
+  (modelo de la situación), planear, ejecutar y comprobar; Bakman (2007, arXiv math/0701393), leer con robustez
+  frente a frases reordenadas e información que sobra; Bobrow (1964), STUDENT, frases núcleo → ecuaciones; Roy y
+  Roth (2015, arXiv 1608.01413), componer árboles de expresiones sin plantillas; Newell y Simon, GPS y el análisis
+  de medios y fines; Pólya, *How to Solve It*; Schoenfeld (1979), las heurísticas no bastan sin el CONTROL (cuándo
+  usar cada una). → diario/2026-10-08-PLAN-U-volverlo-universal.md
+
 ## Enlaces
 - NCETM 1.29: https://ncetm.org.uk/classroom-resources/primm-129-using-equivalence-and-the-compensation-property-to-calculate/
 - NCETM, guías Upper KS2 (Number, Addition and Subtraction, 15–18): https://ncetm.org.uk/media/8d8533f8648fa18/pvltg_upper_ks2_number_addition_subtraction_pt1_15_to_18.pdf
