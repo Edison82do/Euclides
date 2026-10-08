@@ -320,8 +320,9 @@ def explicar_comparar_fracciones(fa, fb, saber):
         return "\n".join(L + ["  %s: %s" % ("NO SE PUEDE" if r["conclusion"] == "imposible" else "TODAVIA NO",
                                             r["porque"]), "", "RESULTADO: %s" % r["conclusion"]])
     if r["conclusion"] != "hecho":
-        return "\n".join(L + ["  TODAVIA NO: arriba y abajo son distintos en las dos; para compararlas hay que "
-                              "buscar fracciones equivalentes (NCETM 3.7, 5.o)", "", "RESULTADO: todavia_no"])
+        return "\n".join(L + ["  TODAVIA NO: %s" % (r.get("porque") or "arriba y abajo son distintos en las dos"),
+                              "  (para ver cual es mayor hace falta el mismo de abajo: NCETM 3.8, el paso siguiente)",
+                              "", "RESULTADO: todavia_no"])
     for pid, res in sorted(r.get("todos", []), key=lambda x: x[1]["metodo"]):
         L.append("    %-28s %s" % (res["metodo"] + ":", res["cuenta"]))
     if len(r.get("todos", [])) > 1:

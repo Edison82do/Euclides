@@ -337,3 +337,10 @@ equivalente: 7.2 - 3.9            | 3.3             | P.7: con decimales, 7.3 - 
 si 600 - 200 = 400: 600 - 201 = ? | 399             | P.7: el sustraendo sube, la diferencia BAJA
 verdad: 75 - 28 = 73 - 30         | falso           | P.7: sin calcular, la diferencia baja 4
 74 - 28 = 75 - ?                  | 29              | P.7: no 27
+simplificar: 12/18                | 2/3             | F.6: paso a paso (6/9 y luego 2/3)
+simplificar: 3/4                  | 3/4             | F.6: ya es la forma mas simple
+equivalentes: 2/3                 | ??              | F.6: la familia, con las tiras
+2/3 = ?/12                        | 8               | F.6: de 3 a 12 es x 4
+4/12 = 5/?                        | 15              | F.6: la relacion vertical (x 3)
+equivalentes: 2/3 y 3/4           | no              | F.6: sumar lo mismo NO da una equivalente
+comparar: 3/12 y 1/4              | 3/12 = 1/4      | F.6: no es mayor por tener numeros mas grandes

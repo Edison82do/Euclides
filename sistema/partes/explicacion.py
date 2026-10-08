@@ -755,6 +755,8 @@ def explicar_pregunta(texto, saber=None):
             return explicar_piezas(saber)
         if es_orden_factores(t):
             return explicar_orden_factores(t, saber)
+        if es_orden_equivalentes(t):                 # fracciones equivalentes y simplificar (F.6; NCETM 3.7)
+            return explicar_orden_equivalentes(t, saber)
         if es_orden_combinar(t):
             return explicar_orden_combinar(t, saber)
         if es_orden_parte_todo(t, saber):

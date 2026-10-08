@@ -82,9 +82,14 @@ try:
                     malos.append((x, y, r.get("valor"), esperado))
             else:
                 otras += 1
-                if r["conclusion"] == "hecho":
+                # OBSOLETA POR MEJORA (F.6, 8 oct; NCETM 3.7): antes, sin nada en comun -> nunca se atrevia.
+                # Ahora, si son EQUIVALENTES (1/2 y 2/4) dice '=' simplificando las dos; si no, sigue sin atreverse.
+                if Fraction(*x) == Fraction(*y):
+                    if r["conclusion"] != "hecho" or r["valor"] != "=":
+                        malos.append((x, y, "equivalentes y no dijo '='", r.get("valor")))
+                elif r["conclusion"] == "hecho":
                     malos.append((x, y, "se atrevio", r.get("valor")))
-    comprobar("B1 %d parejas bien, con dos caminos o mas; %d sin nada en comun -> no se atreve" % (n, otras),
+    comprobar("B1 %d parejas bien, con dos caminos o mas; %d sin nada en comun -> no se atreve (salvo las equivalentes: '=', F.6)" % (n, otras),
               malos[:3], [])
 
     print("\nC - a/b DE n (muestra)")

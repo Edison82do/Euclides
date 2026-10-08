@@ -474,6 +474,19 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         12 x 3/4               -> 9       y la otra lectura: 3/4 de 12 (repartir en 4, tomar 3)
         2/3 x 3/4              -> todavia_no (fraccion por fraccion: 6.o)
 
+  FRACCIONES EQUIVALENTES  ->  valen lo mismo; SIMPLIFICAR (paso F.6; NCETM 3.7; 4.NF.A.1)
+        simplificar: 12/18     -> 2/3     paso a paso: 6/9 (entre 2), 2/3 (entre 3); no se queda en 6/9
+        simplificar: 5/20      -> 1/4     el 5 cabe justo en el 20: de una vez;   simplificar: 3/4 -> 3/4 (ya lo es)
+        simplificar: 26/39     -> 2/3     el factor comun 13 no es de las tablas: los "trozos grandes" (13 y 13)
+        equivalentes: 2/3      -> 2/3 = 4/6 = 6/9 = 8/12 = 10/15 = 12/18   (arriba y abajo POR EL MISMO; con tiras)
+        2/3 = ?/12             -> 8       la relacion horizontal: de 3 a 12 es x 4
+        4/12 = 5/?             -> 15      la relacion vertical: en 4/12 el de abajo es 3 veces el de arriba
+        4/6 = ?/9              -> 6       simplificar primero: 2/3, y de 3 a 9 es x 3;   2/3 = ?/10 -> no_sale
+        equivalentes: 2/3 y 3/4  -> no    sumar lo mismo arriba y abajo NO da una equivalente (hay que multiplicar)
+        equivalentes: 3/12 y 1/4 -> si    (y comparar: 3/12 y 1/4 -> 3/12 = 1/4: sus numeros mas grandes no la hacen mayor)
+        2/3 = 8/12             -> VERDADERO
+        Cada respuesta se comprueba: multiplicando de vuelta, o simplificando las dos a la misma.
+
   AREA Y PERIMETRO  ->  la superficie y el borde (paso G.1; NCETM 2.16; 3.MD.C.7, 3.MD.D.8)
         area: rectangulo 5 x 3       -> 15 unidades cuadradas  (3 filas de 5 cuadraditos = 5 x 3)
         perimetro: rectangulo 5 x 3  -> 16   (5 + 3 + 5 + 3: el borde, en unidades de longitud)
@@ -756,6 +769,12 @@ def preguntar(texto, saber):
             if salida.startswith("NO ENTIENDO"):
                 return "no_entiendo", None
             return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
+        if motor.es_orden_equivalentes(t):                 # fracciones equivalentes y simplificar (F.6; NCETM 3.7)
+            salida = motor.explicar_orden_equivalentes(t, saber)
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            r = salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip()
+            return ({"VERDADERO": "verdadero", "FALSO": "falso"}.get(r, r)), None
         if motor.es_orden_combinar(t):                     # x con + y - (M.16): antes que calcular: y verdad:
             salida = motor.explicar_orden_combinar(t, saber)
             if salida.startswith("NO ENTIENDO"):
@@ -1421,6 +1440,8 @@ def como_problema(texto):
     if motor.es_orden_parte_todo(t):                      # parte-parte-todo (S.2): el '?' es la parte que falta
         return t
     if motor.es_orden_derivar(t):                         # si 600 - 200 = 400: 600 - 201 = ? (P.7): no es una ecuacion
+        return t
+    if motor.es_orden_equivalentes(t):                    # 2/3 = ?/12 y 2/3 = 8/12 (F.6): fracciones, no una ecuacion
         return t
     if "=" in t and any(h in t for h in ("?", "_", "\u25a1")):   # una ECUACION con hueco (E.1, E.4)
         return "ecuacion: " + t

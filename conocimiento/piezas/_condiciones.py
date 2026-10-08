@@ -12,6 +12,32 @@ IMPOSIBLE" (quitar mas de lo que hay).  Entonces el problema no tiene solucion, 
 """
 
 
+# ---- fracciones equivalentes y simplificar (paso F.6; NCETM 3.7)
+def _f6_cabe_justo(s, u):
+    """El mas pequeno de los dos (arriba o abajo) se reparte justo en el otro?  Se mira DIVIDIENDO (M.3/M.8).
+    Si no se sabe hacer esa division, no encaja."""
+    a, b = s.get("a"), s.get("b")
+    if not isinstance(a, int) or not isinstance(b, int) or 0 in (a, b):
+        return False
+    pa, pb = u.decir(a), u.decir(b)
+    chico, grande = (b, a) if u.viene_despues(pa, pb) else (a, b)
+    try:
+        r = u.usar("dividir", total=grande, divisor=chico)
+    except Exception:
+        return False
+    return not r["resultado"].get("resto", 0)
+
+
+def _f6_un_hueco(s):
+    """{"completa": (p, q), "con_hueco": (x, y)}: la completa sin hueco y la otra con UN hueco (None)."""
+    c, h = s.get("completa"), s.get("con_hueco")
+    if not (isinstance(c, tuple) and isinstance(h, tuple) and len(c) == 2 and len(h) == 2):
+        return False
+    if None in c or 0 in c:
+        return False
+    return [v is None for v in h].count(True) == 1 and 0 not in h
+
+
 # ---- usar la equivalencia (paso M.12; NCETM 2.18)
 def _eq_sin_ceros_acaba_en_5(n, u):
     c = u.cifras_de(n)
@@ -500,6 +526,11 @@ CONDICIONES = {
     "mismo_denominador": lambda s, u: s["a"][1] == s["b"][1],
     "mismo_numerador": lambda s, u: s["a"][0] == s["b"][0],
     "comparten_arriba_o_abajo": lambda s, u: s["a"][0] == s["b"][0] or s["a"][1] == s["b"][1],
+    # ---- fracciones equivalentes y simplificar (paso F.6; NCETM 3.7): {"a": arriba, "b": abajo}
+    "ninguno_es_uno": lambda s, u: s.get("a") != 1 and s.get("b") != 1,
+    "el_pequeno_cabe_justo_en_el_grande": lambda s, u: _f6_cabe_justo(s, u),
+    "hay_un_hueco_y_una_fraccion_completa": lambda s, u: _f6_un_hueco(s),
+    "no_comparten_arriba_ni_abajo": lambda s, u: s["a"][0] != s["b"][0] and s["a"][1] != s["b"][1],
     # ---- usar la equivalencia (paso M.12; NCETM 2.18)
     "un_factor_acaba_en_cinco_y_el_otro_es_par": lambda s, u: _eq_doblar_y_partir(s, u),
     "se_puede_escalar_la_division": lambda s, u: _eq_escalar_division(s, u),

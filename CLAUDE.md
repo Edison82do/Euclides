@@ -72,9 +72,9 @@
   no puede comprobarlo dividiendo): podría comprobarlo multiplicando en otro orden. `101 x 100 x 100`
   dice «todavía no» cuando debería decir que se pasa del millón.
 
-## Dónde se quedó (7 oct 2026)
-Hecho hasta **P.7 usar la equivalencia y la compensación para calcular, con + y −** (NCETM 1.29). Antes: S.2 parte-parte-todo con
-tres partes o más (NCETM 1.28), M.16 combinar la multiplicación con la suma y la resta (NCETM 2.22). Siguiente en el orden de
-NCETM, 5.º (Year 5): **2.23** (su título no se pudo ver desde la nube: mirarlo en el índice de NCETM); y en Spine 3: 3.7 fracciones
-equivalentes, 3.8 denominador común… (La división combinada con + y - es 2.28, de 6.º.) La balanza y `verdad:` con decimales:
-todavía no (solo enteros).
+## Dónde se quedó (8 oct 2026)
+Hecho hasta **F.6 fracciones equivalentes y simplificar** (NCETM 3.7). Antes: P.7 la compensación con + y − (NCETM 1.29), S.2
+parte-parte-todo con tres partes o más (NCETM 1.28). Siguiente en el orden de NCETM, 5.º (Year 5): en Spine 3, **3.8 el
+denominador común** (comparar y sumar fracciones con el mismo de abajo); en Spine 2, **2.23** (su título no se pudo ver desde la
+nube: mirarlo en el índice de NCETM). (La división combinada con + y - es 2.28, de 6.º.) La balanza y `verdad:` con decimales:
+todavía no (solo enteros). `comparar:` de fracciones sigue limitado a medios…doceavos, décimos, centésimos y milésimos.

@@ -53,6 +53,10 @@ OBJETIVOS = {
                         "que_es": "esta cerca de un redondo (100, 1000...)? cuanto le falta o le sobra (NCETM 1.29)"},
     "derivar": {"elige": "la_mas_rapida",
                 "que_es": "sacar una suma o resta nueva de una que ya se sabe (NCETM 1.29, puntos 2, 4 y 5)"},
+    "simplificar_fraccion": {"elige": "la_mas_rapida",
+                             "que_es": "la forma mas simple de una fraccion (NCETM 3.7, punto 3): 12/18 = 2/3"},
+    "hueco_equivalente": {"elige": "la_mas_rapida",
+                          "que_es": "el numero que falta en dos fracciones equivalentes (NCETM 3.7, punto 2): 2/3 = ?/12"},
     "contar_hasta": {"elige": "la_mas_rapida",
                      "que_es": "cuantos pasos hay de un numero a otro (el hueco, 5.5)"},
 }

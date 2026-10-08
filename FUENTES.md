@@ -266,6 +266,18 @@
   (625 − 398 = 625 − 400 + 2). (La web de NCETM y sus PDF no se abren desde la nube, 7 oct: los puntos salen del índice del
   buscador; falta leer los archivos de Year 5.) → P.7.
 
+- **NCETM 3.7** (*Finding equivalent fractions and simplifying fractions*, Year 5). Tres puntos: 1 fracciones con distinto
+  arriba y abajo que valen lo mismo son equivalentes; 2 la relación multiplicativa entre arriba y abajo se mantiene: se generan
+  multiplicando o dividiendo los dos por el mismo número; 3 simplificar: dividir arriba y abajo entre un factor común. **Guías de
+  Upper KS2, *Fractions*** (lecciones 1–6, 7–11, 17–20; resúmenes): la relación horizontal (de una a otra) y la vertical (dentro
+  de cada una, ligada a las tablas); familias primero de unitarias, luego de no unitarias; el aviso de creer que solo las
+  unitarias están en su forma más simple; elegir la estrategia eficiente para simplificar. **Audit de conocimiento de NCETM
+  (fracciones)**: multiplican la fracción en vez de ver que vale lo mismo; creen que 3/12 es mayor que 1/4; familias explicando
+  la relación, no siguiendo el patrón. **Common Core 4.NF.A.1** (a/b = (n × a)/(n × b), con modelos; denominadores 2, 3, 4, 5, 6,
+  8, 10, 12, 100). La forma más simple: el único factor común es el 1 (TeacherVision; TeachableMath: decir «simplificar»). El
+  error aditivo (sumar lo mismo arriba y abajo), de las *Progressions* 3–5 NF. (La web de NCETM y sus PDF no se abren desde la
+  nube, 8 oct: los puntos salen del buscador; falta leer el segmento entero.) → F.6.
+
 ## Enlaces
 - NCETM 1.29: https://ncetm.org.uk/classroom-resources/primm-129-using-equivalence-and-the-compensation-property-to-calculate/
 - NCETM, guías Upper KS2 (Number, Addition and Subtraction, 15–18): https://ncetm.org.uk/media/8d8533f8648fa18/pvltg_upper_ks2_number_addition_subtraction_pt1_15_to_18.pdf
@@ -323,3 +335,9 @@
 - NCETM Spine 3 (fracciones): https://ncetm.org.uk/teaching-for-mastery/mastery-materials/primary-mastery-professional-development/fractions/
 - NCETM Spine 1: https://ncetm.org.uk/teaching-for-mastery/mastery-materials/primary-mastery-professional-development/number-addition-and-subtraction/
 - NCETM Spine 2: https://ncetm.org.uk/teaching-for-mastery/mastery-materials/primary-mastery-professional-development/multiplication-and-division/
+- NCETM 3.7: https://ncetm.org.uk/classroom-resources/primm-307-finding-equivalent-fractions-and-simplifying-fractions/
+- NCETM, guías Upper KS2 (Fractions, 1–6): https://www.ncetm.org.uk/media/8d8533f1634a4e9/pvltg_upper_ks2_fractions_pt1_1_to_6.pdf
+- NCETM, guías Upper KS2 (Fractions, 7–11): https://www.ncetm.org.uk/media/8d8533f1fc305e8/pvltg_upper_ks2_fractions_pt1_7_to_11.pdf
+- NCETM, guías Upper KS2 (Fractions, 17–20): https://ncetm.org.uk/media/8d8533f30926e14/pvltg_upper_ks2_fractions_pt1_17_to_20.pdf
+- Common Core 4.NF.A.1: https://www.thecorestandards.org/Math/Content/4/NF/A/1/
+- TeacherVision, equivalentes y forma más simple: https://www.teachervision.com/operations/finding-equivalent-fractions-simplest-form

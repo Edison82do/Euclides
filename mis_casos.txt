@@ -1038,3 +1038,20 @@ verdad: 75 - 28 = 77 - 30                  | verdadero | (P.7) los dos suben 2
 verdad: 75 - 28 = 73 - 30                  | falso | (P.7) la diferencia baja 4
 ecuacion: 74 - 28 = 75 - ?                 | 29 | (P.7) no 27 (compensar como en la suma)
 ecuacion: 50 - 19 = ? - 20                 | 51 | (P.7) los dos suben 1
+simplificar: 12/18                         | 2/3 | (F.6) no se queda en 6/9
+simplificar: 5/20                          | 1/4 | (F.6) el 5 cabe justo en el 20: de una vez
+simplificar: 3/4                           | 3/4 | (F.6) ya es la mas simple (no solo las unitarias)
+simplificar: 26/39                         | 2/3 | (F.6) el 13 no es de las tablas: los trozos grandes
+simplificar: 12/4                          | 3 | (F.6) una impropia que es un entero
+simplificar: 5/0                           | imposible | (F.6) cero partes
+simplificar: 500000/1000000                | 1/2 | (F.6) cerca del techo
+equivalentes: 2/3                          | 2/3 = 4/6 = 6/9 = 8/12 = 10/15 = 12/18 | (F.6) la familia
+2/3 = ?/12                                 | 8 | (F.6) la relacion horizontal
+4/12 = 5/?                                 | 15 | (F.6) la relacion vertical
+4/6 = ?/9                                  | 6 | (F.6) simplificar primero
+2/3 = ?/10                                 | no_sale | (F.6) no hay entero
+equivalentes: 2/3 y 3/4                    | no | (F.6) sumar 1 arriba y abajo no es multiplicar
+equivalentes: 2/3 y 4/9                    | no | (F.6) arriba x 2 y abajo x 3
+equivalentes: 3/12 y 1/4                   | si | (F.6) la trampa del audit
+comparar: 3/12 y 1/4                       | 3/12 = 1/4 | (F.6) sus numeros mas grandes no la hacen mayor
+2/3 = 8/12                                 | verdadero | (F.6) sin hueco: verdadero o falso
