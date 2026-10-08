@@ -1355,7 +1355,7 @@ def leer_casos(ruta):
     return casos
 
 
-def correr_mis_casos(saber, mostrar_todo=False, archivo=None, flexible=False):
+def correr_mis_casos(saber, mostrar_todo=False, archivo=None, flexible=False, trozo=None):
     archivo = archivo or ARCHIVO_CASOS
     if not os.path.exists(archivo):
         print("No encuentro el archivo %s" % archivo)
@@ -1368,6 +1368,8 @@ def correr_mis_casos(saber, mostrar_todo=False, archivo=None, flexible=False):
         print("No hay casos todavia.  Abre mis_casos.txt y anade lineas.\n")
         return 0, 0
 
+    if trozo:                                      # (k, n): solo los casos k, k+n, k+2n... (la bateria en paralelo)
+        casos = casos[trozo[0]::trozo[1]]
     bien = fallos = 0
     for c in casos:
         if flexible:
@@ -1483,7 +1485,11 @@ def main(argv):
         return 1 if fallos else 0
 
     if len(argv) >= 2 and argv[1] == "--casos":
-        bien, fallos = correr_mis_casos(saber, mostrar_todo=True)
+        trozo = None
+        if len(argv) >= 4 and argv[2] == "--trozo":          # --casos --trozo 0/4  (lo usa correr_todas.py)
+            k, _, n = argv[3].partition("/")
+            trozo = (int(k), int(n))
+        bien, fallos = correr_mis_casos(saber, mostrar_todo=True, trozo=trozo)
         return 1 if fallos else 0
 
     # 'ayuda' como argumento tambien tiene que dar la ayuda (antes lo tomaba por una ESCENA y

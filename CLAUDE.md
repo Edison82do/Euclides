@@ -42,6 +42,8 @@
 
 ## Comandos
 - Batería entera: `python3 pruebas/correr_todas.py` (≈1 min; debe salir todo en verde).
+  Si el entorno corta los comandos largos (≈3 min), se corre en dos mitades seguidas:
+  `python3 pruebas/correr_todas.py --parte 1/2` y luego `--parte 2/2` (los casos van en la última).
 - Casos de Carlos: `python3 probar.py --archivo mis_pruebas.txt`;  casos: `python3 probar.py --casos`.
 - Una pregunta: `python3 probar.py "recta: 3 - 8"`.
 
