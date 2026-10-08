@@ -746,11 +746,10 @@ def explicar_pregunta(texto, saber=None):
     if es_orden_resolver(t):                         # el resolvedor universal (plan U, fase U.1)
         return explicar_orden_resolver(t, saber)
     salida = _explicar_por_las_puertas(t, saber)
-    if salida.startswith("NO ENTIENDO") and es_expresion_simbolica(t):
-        nueva = explicar_orden_resolver(t, saber)
-        if not nueva.startswith("NO ENTIENDO") and nueva.strip().splitlines()[-1].startswith("RESULTADO: ") \
-                and decidir_resolver(t, saber)["conclusion"] == "hecho":
-            return "(la puerta vieja decia: NO ENTIENDO; lo lee el lector simbolico, U.1)\n\n" + nueva
+    vieja = _u_la_puerta_no_llega(salida)
+    if vieja and _u_le_toca_al_resolvedor(t, vieja, saber):
+        return "(la puerta vieja decia: %s; lo lee el lector simbolico y lo resuelve el resolvedor, U.1-U.2)\n\n%s" % (
+            vieja.upper().replace("_", " "), explicar_orden_resolver(t, saber))
     return salida
 
 

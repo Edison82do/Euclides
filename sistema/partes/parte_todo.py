@@ -12,7 +12,8 @@ NCETM 1.28 (Common structures and the part-part-whole relationship):
   punto 4: contextos muy distintos tienen la misma estructura de parte que falta.
 Las cuentas las hacen las piezas de 'todo_de_las_partes' y 'parte_del_todo'.  Aqui solo se LEE la orden
 (con las palabras del contexto, de conocimiento/parte_parte_todo.kn), se dibuja la barra, se pregunta a las
-piezas y se explica.
+piezas y se explica.  Desde U.2 (plan U) es tambien un TRADUCTOR AL MODELO: la orden se dice como una relacion
+(todo = parte + parte + ...) y el resolvedor universal la resuelve como otra estrategia, que tiene que coincidir.
 """
 
 import re
@@ -277,12 +278,36 @@ def explicar_parte_todo(texto, saber):
         if v is not None:
             L.append("     OTRA ESTRATEGIA (%s): sale %s ... %s" % (
                 otra, v, "LO MISMO: la estructura no cambia" if v == r["valor"] else "NO COINCIDE, algo esta mal"))
+    L += _pt_el_modelo(r, saber)
     if r["falta"] == "parte" and not r["iguales"]:
         L += _pt_errores(r, saber)
     if r["vuelta"]:
         L.append("  COMPRUEBO con la operacion contraria: %s ... SI" % r["vuelta"])
     ver = "cada parte: " if r["iguales"] and r["falta"] == "parte" else ""
     return "\n".join(L + ["", "RESULTADO: %s%s" % (ver, _pt_con_unidad(r["valor"], unidad))])
+
+
+def _pt_modelo(r):
+    """TRADUCTOR AL MODELO (U.2, plan U): la orden de parte-parte-todo es UNA relacion del modelo:
+    todo = parte + parte + ...  (el ? es lo que falta; las partes iguales que faltan son la MISMA letra, p)."""
+    falta = "p" if r["iguales"] else "?"
+    partes = [falta if p is None else _pt_normal(p) for p in r["partes"]]
+    return "%s = %s" % ("?" if r["todo"] is None else _pt_normal(r["todo"]), " + ".join(partes))
+
+
+def _pt_el_modelo(r, saber):
+    """La otra estrategia: el resolvedor universal con el modelo; tiene que salir LO MISMO."""
+    texto = _pt_modelo(r)
+    try:
+        u = decidir_resolver(texto, saber)
+        if u["conclusion"] != "hecho" or len(u.get("valores") or {}) != 1:
+            return []
+        v = list(u["valores"].values())[0]
+        igual = _nu_iguales(v, _nu_leer(r["valor"]), saber)
+    except Exception:
+        return []
+    return ["     OTRA ESTRATEGIA (el MODELO, U.2: %s; el resolvedor universal): sale %s ... %s" % (
+        texto, _nu_texto(v), "LO MISMO: la estructura no cambia" if igual else "NO COINCIDE, algo esta mal")]
 
 
 def _pt_errores(r, saber):

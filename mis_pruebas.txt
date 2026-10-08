@@ -369,3 +369,8 @@ resolver: a + b = 1/2; a - b = 1/4 | a = 3/8, b = 1/8 | U.1: sustituir a = 1/2 -
 x + y + z = 40; x = y; z = 2 x y  | x = 10, y = 10, z = 20 | U.1: 1 + 1 + 2 = 4 trozos de y
 1/2 + 0.25                        | 3/4             | U.1: 0.25 = 1/4; el mismo de abajo (= 0.75)
 -3 + 2 x 4                        | 5               | U.1: primero el x (no -1 x 4)
+resolver: a + b = 30; a - b = 8   | a = 19, b = 11  | U.2: juntar (restar las dos: [b][b] = 22)
+resolver: n x n = 49              | n = 7           | U.2: probar en orden; con 8 ya me paso
+resolver: a x b = 24; a + b = 10  | a = 6, b = 4; a = 4, b = 6 | U.2: probar en orden (el tope lo pone la suma)
+x + y + z = 12; x - y = 2; x x y = 15 | x = 5, y = 3, z = 4 | U.2: la puerta vieja decia todavia no
+3/4 de 20                         | 15              | U.2: 'de' es por

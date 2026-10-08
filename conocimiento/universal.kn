@@ -1,5 +1,5 @@
 id: universal
-nombre: El resolvedor universal - el modelo, el numero comun y los operadores (plan U, fase U.1)
+nombre: El resolvedor universal - el modelo, el numero comun y los operadores (plan U, fases U.1 y U.2)
 tipo: concepto
 categoria: FIJADO
 definicion: |
@@ -29,10 +29,29 @@ definicion: |
   REGLA FIJADA 6 - EL PRESUPUESTO.  Un humano no da cien vueltas: si se pasa de los pasos de abajo, todavia no,
   diciendo hasta donde llego.  Si faltan relaciones (mas letras que datos), todavia no (U.2: infinitas, probar
   en orden).
+
+  U.2 - BUSCAR CON CONTROL (diario/2026-10-08-paso-U2-buscar-con-control.md).
+
+  REGLA FIJADA 7 - JUNTAR RELACIONES.  Dos relaciones en las que una letra tiene los MISMOS trozos se restan (contrarios,
+  se suman; K veces, se quita K veces): la letra se va (NCETM 1.31: quitar la diferencia).
+
+  REGLA FIJADA 8 - REESCRIBIR.  Un BLOQUE que ya se sabe se cambia por su numero ((x + y) x z = 21 con x + y = 7);
+  si todos los trozos y lo suelto se reparten justo entre lo mismo, se saca FACTOR COMUN (2 x a + 2 x b = 20 es dos
+  veces a + b = 10).
+
+  REGLA FIJADA 9 - PROBAR EN ORDEN.  Si nada baja las letras, se prueba desde el 0 la letra que menos pruebas pide; el
+  TOPE lo pone una relacion hecha de + y x: si con las demas en lo mas pequeno ya se pasa, con mas se pasaria mas, y se
+  para.  Con numeros para contar; una, varias o ninguna.  Mas pruebas que el tope de abajo: todavia no.
+
+  REGLA FIJADA 10 - EL CONTROL (medios y fines).  En cada vuelta se miran todos los operadores que encajan: se elige el
+  que deja menos letras; si empatan, el que no pone una letra dividiendo o por otra, y el mas barato (los costes, abajo).
+
 errores_tipicos:
   - Mezclar 1/2 + 0.25 sin pasarlos a lo mismo (1.25/2, 1/2.25).
   - Hacer -3 + 2 x 4 de izquierda a derecha (-1 x 4 = -4): primero el x.
   - Comprobar en las relaciones transformadas en vez de en las de partida (un error al transformar no se ve).
+  - Probar en orden sin saber cuando parar (o probar cien veces): el tope dice cuando ya se pasa.
+  - Sumar las dos relaciones cuando lo que se va es restandolas (a + b = 30; a - b = 8: restando se va la a).
 fuentes:
   - Mayer (1992); Kintsch y Greeno (1985): traducir, integrar en un modelo, planear, ejecutar, comprobar.
   - Polya, Como plantear y resolver problemas: trabajar hacia atras.
@@ -41,3 +60,13 @@ fuentes:
     5.NF.B.3-7 (fraccion como division; multiplicar y dividir fracciones), 6.NS.A.1 (dividir entre una fraccion).
 
 presupuesto_de_pasos: 20
+
+# U.2 - EL CONTROL (medios y fines): lo que CUESTA cada operador.  Se elige el que deja menos letras; si empatan, el
+# mas barato.  Probar en orden solo si no hay otro, con un tope de pruebas (un humano no prueba cien veces).
+coste_calcular: 1
+coste_sustituir_sola: 2
+coste_reescribir: 2
+coste_juntar: 3
+coste_juntar_veces: 3
+coste_sustituir_aislando: 4
+tope_de_pruebas: 30

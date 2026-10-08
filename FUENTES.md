@@ -323,6 +323,13 @@
   3.7–3.8 (equivalentes, el mismo de abajo), 1.27 (negativos) y 1.31 (la barra: contar trozos). (Las webs de NCETM siguen
   sin abrirse desde la nube; se usan los puntos ya recogidos en los pasos anteriores.) → U.1.
 
+- **La fase U.2 (buscar con control; 8 oct)** usa las del plan U: **Newell y Simon** (GPS, medios y fines: el operador
+  que más reduce la diferencia; aquí, las letras que faltan), **Schoenfeld (1979)** (el CONTROL: elegir cuándo, primero
+  lo barato, presupuesto), **Pólya** (problema auxiliar: un bloque que ya se sabe; simplificar), **NCETM 1.31** puntos
+  3–5 (la barra; con la suma y la diferencia, quitar la diferencia = juntar dos relaciones; lo que no se dibuja, probar en
+  orden de forma sistemática: una, varias o ninguna), NCETM 2.20–2.22 y M.12 (la distributiva: sacar factor común), F.6
+  (simplificar repartiendo todo entre lo mismo) y **F.1 / 5.NF.B.4** («3/4 de 20» = 3/4 x 20). → U.2.
+
 ## Enlaces
 - NCETM 1.29: https://ncetm.org.uk/classroom-resources/primm-129-using-equivalence-and-the-compensation-property-to-calculate/
 - NCETM, guías Upper KS2 (Number, Addition and Subtraction, 15–18): https://ncetm.org.uk/media/8d8533f8648fa18/pvltg_upper_ks2_number_addition_subtraction_pt1_15_to_18.pdf

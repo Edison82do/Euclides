@@ -165,7 +165,8 @@ try:
 
     print("\nF - EL PROBADOR")
     comprobar("F1 preguntar '3 x 4 - 5 = c' -> 7", probar.preguntar("3 x 4 - 5 = c", SABER)[0], "7")
-    comprobar("F2 preguntar 'n + n = 10' -> todavia_no", probar.preguntar("n + n = 10", SABER)[0], "todavia_no")
+    comprobar("F2 preguntar 'n + n = 10' -> E.5 todavia no; el resolvedor (U.2) cuenta 2 trozos",
+              probar.preguntar("n + n = 10", SABER)[0], "n = 5")
     t = motor.explicar_pregunta("3 x n + 2 = 14", SABER)
     comprobar("F3 la explicacion deshace y comprueba",
               ("DESHACER" in t, "COMPRUEBO" in t, t.strip().splitlines()[-1]), (True, True, "RESULTADO: n = 4"))

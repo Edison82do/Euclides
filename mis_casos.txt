@@ -767,7 +767,7 @@ divisible: 50 entre 7                      | no | sobra 1
 3 x n + 2 = 14                             | 4 | deshacer
 x + 5 = 12                                 | 7 | la x es letra
 20 - 2 x n = 8                             | 6 | deshacer
-n + n = 10                                 | todavia_no | la letra dos veces
+n + n = 10                                 | n = 5 | la letra dos veces: E.5 todavia no; el resolvedor cuenta 2 trozos (U.2)
 3 x n + 2 = 13                             | no_sale | no hay entero
 # ---------------------------------------------------------------------------
 # PASO N.2 - REDONDEAR A LA DECENA Y A LA CENTENA (3.NBT.A.1)
@@ -1126,7 +1126,7 @@ a + b = 10; 2 x a + 5 x b = 32             | a = 6, b = 4 | (S.3) las monedas de
 2 x a + 3 x b = 20                         | a = 10, b = 0; a = 7, b = 2; a = 4, b = 4; a = 1, b = 6 | (S.3) varias soluciones
 a + b = 1.235; a - b = 0.115               | a = 0.675, b = 0.56 | (S.3) con milesimas
 a + b = 9999999; a - b = 1                 | a = 5000000, b = 4999999 | (S.3) cerca del techo
-a + b = 500; 2 x a + 5 x b = 1600          | todavia_no | (S.3) demasiadas pruebas para un humano
+a + b = 500; 2 x a + 5 x b = 1600          | a = 300, b = 200 | S.3: demasiadas pruebas; el resolvedor JUNTA las dos (U.2)
 problema: Ana y Luis tienen 30 entre los dos. Ana tiene 8 mas que Luis. Cuantas tiene Luis? | 11 | (S.3) el contexto: suma y diferencia con palabras
 resolver: a + b = 1/2; a - b = 1/4         | a = 3/8, b = 1/8 | (U.1) sustituir a = 1/2 - b; dos trozos de b
 a + b = 1/2; a - b = 1/4                   | a = 3/8, b = 1/8 | (U.1) la red de seguridad (antes caia en 0.2)
@@ -1139,3 +1139,13 @@ resolver: 3/4 : 1/8                        | 6 | (U.1) con el mismo de abajo, cu
 resolver: a + b = 10; a + b = 12           | ninguna | (U.1) las relaciones se contradicen
 resolver: 0 x n = 5                        | ninguna | (U.1) 0 por algo es 0 siempre
 resolver: a + b + c = 10                   | todavia_no | (U.1) faltan relaciones (U.2)
+resolver: a + b = 30; a - b = 8            | a = 19, b = 11 | (U.2) JUNTAR: las resta (la a tiene los mismos trozos)
+resolver: 2 x a + 2 x b = 20; a - b = 2    | a = 6, b = 4 | (U.2) JUNTAR: le quita 2 veces la otra
+resolver: (x + y) x z = 21; x + y = 7 | x = 0, y = 7, z = 3; x = 1, y = 6, z = 3; x = 2, y = 5, z = 3; x = 3, y = 4, z = 3; x = 4, y = 3, z = 3; x = 5, y = 2, z = 3; x = 6, y = 1, z = 3; x = 7, y = 0, z = 3 | (U.2) REESCRIBIR: el bloque x + y ya se sabe
+resolver: n x n = 49                       | n = 7 | (U.2) PROBAR EN ORDEN: con 8 ya me paso (64)
+resolver: n x n = 50                       | ninguna | (U.2) probar en orden: ninguna con numeros para contar
+resolver: n x n = 2000000                  | todavia_no | (U.2) mas de 30 pruebas: un humano no prueba tantas
+resolver: a x b = 12; a x c = 8; b + c = 5 | a = 4, b = 3, c = 2 | (U.2) dos relaciones no lineales: probar en orden
+x + y + z = 12; x - y = 2; x x y = 15      | x = 5, y = 3, z = 4 | (U.2) la red de seguridad: la puerta vieja decia todavia no
+resolver: 1/2 de n = 6                     | n = 12 | (U.2) 'de' es POR tras una fraccion
+12 : 3 + 1                                 | todavia_no | (U.2) una cuenta sin letras sigue respetando el ano

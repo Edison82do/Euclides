@@ -12,12 +12,14 @@ NCETM 1.31 (Problems with two unknowns):
   punto 5: si no se deja dibujar, se prueba en orden (una, varias o infinitas).
 Las cuentas las hacen las piezas de 'dos_incognitas' (y su comprobacion, 'cumplen_las_ecuaciones').  Aqui solo se
 LEEN las ecuaciones (a + b = 30; a - b = 8), se dice de que FORMA es cada una, se dibuja la barra y se explica.
+Desde U.2 (plan U) es un TRADUCTOR AL MODELO: las ecuaciones las lee el lector unico (universal.py) y las formas
+(suma, diferencia, multiplo, producto, suma con pesos) se reconocen en las RELACIONES del modelo.
 """
 
 import re
 
 _DI_PREFIJO = re.compile(r"^(dos\s+incognitas|incognitas)\s*:\s*")
-_DI_TOKEN = re.compile(r"\d+(?:\.\d+)?|[a-z]|[+\-=]")
+_DI_SIMBOLOS = re.compile(r"^[0-9.a-z+\-= ]+$")
 _DI_FORMAS = ("a + b = 30 (la suma)   a - b = 8  o  a = b + 8 (la diferencia)   a = 3 x b (el multiplo)   "
               "a x b = 24 (el producto)   2 x a + 5 x b = 32 (la suma con pesos)")
 
@@ -29,48 +31,42 @@ def _di_limpio(texto):
     return " ".join(t.strip().rstrip(".").split())
 
 
-def _di_tokens(lado):
-    """'2 x a + 5 x b' -> [("n","2"), ("op","x"), ("l","a"), ("op","+"), ...], o None si hay algo que no es."""
-    crudos = _DI_TOKEN.findall(lado)
-    if "".join(crudos) != lado.replace(" ", ""):
+def _di_relacion(texto):
+    """TRADUCTOR AL MODELO (U.2): la ecuacion la lee el lector UNICO (universal.py, U.1) y da su relacion (izq, der) del
+    modelo; None si no es una ecuacion escrita con numeros, letras, + - x y un =."""
+    if not _DI_SIMBOLOS.match(texto):
         return None
-    out, prev = [], None
-    for c in crudos:
-        if c[0].isdigit():
-            tok = ("n", c)
-        elif c == "x" and prev is not None and prev[0] in ("n", "l"):
-            tok = ("op", "x")                                # entre dos cosas: es POR
-        elif c.isalpha():
-            tok = ("l", c)
-        elif c in "+-":
-            tok = ("op", c)
-        else:
-            tok = ("=", c)
-        out.append(tok)
-        prev = tok
-    return out
+    try:
+        m = _u_leer(texto)
+    except (ValueError, _NuNoSale):
+        return None
+    if m["expresion"] is not None or len(m["relaciones"]) != 1:
+        return None
+    return m["relaciones"][0]
 
 
-def _di_terminos(toks):
-    """Los terminos de un lado con su signo: [("+", [("n","2"), ("l","a")]), ...].  None si esta mal escrito."""
-    terminos, signo, factores, espera = [], "+", [], "cosa"
-    for t in toks:
-        if espera == "cosa":
-            if t[0] not in ("n", "l"):
-                return None
-            factores.append(t)
-            espera = "op"
-        elif t == ("op", "x"):
-            espera = "cosa"
-        elif t[0] == "op":
-            terminos.append((signo, factores))
-            signo, factores, espera = t[1], [], "cosa"
-        else:
+def _di_terminos(e):
+    """Un lado de la relacion del modelo -> sus terminos con signo: [("+", [("n","2"), ("l","a")]), ...].
+    None si no es una suma o resta de productos de numeros (sin signo) y letras."""
+    if e[0] == "num":
+        if e[1][0] == "-" and e[1][1] != 0:
             return None
-    if espera != "op":
+        return [("+", [("n", _di_numero(_nu_texto(e[1])))])]
+    if e[0] == "letra":
+        return [("+", [("l", e[1])])] if e[1] != "?" else None
+    if e[0] != "op":
+        return None                                      # parentesis, '-' de delante: no son de las formas de S.3
+    izq, der = _di_terminos(e[2]), _di_terminos(e[3])
+    if izq is None or der is None or len(der) != 1 or der[0][0] != "+":
         return None
-    terminos.append((signo, factores))
-    return terminos
+    if e[1] in "+-":
+        izq.append((e[1], der[0][1]))
+        return izq
+    if e[1] == "x" and len(izq) == 1 and izq[0][0] == "+":
+        factores = list(izq[0][1])
+        factores.extend(der[0][1])
+        return [("+", factores)]
+    return None
 
 
 def _di_trozos(texto):
@@ -84,10 +80,10 @@ def _di_trozos(texto):
 
 def _di_letras_de(texto):
     """Las letras de una ecuacion (o None si no es una ecuacion escrita con numeros, letras, + - x y un =)."""
-    toks = _di_tokens(texto)
-    if not toks or [t for t in toks if t[0] == "="] != [("=", "=")]:
+    rel = _di_relacion(texto)
+    if rel is None:
         return None
-    return [t[1] for t in toks if t[0] == "l"]
+    return _u_letras_rel(rel)
 
 
 def es_orden_dos_incognitas(texto):
@@ -139,9 +135,8 @@ def _di_letra_con_peso(termino):
 
 def _di_forma(texto):
     """Una ecuacion -> {"tipo": lineal | diferencia | multiplo | producto, ...} o {"error": ...}."""
-    toks = _di_tokens(texto)
-    k = toks.index(("=", "="))
-    izq, der = _di_terminos(toks[:k]), _di_terminos(toks[k + 1:])
+    rel = _di_relacion(texto)                            # el modelo (U.2: S.3 es un traductor al modelo)
+    izq, der = _di_terminos(rel[0]), _di_terminos(rel[1])
     if izq is None or der is None:
         return {"error": "'%s' esta mal escrita" % texto}
     if _di_es_numero(izq) and not _di_es_numero(der):

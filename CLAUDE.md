@@ -85,12 +85,14 @@ solo relaciones generales (datos), operadores generales (piezas) y búsqueda con
 respuesta; lo nuevo, con pocas pruebas representativas. Si la batería tarda demasiado, `--parte 1/3`, `2/3`, `3/3`.
 
 ## Dónde se quedó (8 oct 2026)
-Hecho **U.1 el modelo y el lector simbólico** (plan U, primera fase): partes `numero.py` (el NÚMERO común, prefijo `_nu_`)
-y `universal.py` (el lector único, el modelo, calcular despejando y sustituir, la comprobación; prefijo `_u_`), puerta
-`resolver:` y red de seguridad en las dos cadenas (antes de 0.1/0.2, y cuando una puerta vieja dice NO ENTIENDO y el
-resolvedor lo resuelve). S.3 solo coge ecuaciones con DOS letras. Presupuesto en `conocimiento/universal.kn`.
-**Siguiente: U.2 — buscar con control** (operadores 3, 4 y 5: juntar relaciones, reescribir, probar en orden; el control por
-medios y fines; la explicación con barras; `dos_incognitas` y `parte_todo` como traductores al modelo).
+Hecho **U.1 el modelo y el lector simbólico** (partes `numero.py`, prefijo `_nu_`, y `universal.py`, prefijo `_u_`; puerta
+`resolver:`) y **U.2 buscar con control** (parte `buscar.py`, prefijo `_bu_`: juntar relaciones, reescribir —bloque que ya se
+sabe, factor común—, probar en orden con tope y sabiendo cuándo parar, el control por medios y fines con costes en
+`conocimiento/universal.kn`; S.3 lee con el lector único y S.2 se traduce al modelo como otra estrategia). La red de
+seguridad, en las dos cadenas: si una puerta vieja dice NO ENTIENDO, o TODAVÍA NO a algo con una relación con letras, y el
+resolvedor lo resuelve y lo comprueba, contesta él (las cuentas sin letras siguen respetando el año). «de» tras una
+fracción o un decimal es POR.
+**Siguiente: U.3 — el lector de palabras** (frases → proposiciones con `frases.kn` y `relaciones.kn`).
 Antes: S.3 problemas con dos incógnitas (NCETM 1.31), N.6 hasta diez millones (NCETM 1.30), F.7, F.6, P.7.
 Al acabar el plan U se vuelve a NCETM (Spine 2: **2.23**; la división larga 2.24; Spine 3 tras 3.8).
 La balanza y `verdad:` con decimales: todavía no (solo enteros) por sus puertas viejas; por `resolver:` sí.

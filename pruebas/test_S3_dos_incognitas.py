@@ -101,7 +101,10 @@ try:
     comprobar("A21 a = b - 8 (b tiene 8 mas)", S("a + b = 30; a = b - 8"), "a = 11, b = 19")
     comprobar("A22 dinero: a + b = 1.20; a - b = 0.40", S("a + b = 1.20; a - b = 0.40"), "a = 0.8, b = 0.4")
     comprobar("A23 tres decimales: a + b = 1.235; a - b = 0.115", S("a + b = 1.235; a - b = 0.115"), "a = 0.675, b = 0.56")
-    comprobar("A24 a + b = 1.001; a - b = 0 -> todavia no (diezmilesimas)", S("a + b = 1.001; a - b = 0"), "todavia_no")
+    # (U.2, arreglo de la revision de U.1: cuando S.3 dice "todavia no" a una ecuacion que el lector simbolico lee,
+    #  el resolvedor universal tiene su oportunidad: A24, A29, F3, F4 y F8 los resuelve el, y lo comprueba)
+    comprobar("A24 a + b = 1.001; a - b = 0 -> el resolvedor (S.3: diezmilesimas)", S("a + b = 1.001; a - b = 0"),
+              "a = 1001/2000, b = 1001/2000")
     comprobar("A25 cerca del techo: a + b = 9999999; a - b = 1", S("a + b = 9999999; a - b = 1"),
               "a = 5000000, b = 4999999")
     comprobar("A26 cerca del techo: a + b = 10000000; a = 4 x b", S("a + b = 10000000; a = 4 x b"),
@@ -109,10 +112,11 @@ try:
     comprobar("A27 a + b = 10000001 -> no alcanza", S("a + b = 10000001; a - b = 1"), "no_alcanza")
     comprobar("A28 a + b = 100; a x b = 2400 -> todavia no (ni 101 pruebas ni dividir entre 13 o mas)",
               S("a + b = 100; a x b = 2400"), "todavia_no")
-    comprobar("A29 a + b = 500; 2 x a + 5 x b = 1600 -> todavia no (demasiadas pruebas)",
-              S("a + b = 500; 2 x a + 5 x b = 1600"), "todavia_no")
-    comprobar("A30 ... y dice por que: un humano no prueba tantas",
-              "un humano no prueba tantas" in motor.explicar_pregunta("a + b = 500; 2 x a + 5 x b = 1600", SABER), True)
+    comprobar("A29 a + b = 500; 2 x a + 5 x b = 1600 -> S.3 no (demasiadas pruebas); el resolvedor junta",
+              S("a + b = 500; 2 x a + 5 x b = 1600"), "a = 300, b = 200")
+    comprobar("A30 ... y dice que la puerta vieja decia todavia no",
+              "la puerta vieja decia: TODAVIA NO" in motor.explicar_pregunta("a + b = 500; 2 x a + 5 x b = 1600", SABER),
+              True)
 
     print("\nB - SUMA Y DIFERENCIA (punto 4), contra el testigo")
     azar = random.Random(20261008)
@@ -248,12 +252,13 @@ try:
     print("\nF - LO QUE NO ES DE ESTE PASO (o no se entiende)")
     comprobar("F1 tres letras: todavia no", S("a + b + c = 10"), "todavia_no")
     comprobar("F2 dos problemas con cuatro letras: todavia no", S("a + b = 3; c + d = 4"), "todavia_no")
-    comprobar("F3 tres ecuaciones: todavia no", S("a + b = 10; a - b = 2; a = 2 x b"), "todavia_no")
-    comprobar("F4 un peso con decimales: todavia no", S("a + b = 10; a = 2.5 x b"), "todavia_no")
+    comprobar("F3 tres ecuaciones: S.3 no; el resolvedor: se contradicen", S("a + b = 10; a - b = 2; a = 2 x b"),
+              "ninguna")
+    comprobar("F4 un peso con decimales: S.3 no; el resolvedor si", S("a + b = 10; a = 2.5 x b"), "a = 50/7, b = 20/7")
     comprobar("F5 'dos incognitas: hola' -> no entiendo", S("dos incognitas: hola"), "no_entiendo")
     comprobar("F6 con la orden delante", S("dos incognitas: a + b = 30; a - b = 8"), "a = 19, b = 11")
     comprobar("F7 una sola letra sigue siendo de E.5: x + 5 = 12", S("x + 5 = 12"), "7")
-    comprobar("F8 la misma letra dos veces sigue en E.5 (todavia no)", S("a + a = 10"), "todavia_no")
+    comprobar("F8 la misma letra dos veces: E.5 no; el resolvedor cuenta los trozos", S("a + a = 10"), "a = 5")
     comprobar("F9 una forma que no conozco: todavia no y dice las que si",
               "las formas que se" in motor.explicar_pregunta("a x b + a = 10; a - b = 1", SABER), True)
 

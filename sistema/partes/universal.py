@@ -49,7 +49,11 @@ def es_orden_resolver(texto):
 
 # ------------------------------------------------------------- 1. LEER: los simbolos, uno a uno
 
+_U_DE = re.compile(r"(\d+\s*/\s*\d+|\d+[.,]\d+)\s+de\s+(?=[\d(a-z?_])")
+
+
 def _u_tokens(t):
+    t = _U_DE.sub(r"\1 x ", t)                         # 3/4 de 20 = 3/4 x 20 (F.1; 5.NF.B.4): 'de' es POR
     if re.search(r"[a-z]{2,}", t):
         return None                                      # hay palabras: eso es de U.3 (el lector de palabras)
     crudos = _U_TOKEN.findall(t)
@@ -183,6 +187,39 @@ def es_expresion_simbolica(texto):
     if m["relaciones"]:
         return True
     return m["expresion"][0] in ("op", "par", "neg") and _u_hay_cuenta(m["expresion"])
+
+
+def _u_la_puerta_no_llega(salida):
+    """'no_entiendo' o 'todavia_no' si lo que contesto una puerta vieja es eso; si no, None."""
+    if salida.startswith("NO ENTIENDO"):
+        return "no_entiendo"
+    lineas = salida.strip().splitlines()
+    if lineas and lineas[-1].strip() == "RESULTADO: todavia_no":
+        return "todavia_no"
+    return None
+
+
+def _u_le_toca_al_resolvedor(texto, vieja, saber):
+    """LA RED DE SEGURIDAD (U.1, ampliada en U.2 tras la revision de U.1): una puerta vieja no llega ('no entiendo' o
+    'todavia no') y el lector simbolico lo lee entero.  Si el resolvedor llega a una respuesta comprobada (hecho, o
+    ninguna porque las relaciones se contradicen), contesta el.  Con 'todavia no', solo si hay una RELACION con letras: el 'todavia no' de una cuenta sin
+    letras es respetar el ano (12 : 3 + 1, 2/3 x 3/4), no un problema de forma."""
+    if not vieja or not es_expresion_simbolica(texto):
+        return False
+    if vieja == "todavia_no":
+        try:
+            m = _u_leer(texto)
+        except (ValueError, _NuNoSale):
+            return False
+        if not m["relaciones"] or not m["cantidades"]:
+            return False
+    try:
+        r = decidir_resolver(texto, saber)
+    except Exception:
+        return False
+    if r["conclusion"] == "ninguna":             # ninguna porque se contradicen, si; probando en orden solo es ninguna
+        return not r.get("probado")              # con numeros para contar (podria haberla con decimales): no basta
+    return r["conclusion"] == "hecho"
 
 
 def _u_hay_cuenta(e):
@@ -430,9 +467,9 @@ def _u_aislar(e, objetivo, letra):
             continue
         op, izq, der = e[1], e[2], e[3]
         if letra in _u_letras(izq):
-            e, objetivo = izq, ("op", _U_CONTRARIA[op], objetivo, par(der))
+            e, objetivo = izq, ("op", _U_CONTRARIA[op], par(objetivo), par(der))
         elif op in ("+", "x"):
-            e, objetivo = der, ("op", _U_CONTRARIA[op], objetivo, par(izq))
+            e, objetivo = der, ("op", _U_CONTRARIA[op], par(objetivo), par(izq))
         else:
             e, objetivo = der, ("op", op, par(izq), par(objetivo))
     return objetivo
@@ -506,13 +543,42 @@ def decidir_resolver(texto, saber=None):
         return r
     if valores is None:                          # relaciones sin letras: verdad o no
         return r
+    if r.get("probado"):                         # probar en orden (U.2): una, varias o ninguna
+        return _u_probado(r, valores, modelo, saber)
     r["valores"] = valores
     _u_comprobar(modelo, valores, saber, r)
     if r["comprobacion_ok"]:
         r["conclusion"] = "hecho"
-        r["respuesta"] = ", ".join("%s = %s" % (_u_nombre(l), _nu_texto(valores[l])) for l in modelo["cantidades"])
+        r["respuesta"] = _u_escribir_valores(valores, modelo)
     else:
         r.update(conclusion="no_cuadra", porque="al poner los numeros en las relaciones de partida no cuadra")
+    return r
+
+
+def _u_escribir_valores(valores, modelo):
+    return ", ".join("%s = %s" % (_u_nombre(l), _nu_texto(valores[l])) for l in modelo["cantidades"])
+
+
+def _u_probado(r, soluciones, modelo, saber):
+    """Las soluciones de probar en orden (cada una ya comprobada en TODAS las relaciones de partida)."""
+    lineas, ok = [], True
+    for v in soluciones:
+        sub = {}
+        _u_comprobar(modelo, v, saber, sub)
+        lineas.extend(sub["comprobacion"])
+        ok = ok and sub["comprobacion_ok"]
+    r["comprobacion"] = lineas
+    r["comprobacion_ok"] = ok
+    r["cuantas"] = "ninguna" if not soluciones else ("una" if not soluciones[1:] else "varias")
+    r["nota"] = "con numeros para contar, desde el 0"
+    if viene_despues(decir(len(modelo["cantidades"]), saber), decir(len(modelo["relaciones"]), saber), saber):
+        r["nota"] = "%s; con decimales o fracciones habria infinitas (falta una relacion que las pare)" % r["nota"]
+    if not ok:
+        r.update(conclusion="no_cuadra", porque="al poner los numeros en las relaciones de partida no cuadra")
+    elif not soluciones:
+        r.update(conclusion="ninguna", porque="probe en orden y ninguna cumple (%s)" % r["nota"])
+    else:
+        r.update(conclusion="hecho", respuesta="; ".join(_u_escribir_valores(v, modelo) for v in soluciones))
     return r
 
 
@@ -535,69 +601,17 @@ def _u_buscar(modelo, saber, r):
         r["etapas"].append(("CALCULO cada lado", pasos))
         r.update(conclusion="hecho", respuesta="VERDADERO" if ok else "FALSO", verdad=ok)
         return None
-    conocidas, aisladas = {}, []
-    presupuesto, usados = _u_presupuesto(saber), 0
-    while rels:
-        usados = _u_siguiente(usados, saber)
-        if viene_despues(decir(usados, saber), decir(presupuesto, saber), saber):
-            raise _UNoSale("todavia_no", "llevo %d pasos y no llego (un humano no da tantas vueltas)" % presupuesto)
-        quedan = []
-        for rel in rels:                         # las que ya no tienen letras: se miran
-            if _u_letras_rel(rel):
-                quedan.append(rel)
-                continue
-            pasos = []
-            vi, vd = _u_valor(rel[0], saber, pasos), _u_valor(rel[1], saber, pasos)
-            if not _nu_iguales(vi, vd, saber):
-                r["etapas"].append(("MIRO %s: ya no tiene letras" % _u_rel_texto(rel),
-                                    pasos + ["%s no es %s: las relaciones se contradicen" % (_nu_texto(vi), _nu_texto(vd))]))
-                raise _UNoSale("ninguna", "las relaciones se contradicen (%s = %s es falso): ningun numero las cumple"
-                               % (_nu_texto(vi), _nu_texto(vd)))
-            r["etapas"].append(("MIRO %s: ya no tiene letras y es verdad; no dice nada nuevo" % _u_rel_texto(rel), []))
-        rels = quedan
-        if not rels:
-            break
-        una = [i for i, rel in enumerate(rels) if len(_u_distintas(_u_letras_rel(rel))) == 1]
-        if una:
-            i = min(una, key=lambda j: len(_u_letras_rel(rels[j])))
-            rel = rels.pop(i)
-            letra = _u_letras_rel(rel)[0]
-            pasos = []
-            v = _u_despejar(rel, letra, saber, pasos)
-            conocidas[letra] = v
-            r["etapas"].append(("CALCULO %s en %s (solo falta %s)" % (_u_nombre(letra), _u_rel_texto(rel),
-                                                                     _u_nombre(letra)),
-                                pasos + ["%s = %s" % (_u_nombre(letra), _nu_texto(v))]))
-            rels = [(_u_poner(a, letra, ("num", v)), _u_poner(b, letra, ("num", v))) for a, b in rels]
-            continue
-        eleccion = _u_elegir_para_sustituir(rels)
-        if eleccion is None:
-            raise _UNoSale("todavia_no", "ninguna letra sale una sola vez para poder aislarla (U.2)")
-        i, letra, arbol, como = eleccion
-        rel = rels.pop(i)
-        rels = [(_u_poner(a, letra, arbol), _u_poner(b, letra, arbol)) for a, b in rels]
-        lineas = ["%s = %s" % (_u_nombre(letra), _u_texto(arbol))]
-        if rels:
-            lineas.append("la pongo en las demas: %s" % ";  ".join(_u_rel_texto(x) for x in rels))
-        r["etapas"].append(("SUSTITUYO: en %s, %s %s" % (_u_rel_texto(rel), _u_nombre(letra),
-                                                        "esta sola en un lado" if como == "sola"
-                                                        else "sale una vez: la aislo deshaciendo"), lineas))
-        aisladas.append((letra, arbol))
-    for letra, arbol in reversed(aisladas):      # se vuelve a lo aislado, con lo que ya se sabe
-        faltan = [l for l in _u_distintas(_u_letras(arbol)) if l not in conocidas]
+    soluciones = _bu_resolver(rels, saber, r["etapas"], modelo["relaciones"])     # U.2: buscar con control
+    probado = any(t.startswith("PRUEBO EN ORDEN") for t, _ in r["etapas"])
+    if not probado:
+        faltan = [l for l in modelo["cantidades"] if l not in soluciones[0]]
         if faltan:
-            raise _UNoSale("todavia_no", "faltan relaciones: %s puede valer cualquier cosa (infinitas; U.2)"
+            raise _UNoSale("todavia_no", "faltan relaciones: %s puede valer cualquier cosa (infinitas)"
                            % ", ".join(_u_nombre(l) for l in faltan))
-        pasos = []
-        v = _u_valor(_u_poner_todas(arbol, conocidas), saber, pasos)
-        conocidas[letra] = v
-        r["etapas"].append(("VUELVO a %s = %s" % (_u_nombre(letra), _u_texto(arbol)),
-                            pasos + ["%s = %s" % (_u_nombre(letra), _nu_texto(v))]))
-    faltan = [l for l in modelo["cantidades"] if l not in conocidas]
-    if faltan:
-        raise _UNoSale("todavia_no", "faltan relaciones: %s puede valer cualquier cosa (infinitas; U.2)"
-                       % ", ".join(_u_nombre(l) for l in faltan))
-    return conocidas
+        return soluciones[0]
+    r["probado"] = True
+    r["soluciones"] = soluciones
+    return soluciones
 
 
 # ------------------------------------------------------------- 4. COMPROBAR en las relaciones de partida
@@ -629,7 +643,7 @@ def explicar_resolver(texto, saber=None):
     if r["conclusion"] == "no_entiendo":
         return ("NO ENTIENDO ESTO: %s\n   se escribe asi:  resolver: a + b = 1/2; a - b = 1/4     resolver: 3 x n = 4.5"
                 "     1/2 + 0.25     -3 + 2 x 4" % r.get("porque", ""))
-    L = ["PREGUNTA (U.1, el resolvedor): %s" % _u_limpio(texto), ""]
+    L = ["PREGUNTA (U.1-U.2, el resolvedor): %s" % _u_limpio(texto), ""]
     m = r.get("modelo")
     if m:
         L.append("  EL MODELO:")
@@ -653,6 +667,9 @@ def explicar_resolver(texto, saber=None):
     if r.get("tambien"):
         L.append("")
         L.append("  en decimal: %s" % r["tambien"])
+    if r.get("cuantas"):
+        L.append("")
+        L.append("  CUANTAS: %s (%s)" % (r["cuantas"].upper(), r["nota"]))
     L.append("")
     if r["conclusion"] == "hecho":
         L.append("RESULTADO: %s" % r["respuesta"])

@@ -484,6 +484,20 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         relaciones, 2n = 2 x n.  Al final COMPRUEBA en las relaciones de PARTIDA.  Lo que una puerta vieja no
         entiende y esto si, va aqui solo.  Faltan relaciones, o la letra por si misma (n x n) -> todavia no (U.2).
 
+  BUSCAR CON CONTROL  ->  juntar, reescribir y probar en orden; elige por medios y fines (plan U, fase U.2)
+        resolver: a + b = 30; a - b = 8          -> a = 19, b = 11   JUNTA: las resta, [b][b] = 22 (mas barato que sustituir)
+        resolver: 2 x a + 2 x b = 20; a - b = 2  -> a = 6, b = 4     JUNTA: le quita 2 veces la otra
+        resolver: (x + y) x z = 21; x + y = 7    -> z = 3 en todas   REESCRIBE: el bloque x + y ya se sabe
+        resolver: 2 x a + 4 x b = 20             -> 6 parejas        saca FACTOR COMUN (a + 2 x b = 10) y prueba
+        resolver: n x n = 49                     -> n = 7            PRUEBA EN ORDEN; con 8 ya da 64 y se pasa: PARA
+        resolver: a x b = 24; a + b = 10         -> a = 6, b = 4; a = 4, b = 6   (el tope lo pone la suma)
+        resolver: a x b = 12; a x c = 8; b + c = 5  -> a = 4, b = 3, c = 2   (dos relaciones no lineales)
+        resolver: n x n = 2000000                -> todavia no (mas de 30 pruebas: un humano no prueba tantas)
+        3/4 de 20 -> 15;  resolver: 1/2 de n = 6 -> n = 12   ('de' tras una fraccion o un decimal es POR)
+        Si una puerta vieja dice 'todavia no' a una ecuacion y el resolvedor la resuelve (y la comprueba), contesta el:
+        n + n = 10 -> n = 5;  x + y + z = 12; x - y = 2; x x y = 15 -> x = 5, y = 3, z = 4.  Una cuenta sin letras
+        sigue respetando el ano (12 : 3 + 1 -> todavia no).  La explicacion dice lo que MIRO y por que lo ELIGIO.
+
   MAS DE UN ENTERO  ->  numeros mixtos y fracciones impropias (paso F.4; NCETM 3.5; 4.NF.B.3)
         fraccion: 7/4          -> siete cuartos = 1 3/4   (agrupo 7 cuartos de 4 en 4: 1 entero y sobran 3)
         mixto: 2 3/4           -> 11/4   (2 enteros son 8 cuartos, y 3 mas)
@@ -824,12 +838,9 @@ def preguntar(texto, saber):
     except Exception:
         return "no_entendido", None
     resp = _preguntar_por_las_puertas(t, saber)
-    if resp[0] in ("no_entiendo", "no_entendido"):
-        try:
-            if motor.es_expresion_simbolica(t) and motor.decidir_resolver(t, saber)["conclusion"] == "hecho":
-                return _respuesta_resolver(t, saber)
-        except Exception:
-            pass
+    vieja = {"no_entiendo": "no_entiendo", "no_entendido": "no_entiendo", "todavia_no": "todavia_no"}.get(resp[0])
+    if vieja and motor._u_le_toca_al_resolvedor(t, vieja, saber):     # la red de seguridad (U.1-U.2)
+        return _respuesta_resolver(t, saber)
     return resp
 
 

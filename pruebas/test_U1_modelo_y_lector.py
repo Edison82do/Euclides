@@ -126,11 +126,13 @@ def main():
 
     print("\nD - LAS TRAMPAS")
     for q, esperado in (("a + b = 10; a + b = 12", "ninguna"),               # se contradicen
-                        ("resolver: a + b = 10; 2 x a + 2 x b = 20", "todavia_no"),     # dicen lo mismo: faltan datos
+                        ("resolver: a + b = 10; 2 x a + 2 x b = 20",                   # dicen lo mismo: U.2 las junta (0 = 0)
+                         "a = 0, b = 10; a = 1, b = 9; a = 2, b = 8; a = 3, b = 7; a = 4, b = 6; a = 5, b = 5; "
+                         "a = 6, b = 4; a = 7, b = 3; a = 8, b = 2; a = 9, b = 1; a = 10, b = 0"),  # y prueba en orden
                         ("resolver: 0 x n = 5", "ninguna"),
                         ("resolver: 0 x n = 0", "todavia_no"),
                         ("resolver: 5 : 0", "no_se_puede"),
-                        ("resolver: n x n = 49", "todavia_no"),               # no lineal: probar en orden es U.2
+                        ("resolver: n x n = 49", "n = 7"),                    # no lineal: probar en orden (U.2)
                         ("resolver: n + 1 = 10000000", "n = 9999999"),        # cerca del techo
                         ("resolver: n - 1 = 10000000", "todavia_no"),         # se pasa del techo: sin reventar
                         ("resolver: 3 x n + 2 = n + 10", "n = 4"),                      # la letra a los dos lados: trozos
@@ -141,7 +143,8 @@ def main():
 
     print("\nE - NADA VIEJO CAMBIA (unas cuantas puertas de cada tipo)")
     for q, esperado in (("a + b = 30; a - b = 8", "a = 19, b = 11"),          # S.3 (la barra)
-                        ("a + b = 1.001; a - b = 0", "todavia_no"),           # S.3: diezmilesimas, todavia no
+                        ("a + b = 1.001; a - b = 0", "a = 1001/2000, b = 1001/2000"),  # S.3 dice todavia no
+                        # (diezmilesimas); desde U.2 la red de seguridad le da su oportunidad al resolvedor
                         ("a + b + c = 10", "todavia_no"),                     # E.5 (la letra tres veces)
                         ("3 x n = 13", "no_sale"),                            # E.5: no es entero
                         ("3 + 4 x 5", "23"),                                  # M.16
@@ -154,17 +157,22 @@ def main():
     print("\nF - LA COMPROBACION ES DE VERDAD (una pieza trucada no da respuesta)")
     mod = sys.modules[motor._DONDE_ESTA["_u_despejar"]]
     original = mod._u_despejar
+    # (U.2: el despeje lo llama tambien el control de buscar.py: se truca en todas las partes que lo ven)
+    partes = [m for n, m in list(sys.modules.items()) if n.startswith(mod.__name__.rsplit(".", 1)[0])
+              and getattr(m, "_u_despejar", None) is original]
 
     def trucado(rel, letra, saber, pasos):
         v = original(rel, letra, saber, pasos)
         return motor._nu_sumar(v, ("+", 1, 1, "entero"), saber, [])            # da UNO DE MAS
-    mod._u_despejar = trucado
+    for m in partes:
+        m._u_despejar = trucado
     try:
         for q in ("a + b = 1/2; a - b = 1/4", "3 x n = 4.5", "x + y + z = 40; x = y; z = 2 x y"):
             comprobar("F %s con el despeje trucado: no_cuadra" % q, motor.decidir_resolver(q, SABER)["conclusion"],
                       "no_cuadra")
     finally:
-        mod._u_despejar = original
+        for m in partes:
+            m._u_despejar = original
     comprobar("F y sin trucar vuelve a salir", P("3 x n = 4.5"), "n = 1.5")
 
     print("\nG - EL TIEMPO (un humano no tarda; cada pregunta muy por debajo de 2 s)")
