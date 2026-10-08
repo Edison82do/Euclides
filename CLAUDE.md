@@ -71,6 +71,12 @@
 - **Pendientes de la revisión de M.14:** `99 x 99 x 99` dice «todavía no» aunque calcula 970299 (porque
   no puede comprobarlo dividiendo): podría comprobarlo multiplicando en otro orden. `101 x 100 x 100`
   dice «todavía no» cuando debería decir que se pasa del millón.
+- **IDEA PARA EL FUTURO (no hacer sin que Carlos lo pida; 7 oct):** elegir la técnica según lo que CUESTA
+  en este caso, como un humano de un vistazo. Hoy cada pieza tiene una `rapidez` fija y, para que no haga
+  cosas inhumanas con números grandes, se han ido poniendo topes sueltos (grupos iguales ≤ 12, saltos ≤ 100
+  o ≤ 1000, contar...). La idea: que cada pieza estime cuántos pasos le costaría ESTE caso y se elija la más
+  barata entre las aprendidas; una regla general («nadie repite algo cientos de veces si sabe otra manera»)
+  en lugar de los topes. Carlos (7 oct): «en el futuro vemos si es necesario; si no, no».
 
 ## Dónde se quedó (8 oct 2026)
 Hecho hasta **F.6 fracciones equivalentes y simplificar** (NCETM 3.7). Antes: P.7 la compensación con + y − (NCETM 1.29), S.2
