@@ -454,6 +454,22 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         calcular: 997000 + 5000  -> mental (pasar por el millon) o escrito (columnas): se elige el mas corto
         Los NUMEROS llegan a DIEZ MILLONES; contar OBJETOS sigue hasta diez mil.
 
+  DOS INCOGNITAS  ->  una solucion, varias o ninguna; la barra o probar en orden (paso S.3, 6.o; NCETM 1.31)
+        a + b = 30; a - b = 8          -> a = 19, b = 11   la BARRA: quito la diferencia, 30 - 8 = 22; 22 : 2 = 11 = b
+                                          (no 30 : 2 = 15 y 15 + 8 = 23: asi juntan 38)
+        a + b = 24; a = 3 x b          -> a = 18, b = 6    3 trozos y UNO mas = 4 trozos: 24 : 4 = 6 (no 24 : 3)
+        a - b = 20; a = 3 x b          -> a = 30, b = 10   los trozos DE MAS (3 - 1 = 2) son la diferencia
+        a + b = 10; a - b = 12         -> ninguna          la diferencia no cabe en la suma
+        a + b = 9; a - b = 4           -> a = 6.5, b = 2.5 (con enteros, ninguna)
+        a + b = 10                     -> 11 parejas con enteros (9 sin el 0); infinitas con decimales
+        a - b = 3   o   a = 3 x b      -> infinitas        (una relacion sola no pone tope)
+        a x b = 24; a + b = 10         -> a = 4, b = 6; a = 6, b = 4   PROBAR EN ORDEN por las parejas de factores
+        a + b = 10; 2 x a + 5 x b = 32 -> a = 6, b = 4     (10 monedas de 2 y de 5 que hacen 32)
+        2 x a + 3 x b = 20             -> cuatro soluciones (pruebo con el que mas pesa: menos pruebas)
+        Tambien: x + y = 30; x = y + 8   24 = a + b   b - a = 8   y con la orden delante, dos incognitas: ...
+        Con palabras: Ana y Luis tienen 30 entre los dos. Ana tiene 8 mas que Luis. Cuantas tiene Luis?  -> 11
+        Mas de 30 pruebas -> todavia no (un humano no prueba tantas).  Se comprueba poniendo los numeros en las ecuaciones.
+
   MAS DE UN ENTERO  ->  numeros mixtos y fracciones impropias (paso F.4; NCETM 3.5; 4.NF.B.3)
         fraccion: 7/4          -> siete cuartos = 1 3/4   (agrupo 7 cuartos de 4 en 4: 1 entero y sobran 3)
         mixto: 2 3/4           -> 11/4   (2 enteros son 8 cuartos, y 3 mas)
@@ -789,6 +805,11 @@ def preguntar(texto, saber):
     try:
         if t.lower().strip() in ("piezas", "mapa"):
             return "las_piezas", None
+        if motor.es_orden_dos_incognitas(t):              # dos incognitas (S.3; NCETM 1.31): antes que la letra (E.5)
+            salida = motor.explicar_orden_dos_incognitas(t, saber)
+            if salida.startswith("NO ENTIENDO"):
+                return "no_entiendo", None
+            return salida.strip().splitlines()[-1].replace("RESULTADO:", "").strip(), None
         if motor.es_orden_factores(t):
             salida = motor.explicar_orden_factores(t, saber)
             if salida.startswith("NO ENTIENDO"):
@@ -1455,6 +1476,8 @@ def como_problema(texto):
     problema;  una igualdad sin hueco (8 + 3 = 11) -> verdad;  una cuenta suelta (8 + 3) -> calcular."""
     t = texto.strip()
     if re.match(r"^(verdad|ecuacion|hueco|problema|calcular)\w*\s*:", t.lower()):   # ya lleva su orden
+        return t
+    if motor.es_orden_dos_incognitas(t):                  # dos incognitas (S.3): a + b = 30; a - b = 8
         return t
     if motor.es_ecuacion_con_letra(t):                    # una ecuacion con LETRA o de dos pasos (E.5)
         return t

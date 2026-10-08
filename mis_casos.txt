@@ -1114,3 +1114,17 @@ redondear: 2499999 al millon               | 2000000 | (N.6) no la cadena (25000
 redondear: 2549999 al millon               | 3000000 | (N.6) la cifra de las centenas de millar es 5
 de 1000000 en 1000000 desde 7000000        | 8000000, 9000000, 10000000 | (N.6) y se para en el techo
 1234567 x 8                                | 9876536 | (N.6) la multiplicacion corta con siete cifras
+a + b = 30; a - b = 8                      | a = 19, b = 11 | (S.3) suma y diferencia: quitar la diferencia (no 15 y 23)
+a + b = 24; a = 3 x b                      | a = 18, b = 6 | (S.3) suma y multiplo: 4 trozos (no 24 : 3)
+a - b = 20; a = 3 x b                      | a = 30, b = 10 | (S.3) diferencia y multiplo: 2 trozos de mas
+a + b = 10; a - b = 12                     | ninguna | (S.3) la diferencia no cabe en la suma
+a + b = 9; a - b = 4                       | a = 6.5, b = 2.5 | (S.3) con enteros ninguna; con decimales una
+a + b = 10                                 | 11 parejas con enteros (9 sin el 0); infinitas con decimales | (S.3) una mas que la suma
+a - b = 3                                  | infinitas | (S.3) una relacion sola no pone tope
+a x b = 24; a + b = 10                     | a = 4, b = 6; a = 6, b = 4 | (S.3) probar en orden por las parejas de factores
+a + b = 10; 2 x a + 5 x b = 32             | a = 6, b = 4 | (S.3) las monedas de 2 y de 5, probando en orden
+2 x a + 3 x b = 20                         | a = 10, b = 0; a = 7, b = 2; a = 4, b = 4; a = 1, b = 6 | (S.3) varias soluciones
+a + b = 1.235; a - b = 0.115               | a = 0.675, b = 0.56 | (S.3) con milesimas
+a + b = 9999999; a - b = 1                 | a = 5000000, b = 4999999 | (S.3) cerca del techo
+a + b = 500; 2 x a + 5 x b = 1600          | todavia_no | (S.3) demasiadas pruebas para un humano
+problema: Ana y Luis tienen 30 entre los dos. Ana tiene 8 mas que Luis. Cuantas tiene Luis? | 11 | (S.3) el contexto: suma y diferencia con palabras

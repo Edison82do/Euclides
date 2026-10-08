@@ -357,3 +357,10 @@ millar: 1030405                   | 1000000 + 30000 + 400 + 5 | N.6: 1 millon, 3
 1002000 - 997000                  | 5000            | N.6: 3000 hasta el millon y 2000 desde el
 redondear: 2499999 al millon      | 2000000         | N.6: no 3000000 (la cadena)
 comparar: 999999 y 1000000        | 999999 < 1000000 | N.6: mas cifras gana
+a + b = 30; a - b = 8             | a = 19, b = 11  | S.3: quitar la diferencia y repartir en dos (no 15 y 23)
+a + b = 24; a = 3 x b             | a = 18, b = 6   | S.3: 3 + 1 = 4 trozos (no 24 : 3)
+a + b = 10; a - b = 12            | ninguna         | S.3: la diferencia no cabe en la suma
+a + b = 10                        | 11 parejas con enteros (9 sin el 0); infinitas con decimales | S.3: no hay una sola
+a + b = 10; 2 x a + 5 x b = 32    | a = 6, b = 4    | S.3: probar en orden (monedas de 2 y de 5)
+a x b = 24; a + b = 10            | a = 4, b = 6; a = 6, b = 4 | S.3: dos soluciones (los mismos numeros en otro orden)
+Ana y Luis tienen 30 entre los dos. Ana tiene 8 mas que Luis. Cuantas tiene Luis? | 11 | S.3: con palabras

@@ -1,0 +1,49 @@
+id: dos_incognitas
+nombre: Problemas con dos incognitas (una solucion, varias o ninguna; la barra; probar en orden)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  PROBLEMAS CON DOS INCOGNITAS (paso S.3, 6.o; NCETM 1.31, Problems with two unknowns).
+
+  REGLA FIJADA 1 - UNA, VARIAS O NINGUNA (punto 1).  Con dos cosas que no se saben, lo que se dice puede
+  bastar para UNA sola respuesta, dejar VARIAS (o infinitas), o no dejar NINGUNA.  No hay una regla fija para
+  saber cuantas: se razona cada vez (y se dice por que).
+
+  REGLA FIJADA 2 - LA RELACION ES ADITIVA O MULTIPLICATIVA (punto 2):
+      a - b = 8   (a tiene 8 mas que b)          a = 3 x b   (a es el triple de b)
+
+  REGLA FIJADA 3 - LA BARRA ENSENA LA ESTRUCTURA (punto 3).  Las dos barras se dibujan ALINEADAS, una debajo de
+  la otra, empezando en el mismo sitio: asi se ve la diferencia (o los trozos iguales).
+
+  REGLA FIJADA 4 - CUANDO HAY UNA SOLA (punto 4):
+      SUMA Y DIFERENCIA:  a + b = 30;  a - b = 8.  Se quita la diferencia y quedan DOS barras iguales:
+          30 - 8 = 22;  22 : 2 = 11 = b;  a = 11 + 8 = 19.   (O se anade: 30 + 8 = 38; 38 : 2 = 19 = a.)
+      SUMA Y MULTIPLO:    a + b = 24;  a = 3 x b.  b es UN trozo, a son TRES: juntos, 3 + 1 = 4 trozos.
+          24 : 4 = 6 = b;  a = 3 x 6 = 18.
+      (Y con la misma barra, DIFERENCIA Y MULTIPLO: a - b = 20; a = 3 x b: la diferencia son 3 - 1 = 2 trozos.)
+  Si la diferencia no cabe en la suma, NINGUNA.  Si al quitarla queda un impar, con enteros ninguna, con
+  decimales una (se reparte en decimas, M.13).
+
+  REGLA FIJADA 5 - PROBAR EN ORDEN (punto 5).  Si no se deja dibujar, UNA ecuacion pone el TOPE (la suma: de 0
+  a la suma; el producto: las parejas de factores; 2 x a + 3 x b = 20: el que mas pesa, de 0 hasta donde cabe) y
+  la otra se COMPRUEBA en cada prueba.  En orden, para no dejarse ninguna y saber si hay una, varias o ninguna.
+  Un humano no prueba cientos de veces: el tope de pruebas esta abajo.
+
+  REGLA FIJADA 6 - UNA SOLA ECUACION.  a + b = 10: con enteros, de 0 + 10 a 10 + 0, UNA MAS QUE LA SUMA (11
+  parejas; 9 si no vale el 0); con decimales, infinitas.  a - b = 3 o a = 3 x b solas: infinitas (cualquier b).
+
+errores_tipicos:
+  - Repartir la suma sin quitar antes la diferencia (30 : 2 = 15; 15 + 8 = 23: entonces suman 38, no 30).
+  - Contar los trozos de la barra sin el de la pequena (24 : 3 = 8; son 3 + 1 = 4 trozos).
+  - En diferencia y multiplo, repartir la diferencia entre el multiplo (20 : 3); son 3 - 1 = 2 trozos.
+  - Dar UNA pareja cuando hay varias (a + b = 10: 5 y 5 es una de once).
+  - Dibujar las barras sin alinearlas (no se ve la diferencia).
+  - Probar sin orden y dejarse soluciones.
+fuentes:
+  - NCETM 1.31, Problems with two unknowns (Year 6), sus cinco teaching points (leidos por el buscador; la web de
+    NCETM esta bloqueada desde la nube).
+  - NCETM, Curriculum Prioritisation, Year 6 unit 11 "Solving problems with two unknowns".
+  - Oak National Academy, unidad "Solving problems with two unknowns" (A + B = 30, A - B = 8 con la barra; alinear
+    las barras; razonar cada vez cuantas soluciones hay).
+
+tope_de_pruebas: 30

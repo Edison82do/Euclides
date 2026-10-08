@@ -311,8 +311,53 @@ def _paso(situacion, que_busca, saber, pasos):
     return r["valor"]
 
 
+def _r1_suma_y_diferencia(q, m):
+    """S.3 (NCETM 1.31): 'X e Y tienen 30 entre los dos' y 'X tiene 8 mas que Y', y de ninguno de los dos se sabe
+    nada mas: son DOS incognitas con la suma y la diferencia.  Devuelve (el todo, la comparacion) o None."""
+    for tot in m["totales"]:
+        if q not in (tot["a"], tot["b"]):
+            continue
+        par = {tot["a"], tot["b"]}
+        for rel in m["relaciones"]:
+            if {rel["mayor"], rel["menor"]} == par and all(
+                    m["quienes"][x]["final"] is None and m["quienes"][x]["inicio"] is None for x in par):
+                return tot, rel
+    return None
+
+
+def _r1_dos_incognitas(q, tot, rel, saber, pasos):
+    """Se le pasa a la pregunta de S.3 como dos ecuaciones (los nombres hacen de letras) y se apunta como un paso."""
+    a, b = sorted((tot["a"], tot["b"]))
+    eqs = [{"tipo": "lineal", "letras": [a, b], "coef": {a: "1", b: "1"}, "n": "%d" % tot["n"],
+            "texto": "%s + %s = %d" % (a, b, tot["n"])},
+           {"tipo": "diferencia", "mayor": rel["mayor"], "menor": rel["menor"], "letras": [rel["mayor"], rel["menor"]],
+            "n": "%d" % rel["n"], "texto": "%s - %s = %d" % (rel["mayor"], rel["menor"], rel["n"])}]
+    r = aplicar("dos_incognitas", {"letras": [a, b], "ecuaciones": eqs}, saber)
+    paso = {"que_busca": "lo que tiene %s: no se sabe de %s ni de %s, pero se sabe que '%s' y que '%s' (dos incognitas, "
+                         "S.3)" % (q, a, b, tot["frase"], rel["frase"]), "candidatos": r["candidatos"]}
+    pasos.append(paso)
+    if r["conclusion"] != "hecho":
+        raise _NoSe(r.get("porque") or "no me sale con dos incognitas")
+    pieza, res = r["pieza"], r["resultado"]
+    paso.update({"aplicado": pieza["id"], "nombre": pieza["nombre"], "unidad": pieza["unidad"],
+                 "operacion": "dos_incognitas", "que_hace": pieza["que_hace"], "cuenta": "; ".join(res["pasos"]),
+                 "metodo": res["metodo"], "metodo_pieza": pieza["id"], "metodo_candidatos": [],
+                 "metodo_tambien_servian": r.get("tambien_servian", []), "vuelta": res["vuelta"],
+                 "vuelta_ok": res["vuelta_ok"], "valor": r["valor"], "tambien": []})
+    if res["cuantas"] == "ninguna":
+        raise _NoSe("IMPOSIBLE: la diferencia (%d) no cabe en lo que tienen entre los dos (%d)" % (rel["n"], tot["n"]))
+    v = res["soluciones"][0][q]
+    if "." in v:
+        raise _NoSe("IMPOSIBLE: saldria %s = %s, y las cosas se cuentan enteras (%s)" % (
+            q, v, res.get("con_enteros", "con enteros no hay ninguna")))
+    return escribir_cifras([int(c) for c in reversed(v)])
+
+
 def _valor_de(q, m, saber, pasos, pila=()):
     """Lo que tiene 'q'.  Si no es un dato, se busca combinando lo que se sabe (R.2 en pequeno)."""
+    dos = _r1_suma_y_diferencia(q, m)
+    if dos is not None:
+        return _r1_dos_incognitas(q, dos[0], dos[1], saber, pasos)
     if q in pila:
         raise _NoSe("me doy vueltas: %s depende de %s y al reves; falta un dato de verdad"
                     % (q, " y de ".join(x for x in pila if x != q) or q))

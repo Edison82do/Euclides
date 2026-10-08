@@ -753,6 +753,8 @@ def explicar_pregunta(texto, saber=None):
     try:
         if t.lower().strip() in ("piezas", "mapa"):
             return explicar_piezas(saber)
+        if es_orden_dos_incognitas(t):              # dos incognitas (S.3; NCETM 1.31): antes que la letra de E.5
+            return explicar_orden_dos_incognitas(t, saber)
         if es_orden_factores(t):
             return explicar_orden_factores(t, saber)
         if es_orden_equivalentes(t):                 # fracciones equivalentes y simplificar (F.6; NCETM 3.7)

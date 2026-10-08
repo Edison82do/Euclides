@@ -199,6 +199,15 @@
   y redondear al millón y a la centena de millar. Currículo inglés de Year 6: leer, escribir, ordenar y comparar
   hasta 10 000 000. → N.6.
 
+- **NCETM 1.31** (*Problems with two unknowns*, Year 6; la web está bloqueada desde la nube, leída por el buscador el
+  8 oct). Cinco puntos: (1) pueden tener una solución, varias o ninguna; (2) la relación entre las dos incógnitas se
+  dice de forma aditiva o multiplicativa; (3) dibujar el modelo (la barra) enseña la estructura; (4) hay una sola
+  solución si se dan la suma y la diferencia, o la suma y una relación multiplicativa; (5) los que no se dejan
+  dibujar se resuelven probando y mejorando de forma sistemática (una, varias o infinitas). La unidad 11 de Year 6
+  (*Curriculum Prioritisation*, «Solving problems with two unknowns») añade explicar por qué la suma y diferencia
+  tiene una sola. **Oak National** (la misma unidad): A + B = 30, A − B = 8 con dos barras y un trozo de 8; alinear
+  las barras una debajo de otra; no hay regla fija para saber cuántas soluciones hay: razonarlo cada vez. → S.3.
+
 - **NCETM 1.27** (*Negative numbers: counting, comparing and calculating*, Year 5): positivos y negativos
   representan un cambio; los negativos son menores que cero; el signo menos delante de la cifra; en la
   escala horizontal, a la izquierda del cero, y cuanto mayor la cifra más lejos del cero; intervalos a
@@ -365,3 +374,6 @@
 - Oak National, fracciones no relacionadas: https://www.thenational.academy/teachers/programmes/maths-primary-ks2/units/addition-and-subtraction-of-fractions/lessons/add-and-subtract-non-related-fractions-with-different-denominators
 - NCETM 1.30 (bloqueada desde la nube; leída por el buscador): https://www.ncetm.org.uk/classroom-resources/primm-130-composition-and-calculation-numbers-up-to-10-000-000
 - NCETM, Year 6 «Numbers up to 10,000,000» (Curriculum Prioritisation): https://ncetm.org.uk/classroom-resources/cp-year-6-unit-3-numbers-up-to-10-000-000/
+- NCETM 1.31 (bloqueada desde la nube; leída por el buscador): https://www.ncetm.org.uk/classroom-resources/primm-131-problems-with-two-unknowns/
+- NCETM, Year 6 unit 11 «Solving problems with two unknowns» (Curriculum Prioritisation): https://www.ncetm.org.uk/classroom-resources/cp-year-6-unit-11-solving-problems-with-two-unknowns/
+- Oak National, unidad «Solving problems with two unknowns» (bloqueada desde la nube; leída por el buscador): https://www.thenational.academy/teachers/programmes/maths-primary-ks2/units/solving-problems-with-two-unknowns/lessons/compare-the-structure-of-problems-with-one-or-two-unknowns

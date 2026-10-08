@@ -459,6 +459,50 @@ def _n6_pocas_cosas(s, u, ceros):
     return len(u.cifras_de(_n6_cosas(u, a, ceros))) <= 3
 
 
+# ---- problemas con dos incognitas (paso S.3; NCETM 1.31): {"letras": [a, b], "ecuaciones": [{"tipo": ...}, ...]}
+def _di_ecuaciones(s):
+    e = s.get("ecuaciones")
+    return e if isinstance(e, list) else []
+
+
+def _di_es_suma(e):
+    return e.get("tipo") == "lineal" and e["coef"][e["letras"][0]] == "1" and e["coef"][e["letras"][1]] == "1"
+
+
+def _di_dos_de(s, uno, otro):
+    """Dos ecuaciones: una cumple 'uno' y la otra 'otro' (en el orden que vengan)."""
+    e = _di_ecuaciones(s)
+    if len(e) != 2:
+        return None
+    for x, y in ((e[0], e[1]), (e[1], e[0])):
+        if uno(x) and otro(y):
+            return x, y
+    return None
+
+
+def _di_diferencia_y_multiplo(s):
+    """La diferencia y el multiplo hablan de la misma: la que tiene MAS es la que es k veces la otra."""
+    par = _di_dos_de(s, lambda e: e.get("tipo") == "diferencia", lambda e: e.get("tipo") == "multiplo")
+    return par is not None and par[0]["mayor"] == par[1]["grande"]
+
+
+def _di_es_entero(f):
+    return isinstance(f, str) and f.isdigit()
+
+
+def _di_pone_tope(e):
+    """Una ecuacion que deja probar EN ORDEN un numero acotado de casos: el producto (las parejas de factores) o
+    una suma con pesos de enteros (de 0 hasta donde cabe)."""
+    if e.get("tipo") == "producto":
+        return _di_es_entero(e["n"]) and e["n"].strip("0") != ""
+    return e.get("tipo") == "lineal" and _di_es_entero(e["n"]) and all(_di_es_entero(c) for c in e["coef"].values())
+
+
+def _di_una_sola(s, tipos):
+    e = _di_ecuaciones(s)
+    return len(e) == 1 and e[0].get("tipo") in tipos
+
+
 CONDICIONES = {
     "pocas_centenas_para_contarlas": lambda s, u: _n6_pocas_cosas(s, u, 2),
     "pocos_miles_para_contarlos": lambda s, u: _n6_pocas_cosas(s, u, 3),
@@ -651,6 +695,18 @@ CONDICIONES = {
     # ---- redondear (paso N.2; 3.NBT.A.1): el numero esta en la lista, y el sitio es decena o centena
     "se_puede_redondear": lambda s, u: u.decir(s["n"]) is not None and s.get("a") in (
         "decena", "centena", "millar", "decena de millar", "centena de millar", "millon"),
+    # ---- problemas con dos incognitas (paso S.3; NCETM 1.31)
+    "hay_ecuaciones_y_un_numero_para_cada_letra": lambda s, u: bool(_di_ecuaciones(s)) and all(
+        l in s.get("valores", {}) for e in _di_ecuaciones(s) for l in e["letras"]),
+    "se_dan_la_suma_y_la_diferencia": lambda s, u: _di_dos_de(
+        s, _di_es_suma, lambda e: e.get("tipo") == "diferencia") is not None,
+    "se_dan_la_suma_y_un_multiplo": lambda s, u: _di_dos_de(
+        s, _di_es_suma, lambda e: e.get("tipo") == "multiplo") is not None,
+    "se_dan_la_diferencia_y_un_multiplo_del_mismo_lado": lambda s, u: _di_diferencia_y_multiplo(s),
+    "una_ecuacion_pone_el_tope": lambda s, u: any(_di_pone_tope(e) for e in _di_ecuaciones(s)),
+    "no_es_una_suma_sola": lambda s, u: not (_di_una_sola(s, ("lineal",)) and _di_es_suma(_di_ecuaciones(s)[0])),
+    "es_una_suma_sola": lambda s, u: _di_una_sola(s, ("lineal",)) and _di_es_suma(_di_ecuaciones(s)[0]),
+    "es_una_relacion_sola": lambda s, u: _di_una_sola(s, ("diferencia", "multiplo")),
 }
 
 DE_APLICACION = {"el_divisor_no_es_cero", "hay_bastantes", "hay_bastantes_al_deshacer", "la_parte_cabe_en_el_todo",
