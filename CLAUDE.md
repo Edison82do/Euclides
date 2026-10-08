@@ -96,6 +96,10 @@ Hecho **U.3 el lector de palabras** (parte `palabras.py`, prefijo `_pa_`; el voc
 estructuras y lo que se sabe —figuras, consecutivos— en `conocimiento/relaciones.kn`): frase a frase → relaciones del mismo
 MODELO, que busca U.2. Entra por `resolver:` con palabras y por la red de seguridad de las palabras (si R.1, R.2, la escala...
 no llegan). Una palabra nueva se añade en `frases.kn`, nunca en el código; una palabra no puede tener dos sentidos (se avisa).
+Hecho **U.3b la cosa de cada cantidad** (en `palabras.py`; tras la revisión de U.3, que halló respuestas falsas): cada cantidad
+es (de quién, de qué cosa) —la primera cosa conserva el nombre (`maria`), otra es `maria_lapiz`—; solo se suman o restan las de
+la misma cosa (`_pa_comprobar_cosas`, en el modelo); «cada», «N u por X» y los verbos de cada (`frases.kn`) son grupos iguales;
+comprar con dinero es gastar; las cosas genéricas (dinero, edad...), las parejas y dimensiones de las figuras, en datos.
 **Siguiente: U.4 — una sola tabla de puertas** (juntar `explicar_pregunta` y `preguntar`; las puertas viejas que ya equivalen
 al modelo, a traductores; la división con resto de R.2 todavía no es vocabulario del modelo).
 Antes: S.3 problemas con dos incógnitas (NCETM 1.31), N.6 hasta diez millones (NCETM 1.30), F.7, F.6, P.7.

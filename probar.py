@@ -508,6 +508,14 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         Ana tiene 6 caramelos y Luis tiene 4. Ana le da 2 a Luis. Cuantos tiene Luis?       -> 6 caramelos (un traspaso)
         Hay 25 alumnos en la clase. 13 son ninas. Cuantos son ninos?                        -> 12 ninos (partes de un todo)
         Pedro ahorra 5 pesos cada semana. Cuanto ahorra en 6 semanas?                       -> 30 pesos
+
+  LA COSA DE CADA CANTIDAD  ->  (de quien, de que cosa); solo se juntan las de la misma cosa (plan U, fase U.3b)
+        Maria tiene 8 anos y 15 lapices. Luis tiene 6 lapices. Cuantos lapices tienen en total?  -> 21 lapices
+        Ana tiene 8 anos. Luis tiene 6 canicas. Cuantas tienen entre los dos?   -> no entiendo (anos + canicas)
+        3 cuadernos cuestan 12 pesos. Cuanto cuestan 5 cuadernos?              -> 20 pesos (3 x lo de uno = 12)
+        Un camion lleva 12 cajas. Cada caja pesa 8 kilos. Cuantos kilos lleva el camion?  -> 96 kilos
+        Un rectangulo tiene 30 cm de perimetro. Un lado mide 8 cm. Cuanto mide el otro?  -> 7 cm
+        Ana tenia 40 canicas. Pierde la mitad de lo que tenia. Cuantas le quedan?          -> 20 canicas
         El vocabulario esta en conocimiento/frases.kn y las estructuras (parte-todo, cambio, comparar, grupos iguales,
         figuras, consecutivos) en conocimiento/relaciones.kn.  Si una puerta vieja (R.1, R.2, la escala...) no lo
         entiende, lo lee el lector de palabras; si la puerta vieja contesta, se queda lo suyo.  Una frase que no se

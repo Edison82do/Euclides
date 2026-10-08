@@ -37,6 +37,7 @@ _PA_LISTAS = (
     ("articulos", "art", None), ("posesivos", "su", None), ("relleno", "relleno", None), ("iguales", "relleno", None),
     ("verbos_valor", "verbo", {"tipo": "valor"}), ("verbos_valor_pasado", "verbo", {"tipo": "valor", "tiempo": "inicio"}),
     ("verbos_quedan", "verbo", {"tipo": "valor", "tiempo": "final"}), ("verbos_toca", "verbo", {"tipo": "toca"}),
+    ("verbos_quedan_le", "verbo", {"tipo": "valor", "tiempo": "final", "quien": "le"}),
     ("verbos_suman", "verbo", {"tipo": "suman"}), ("verbos_diferencia", "verbo", {"tipo": "diferencia"}),
     ("cambio_mas_de_alguien", "verbo", {"tipo": "cambio", "signo": "+", "quien": "alguien"}),
     ("cambio_mas_le", "verbo", {"tipo": "cambio", "signo": "+", "quien": "le"}),
@@ -93,7 +94,10 @@ def _pa_vocabulario(saber):
     voc = {"frases": frases, "largo": max(len(k) for k in frases) if frases else 1,
            "al_reves": set(_pa_lista(f.get("al_reves"))), "unidades": set(_pa_lista(f.get("unidades"))),
            "sujeto_de_verbo": dict(f.get("sujeto_de_verbo") or {}), "palabras": set(),
-           "orden_momentos": _pa_lista(f.get("momentos")), "negativos": set(_pa_lista(f.get("pueden_ser_negativos")))}
+           "orden_momentos": _pa_lista(f.get("momentos")), "negativos": set(_pa_lista(f.get("pueden_ser_negativos"))),
+           "genericas": {k: set(_pa_lista(v)) for k, v in (f.get("cosas_genericas") or {}).items()},
+           "mismas": dict(f.get("mismas_cosas") or {}), "de_cada": set(_pa_lista(f.get("verbos_de_cada"))),
+           "cosa_del_verbo": {v: k for k, lista in (f.get("cosa_del_verbo") or {}).items() for v in _pa_lista(lista)}}
     for k in frases:
         voc["palabras"].update(k)
     saber["_pa_vocabulario"] = voc
@@ -112,7 +116,12 @@ def _pa_relaciones(saber):
         for par in _pa_lista(fg.get("otros_nombres")):
             a, _, b = par.partition("=")
             otros[a.strip()] = b.strip()
-        figuras.append({"nombre": fg["nombre"], "palabras": _pa_lista(fg.get("palabras")),
+        pares = {}
+        for par in _pa_lista(fg.get("pares")):              # 'lado=largo ancho': un lado / el otro (U.3b)
+            a, _, b = par.partition("=")
+            pares[a.strip()] = b.split()
+        figuras.append({"nombre": fg["nombre"], "palabras": _pa_lista(fg.get("palabras")), "pares": pares,
+                        "dimensiones": _pa_lista(fg.get("dimensiones")),
                         "medidas": _pa_lista(fg.get("medidas")), "otros": otros,
                         "formulas": [x.strip() for x in fg.get("formulas", "").split(";") if x.strip()],
                         "cuadradas": _pa_lista(fg.get("cuadradas")), "cubicas": _pa_lista(fg.get("cubicas"))})
@@ -209,7 +218,10 @@ def _pa_frases(texto):
     out, actual, pregunta = [], [], False
     for trozo in re.split(r"(\?|!|;|\.(?!\d)|¿)", t):
         if trozo == "¿":
-            pregunta = True
+            frase = " ".join("".join(actual).split()).strip(" ,")
+            if frase:                                      # 'si 2 kilos cuestan 9, ¿cuanto...?': lo de antes es un hecho
+                out.append((frase, False))
+            actual, pregunta = [], True
             continue
         if trozo in ("?", "!", ";", "."):
             frase = " ".join("".join(actual).split())
@@ -285,6 +297,13 @@ def _pa_juntar_tokens(toks):
         if t[0] == "relleno" and t[2] in ("lo que", "de lo que"):
             if t[2] == "de lo que" and out and out[-1][0] in ("mult", "num"):
                 out.append(("de", "de", "de"))
+                k = i + 1
+                if sig and sig[0] == "verbo" and k + 1 < len(toks) and toks[k + 1][0] == "verbo":
+                    k = k + 1                              # 'de lo que habia BAJADO': el verbo es el segundo
+                if k < len(toks) and toks[k][0] == "verbo":    # U.3b: 'la mitad de lo que TENIA' (lo de antes)
+                    out.append(("lo_que", toks[k][1], "lo que " + toks[k][2]))
+                    i = k + 1
+                    continue
             if sig and sig[0] == "verbo":
                 i += 1                                     # 'el doble de lo que CUESTA la goma': ese verbo no es el de la frase
             i += 1
@@ -319,7 +338,7 @@ def _pa_nucleos(toks):
         t = toks[k]
         if t[0] == "func":
             pendientes = pendientes + 1
-        elif t[0] in ("y", ","):
+        elif t[0] in ("y", ",") or (t[0] == "relleno" and t[2].startswith("y ")):     # 'y luego'
             if pendientes:
                 pendientes = pendientes - 1
                 continue
@@ -387,7 +406,7 @@ def _pa_buscar_ente(ctx, palabras, tipo=None):
     """La cantidad que ya se nombro con esas palabras (singular o plural; 'la roja' es 'la cuerda roja')."""
     clave = set(_pa_singular(w) for w in palabras)
     for e in reversed(ctx["entes"]):
-        if tipo and e["tipo"] != tipo:
+        if (tipo and e["tipo"] != tipo) or e.get("dueno"):
             continue
         if clave and (clave <= set(e["clave"]) or set(palabras) <= set(e["clave"])):
             return e
@@ -418,19 +437,28 @@ def _pa_ente(ctx, palabras, tipo="uno", crear=True):
 
 
 def _pa_medida(ctx, palabras):
-    """'largo', 'el perimetro', 'su area' de una figura que ha salido -> la cantidad de esa medida."""
+    """'largo', 'el perimetro', 'su area' de una figura que ha salido -> la cantidad de esa medida.  'Un lado' del
+    rectangulo es el primero de su pareja (relaciones.kn, 'pares'); 'el otro' sera el otro (U.3b)."""
     for fg in ctx["figuras"]:
         for w in palabras:
             m = fg["otros"].get(w, w)
+            if m in fg["pares"]:
+                cual = fg["pares"][m][0]
+                ctx["par_ultimo"] = (fg, m, cual)
+                return _pa_medida_de(ctx, fg, cual)
             if m in fg["medidas"]:
-                e = _pa_buscar_ente(ctx, [m], "medida")
-                if e:
-                    return e
-                e = _pa_nuevo_ente(ctx, (m,), "medida", _pa_libre(ctx, m))
-                e["figura"] = fg
-                ctx["figuras_usadas"].append(fg) if fg not in ctx["figuras_usadas"] else None
-                return e
+                return _pa_medida_de(ctx, fg, m)
     return None
+
+
+def _pa_medida_de(ctx, fg, m):
+    e = _pa_buscar_ente(ctx, [m], "medida")
+    if e:
+        return e
+    e = _pa_nuevo_ente(ctx, (m,), "medida", _pa_libre(ctx, m))
+    e["figura"] = fg
+    ctx["figuras_usadas"].append(fg) if fg not in ctx["figuras_usadas"] else None
+    return e
 
 
 def _pa_version(ctx, e, tiempo):
@@ -457,12 +485,142 @@ def _pa_otra_version(ctx, e):
     return nombre
 
 
-def _pa_letra(ctx, e, tiempo=None):
-    ctx["ultimo"] = e
-    if e["persona"]:
-        ctx["ultima_persona"] = e
-    ctx["mencionados"].append(e)
+def _pa_letra(ctx, e, tiempo=None, exacto=False):
+    """La letra de una cantidad.  Si no es 'exacto', primero se mira DE QUE COSA es en esta frase (U.3b): Maria con
+    lapices y Maria con anos son dos cantidades."""
+    if not exacto:
+        e = _pa_de_cosa(ctx, e, ctx.get("cosa_frase"))
+    raiz = e.get("dueno") or e
+    ctx["ultimo"] = raiz
+    if raiz["persona"]:
+        ctx["ultima_persona"] = raiz
+    ctx["mencionados"].append(raiz)
     return ("letra", _pa_version(ctx, e, tiempo))
+
+
+# ------------------------------------------------------------- 3b. la COSA de cada cantidad (U.3b)
+
+def _pa_cosa(ctx, palabras):
+    """Las palabras de una cosa -> su forma comun: en singular, y las que son la misma ('kg' = 'kilo'; frases.kn)."""
+    mismas = ctx["voc"]["mismas"]
+    out = []
+    for w in palabras:
+        s = _pa_singular(mismas.get(w, w))
+        out.append(mismas.get(s, s))
+    return tuple(out)
+
+
+def _pa_misma_cosa(ctx, a, b):
+    """Dos cosas son la misma si las palabras de una estan en la otra ('kilos' y 'kilos de manzanas'), o si una es una
+    palabra GENERICA de la clase de la otra ('dinero' y 'pesos'; frases.kn)."""
+    if set(a) <= set(b) or set(b) <= set(a):
+        return True
+    gen = ctx["voc"]["genericas"]
+    for x, y in ((a, b), (b, a)):
+        if len(x) == 1 and x[0] in gen and set(y) & gen[x[0]]:
+            return True
+    return False
+
+
+def _pa_es_generica(ctx, c):
+    return len(c) == 1 and c[0] in ctx["voc"]["genericas"]
+
+
+def _pa_cosa_de_toks(toks, ctx):
+    """La cosa de un dato: las palabras que van detras del primer numero ('15 lapices', '2 kilos de manzanas'), o del
+    '?' ('cuantos lapices').  Lo que va detras de 'de' si es una medida de una figura ('8 cm de largo') no es la cosa."""
+    for k, t in enumerate(toks):
+        if t[0] not in ("num", "pide", "algo"):
+            continue
+        palabras, j = [], k + 1
+        while j < len(toks) and (toks[j][0] == "palabra" or (
+                toks[j][0] == "de" and palabras and j + 1 < len(toks) and toks[j + 1][0] == "palabra"
+                and not _pa_es_medida(ctx, [toks[j + 1][2]]))):
+            if toks[j][0] == "palabra":
+                palabras.append(toks[j][2])
+            j = j + 1
+        return _pa_cosa(ctx, palabras) if palabras else None
+    return None
+
+
+def _pa_de_cosa(ctx, e, cosa):
+    """La cantidad (de quien, de que cosa).  La primera cosa de alguien se queda con su nombre ('maria'); otra cosa
+    distinta es OTRA cantidad ('maria_lapiz').  Sin cosa: si tiene varias, no se adivina."""
+    if e["tipo"] != "uno":
+        return e
+    raiz = e.get("dueno") or e
+    familia = [raiz]
+    familia.extend(raiz.get("hijos", []))
+    if cosa is None:
+        if e is not raiz or len(familia) == 1:
+            return e
+        raise _PaNo("%s tiene varias cosas (%s): no se de cual se habla" % (
+            raiz["nombre"], ", ".join(" ".join(x["cosa"]) for x in familia if x.get("cosa"))))
+    iguales = [x for x in familia if x.get("cosa") and _pa_misma_cosa(ctx, x["cosa"], cosa)]
+    if len(iguales) > 1:
+        raise _PaNo("'%s' de %s: hay varias cosas asi" % (" ".join(cosa), raiz["nombre"]))
+    if iguales:
+        x = iguales[0]
+        if _pa_es_generica(ctx, x["cosa"]) and not _pa_es_generica(ctx, cosa):
+            x["cosa"] = cosa                          # 'dinero' -> 'pesos'
+        return x
+    if raiz.get("cosa") is None:
+        raiz["cosa"] = cosa
+        return raiz
+    hijo = _pa_nuevo_ente(ctx, raiz["clave"], "uno", _pa_libre(ctx, "%s_%s" % (raiz["nombre"], "_".join(cosa))))
+    hijo["dueno"], hijo["cosa"] = raiz, cosa
+    raiz.setdefault("hijos", []).append(hijo)
+    return hijo
+
+
+def _pa_cosa_de_arbol(e, cosas, ctx):
+    """La cosa de un lado de una relacion (Schwartz 1988): sumar y restar CONSERVAN la cosa (las dos tienen que ser la
+    misma); multiplicar por un numero la conserva; multiplicar o dividir dos cantidades la TRANSFORMA (no se mira).
+    Devuelve (cosa o None, el choque o None)."""
+    if e[0] == "letra":
+        return cosas.get(e[1]), None
+    if e[0] == "num":
+        return None, None
+    if e[0] in ("par", "neg"):
+        return _pa_cosa_de_arbol(e[1], cosas, ctx)
+    a, ch = _pa_cosa_de_arbol(e[2], cosas, ctx)
+    if ch:
+        return None, ch
+    b, ch = _pa_cosa_de_arbol(e[3], cosas, ctx)
+    if ch:
+        return None, ch
+    if e[1] in ("+", "-"):
+        if a and b and not _pa_misma_cosa(ctx, a, b):
+            return None, (a, b)
+        return a or b, None
+    if e[1] == "x" and (e[2][0] == "num" or e[3][0] == "num"):
+        return a or b, None
+    return None, None
+
+
+def _pa_cosas_de_letras(ctx):
+    cosas = dict(ctx["cosa_pedido"])
+    for e in ctx["entes"]:
+        if e.get("cosa"):
+            for v in e["versiones"]:
+                cosas[v] = e["cosa"]
+    return cosas
+
+
+def _pa_comprobar_cosas(ctx, rels):
+    """CAPA 4 con las cosas: una relacion que suma, resta o iguala cosas distintas ('8 anos + 6 canicas') junta lo que
+    no se junta; algo se leyo mal: mejor no entender que dar una respuesta falsa."""
+    cosas = _pa_cosas_de_letras(ctx)
+    for r in rels:
+        izq, der = r["rel"]
+        a, ch = _pa_cosa_de_arbol(izq, cosas, ctx)
+        if ch is None:
+            b, ch = _pa_cosa_de_arbol(der, cosas, ctx)
+            if ch is None and a and b and not _pa_misma_cosa(ctx, a, b):
+                ch = (a, b)
+        if ch:
+            raise ValueError("'%s' junta cosas distintas (%s con %s): eso no se suma ni se iguala"
+                             % (_u_rel_texto(r["rel"]), " ".join(ch[0]), " ".join(ch[1])))
 
 
 def _pa_incognita(ctx, base):
@@ -477,6 +635,8 @@ def _pa_pedido(ctx):
     nombre = _pa_libre(ctx, "lo_pedido")
     ctx["nombres"].add(nombre)
     ctx["pide"].append(nombre)
+    if ctx.get("cosa_frase"):
+        ctx["cosa_pedido"][nombre] = ctx["cosa_frase"]
     return ("letra", nombre)
 
 
@@ -542,6 +702,9 @@ def _pa_expresion(toks, ctx, lado="sujeto"):
             if t[0] == "art":
                 tomar()
             return funcion(tomar()[1])
+        if t[0] == "lo_que":                               # 'de lo que pesa la maleta' / 'de lo que tenia'
+            tomar()
+            return factor() if quedan else _pa_lo_que(ctx, t[1])
         if t[0] == "num":
             tomar()
             n = ("num", t[1])
@@ -556,6 +719,9 @@ def _pa_expresion(toks, ctx, lado="sujeto"):
             if ver()[0] == "palabra":
                 palabras = nombre()                        # '4 kilos de manzanas'
                 e = _pa_por_unidad(ctx, palabras)
+                if e is None and lado == "sujeto" and ctx["de_cada"] and not _pa_es_medida(ctx, palabras):
+                    e = _pa_ente(ctx, [_pa_singular(w) for w in palabras])   # '3 cuadernos cuestan 12' (U.3b):
+                    e["por_unidad"] = True                                   # 3 x lo de un cuaderno
                 if e is not None and lado == "sujeto":
                     return ("op", "x", n, _pa_letra(ctx, e))       # '4 cajas' (cada caja pesa 5): 4 x caja
                 _pa_unidad(ctx, palabras)
@@ -651,6 +817,14 @@ def _pa_expresion(toks, ctx, lado="sujeto"):
             nuevo = ver()[2] in ("un", "una", "unos", "unas")
             tomar()
         t = ver()
+        if t[0] == "cual" and t[2] in ("otro", "otra", "el otro", "la otra") and ctx["par_ultimo"] and (
+                ver(1)[0] is None or (ver(1)[0] == "palabra" and ver(1)[2] in ctx["par_ultimo"][0]["pares"])):
+            tomar()                                       # 'el otro (lado)' del rectangulo: el otro de la pareja
+            if ver()[0] == "palabra":
+                tomar()
+            fg, m, cual = ctx["par_ultimo"]
+            otro = [x for x in fg["pares"][m] if x != cual][0]
+            return _pa_letra(ctx, _pa_medida_de(ctx, fg, otro))
         if t[0] == "cual":
             tomar()
             if ver()[0] == "generico":
@@ -690,7 +864,7 @@ def _pa_expresion(toks, ctx, lado="sujeto"):
 
 
 def _pa_es_medida(ctx, palabras):
-    return any(fg["otros"].get(w, w) in fg["medidas"] for fg in ctx["figuras"] for w in palabras)
+    return any(fg["otros"].get(w, w) in fg["medidas"] or w in fg["pares"] for fg in ctx["figuras"] for w in palabras)
 
 
 def _pa_operar(op, miembros):
@@ -708,7 +882,9 @@ def _pa_por_unidad(ctx, palabras):
     for e in reversed(ctx["entes"]):
         if e["tipo"] == "uno" and e.get("por_unidad") and clave == set(e["clave"]):
             return e
-    return None
+    mas = [e for e in ctx["entes"] if e["tipo"] == "uno" and e.get("por_unidad") and not e.get("dueno")
+           and clave and clave < set(e["clave"])]
+    return mas[0] if len(mas) == 1 else None             # '8 kilos' (de manzanas, que es lo unico por kilo)
 
 
 def _pa_unidad(ctx, palabras):
@@ -773,8 +949,15 @@ def _pa_nucleo(toks, ctx, pregunta, antes):
         else:
             sujeto, verbo, objeto = toks[:v], toks[v], toks[v + 1:]
     tiempo = tiempo or verbo[1].get("tiempo") or ("final" if pregunta and verbo[1]["tipo"] != "cambio" else None)
+    cosa = _pa_cosa_de_toks(objeto, ctx)                  # U.3b: de que cosa habla esta frase
+    del_verbo = ctx["voc"]["cosa_del_verbo"].get(verbo[1].get("palabra"))
+    ctx["cosa_frase"] = cosa or ctx.get("cosa_heredada") or ((del_verbo,) if del_verbo else None)
+    ctx["de_cada"] = verbo[1].get("palabra") in ctx["voc"]["de_cada"]
     ctx["unidad_frase"] = None
     ctx["tasa_frase"] = None
+    objeto = _pa_por_cada(objeto, ctx)                    # '3 pesos por kilo': lo de CADA kilo
+    if objeto is None:
+        return {"verbo": verbo, "sujeto": sujeto}
     tipo = verbo[1]["tipo"]
     if _pa_ritmo(sujeto, objeto, ctx, pregunta):
         return {"verbo": verbo, "sujeto": sujeto}
@@ -906,7 +1089,7 @@ def _pa_valor(sujeto, verbo, objeto, ctx, tiempo):
         return
     if _pa_es_grupos(objeto):                          # 'tengo 3 cajas con 8 huevos cada una'
         return _pa_existe(objeto, ctx, tiempo)
-    cuenta = _pa_es_cuenta_pedida(objeto, ctx)
+    cuenta = None if _pa_tiene_grupos(ctx, sin_lugar) else _pa_es_cuenta_pedida(objeto, ctx)
     if cuenta is not None:                             # 'cuantos huevos tengo?': los huevos que hay
         _pa_apuntar(ctx, _pa_letra(ctx, cuenta, tiempo), _pa_dato(objeto, ctx), frase, "valor")
         return
@@ -942,6 +1125,8 @@ def _pa_valor(sujeto, verbo, objeto, ctx, tiempo):
     a = miembros[0]
     if ctx["tasa_frase"] is not None and ctx["tasa_frase"] in ctx["tasas"]:
         ctx["tasa_frase"]["unidad_tasa"] = None
+    if _pa_dimensiones(objeto, ctx, frase):
+        return
     if _pa_comparar(a, objeto, ctx, frase):
         return
     if _pa_atributo(a, sin_lugar, objeto, ctx, frase):
@@ -1023,6 +1208,19 @@ def _pa_es_grupos(objeto):
     return c[k:k + 3] in (["con", "num", "palabra"], ["de", "num", "palabra"])
 
 
+def _pa_tiene_grupos(ctx, sujeto):
+    """'cuantos kilos lleva EL CAMION' cuando el camion tiene cajas y se sabe lo de cada caja: se pide una cosa del
+    camion (U.3b), no la cuenta suelta de los kilos."""
+    palabras = [t[2] for t in sujeto if t[0] == "palabra"]
+    e = _pa_buscar_ente(ctx, palabras, "uno") if palabras else None
+    if e is None:
+        return False
+    familia = [e]
+    familia.extend(e.get("hijos", []))
+    return any(x.get("por_unidad") and _pa_misma_cosa(ctx, x["clave"], q["cosa"])
+               for q in familia if q.get("cosa") for x in ctx["entes"] if not x.get("dueno"))
+
+
 def _pa_es_cuenta_pedida(objeto, ctx):
     """'? huevos' cuando 'huevos' ya es una CUENTA (cuantos hay): se pide esa cuenta."""
     c = [t for t in objeto if t[0] != "relleno"]
@@ -1052,7 +1250,7 @@ def _pa_comparar(a, objeto, ctx, frase):
         while resto and resto[0][0] in ("veces", "de"):
             resto = resto[1:]
         if multi and resto and resto[0][0] != "masmenos" and (
-                any(t[0] in ("lo_de", "art", "su", "cual", "generico", "num") for t in resto)
+                any(t[0] in ("lo_de", "art", "su", "cual", "generico", "num", "lo_que") for t in resto)
                 or _pa_buscar_ente(ctx, [t[2] for t in resto if t[0] == "palabra"])):
             return False                                  # 'el doble de 3', '3 veces la edad de Juan': una expresion
         b = _pa_otro(ctx, a)
@@ -1084,6 +1282,63 @@ def _pa_comparar(a, objeto, ctx, frase):
         _pa_unidad(ctx, uni)
     _pa_estructura(ctx, "comparacion_multiplicativa", {"grande": a, "veces": veces, "pequeno": b}, frase)
     return True
+
+
+def _pa_dimensiones(objeto, ctx, frase):
+    """'mide 5 cm por 4 cm por 3 cm': las DIMENSIONES de la figura en su orden (relaciones.kn; U.3b)."""
+    trozos, actual = [], []
+    for t in objeto:
+        if t[0] == "op" and t[2] == "por":
+            trozos.append(actual)
+            actual = []
+        elif t[0] != "relleno":
+            actual.append(t)
+    trozos.append(actual)
+    if len(trozos) < 2 or any(not x or x[0][0] not in ("num", "pide", "algo") or any(y[0] != "palabra" for y in x[1:])
+                              for x in trozos):
+        return False
+    fg = next((f for f in ctx["figuras"] if len(f["dimensiones"]) == len(trozos)), None)
+    if fg is None:
+        return False
+    for m, x in zip(fg["dimensiones"], trozos):
+        _pa_apuntar(ctx, _pa_letra(ctx, _pa_medida_de(ctx, fg, m)), _pa_dato(x, ctx), frase, "medida")
+    return True
+
+
+def _pa_por_cada(objeto, ctx):
+    """'3 pesos por kilo', '40 personas por vagon': lo de CADA uno (grupos iguales; Schwartz: una cantidad 'por').
+    Se apunta y se quita del objeto (None si no queda nada mas)."""
+    obj = [t for t in objeto if t[0] != "relleno"]
+    k = next((i for i, t in enumerate(obj) if t[0] == "op" and t[2] == "por" and i >= 2), None)
+    if k is None or obj[0][0] != "num" or any(t[0] != "palabra" for t in obj[1:k]):
+        return objeto
+    detras = [t for t in obj[k + 1:] if t[0] not in ("art", "cada")]
+    if not detras or any(t[0] != "palabra" for t in detras) or _pa_es_medida(ctx, [t[2] for t in detras]):
+        return objeto
+    uni = [t[2] for t in obj[1:k]]
+    e = _pa_ente(ctx, [_pa_singular(t[2]) for t in detras])
+    e["por_unidad"], e["unidad_tasa"] = True, " ".join(uni)
+    if e not in ctx["tasas"]:
+        ctx["tasas"].append(e)
+    ctx["cosa_frase"] = _pa_cosa(ctx, uni)
+    _pa_unidad(ctx, uni)
+    ctx["unidad_de"][e["versiones"][0]] = " ".join(uni)
+    _pa_apuntar(ctx, _pa_letra(ctx, e), ("num", obj[0][1]), ctx["frase"], "lo de cada uno")
+    return None
+
+
+def _pa_lo_que(ctx, verbo):
+    """'la mitad de LO QUE TENIA' (lo que tenia antes de este cambio); '3/4 de LO QUE HABIA BAJADO' (el cambio de
+    antes de esa cosa con ese verbo).  U.3b."""
+    e = ctx["quien_cambia"]
+    if e is None:
+        raise _PaNo("'lo que %s' de quien?" % verbo.get("palabra", ""))
+    if verbo["tipo"] == "cambio":
+        for ent, s, cambio in reversed(ctx["cambios"]):
+            if ent is e and s == verbo["signo"]:
+                return _pa_par(cambio)
+        raise _PaNo("antes no hubo ningun '%s'" % verbo.get("palabra", ""))
+    return ("letra", e["versiones"][-1])
 
 
 def _pa_otro(ctx, a):
@@ -1184,12 +1439,17 @@ def _pa_cambio(sujeto, verbo, objeto, ctx, pregunta):
         e = _pa_cosa_sola(partes[0], ctx)
     else:
         e = _pa_quien(ctx, verbo)
+    e = _pa_de_cosa(ctx, e, ctx.get("cosa_frase"))         # U.3b: lo que cambia es UNA cosa de alguien
     signo = verbo[1]["signo"]
     obj = [t for t in objeto if t[0] not in ("relleno", "masmenos")]
     if pregunta:
         return _pa_cambio_pedido(e, signo, ctx)
-    _pa_un_cambio(ctx, e, signo, _pa_cuanto_cambia(obj, e, verbo, ctx), "%s %s" % (
-        verbo[2], " ".join(t[2] for t in objeto if t[0] != "relleno")))
+    ctx["quien_cambia"] = e
+    try:
+        cuanto = _pa_cuanto_cambia(obj, e, verbo, ctx)
+    finally:
+        ctx["quien_cambia"] = None
+    _pa_un_cambio(ctx, e, signo, cuanto, "%s %s" % (verbo[2], " ".join(t[2] for t in objeto if t[0] != "relleno")))
     return e
 
 
@@ -1198,6 +1458,9 @@ def _pa_cuanto_cambia(obj, e, verbo, ctx):
             and not [t for t in obj if t[0] == "de"]:
         m = obj[0] if obj[0][0] == "mult" else obj[1]     # 'regala la cuarta parte': de lo que tiene ahora
         return ("op", "x", ("num", _nu_leer(m[1])), ("letra", e["versiones"][-1]))
+    if obj and any(t[0] == "lo_que" for t in obj) and (obj[0][0] in ("mult", "num") or (
+            obj[0][0] == "art" and obj[1:2] and obj[1][0] == "mult")):
+        return _pa_dato(obj, ctx)                         # 'la mitad de lo que tenia' (U.3b)
     if not obj or obj[0][0] not in ("num", "algo", "pide"):
         raise _PaNo("%s... cuanto?" % verbo[2])
     return _pa_dato(obj, ctx)
@@ -1207,7 +1470,7 @@ def _pa_un_cambio(ctx, e, signo, cambio, texto):
     """La cantidad e cambia: despues = antes +/- cambio (relaciones.kn: cambio_gana / cambio_pierde)."""
     if cambio[0] == "letra" and cambio[1] in ctx["incognitas"]:
         ctx["cambios_desconocidos"].append((e, signo, cambio[1]))
-    antes = _pa_letra(ctx, e)
+    antes = _pa_letra(ctx, e, exacto=True)
     despues = ("letra", _pa_otra_version(ctx, e))
     ctx["cambios"].append((e, signo, cambio))
     ctx["que_es"][antes[1]] = ctx["que_es"].get(antes[1]) or "%s al principio" % e["nombre"].replace("_", " ")
@@ -1273,6 +1536,7 @@ def _pa_compra(sujeto, verbo, objeto, ctx):
     obj = [t for t in objeto if t[0] not in ("relleno",)]
     partes = _pa_trozos_por_y(obj)
     compras = []
+    cosa_frase, ctx["cosa_frase"] = ctx["cosa_frase"], None     # lo de cada cosa es de su PRECIO (U.3b)
     for p in partes:
         if len(p) >= 2 and p[0][0] in ("num", "art") and p[1][0] == "palabra":
             k = 1
@@ -1285,8 +1549,11 @@ def _pa_compra(sujeto, verbo, objeto, ctx):
             if resto and resto[0][0] == "de" and len(resto) > 1 and resto[1][0] == "num":   # un libro de 13.50 pesos
                 e = _pa_ente(ctx, palabras)
                 e["por_unidad"] = True
-                _pa_unidad(ctx, [t[2] for t in resto[2:] if t[0] == "palabra"])
+                precio = [t[2] for t in resto[2:] if t[0] == "palabra"]
+                _pa_unidad(ctx, precio)
+                ctx["cosa_frase"] = _pa_cosa(ctx, precio) if precio else None
                 _pa_apuntar(ctx, _pa_letra(ctx, e), ("num", resto[1][1]), ctx["frase"], "precio")
+                ctx["cosa_frase"] = None
                 compras.append(("op", "x", n, _pa_letra(ctx, e)) if p[0][0] == "num" else _pa_letra(ctx, e))
                 continue
             e = _pa_por_unidad(ctx, palabras)
@@ -1298,10 +1565,27 @@ def _pa_compra(sujeto, verbo, objeto, ctx):
                 continue
         compras = None
         break
+    ctx["cosa_frase"] = cosa_frase
     if compras:
         ctx["compras"].extend(compras)
+        _pa_paga_comprando(sujeto, verbo, compras, ctx)
         return
     _pa_cambio(sujeto, verbo, objeto, ctx, False)
+
+
+def _pa_paga_comprando(sujeto, verbo, compras, ctx):
+    """Comprar con precio es GASTAR: si el que compra tiene dinero, su dinero baja lo que cuestan las compras (U.3b)."""
+    suj = [t for t in sujeto if t[0] not in ("relleno",)]
+    try:
+        quien = _pa_cosa_sola(suj, ctx) if suj else _pa_quien(ctx, verbo)
+    except _PaNo:
+        return
+    raiz = quien.get("dueno") or quien
+    familia = [raiz]
+    familia.extend(raiz.get("hijos", []))
+    dinero = [x for x in familia if x.get("cosa") and _pa_misma_cosa(ctx, ("dinero",), x["cosa"])]
+    if len(dinero) == 1:
+        _pa_un_cambio(ctx, dinero[0], "-", _pa_suma(compras), "paga lo que compra")
 
 
 def _pa_estructura_simple(ctx, nombre, objeto):
@@ -1361,7 +1645,8 @@ def _pa_contexto(texto, saber):
             "ultimo": None, "ultima_persona": None, "grupo": None, "figuras": [], "figuras_usadas": [],
             "tasas": [], "reparto": None, "compras": [], "dinero": set(), "cambios_desconocidos": [],
             "frase": "", "unidad_frase": None, "tasa_frase": None, "unidad_de": {}, "que_es": {}, "cambios": [],
-            "todo": None, "partes": {}}
+            "todo": None, "partes": {}, "cosa_frase": None, "cosa_heredada": None, "cosa_pedido": {},
+            "de_cada": False, "quien_cambia": None, "par_ultimo": None}
 
 
 def _pa_preparar_figuras_y_grupos(toks, ctx):
@@ -1373,6 +1658,7 @@ def _pa_preparar_figuras_y_grupos(toks, ctx):
             continue
         medidas = list(fg["medidas"])
         medidas.extend(fg["otros"])
+        medidas.extend(fg["pares"])
         if any(" %s " % w in texto for w in fg["palabras"]) and \
                 any(" %s " % m in ctx["todo_el_texto"] for m in medidas):
             ctx["figuras"].append(fg)
@@ -1421,6 +1707,8 @@ def _pa_leer(texto, saber):
                     if toks[j][0] == "palabra":
                         ctx["con_precio"].add(_pa_singular(toks[j][2]))
                     j = j + 1
+        if es_pregunta and len(toks) > 1 and toks[0][0] == "que" and toks[1][0] == "palabra":
+            toks[0] = ("preg", None, "cuanto")             # 'que temperatura hace?' (U.3b)
         if es_pregunta or (toks and toks[0][0] == "preg"):
             k = next((i for i, t in enumerate(toks) if t[0] == "relleno" and t[2] == "si" and i), None)
             if k:                                          # 'cuanto cuesta la goma si ...': lo de detras es un hecho
@@ -1446,9 +1734,11 @@ def _pa_leer_frase(frase, toks, ctx, pregunta):
     try:
         anterior = None
         ctx["unidad_heredada"] = None
+        ctx["cosa_heredada"] = None
         for nucleo in (_pa_nucleos(toks) if not pregunta else [toks]):
             ctx["frase"] = frase
             anterior = _pa_nucleo(nucleo, ctx, pregunta, anterior)
+            ctx["cosa_heredada"] = ctx.get("cosa_frase")       # 'Ana tiene 5 canicas y Luis 3' (canicas)
             ctx["unidad_heredada"] = ctx.get("unidad_frase") or ctx["unidad_heredada"]    # 'y Luis tiene 4' (caramelos)
         ctx["unidad_heredada"] = None
     except (_PaNo, _NuNoSale, KeyError, IndexError, ValueError) as ex:
@@ -1460,6 +1750,7 @@ def _pa_leer_frase(frase, toks, ctx, pregunta):
         leido["palabras"] = set(t[2] for t in toks if t[0] == "palabra")
         leido["dato"] = any(t[0] in ("num", "algo") for t in toks)
     leido["hasta"] = len(ctx["rels"])
+    ctx["cosa_heredada"] = ctx["cosa_frase"] = None
     return leido
 
 
@@ -1488,6 +1779,23 @@ def _pa_lo_que_se_sabe(ctx):
                      "cada_grupo": ("letra", cada["versiones"][0])}
             _pa_apuntar_sabido(ctx, _pa_rellenar(izq, roles), _pa_rellenar(der, roles),
                                "grupos iguales: %s" % ctx["rel"]["estructuras"]["grupos_iguales"], "grupos_iguales")
+    for raiz in [e for e in ctx["entes"] if e.get("hijos")]:     # U.3b: el camion lleva 12 CAJAS y cada caja 8 KILOS:
+        familia = [raiz]                                            # los kilos del camion = cajas x lo de cada caja
+        familia.extend(raiz["hijos"])
+        for q1 in familia:
+            for q2 in familia:
+                if q1 is q2 or not q1.get("cosa") or not q2.get("cosa"):
+                    continue
+                cada = next((x for x in ctx["entes"] if x.get("por_unidad") and x.get("cosa") and not x.get("dueno")
+                             and _pa_misma_cosa(ctx, x["clave"], q1["cosa"])
+                             and _pa_misma_cosa(ctx, x["cosa"], q2["cosa"])), None)
+                if cada is not None:
+                    _pa_apuntar_sabido(ctx, ("letra", "\x00final\x00" + q2["nombre"]),
+                                       ("op", "x", ("letra", "\x00final\x00" + q1["nombre"]),
+                                        ("letra", cada["versiones"][0])),
+                                       "grupos iguales: %s de %s = %s x lo de cada %s" % (
+                                           " ".join(q2["cosa"]), raiz["nombre"], " ".join(q1["cosa"]),
+                                           " ".join(cada["clave"])), "grupos_iguales")
     for todo in ctx["entes"]:                              # las partes de un todo ('13 son ninas'): parte + parte = todo
         partes = ctx["partes"].get(todo["nombre"]) or []
         if len(partes) > 1:
@@ -1538,6 +1846,9 @@ def _pa_modelo(texto, ctx, lecturas):
             pide[pide.index(der[1])] = izq[1]
             r["pedido"] = izq[1]
     if not pide:
+        mal = [l for l in lecturas if l["pregunta"] and l["error"]]
+        if mal:
+            raise ValueError("no entiendo la pregunta '%s' (%s)" % (mal[0]["frase"], mal[0]["error"]))
         raise ValueError("no encuentro la pregunta (lo que se pide)")
     # lo que sobra no estorba: solo lo CONECTADO con lo que se pide
     conectadas, letras = [], set(pide)
@@ -1553,6 +1864,7 @@ def _pa_modelo(texto, ctx, lecturas):
                 letras |= ls
                 cambia = True
     _pa_sin_callejones(conectadas, pide)
+    _pa_comprobar_cosas(ctx, conectadas)                  # U.3b: nada junta cosas distintas
     for r in list(conectadas):
         for l in _u_letras_rel(r["rel"]):
             letras.add(l)
@@ -1585,7 +1897,8 @@ def _pa_modelo(texto, ctx, lecturas):
     return {"cantidades": cantidades, "relaciones": [r["rel"] for r in ctx["rels"] if r in conectadas],
             "tipos": tipos, "negativos": ctx["voc"]["negativos"], "que_es": ctx["que_es"],
             "expresion": None, "texto": " ".join(_pa_normal(texto).split()), "pide": pide, "palabras": True,
-            "lecturas": lecturas, "apuntes": ctx["rels"], "conectadas": conectadas, "unidades": unidades}
+            "lecturas": lecturas, "apuntes": ctx["rels"], "conectadas": conectadas, "unidades": unidades,
+            "cosas": {l: c for l, c in _pa_cosas_de_letras(ctx).items() if l in cantidades}}
 
 
 def _pa_sin_callejones(conectadas, pide):
@@ -1723,6 +2036,11 @@ def _pa_explicar_lectura(m, saber):
         L.append("     EN EL TIEMPO:")
         for n, q in tiempos:
             L.append("         %s = %s" % (n, q))
+    cosas = m.get("cosas") or {}
+    if cosas:                                             # U.3b: de que cosa es cada cantidad
+        L.append("     DE QUE COSA ES CADA CANTIDAD (solo se suman o restan las de la misma cosa):")
+        L.append("         %s" % "; ".join("%s: %s" % (l, " ".join(c)) for l, c in cosas.items()))
+        L.append("         COMPRUEBO LAS COSAS: ninguna relacion junta cosas distintas")
     L.append("     SE PIDE: %s" % ", ".join(m["pide"]))
     L.append("")
     return L

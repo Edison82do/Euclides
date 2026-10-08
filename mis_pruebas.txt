@@ -379,3 +379,7 @@ problema: Cuanto cuesta la goma? Un lapiz y una goma cuestan 12 pesos. Ana tiene
 problema: Un rectangulo mide 8 cm de largo. Su perimetro es 26 cm. Cuanto mide de ancho? | 5 cm | U.3: lo que se sabe del rectangulo
 problema: Dos numeros consecutivos suman 31. Cuales son? | 15 y 16 | U.3: consecutivos
 problema: Ana tiene 6 caramelos y Luis tiene 4. Ana le da 2 a Luis. Cuantos tiene Luis? | 6 caramelos | U.3: un traspaso
+problema: Maria tiene 8 anos y 15 lapices. Luis tiene 6 lapices. Cuantos lapices tienen en total? | 21 lapices | U.3b: la cosa de cada cantidad
+problema: 3 cuadernos cuestan 12 pesos. Cuanto cuestan 5 cuadernos? | 20 pesos | U.3b: la proporcion simple
+problema: Un camion lleva 12 cajas. Cada caja pesa 8 kilos. Cuantos kilos lleva el camion? | 96 kilos | U.3b: 'cada' multiplica los grupos
+problema: Un rectangulo tiene 30 cm de perimetro. Un lado mide 8 cm. Cuanto mide el otro? | 7 cm | U.3b: un lado / el otro

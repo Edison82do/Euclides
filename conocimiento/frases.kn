@@ -32,7 +32,7 @@ definicion: |
 
 articulos: el, la, los, las, un, una, unos, unas
 posesivos: su, sus
-relleno: si, entonces, pero, luego, despues, mas tarde, y luego, y despues, tambien, solo, ya, le, se, lo que, de lo que
+relleno: si, entonces, pero, luego, ha, han, he, hemos, despues, mas tarde, y luego, y despues, tambien, solo, ya, le, se, lo que, de lo que
 iguales: iguales, igual, cada una igual, todas iguales
 
 # Los verbos de VALOR: 'sujeto VERBO dato' es 'sujeto = dato'.  En pasado: es lo de AL PRINCIPIO.
@@ -44,7 +44,9 @@ verbos_valor_pasado: |
   tenia, tenian, tenias, teniamos, costaba, costaban, media, median, pesaba, pesaban, valia, valian, era, eran, habia,
   hacia, marcaba
 # 'quedan' es lo de AL FINAL (despues de los cambios)
-verbos_quedan: queda, quedan, le queda, le quedan
+verbos_quedan: queda, quedan, sobra, sobran
+# 'le queda', 'me sobra': lo de AL FINAL de una PERSONA (U.3b: 'me' y 'te' son como 'le')
+verbos_quedan_le: le queda, le quedan, le sobra, le sobran, me queda, me quedan, me sobra, me sobran, te queda, te sobra
 # a quien le toca algo al repartir: es lo de CADA uno
 verbos_toca: le toca, le tocan, toca, tocan
 # el sujeto que se sobreentiende (la temperatura 'hace', el termometro 'marca')
@@ -61,14 +63,15 @@ verbos_diferencia: se diferencian en, se llevan, de diferencia hay
 # los 'le' son para el ultimo que se nombro; los 'de algo' valen para cualquier cosa (la temperatura sube).
 cambio_mas_de_alguien: |
   gana, ganan, recibe, reciben, encuentra, consigue, junta, recoge, coge, pesca, saca, ahorra,
-  gano, recibio, encontro, consiguio, junto, recogio, cogio, pesco, saco, ahorro, cobra, cobro
-cambio_mas_le: le dan, le regalan, le traen, le dieron, le regalaron, le trajeron, le pagan, le pagaron, le anaden
+  gano, recibio, encontro, consiguio, junto, recogio, cogio, pesco, saco, ahorro, cobra, cobro,
+  ganado, recibido, encontrado, conseguido, ahorrado, cobrado
+cambio_mas_le: me dan, me regalan, le dan, le regalan, le traen, le dieron, le regalaron, le trajeron, le pagan, le pagaron, le anaden
 cambio_mas_de_algo: |
   llegan, vienen, entran, nacen, aparecen, sube, suben, subio, subieron, aumenta, aumento, crece,
-  crecio, llegaron, vinieron, entraron, nacieron, aparecieron, se anaden, anaden
+  crecio, llegaron, vinieron, entraron, nacieron, aparecieron, se anaden, anaden, subido, aumentado, crecido
 cambio_menos_de_alguien: |
   pierde, vende, rompe, tira, come, usa, se come, se gasta, se bebe,
-  perdio, vendio, rompio, tiro, comio, uso, se comio, se gasto
+  perdio, vendio, rompio, tiro, comio, uso, se comio, se gasto, perdido, vendido, gastado, comido, usado
 # DAR: el que da pierde y, si se dice A QUIEN ('le da 2 a Luis'), ese gana (un traspaso: dos cambios).
 # 'da' sin persona que de es 'es igual a' (STUDENT: 'si a un numero le sumas 5 da 12').
 verbos_dar: |
@@ -77,7 +80,7 @@ verbos_dar: |
 cambio_menos_de_algo: |
   se van, se escapan, se caen, se rompen, se comen, se fueron, se escaparon, se cayeron,
   se rompieron, se comieron, se van a, se beben, se bebieron, se bajan, se bajaron, baja, bajan, bajo, bajaron, disminuye, disminuyo, se derriten, se pierden,
-  se gastan, se venden, se vendieron, quitan, quitaron, sacan, sacaron
+  se gastan, se venden, se vendieron, quitan, quitaron, sacan, sacaron, bajado, disminuido
 # comprar cosas que tienen precio (dinero): lo que paga es lo que cuestan; 'paga con' es lo que entrega
 verbos_compra: compra, compran, compro, se compra, se lleva
 verbos_pago_con: paga con, pagan con, pago con, entrega, da para pagar
@@ -209,3 +212,31 @@ complementos: en, para, por, de, del, con, a, al
 # lo que SI puede ser negativo (la temperatura, N.5); lo demas (cosas, precios, medidas) no: si sale negativo, no
 # es razonable (E.6) y no se da la respuesta.  Las CUENTAS de cosas (cuantos pajaros, cuantas bolsas) son enteras.
 pueden_ser_negativos: grados, grado, temperatura
+
+# --------------------------------------------------------------------- U.3b: la COSA de cada cantidad
+# Cada cantidad es (de quien, de que cosa): 'Maria tiene 8 anos y 15 lapices' son DOS cantidades de Maria.
+# La cosa de una frase son las palabras que van detras del numero ('15 lapices'; en la pregunta, 'cuantos lapices').
+# Solo se suman o restan cantidades de la misma cosa (Schwartz 1988: sumar conserva el referente; multiplicar lo
+# transforma).  Diario: diario/2026-10-08-paso-U3b-la-cosa-de-cada-cantidad.md
+# Las palabras GENERICAS valen por cualquier cosa de su clase ('cuanto dinero le queda' pregunta por sus pesos).
+cosas_genericas:
+  dinero: peso, euro, dolar, centavo
+  edad: ano
+  temperatura: grado
+  masa: kilo, gramo, tonelada, libra
+  longitud: cm, m, mm, km, dm, metro, centimetro, milimetro, kilometro
+# las palabras que son la MISMA cosa (ademas del singular y el plural)
+mismas_cosas:
+  kg: kilo
+  kilogramo: kilo
+  gr: gramo
+  g: gramo
+# Los VERBOS DE CADA: lo que dicen es de CADA cosa (todas cuestan / pesan lo mismo), asi que 'N cosas cuestan P' es
+# grupos iguales: N x (lo de una) = P (la proporcion simple; Vergnaud 1983, Common Core 6.RP.A.3b).
+verbos_de_cada: |
+  cuesta, cuestan, vale, valen, pesa, pesan, costaba, costaban, valia, valian, pesaba, pesaban
+# Los verbos que ya dicen DE QUE COSA se habla aunque no se diga la unidad ('cuanto cuestan 3 lapices': dinero).
+cosa_del_verbo:
+  dinero: cuesta, cuestan, costaba, costaban, vale, valen, valia, valian, paga, pagan, pago, gasta, gastan, gasto
+  masa: pesa, pesan, pesaba, pesaban
+  longitud: mide, miden, media, median

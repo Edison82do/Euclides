@@ -1160,3 +1160,14 @@ problema: Hay 25 alumnos en la clase. 13 son ninas. Cuantos son ninos? | 12 nino
 problema: Una caja mide 5 cm de largo, 3 cm de ancho y 2 cm de alto. Cual es su volumen? | 30 cm cubicos | (U.3) la elipsis por comas; volumen = largo x ancho x alto
 problema: Ana tiene 5 cromos. Adquiere 4. Cuantos tiene ahora? | no_entiendo | (U.3) 'adquiere' no esta en frases.kn: la frase trae un numero, no se adivina
 resolver: Hay 4 peces. Se van 9. Cuantos quedan?  | no_razonable | (U.3) no se puede quitar mas de lo que hay (por problema: sigue R.1, sin_solucion)
+# --- fase U.3b del plan U: la cosa de cada cantidad (de quien, de que cosa)
+problema: Maria tiene 8 anos y 15 lapices. Luis tiene 6 lapices. Cuantos lapices tienen en total? | 21 lapices | (U.3b) dos cantidades de Maria; 'en total' junta solo los lapices
+problema: Ana tiene 8 anos. Luis tiene 6 canicas. Cuantas tienen entre los dos? | no_se_resolver | (U.3b) TRAMPA: anos + canicas no se juntan (U.3 decia '14 anos'); R.1 dice no_se_resolver
+resolver: Ana tiene 8 anos. Luis tiene 6 canicas. Cuantas tienen entre los dos? | no_entiendo | (U.3b) la comprobacion de las cosas
+problema: 3 cuadernos cuestan 12 pesos. Cuanto cuestan 5 cuadernos? | 20 pesos | (U.3b) TRAMPA: 3 x lo de un cuaderno = 12 (U.3 decia '5 cuadernos')
+problema: Juan tiene 20 pesos. Compra 3 lapices de 4 pesos cada uno. Cuanto le queda? | 8 pesos | (U.3b) TRAMPA: comprar es gastar (U.3 decia '4 pesos')
+problema: Un camion lleva 12 cajas. Cada caja pesa 8 kilos. Cuantos kilos lleva el camion? | 96 kilos | (U.3b) los kilos del camion = cajas x lo de cada caja
+problema: Tengo 50 pesos. Gasto 32 pesos. Cuanto me sobra? | 18 pesos | (U.3b) 'me sobra'
+problema: Una caja mide 5 cm por 4 cm por 3 cm. Cual es su volumen? | 60 cm cubicos | (U.3b) las dimensiones con 'por'
+problema: Ana tenia 40 canicas. Pierde la mitad de lo que tenia. Cuantas le quedan? | 20 canicas | (U.3b) un cambio de lo que habia
+problema: La temperatura bajo 8 grados y luego subio 3/4 de lo que habia bajado. Al principio hacia 20 grados. Que temperatura hace ahora? | 18 grados | (U.3b) 3/4 del cambio de antes

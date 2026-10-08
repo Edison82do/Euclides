@@ -338,8 +338,19 @@
   (traducir e integrar; comprobar si es razonable), NCETM 2.17 (comparar multiplicando no es sumar), Common Core
   3.MD.D.8, 3.MD.C.7, 5.MD.C.5 (perímetro, área, volumen) y la nota del NC2ML de METODO §5 (contra las palabras clave: la
   palabra da la relación, no la operación). → U.3.
+- **La fase U.3b (la cosa de cada cantidad; 8 oct)** usa: **Schwartz (1988), «Intensive quantity and referent
+  transforming arithmetic operations»** (en Hiebert y Behr, eds., *Number Concepts and Operations in the Middle Grades*,
+  NCTM, pp. 41–52; leído por resúmenes que lo citan): una cantidad es un número con su REFERENTE; sumar y restar lo
+  CONSERVAN (solo cantidades de la misma cosa); multiplicar y dividir lo TRANSFORMAN (lo «intensivo», con «por»: pesos por
+  cuaderno, kilos por caja, por lo «extensivo»: 5 cuadernos). **Kintsch y Greeno (1985)** (WORDPRO: el texto se vuelve
+  proposiciones sobre conjuntos; dos frases hablan del mismo conjunto si coinciden su cosa y su dueño) y **Mayer (1992)**
+  (integrar el modelo de la situación). **Vergnaud (1983)**, las estructuras multiplicativas (el isomorfismo de medidas =
+  la proporción simple; el producto de medidas = largo por ancho por alto; de memoria, no leído en esta sesión). **NCETM
+  2.2** y **Common Core 3.OA.A.3** (grupos iguales) y **6.RP.A.3b** (el valor unitario). → U.3b.
 
 ## Enlaces
+- Schwartz (1988), resumen en «Semantic aspects of quantity» (Haifa): https://math.edu.haifa.ac.il/sites.google.com/site/mathmindhabits/on-th-teaching-of-mathematics/semantic-aspects-of-quantity/iii-multipliction-division.html
+- Kintsch y Greeno (1985), WORDPRO (bibliografía): https://interlisp.org/history/bibliography/mvhyrdbf/
 - NCETM 1.29: https://ncetm.org.uk/classroom-resources/primm-129-using-equivalence-and-the-compensation-property-to-calculate/
 - NCETM, guías Upper KS2 (Number, Addition and Subtraction, 15–18): https://ncetm.org.uk/media/8d8533f8648fa18/pvltg_upper_ks2_number_addition_subtraction_pt1_15_to_18.pdf
 - NZ Maths / Meaningful Maths, Equal Additions: https://meaningfulmaths.nt.edu.au/mmws/nz/resource/equal-additions.html

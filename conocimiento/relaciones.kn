@@ -20,6 +20,10 @@ definicion: |
   REGLA FIJADA 3 - LAS UNIDADES.  Lo que es 'cuadrada' (el area) se dice en unidades cuadradas; lo 'cubica' (el
   volumen), en cubicas (G.1, M.14).
 
+  REGLA FIJADA 4 (U.3b) - 'UN LADO / EL OTRO' Y 'A POR B POR C'.  Los 'pares' de una figura son las dos medidas
+  distintas que se nombran igual ('un lado' del rectangulo es el largo; 'el otro', el ancho).  'Mide A por B por C'
+  da sus 'dimensiones' en ese orden (Vergnaud: el producto de medidas).
+
 estructuras:
   parte_todo: parte + parte = todo
   cambio_gana: despues = antes + cambio
@@ -36,6 +40,8 @@ figuras:
     otros_nombres: base=largo, altura=ancho, longitud=largo
     formulas: perimetro = 2 x largo + 2 x ancho; area = largo x ancho
     cuadradas: area
+    pares: lado=largo ancho
+    dimensiones: largo, ancho
   - nombre: cuadrado
     palabras: cuadrado, cuadrados, cuadrada
     medidas: lado, perimetro, area
@@ -54,6 +60,7 @@ figuras:
     otros_nombres: altura=alto, fondo=alto, profundidad=alto, longitud=largo
     formulas: volumen = largo x ancho x alto
     cubicas: volumen
+    dimensiones: largo, ancho, alto
   - nombre: cubo
     palabras: cubo, cubos
     medidas: arista, volumen
