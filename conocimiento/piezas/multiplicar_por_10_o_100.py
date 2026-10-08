@@ -17,7 +17,8 @@ PIEZA = {
     "usa": [],
 }
 
-_SITIOS = ("unidades", "decenas", "centenas", "millares", "decenas de millar", "centenas de millar")   # F.6: 100000 x 10 reventaba
+_SITIOS = ("unidades", "decenas", "centenas", "millares", "decenas de millar", "centenas de millar",
+           "millones", "decenas de millon")   # F.6: 100000 x 10 reventaba; N.6: hasta diez millones
 
 
 def _subir(u, n):

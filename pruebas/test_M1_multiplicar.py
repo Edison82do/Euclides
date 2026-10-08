@@ -68,7 +68,7 @@ try:
     r = M("5 x 2")
     comprobar("D1 5 x 2 = 10 (en M.1 saltando de 2 en 2; desde M.2, el doble de 5)",
               (r["valor"], r["aplicado"]["pieza"]["id"]), (10, "multiplicar_con_dobles"))
-    comprobar("D2 4000 x 300: pasa de un millon (N.4) -> no se puede", M("4000 x 300")["conclusion"], "no_se_puede")
+    comprobar("D2 40000 x 300: pasa de diez millones (N.6; N.4 era 4000 x 300) -> no se puede", M("40000 x 300")["conclusion"], "no_se_puede")
     comprobar("D3 3 x ? = 12: en M.1 'todavia no'; desde E.4 se resuelve: 4",
               motor.decidir_ecuacion("3 x ? = 12", SABER).get("valor"), 4)
     comprobar("D4 3 x 4 = ? ya no se lee como '4 = ?' (una puerta que habria mentido)",

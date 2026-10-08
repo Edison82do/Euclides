@@ -33,7 +33,7 @@ def hacer(s, u):
     else:
         r = u.usar("multiplicar", a=n, b=_n(u, una))
         if u.decir(r["valor"]) is None:
-            raise ValueError("se pasa del millon: %d x %s no tiene nombre en mi lista" % (n, una))
+            raise ValueError("se pasa del techo: %d x %s no tiene nombre en mi lista" % (n, una))
         todo = "%d" % r["valor"]
     paso = "%s: son %s partes IGUALES de %s -> %d x %s = %s  (%s)" % (
         ", ".join(partes), palabra, una, n, una, todo, r["resultado"]["metodo"])

@@ -11,7 +11,8 @@ de cinco, de diez'.  El salto lo da el MECANISMO (saltar); aqui solo se lee la o
 
 import re
 
-_DE = {"2": "dos", "5": "cinco", "10": "diez", "100": "cien", "1000": "mil", "10000": "diez mil", "100000": "cien mil"}
+_DE = {"2": "dos", "5": "cinco", "10": "diez", "100": "cien", "1000": "mil", "10000": "diez mil", "100000": "cien mil",
+       "1000000": "un millon"}                                                                  # N.6
 _ORDEN_SALTOS = re.compile(r"^de\s+(\d+)\s+en\s+(\d+)(?:\s+desde\s+(\d+))?(?:\s+hasta\s+(\d+))?\s*$")
 
 
@@ -39,7 +40,7 @@ def explicar_saltos(texto, saber=None):
         saber = cargar_conocimiento()
     m = _ORDEN_SALTOS.match(" ".join(texto.lower().split()))
     if not m or m.group(1) != m.group(2) or m.group(1) not in _DE:
-        return ("NO ENTIENDO ESTO: se puede contar de 2 en 2, de 5 en 5, de 10 en 10, de 100 en 100, de 1000 en 1000, de 10000 en 10000 o de 100000 en 100000.\n"
+        return ("NO ENTIENDO ESTO: se puede contar de 2 en 2, de 5 en 5, de 10 en 10, de 100 en 100, de 1000 en 1000, de 10000 en 10000, de 100000 en 100000 o de 1000000 en 1000000.\n"
                 "   se escribe asi:  de 5 en 5 hasta 50      o   de 10 en 10 desde 47 hasta 97")
     de = _DE[m.group(1)]
     desde = int(m.group(3)) if m.group(3) else 0
@@ -51,8 +52,9 @@ def explicar_saltos(texto, saber=None):
     como = ("se recita en voz baja con %s dedos y se dice en voz alta el ultimo" % de
             if de in ("dos", "cinco") else
             "no se cuentan %s pasos: se ESCRIBE la cifra de %s (sube una)"
-            % (de, {"diez": "las decenas", "cien": "las centenas", "mil": "los millares",
-                    "diez mil": "las decenas de millar", "cien mil": "las centenas de millar"}[de]))
+            % ("un millon de" if de == "un millon" else de, {"diez": "las decenas", "cien": "las centenas", "mil": "los millares",
+                    "diez mil": "las decenas de millar", "cien mil": "las centenas de millar",
+                    "un millon": "los millones"}[de]))
     L = ["PREGUNTA (N.1): contar de %s en %s desde %d%s" % (m.group(1), m.group(1), desde,
                                                              "" if hasta is None else " hasta %d" % hasta),
          "  (cada salto: %s)" % como, ""]

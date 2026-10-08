@@ -21,7 +21,8 @@ definicion: |
 
   REGLA FIJADA 4 - EL CERO MARCA EL SITIO (como siempre): "doscientos mil cinco" es 200 005.
 
-  REGLA FIJADA 5 - EL TECHO DE 5.o ES UN MILLON (NCETM 1.26).  Mas alla: 6.o (NCETM 1.30, diez millones).
+  REGLA FIJADA 5 - EL TECHO DE 5.o ES UN MILLON (NCETM 1.26).  Mas alla: 6.o (NCETM 1.30, diez millones):
+  desde el paso N.6 el techo lo pone los_millones.kn (el mecanismo usa el techo mas alto que haya).
 
 errores_tipicos:
   - Decir "veintiuno mil" o "un mil".

@@ -425,7 +425,7 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         redondear: 3456        -> decena 3460, centena 3500, millar 3000      de 1000 en 1000
         300 + 800              -> 1100   3 centenas + 8 centenas = 11 centenas (las centenas como cosas)
         columnas: 2345 + 1678  -> 4023   (lo de tres cifras sirve para cuatro)
-        La lista de contar llega a DIEZ MIL (para contar objetos).  Los numeros: hasta UN MILLON (N.4).
+        La lista de contar llega a DIEZ MIL (para contar objetos).  Los numeros: hasta UN MILLON (N.4), DIEZ MILLONES (N.6).
 
   HASTA UN MILLON  ->  numeros de cinco y seis cifras (paso N.4, 4.o-5.o; NCETM 1.26; 4.NBT.A, 4.NBT.B.5)
         nombre: 21000          -> veintiun mil      nombre: 101000 -> ciento un mil
@@ -437,7 +437,22 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         18 x 38                -> 684      LA REJILLA: 10 x 30 + 10 x 8 + 8 x 30 + 8 x 8 (los dos por sitios)
         redondear: 345678      -> ... decena de millar 350000, centena de millar 300000
         de 10000 en 10000 desde 970000  -> 980000, 990000, 1000000
-        Contar OBJETOS sigue hasta diez mil; los NUMEROS llegan a un millon.  Mas alla: 5.o-6.o.
+        Contar OBJETOS sigue hasta diez mil; los NUMEROS llegan a un millon.  Mas alla: N.6 (6.o).
+
+  HASTA DIEZ MILLONES  ->  numeros de siete cifras; el millon como una cosa (paso N.6, 6.o; NCETM 1.30)
+        nombre: 2345678        -> dos millones trescientos cuarenta y cinco mil seiscientos setenta y ocho
+        nombre: 1021000        -> un millon veintiun mil   (un millon; dos millones: singular y plural)
+        numero: dos millones cinco  -> 2000005   (el grupo de los miles es 000: no se dice)
+        millar: 1030405        -> 1 millon, 30 mil y 405; hay 10 centenas de millar aunque la cifra sea 0
+        millar: 1000000        -> los patrones: 10 centenas de millar = 1000 millares = un millon
+        comparar: 999999 y 1000000  -> 999999 < 1000000   (mas cifras gana)
+        997000 + 5000          -> 1002000   PASANDO POR EL MILLON: le faltan 3000, de los 5000 quedan 2000
+        1002000 - 997000       -> 5000      contando hacia arriba: 3000 hasta el millon y 2000 desde el
+        2000000 + 3000000      -> 5000000   2 millones + 3 millones = 5 millones (el millon como cosa)
+        redondear: 2499999     -> ... al millon 2000000 (no 3000000: la trampa de la cadena)
+        de 100000 en 100000 desde 700000 hasta 1300000  -> cruza el millon
+        calcular: 997000 + 5000  -> mental (pasar por el millon) o escrito (columnas): se elige el mas corto
+        Los NUMEROS llegan a DIEZ MILLONES; contar OBJETOS sigue hasta diez mil.
 
   MAS DE UN ENTERO  ->  numeros mixtos y fracciones impropias (paso F.4; NCETM 3.5; 4.NF.B.3)
         fraccion: 7/4          -> siete cuartos = 1 3/4   (agrupo 7 cuartos de 4 en 4: 1 entero y sobran 3)

@@ -114,8 +114,8 @@ comprobar("C2 manzana no es un numero", motor.decidir_6_7_centena("manzana", SAB
 comprobar("C3 sitio de 10001: no_alcanza", motor.decidir_6_3_sitio("10001", SABER)["conclusion"], "no_alcanza")
 comprobar("C4 y el 100 SIGUE en la tabla de 100 (6.3 no cambia)",
           motor.decidir_6_3_sitio("100", SABER)["dato"], "10 decenas y 0 unidades")
-comprobar("C5 nombre de 1000001: fuera_de_mi_secuencia (N.4: hasta un millon)",
-          motor.decidir_6_1_nombre("1000001", SABER)["conclusion"], "fuera_de_mi_secuencia")
+comprobar("C5 nombre de 10000001: fuera_de_mi_secuencia (N.6: hasta diez millones; N.4 era 1000001)",
+          motor.decidir_6_1_nombre("10000001", SABER)["conclusion"], "fuera_de_mi_secuencia")
 comprobar("C6 numero 'cincocientos': no_lo_se (no se inventa)",
           motor.decidir_6_1_numero("cincocientos", SABER)["conclusion"], "no_lo_se")
 

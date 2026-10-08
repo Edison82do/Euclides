@@ -66,8 +66,9 @@ try:
               (motor.subir_una_decena(95, SABER), motor.subir_una_decena(990, SABER)), (105, 1000))
     comprobar("A3 a traves de un cero: 105 -> 95, 1000 -> 990",
               (motor.bajar_una_decena(105, SABER), motor.bajar_una_decena(1000, SABER)), (95, 990))
-    comprobar("A4 sin decenas que quitar (7) o pasando de un millon (999995, N.4): no hay salto",
-              (motor.bajar_una_decena(7, SABER), motor.subir_una_decena(999995, SABER)), (None, None))
+    # N.4 era 999995 (un millon); N.6: el techo es diez millones
+    comprobar("A4 sin decenas que quitar (7) o pasando de diez millones (9999995, N.6): no hay salto",
+              (motor.bajar_una_decena(7, SABER), motor.subir_una_decena(9999995, SABER)), (None, None))
 
     print("\nB - DE DIEZ EN DIEZ")
     recorrer("B1 a + 30, 40 ...: de diez en diez, bien y con la vuelta",

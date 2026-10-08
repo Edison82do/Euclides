@@ -187,9 +187,24 @@ def explicar_6_1_nombre(texto, saber=None):
         # PASO N.4 (5.o): por GRUPOS DE TRES CIFRAS; el mil se cuenta como una cosa (NCETM 1.26)
         cif = cifras_de(n)
         miles, resto = escribir_cifras(cif[3:6]), escribir_cifras(cif[:3])
+        millones = escribir_cifras(cif[6:])
         lineas.append("")
-        if palabra == (saber.get("el_millon") or {}).get("techo_nombre"):
-            lineas.append("  MIL MILES son UN MILLON (el techo de 5.o; NCETM 1.26).")
+        if n == 1000000:
+            lineas.append("  MIL MILES son UN MILLON (NCETM 1.26); diez de cien mil, tambien (NCETM 1.30).")
+        elif millones:
+            # PASO N.6 (6.o): un grupo mas a la izquierda, el de los MILLONES (NCETM 1.30, punto 2)
+            lineas.append("  SE CONSTRUYE POR GRUPOS DE TRES CIFRAS (paso N.6): %d MILLON%s, %d MIL y %d"
+                          % (millones, "" if millones == 1 else "ES", miles, resto))
+            lineas.append("     %d -> %s" % (millones, "'un millon' (uno se acorta, y 'millon' en singular)"
+                                             if millones == 1 else "'%s', y detras 'millones' (plural)"
+                                             % decir(millones, saber)))
+            if miles:
+                lineas.append("     %d -> '%s', y detras 'mil'" % (miles, decir(miles, saber)))
+            else:
+                lineas.append("     el grupo de los miles es 000: no se dice")
+            if resto:
+                lineas.append("     %d -> '%s'" % (resto, decir(resto, saber)))
+            lineas.append("     ->  %s" % palabra)
         else:
             lineas.append("  SE CONSTRUYE POR GRUPOS DE TRES CIFRAS (paso N.4): %d MIL y %d" % (miles, resto))
             lineas.append("     %d -> '%s', y detras 'mil'%s" % (miles, decir(miles, saber),
@@ -894,7 +909,7 @@ def _partir_por_ordenes(valor):
 
 
 def _nombre_o_cero(n, saber):
-    return construir_nombre_hasta_diez_mil(n, saber) if n else "cero"
+    return (construir_nombre_hasta_diez_mil(n, saber) or decir(n, saber)) if n else "cero"   # N.6: y mas alla
 
 
 def decidir_6_7_centena(texto, saber=None):
@@ -1055,7 +1070,7 @@ def decidir_6_1_nombre(texto, saber=None):
     if not t.isdigit():
         return {"conclusion": "no_lo_se", "texto": t}
     n = int(t)
-    if n < 1 or decir(n, saber) is None:                 # N.4: hasta el numero maximo (un millon)
+    if n < 1 or decir(n, saber) is None:                 # N.4, N.6: hasta el numero maximo (diez millones)
         return {"conclusion": "fuera_de_mi_secuencia", "valor": n}
     return {"conclusion": "nombre", "valor": n,
             "palabra": construir_nombre_hasta_diez_mil(n, saber) or decir(n, saber)}

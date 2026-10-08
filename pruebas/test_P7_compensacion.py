@@ -101,11 +101,12 @@ try:
     comprobar("B3 1000 - 397 = 1003 - 400 = 603", A("restar", a=1000, b=397), (603, "restar_misma_diferencia"))
     comprobar("B4 1000 - 403 = 997 - 400 = 597", A("restar", a=1000, b=403), (597, "restar_misma_diferencia"))
     comprobar("B5 625 - 398 = 227", A("restar", a=625, b=398), (227, "restar_misma_diferencia"))
-    r = motor.aplicar("restar", {"a": 999999, "b": 997}, SABER)
-    comprobar("B6 999999 - 997: la misma diferencia pasaria del millon -> quitar 1000 y devolver 3: 999002",
+    # antes (techo en un millon): 999999 - 997, la misma diferencia pasaria del millon.  N.6: lo mismo en diez millones
+    r = motor.aplicar("restar", {"a": 9999999, "b": 997}, SABER)
+    comprobar("B6 9999999 - 997: la misma diferencia pasaria de diez millones -> quitar 1000 y devolver 3: 9999002",
               (r["valor"], r["pieza"]["id"], [c.get("no_salio", "")[-26:] for c in r["candidatos"]
                                               if c["id"] == "restar_misma_diferencia"]),
-              (999002, "restar_quitando_de_mas_y_devolviendo", ["se sale de mi lista (pasaria del millon)"[-26:]]))
+              (9999002, "restar_quitando_de_mas_y_devolviendo", ["se sale de mi lista (pasaria del techo)"[-26:]]))
     comprobar("B7 398 - 397: no llega a 400 para quitar de mas, pero la misma diferencia si: 1",
               A("restar", a=398, b=397)[0], 1)
     comprobar("B8 52 - 29 sigue por P.4", A("restar", a=52, b=29), (23, "restar_compensando"))
@@ -308,7 +309,7 @@ try:
         comprobar("H %s -> %s" % (texto, esperado), S(texto), esperado)
 
     print("\nI - CERCA DEL TECHO, y el TIEMPO (cada pregunta, con su explicacion, en menos de 2 s)")
-    for texto, esperado in (("999997 + 3", "1000000"), ("999997 + 5", "ninguna"),
+    for texto, esperado in (("999997 + 3", "1000000"), ("999997 + 5", "1000002"), ("9999997 + 5", "ninguna"),   # N.6: antes 999997 + 5 -> ninguna
                             ("999999 - 997", "999002"), ("1000000 - 999997", "3"),
                             ("1000000 - 3", "999997"), ("equivalente: 999999 - 997", "999002"),
                             ("si 999999 - 1 = 999998: 1000000 - 1 = ?", "999999"),

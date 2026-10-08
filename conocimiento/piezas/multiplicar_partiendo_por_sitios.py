@@ -16,7 +16,7 @@ PIEZA = {
     "usa": ["sumar"],
 }
 
-_SITIO = ("unidades", "decenas", "centenas", "millares", "decenas de millar", "centenas de millar", "millones")
+_SITIO = ("unidades", "decenas", "centenas", "millares", "decenas de millar", "centenas de millar", "millones", "decenas de millon")
 
 
 def _hecho(u, x, k):
@@ -42,7 +42,8 @@ def hacer(s, u):
         ceros.extend(u.cifras_de(p))
         parcial = u.escribir_cifras(ceros) if p else 0
         trozo = u.escribir_cifras([0 for _ in range(i)] + [c])
-        lineas.append("%d x %d = %d   (%d x %d = %d, en las %s)" % (trozo, k, parcial, c, k, p, _SITIO[i]))
+        lineas.append("%d x %d = %d   (%d x %d = %d, en %s %s)" % (trozo, k, parcial, c, k, p,
+                      "los" if _SITIO[i] in ("millares", "millones") else "las", _SITIO[i]))
         parciales.append(parcial)
     total = 0
     for p in parciales:

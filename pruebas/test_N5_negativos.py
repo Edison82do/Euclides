@@ -101,7 +101,7 @@ try:
     comprobar("D4 una muestra hasta +-1000 (200)", mal[:3], [])
 
     print("\nE - LOS BORDES")
-    comprobar("E1 recta: -999999 - 5: se pasa", S("recta: -999999 - 5"), "no_alcanza")
+    comprobar("E1 recta: -9999999 - 5: se pasa (N.6; N.4 era -999999 - 5)", S("recta: -9999999 - 5"), "no_alcanza")
     comprobar("E2 lo de siempre no cambia: comparar: 7 y 3", S("comparar: 7 y 3"), "7 > 3")
 finally:
     shutil.rmtree(TMP, ignore_errors=True)

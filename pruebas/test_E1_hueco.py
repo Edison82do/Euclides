@@ -88,7 +88,8 @@ try:
               ("8 + ? = 11", "8 + _ = 11", "8 + __ = 11", "8 + □ = 11")], [3, 3, 3, 3])
     comprobar("C7 con palabras alrededor: 'Que numero falta en 8 + ? = 11?'",
               E("Que numero falta en 8 + ? = 11?")[0], 3)
-    comprobar("C8 900000 + ? = 1200000: se pasa de un millon (N.4) -> no entiendo", E("900000 + ? = 1200000")[0], "no_entiendo")
+    # N.4 era 900000 + ? = 1200000 (un millon); N.6: diez millones
+    comprobar("C8 9000000 + ? = 12000000: se pasa de diez millones (N.6) -> no entiendo", E("9000000 + ? = 12000000")[0], "no_entiendo")
     v, r = E("? + 3 = 11")
     comprobar("C9 cuenta la ecuacion como historia (lenguaje rustico)", r.get("historia"),
               "tenia algunos, le dan 3, ahora tiene 11: cuantos tenia al principio?")

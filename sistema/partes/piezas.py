@@ -148,6 +148,7 @@ class _Lo_que_puede_usar:
         self.subir_una_decena = lambda v: subir_una_decena(v, s)
         self.bajar_una_decena = lambda v: bajar_una_decena(v, s)
         self.saltar = lambda desde, de: saltar(desde, de, s)
+        self.lo_que_falta_para_el_redondo = lambda v, ceros: lo_que_falta_para_el_redondo(v, ceros, s)   # N.6
         # la MEMORIA de hechos (memoria.py): mirar si algo se sabe de memoria
         self.recuerdo = lambda clave: cargar_memoria().get(clave)
 

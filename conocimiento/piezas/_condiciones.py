@@ -414,7 +414,56 @@ def _p7_balanza_de_restas(s, u):
     return _p7_facil(u, c["a"], h["a"]) if h["b"] == "?" else _p7_facil(u, c["b"], h["b"])
 
 
+# ---- cruzar el millon (paso N.6; NCETM 1.30, punto 4): como cruzar el mil, como "hacer diez"
+def _n6_cerca_por_debajo(u, n):
+    """n esta justo debajo de un millon justo: no es un millon justo y le faltan cien mil o menos (la cifra de
+    las centenas de millar es un 9, o es justo 900 000 y pico)."""
+    cif = u.cifras_de(n)
+    return len(cif) >= 6 and cif[5] == 9 and cif[:6] != [0, 0, 0, 0, 0, 0]
+
+
+def _n6_suma_cruza(s, u):
+    """a esta cerca de un millon justo, b es de seis cifras o menos y llega o pasa: b >= lo que le falta a a."""
+    a, b = s.get("a"), s.get("b")
+    if not isinstance(a, int) or not isinstance(b, int) or not _n6_cerca_por_debajo(u, a):
+        return False
+    if len(u.cifras_de(b)) > 6:
+        return False
+    falta = u.lo_que_falta_para_el_redondo(a, 6)
+    return b == falta or u.viene_despues(u.decir(b), u.decir(falta))
+
+
+def _n6_resta_cruza(s, u):
+    """b esta justo debajo de un millon justo y a esta en el millon siguiente (sus millones son uno mas)."""
+    a, b = s.get("a"), s.get("b")
+    if not isinstance(a, int) or not isinstance(b, int) or not _n6_cerca_por_debajo(u, b):
+        return False
+    ma, mb = u.escribir_cifras(u.cifras_de(a)[6:]), u.escribir_cifras(u.cifras_de(b)[6:])
+    return u.siguiente(u.decir(mb)) == u.decir(ma)
+
+
+def _n6_cosas(u, n, ceros):
+    """Cuantas 'cosas' (centenas, miles, millones) son: se tapan las cifras de la derecha."""
+    return u.escribir_cifras(u.cifras_de(n)[ceros:])
+
+
+def _n6_pocas_cosas(s, u, ceros):
+    """Contar centenas o miles como cosas solo si son de TRES cifras o menos (NCETM 1.26: 'lo que sirve hasta
+    1000'); o si los dos son millones justos (el millon como cosa, NCETM 1.30).  Si no, contar de una en una
+    serian miles de pasos: un humano hace otra cosa (N.6: 10 000 000 - 4 000 tardaba 0.7 s contando)."""
+    a, b = s.get("a"), s.get("b")
+    if not isinstance(a, int) or not isinstance(b, int):
+        return False
+    if all(len(u.cifras_de(x)) >= 7 and u.cifras_de(x)[:6] == [0, 0, 0, 0, 0, 0] for x in (a, b)):
+        return True
+    return len(u.cifras_de(_n6_cosas(u, a, ceros))) <= 3
+
+
 CONDICIONES = {
+    "pocas_centenas_para_contarlas": lambda s, u: _n6_pocas_cosas(s, u, 2),
+    "pocos_miles_para_contarlos": lambda s, u: _n6_pocas_cosas(s, u, 3),
+    "la_suma_pasa_por_un_millon_justo": _n6_suma_cruza,
+    "la_resta_pasa_por_un_millon_justo": _n6_resta_cruza,
     # ---- los pasos de un problema (resolvedor, R.1)
     "es_un_cambio": lambda s, u: _tipo(s) in ("cambio", "deshacer", "cambio_desconocido"),
     "se_sabe_el_cambio": lambda s, u: s.get("n") is not None,
@@ -601,7 +650,7 @@ CONDICIONES = {
     "la_cuenta_nueva_es_suma_o_resta": lambda s, u: s.get("nuevo", {}).get("op") in ("+", "-"),
     # ---- redondear (paso N.2; 3.NBT.A.1): el numero esta en la lista, y el sitio es decena o centena
     "se_puede_redondear": lambda s, u: u.decir(s["n"]) is not None and s.get("a") in (
-        "decena", "centena", "millar", "decena de millar", "centena de millar"),
+        "decena", "centena", "millar", "decena de millar", "centena de millar", "millon"),
 }
 
 DE_APLICACION = {"el_divisor_no_es_cero", "hay_bastantes", "hay_bastantes_al_deshacer", "la_parte_cabe_en_el_todo",

@@ -19,7 +19,7 @@ PIEZA = {
     "usa": ["multiplicar"],
 }
 
-_SITIO = ("unidades", "decenas", "centenas", "millares", "decenas de millar", "centenas de millar", "millones")
+_SITIO = ("unidades", "decenas", "centenas", "millares", "decenas de millar", "centenas de millar", "millones", "decenas de millon")
 
 
 def _cuantas_veces(u, actual, d):
@@ -46,7 +46,8 @@ def _cuantas_veces(u, actual, d):
 
 
 _UNO = {"unidades": "unidad", "decenas": "decena", "centenas": "centena", "millares": "millar",
-        "decenas de millar": "decena de millar", "centenas de millar": "centena de millar", "millones": "millon"}
+        "decenas de millar": "decena de millar", "centenas de millar": "centena de millar", "millones": "millon",
+        "decenas de millon": "decena de millon"}
 
 
 def _n(n, sitio):

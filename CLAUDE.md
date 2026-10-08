@@ -34,8 +34,8 @@
 - Auditoría sin calculadora (`pruebas/test_sin_calculadora.py`): nada de `a + b`, `a * b`… con
   variables en el motor. Usar `aplicar("sumar", ...)`, `siguiente`, `viene_despues`, formato de texto
   (`"%s%s" %`), `.extend`, `rjust`, `range(k, 0, -1)`.
-- Dos techos: contar OBJETOS hasta diez mil (`techo_de_contar`); los NÚMEROS hasta un millón
-  (`numero_maximo`, de `conocimiento/el_millon.kn`).
+- Dos techos: contar OBJETOS hasta diez mil (`techo_de_contar`); los NÚMEROS hasta diez millones desde N.6
+  (`numero_maximo`: el techo más alto de `conocimiento/el_millon.kn` y `los_millones.kn`).
 - Las órdenes se enrutan en `sistema/partes/explicacion.py` (`explicar_pregunta`) y en
   `probar.py` (`preguntar`); el orden de las comprobaciones importa.
 - Cada archivo de prueba imprime `TOTAL: x/y`, usa memoria temporal (`EUCLIDES_MEMORIA`).
@@ -79,11 +79,12 @@
   en lugar de los topes. Carlos (7 oct): «en el futuro vemos si es necesario; si no, no».
 
 ## Dónde se quedó (8 oct 2026)
-Hecho hasta **F.7 el mismo de abajo** (NCETM 3.8: sumar, restar y comparar fracciones con distinto de abajo, también mixtos).
-Antes: F.6 fracciones equivalentes y simplificar (NCETM 3.7), P.7 la compensación (NCETM 1.29). Siguiente en el orden de NCETM,
-5.º (Year 5): en Spine 3, la 3.9 (fracción por fracción) está apuntada como de 6.º (F.5): comprobar en el índice de NCETM si a
-3.8 le sigue algo más de Year 5; en Spine 2, **2.23** (su título no se pudo ver desde la nube: mirarlo en el índice de NCETM).
-(La división combinada con + y - es 2.28, de 6.º.)
+Hecho hasta **N.6 hasta diez millones** (NCETM 1.30, primer paso de 6.º): el techo de los NÚMEROS es **diez millones**
+(`numero_maximo`, de `conocimiento/los_millones.kn`); contar objetos sigue en diez mil. Cruzar el millón con las piezas
+`sumar_pasando_por_el_millon` / `restar_pasando_por_el_millon`; redondear al millón.
+Antes: F.7 el mismo de abajo (NCETM 3.8), F.6 fracciones equivalentes (NCETM 3.7), P.7 la compensación (NCETM 1.29).
+Siguiente: mirar en el índice de NCETM lo que queda de Year 5 (Spine 2: **2.23**, cuyo título no se pudo ver desde la
+nube; Spine 3 tras 3.8) y lo siguiente de Year 6 en Spine 1 (tras 1.30). (La división combinada con + y - es 2.28, de 6.º.)
 La balanza y `verdad:` con decimales: todavía no (solo enteros). Las fracciones de partida en `comparar:` y en las cuentas
-siguen limitadas a medios…doceavos, décimos, centésimos y milésimos (el de abajo común puede ser cualquiera hasta el millón).
+siguen limitadas a medios…doceavos, décimos, centésimos y milésimos (el de abajo común puede ser cualquiera hasta el techo).
 `comparar:` por el mismo de arriba no sale si pide dividir entre dos cifras (la división larga, 6.º); el del mismo de abajo sí.

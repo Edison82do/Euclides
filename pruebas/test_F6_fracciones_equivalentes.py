@@ -219,7 +219,9 @@ try:
     t = motor.explicar_pregunta("equivalentes: 1/3", SABER)
     comprobar("F en 1/3 se dice la relacion vertical (la tabla del 3)", "la tabla del 3" in t, True)
     comprobar("F y se dibujan las tiras", "[########|oooooooo|oooooooo]" in t, True)
-    comprobar("F 500000/1000000: no pasa del millon", S("equivalentes: 500000/1000000"), "1/2 = 500000/1000000")
+    # antes (techo en un millon): equivalentes: 500000/1000000 -> "1/2 = 500000/1000000"
+    comprobar("F 5000000/10000000: no pasa de diez millones (N.6)", S("equivalentes: 5000000/10000000"),
+              "1/2 = 5000000/10000000")
 
     print("\nG - COMPARAR DOS EQUIVALENTES (no comparten arriba ni abajo)")
     malos = []
@@ -304,7 +306,7 @@ try:
     print("\nJ - CERCA DEL TECHO, y el TIEMPO (cada pregunta, con su explicacion, en menos de 2 s)")
     for texto, esperado in (("simplificar: 500000/1000000", "1/2"), ("simplificar: 999999/1000000", "999999/1000000"),
                             ("simplificar: 999998/1000000", "499999/500000"), ("simplificar: 1000000/1000000", "1"),
-                            ("simplificar: 1000001/2", "todavia_no"), ("equivalentes: 1/2 y 500000/1000000", "si"),
+                            ("simplificar: 10000001/2", "todavia_no"), ("equivalentes: 1/2 y 500000/1000000", "si"),
                             ("1/2 = ?/1000000", "500000"), ("equivalentes: 999999/1000000", "?"),
                             ("2/3 = ?/999999", "666666"), ("equivalentes: 1/7 y 142857/999999", "si")):
         t1 = time.time()

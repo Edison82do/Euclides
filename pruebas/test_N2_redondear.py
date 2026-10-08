@@ -68,7 +68,7 @@ try:
     comprobar("A10 49 a la centena -> 0", R(49, "centena"), 0)
     comprobar("A11 4 a la decena -> 0;  5 -> 10;  0 -> 0", (R(4, "decena"), R(5, "decena"), R(0, "decena")), (0, 10, 0))
     comprobar("A12 1000 -> 1000 a los dos sitios", (R(1000, "decena"), R(1000, "centena")), (1000, 1000))
-    comprobar("A13 1000001 -> no lo se escribir (N.4: hasta un millon)", R(1000001, "decena"), "ninguna")
+    comprobar("A13 10000001 -> no lo se escribir (N.6: hasta diez millones; N.4 era 1000001)", R(10000001, "decena"), "ninguna")
 
     print("\nB - DE 0 A 1000 CONTRA EL TESTIGO (muestra), LOS DOS CAMINOS DE ACUERDO")
     for a in ("decena", "centena"):

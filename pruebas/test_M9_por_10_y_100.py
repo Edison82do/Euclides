@@ -62,7 +62,7 @@ try:
     comprobar("A3 ... y lo dice: 23 x 10 = 230, y 230 x 10 = 2300", ("23 x 10 = 230" in t, "230 x 10 = 2300" in t), (True, True))
     comprobar("A4 230 : 10 -> 23;  47 : 10 -> 4 resto 7", (D(230, 10)[:2], D(47, 10)[:2]), ((23, 0), (4, 7)))
     comprobar("A5 2345 : 100 -> 23 resto 45", D(2345, 100)[:2], (23, 45))
-    comprobar("A6 99999 x 100 -> se pasa de un millon (N.4)", S("99999 x 100"), "no_se_puede")
+    comprobar("A6 999999 x 100 -> se pasa de diez millones (N.6; N.4 era 99999 x 100)", S("999999 x 100"), "no_se_puede")
     comprobar("A7 9 x 80 sin memoria: no se deriva (hace falta saber 9 x 8)", M(9, 80)[1] != "multiplicar_por_decenas_justas", True)
     motor.aprender("tablas", SABER)
     comprobar("A8 con las tablas aprendidas: 9 x 80 -> 720 (9 x 8 = 72, diez veces)", M(9, 80), (720, "multiplicar_por_decenas_justas"))

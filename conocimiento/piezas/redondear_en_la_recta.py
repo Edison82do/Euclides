@@ -22,7 +22,8 @@ PIEZA = {
 _SITIOS = {"decena": (1, (0,), 0, "diez", "decenas"), "centena": (2, (0, 1), 1, "cien", "centenas"),
            "millar": (3, (0, 1, 2), 2, "mil", "millares"),                     # N.3: tambien al millar
            "decena de millar": (4, (0, 1, 2, 3), 3, "diez mil", "decenas de millar"),     # N.4 (5.o)
-           "centena de millar": (5, (0, 1, 2, 3, 4), 4, "cien mil", "centenas de millar")}
+           "centena de millar": (5, (0, 1, 2, 3, 4), 4, "cien mil", "centenas de millar"),
+           "millon": (6, (0, 1, 2, 3, 4, 5), 5, "un millon", "millones")}                   # N.6 (6.o)
 
 
 def hacer(s, u):

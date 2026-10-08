@@ -84,11 +84,12 @@ comprobar("B10 150 - 40 por 'columnas:' llega a la 7.6", (r.get("unidad"), r["to
 
 # ------------------------------------------------------------------ C: condiciones
 print("\nC - LAS CONDICIONES DE APLICACION")
-comprobar("C1 900000 + 200000 pasa de un millon (N.4): no_alcanza", col("900000", "+", "200000", SABER)["conclusion"], "no_alcanza")
+# antes (N.4, techo en un millon): C1 900000 + 200000 y C3 1000001 - 40 -> no_alcanza.  N.6: diez millones
+comprobar("C1 9000000 + 2000000 pasa de diez millones (N.6): no_alcanza", col("9000000", "+", "2000000", SABER)["conclusion"], "no_alcanza")
 comprobar("C2 300 - 301: no_hay_bastantes", col("300", "-", "301", SABER)["conclusion"], "no_hay_bastantes")
-comprobar("C3 1000001 - 40: no_alcanza (es un numero, pero pasa de un millon)", col("1000001", "-", "40", SABER)["conclusion"], "no_alcanza")
+comprobar("C3 10000001 - 40: no_alcanza (es un numero, pero pasa de diez millones)", col("10000001", "-", "40", SABER)["conclusion"], "no_alcanza")
 comprobar("C4 silla - 3: no_es_un_numero", col("silla", "-", "3", SABER)["conclusion"], "no_es_un_numero")
-comprobar("C5 la regla que decide se puede rastrear", col("900000", "+", "200000", SABER)["regla"], "c6_no_alcanza")
+comprobar("C5 la regla que decide se puede rastrear", col("9000000", "+", "2000000", SABER)["regla"], "c6_no_alcanza")
 
 # ------------------------------------------------------------------ D: lo de antes no cambia
 print("\nD - LO QUE LA 7.3 Y LA 7.5 YA HACIAN SALE IGUAL (hasta cien)")
@@ -174,8 +175,8 @@ comprobar("F ya no sale 'None - None' (fallo arreglado el 5 oct 2026)", "None" i
 d = motor.decidir_5_5_diferencia_numeros("300", "47", SABER)
 comprobar("F la diferencia de 300 y 47 se mide por columnas: 253", (d["diferencia_valor"], d["expresion"]),
           (253, "300 - 47 = 253"))
-t = motor.explicar_pregunta("sumar_numeros: novecientos mil + novecientos mil", SABER)
-comprobar("F 900000 + 900000 dice no_alcanza (antes reventaba con KeyError)", "RESULTADO: no_alcanza" in t, True)
+t = motor.explicar_pregunta("sumar_numeros: nueve millones + nueve millones", SABER)   # antes (N.4): novecientos mil x 2
+comprobar("F 9000000 + 9000000 dice no_alcanza (antes reventaba con KeyError)", "RESULTADO: no_alcanza" in t, True)
 
 print("\n" + "=" * 78)
 print("UNIDAD 7.6: %d/%d correctos" % (BIEN, BIEN + MAL))

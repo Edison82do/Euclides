@@ -100,7 +100,9 @@ try:
     comprobar("A3 200005 -> doscientos mil cinco (los ceros del medio no se dicen)", S("nombre: 200005"),
               "doscientos mil cinco")
     comprobar("A4 1000000 -> un millon", S("nombre: 1000000"), "un millon")
-    comprobar("A5 1000001: mas alla del millon no me lo invento", S("nombre: 1000001"), "fuera_de_mi_secuencia")
+    # antes: nombre: 1000001 -> fuera_de_mi_secuencia (techo un millon).  N.6: un millon uno; se para en diez millones
+    comprobar("A5 10000001: mas alla del techo (diez millones, N.6) no me lo invento", S("nombre: 10000001"),
+              "fuera_de_mi_secuencia")
     comprobar("A6 numero: ciento un mil -> 101000", S("numero: ciento un mil"), "101000")
     comprobar("A7 numero: trescientos cuarenta y cinco mil seiscientos setenta y ocho -> 345678",
               S("numero: trescientos cuarenta y cinco mil seiscientos setenta y ocho"), "345678")
@@ -115,8 +117,9 @@ try:
     for a, b in ((9999, 10000), (99999, 100000), (109999, 110000), (999999, 1000000)):
         comprobar("C %d -> %d" % (a, b), motor.leer(motor.siguiente(motor.decir(a, SABER), SABER), SABER), b)
         comprobar("C %d <- %d" % (a, b), motor.leer(motor.anterior(motor.decir(b, SABER), SABER), SABER), a)
-    comprobar("C9 de 10000 en 10000 desde 970000 llega al millon y se para",
-              S("de 10000 en 10000 desde 970000"), "980000, 990000, 1000000")
+    # antes: de 10000 en 10000 desde 970000 -> 980000, 990000, 1000000 (y se paraba).  N.6: se para en diez millones
+    comprobar("C9 de 10000 en 10000 desde 9970000 llega a diez millones y se para",
+              S("de 10000 en 10000 desde 9970000"), "9980000, 9990000, 10000000")
     comprobar("C10 de 100000 en 100000 desde 0", S("de 100000 en 100000 desde 0"),
               "100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000")
     comprobar("C11 contar con los dedos cruzando 100000: 99998 + 4", S("dedos: 99998 + 4"),
@@ -136,7 +139,8 @@ try:
     r = motor.aplicar("sumar", {"a": 345000, "b": 278000}, SABER)
     comprobar("E2 ... y lo hace contando MILES", "345 mil + 278 mil = 623 mil" in r["resultado"]["cuenta"], True)
     comprobar("E3 623000 - 278000 = 345000", S("623000 - 278000"), "345000")
-    comprobar("E4 600000 + 500000: se pasa del millon -> ninguna", S("600000 + 500000"), "ninguna")
+    # antes: 600000 + 500000 -> ninguna (se pasaba del millon).  N.6: 1100000; se pasa 6000000 + 5000000
+    comprobar("E4 6000000 + 5000000: se pasa de diez millones -> ninguna", S("6000000 + 5000000"), "ninguna")
     comprobar("E5 columnas: 456789 + 123456", S("columnas: 456789 + 123456"), "456789 + 123456 = 580245")
     comprobar("E6 columnas: 500000 - 1 (cambiar a traves de cinco ceros)", S("columnas: 500000 - 1"),
               "500000 - 1 = 499999")
@@ -169,9 +173,11 @@ try:
         if S("%d x %d" % (a, b)) != str(a * b):
             mal.append((a, b))
     comprobar("F4 dos cifras por dos cifras contra el testigo (30)", mal[:3], [])
-    comprobar("F5 99999 x 100 se pasa del millon", S("99999 x 100"), "no_se_puede")
-    comprobar("F6 250000 x 8 se pasa del millon (antes REVENTABA: una condicion con un numero sin nombre)",
-              S("250000 x 8"), "no_se_puede")
+    # antes: 99999 x 100 y 250000 x 8 -> no_se_puede (se pasaban del millon).  N.6: 9999900 y 2000000;
+    # los mismos una cifra mas arriba se pasan de diez millones
+    comprobar("F5 999999 x 100 se pasa de diez millones", S("999999 x 100"), "no_se_puede")
+    comprobar("F6 2500000 x 8 se pasa de diez millones (antes REVENTABA: una condicion con un numero sin nombre)",
+              S("2500000 x 8"), "no_se_puede")
     comprobar("F7 241961 : 243225 = 0 resto 241961, y rapido (los saltos grandes se SUMAN, no se cuentan)",
               S("241961 : 243225"), "0 resto 241961")
 
@@ -185,7 +191,7 @@ try:
 
     print("\nH - LOS DOS TECHOS (lo que se cuenta con objetos no cambia)")
     comprobar("H1 la lista de CONTAR objetos sigue en diez mil", motor.techo_de_contar(SABER), "diez mil")
-    comprobar("H2 los NUMEROS llegan al millon", motor.numero_maximo(SABER), 1000000)
+    comprobar("H2 los NUMEROS llegan al millon, y desde N.6 a diez millones", motor.numero_maximo(SABER), 10000000)
 finally:
     shutil.rmtree(TMP, ignore_errors=True)
 

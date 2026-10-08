@@ -189,6 +189,16 @@
   en columnas), **4.NBT.B.5** (dos cifras por dos cifras con valor posicional y modelo de área → la
   rejilla). → N.4.
 
+- **NCETM 1.30** (*Composition and calculation: numbers up to 10,000,000*, Year 6; la web está bloqueada desde la
+  nube, leída por el buscador el 8 oct). Seis puntos: (1) los patrones de las otras potencias de diez se alargan
+  a la unidad 1 000 000; (2) los de siete cifras se escriben, leen y ordenan viendo cuántos millones, cuántos
+  miles y cuántas centenas, decenas y unidades; (3) las cifras dicen la estructura (componer y descomponer);
+  (4) lo que se sabe de cruzar los miles sirve para llegar a los millones y cruzarlos; (5) a veces se redondea
+  (quitar detalle, estimar), otras importa el número exacto; (6) calcular con soltura es pasar de lo mental a
+  lo escrito según los números. La unidad de Year 6 «Numbers up to 10,000,000» añade comparar los de ocho cifras
+  y redondear al millón y a la centena de millar. Currículo inglés de Year 6: leer, escribir, ordenar y comparar
+  hasta 10 000 000. → N.6.
+
 - **NCETM 1.27** (*Negative numbers: counting, comparing and calculating*, Year 5): positivos y negativos
   representan un cambio; los negativos son menores que cero; el signo menos delante de la cifra; en la
   escala horizontal, a la izquierda del cero, y cuanto mayor la cifra más lejos del cero; intervalos a
@@ -353,3 +363,5 @@
 - NCETM 3.8: https://www.ncetm.org.uk/classroom-resources/primm-308-common-denomination-more-adding-and-subtracting/
 - Common Core 5.NF.A (Illustrative Mathematics): https://tasks.illustrativemathematics.org/5.NF.html
 - Oak National, fracciones no relacionadas: https://www.thenational.academy/teachers/programmes/maths-primary-ks2/units/addition-and-subtraction-of-fractions/lessons/add-and-subtract-non-related-fractions-with-different-denominators
+- NCETM 1.30 (bloqueada desde la nube; leída por el buscador): https://www.ncetm.org.uk/classroom-resources/primm-130-composition-and-calculation-numbers-up-to-10-000-000
+- NCETM, Year 6 «Numbers up to 10,000,000» (Curriculum Prioritisation): https://ncetm.org.uk/classroom-resources/cp-year-6-unit-3-numbers-up-to-10-000-000/

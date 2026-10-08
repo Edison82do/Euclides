@@ -13,7 +13,7 @@ PIEZA = {
     "que_hace": "si un sumando esta a 1, 2 o 3 de un redondo (4997), se lo paso del otro: 5000 + 2453",
     "condiciones": [
         ("un_sumando_esta_cerca_de_un_redondo", "ningun sumando esta a 1, 2 o 3 de un redondo (100, 1000...)"),
-        ("el_total_tiene_nombre", "el total se pasa de mi lista de contar (un millon)"),
+        ("el_total_tiene_nombre", "el total se pasa de lo que se escribir (mi techo)"),
     ],
     "usa": ["buscar_el_redondo_cercano", "sumar_miles_justos", "sumar_centenas_justas", "sumar_por_columnas",
             "restar_por_columnas"],

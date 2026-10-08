@@ -87,7 +87,8 @@ try:
     r = TF([5, 0, 999])
     comprobar("A14 5 x 0 x 999 = 0 sin cuentas", (r["valor"], r["pieza"]["id"]), ("0", "tres_factores_con_un_cero"))
     comprobar("A15 100 x 100 x 100 = 1000000 (el techo)", S("100 x 100 x 100"), "1000000")
-    comprobar("A16 100 x 100 x 101 se pasa: todavia no", S("100 x 100 x 101"), "todavia_no")
+    # antes (techo en un millon): 100 x 100 x 101 -> todavia_no.  N.6: 1010000 ya cabe; se pasa 100 x 100 x 1001
+    comprobar("A16 100 x 100 x 1001 se pasa de diez millones: todavia no", S("100 x 100 x 1001"), "todavia_no")
     comprobar("A17 verdad: 2 x 3 x 4 = 4 x 3 x 2 sin calcular", S("verdad: 2 x 3 x 4 = 4 x 3 x 2"), "verdadero")
     salida = motor.explicar_pregunta("verdad: 2 x 3 x 4 = 4 x 3 x 2", SABER)
     comprobar("A18 ... sin calcular de verdad", "No hace falta calcular" in salida, True)
@@ -165,7 +166,7 @@ try:
             nos += 1
             if t[0] * t[1] * t[2] <= 1000000 and "division larga" not in (r.get("porque") or ""):
                 malos.append((t, r["conclusion"], r.get("porque")))
-    print("        %d trios: %d hechos, %d todavia no (se pasan del millon o la vuelta pide la division larga); "
+    print("        %d trios: %d hechos, %d todavia no (se pasan del techo o la vuelta pide la division larga); "
           "%.1f s, el mas lento %.2f s" % (len(casos), hechos, nos, time.time() - t0, lento))
     comprobar("E1 nunca un producto falso; un 'todavia no' solo por el techo o la division larga", malos[:3], [])
     comprobar("E2 la gran mayoria sale (mas de 140 de 160)", hechos > 140, True)
@@ -249,7 +250,7 @@ try:
     print("\nI - CERCA DEL TECHO (un millon) y el TIEMPO")
     for texto, esperado in (("100 x 100 x 100", "1000000"), ("125 x 8 x 1000", "1000000"),
                             ("999 x 1000 x 1", "999000"), ("999 x 999 x 1", "todavia_no"),
-                            ("2 x 500000 x 1", "1000000"), ("2 x 500001 x 1", "todavia_no"),
+                            ("2 x 500000 x 1", "1000000"), ("2 x 500001 x 1", "1000002"), ("2 x 5000001 x 1", "todavia_no"),   # N.6
                             ("1.125 x 8 x 111", "999"), ("6 x 8 x 0.37", "17.76"), ("0.5 x 7 x 20", "todavia_no"), ("0.001 x 7 x 4", "0.028"), ("0.375 x 8 x 9", "27"),
                             ("2 x 3 x 4 x 5", "120"), ("13 x 17 x 19", "todavia_no"),
                             ("volumen: cubo de 100 cm", "1000000 cm cubicos"),

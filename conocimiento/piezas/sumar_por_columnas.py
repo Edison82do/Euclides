@@ -10,7 +10,7 @@ PIEZA = {
     "rapidez": 40,
     "que_hace": "suma columna a columna desde las unidades, llevandose lo que pasa de nueve",
     "condiciones": [
-        ("el_total_tiene_nombre", "el total se pasa de mi lista de contar (un millon)"),
+        ("el_total_tiene_nombre", "el total se pasa de lo que se escribir (mi techo)"),
     ],
     "usa": ["7.6"],
 }

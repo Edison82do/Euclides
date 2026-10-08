@@ -103,9 +103,10 @@ for k, v in malas.items():
 # antes esta lista era 60+50, 99+9, 100+1 y 55+55, que ahora SI se pueden)
 # PASO N.3: el techo es DIEZ MIL (600+500, 999+9, 1000+1 y 550+550 ya SI se pueden).
 # PASO N.4: las cuentas llegan a UN MILLON.
-for a, b in ((600000, 500000), (999999, 9), (1000000, 1), (550000, 550000)):
+# PASO N.6: llegan a DIEZ MILLONES (600000+500000, 999999+9, 1000000+1 y 550000+550000 ya SI se pueden).
+for a, b in ((6000000, 5000000), (9999999, 9), (10000000, 1), (5500000, 5500000)):
     r = motor.decidir_7_3_columnas(str(a), str(b), SABER)
-    check("B %d+%d pasa de UN MILLON -> no_alcanza" % (a, b), r["conclusion"] == "no_alcanza",
+    check("B %d+%d pasa de DIEZ MILLONES -> no_alcanza" % (a, b), r["conclusion"] == "no_alcanza",
           r["conclusion"])
 
 r = motor.decidir_7_3_columnas("manzana", "3", SABER)
@@ -144,8 +145,8 @@ t = motor.explicar_7_3_columnas("5", "3", SABER)
 check("D9 sin llevarse lo dice", "no hay nada que llevarse" in t)
 
 # 6.7: 60+50 = 110 YA se puede; el techo es MIL.
-t = motor.explicar_7_3_columnas("600000", "500000", SABER)
-check("D10 el techo se explica (N.4: el techo es UN MILLON)", "no_alcanza" in t)
+t = motor.explicar_7_3_columnas("6000000", "5000000", SABER)        # N.4: era 600000 + 500000 (un millon)
+check("D10 el techo se explica (N.6: el techo es DIEZ MILLONES)", "no_alcanza" in t)
 
 
 # ---------------------------------------------------------------------------

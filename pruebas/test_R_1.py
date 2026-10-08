@@ -127,8 +127,9 @@ comprobar("D9 un lugar no 'saca' nada: no_entiendo",
           R("En la caja hay 20 lapices. Saca 5. Cuantos quedan?")["conclusion"], "no_entiendo")
 comprobar("D10 dar vueltas sin dato: no_se_resolver",
           R("Ana tiene 3 mas que Luis. Luis tiene 2 menos que Ana. Cuantas tiene Ana?")["conclusion"], "no_se_resolver")
-comprobar("D11 pasa de un millon (N.4): no_se_resolver (y no se lo inventa)",
-          R("Hay 900000 hormigas. Llegan 200000 mas. Cuantas hay ahora?")["conclusion"], "no_se_resolver")
+# antes (techo en un millon, N.4): 900000 + 200000 hormigas -> no_se_resolver.  N.6: el techo es diez millones
+comprobar("D11 pasa de diez millones (N.6): no_se_resolver (y no se lo inventa)",
+          R("Hay 9000000 hormigas. Llegan 2000000 mas. Cuantas hay ahora?")["conclusion"], "no_se_resolver")
 comprobar("D12 el dato ya esta: no hace falta operar",
           (R("Ana tiene 9 canicas. Cuantas tiene ahora?").get("valor"), R("Ana tiene 9 canicas. Cuantas tiene ahora?")["pasos"]), (9, []))
 

@@ -1,0 +1,50 @@
+id: los_millones
+nombre: Hasta diez millones (el millon como una cosa; los nombres con millon y millones)
+tipo: concepto
+categoria: FIJADO
+definicion: |
+  LA ESCALERA SIGUE OTRA VEZ (paso N.6, 6.o; NCETM 1.30; curriculo ingles de Year 6: leer, escribir,
+  ordenar y comparar numeros hasta 10 000 000; redondear cualquier numero entero).
+
+  REGLA FIJADA 1 - LOS PATRONES DE LAS POTENCIAS DE DIEZ SIGUEN (NCETM 1.30, punto 1):
+      10 unidades = 1 decena;  10 decenas = 1 centena;  10 centenas = 1 mil ...
+      10 centenas de millar (cien mil) = 1 MILLON;  10 millones = diez millones.
+  EL MILLON SE CUENTA COMO UNA COSA (como el mil en N.4):  2 millones + 3 millones = 5 millones.
+
+  REGLA FIJADA 2 - LOS NOMBRES SIGUEN POR GRUPOS DE TRES CIFRAS (punto 2), de derecha a izquierda:
+      2 345 678 = (dos) MILLONES (trescientos cuarenta y cinco) MIL (seiscientos setenta y ocho)
+  OJO (el castellano): 1 000 000 es "un millon" (no "uno millon"); de dos en adelante, "millones"
+  (plural): "dos millones".  El grupo de los miles va como siempre: 1 021 000 = "un millon veintiun mil".
+  Si un grupo es todo ceros no se dice: 2 000 005 = "dos millones cinco".
+
+  REGLA FIJADA 3 - LAS CIFRAS DICEN LA ESTRUCTURA (punto 3): 2 345 678 son 2 millones, 345 mil y 678;
+  y tambien 23 centenas de millar, 2345 mil...  Se compone y se descompone por los sitios.
+
+  REGLA FIJADA 4 - CRUZAR EL MILLON COMO SE CRUZA EL MIL (punto 4; como "hacer diez", 7.2):
+      997 000 + 5 000:  a 997 000 le faltan 3 000 para el millon; de los 5 000 quedan 2 000 -> 1 002 000.
+      1 002 000 - 997 000:  de 997 000 al millon, 3 000; del millon a 1 002 000, 2 000 -> 5 000.
+  LO QUE LE FALTA PARA EL MILLON se saca por las cifras: cada cifra hasta NUEVE y la ultima que no es
+  cero hasta DIEZ (997 000 -> 3 000;  999 950 -> 50), como los complementos a mil.
+
+  REGLA FIJADA 5 - REDONDEAR O NO (punto 5): se redondea para quitar el detalle que sobra o para estimar
+  (al millon, a la centena de millar...); otras veces importa el numero exacto.
+
+  REGLA FIJADA 6 - MENTAL O ESCRITO SEGUN LOS NUMEROS (punto 6): la tecnica mas corta que encaja.
+  997 000 + 5 000 de cabeza (pasando por el millon); 2 345 678 + 1 234 567 por columnas.
+
+  REGLA FIJADA 7 - EL TECHO DE 6.o ES DIEZ MILLONES.  Contar OBJETOS sigue en diez mil.
+
+errores_tipicos:
+  - Decir "uno millon" o "dos millon".
+  - Escribir "dos millones cinco" como 25 o 2005 (el cero marca los sitios).
+  - Creer que 999 999 es mas que 1 000 000 "porque tiene nueves".
+  - Al cruzar el millon, perder un grupo de ceros: 997 000 + 5 000 = 1 002 000, no 1 000 200 ni 102 000.
+  - Redondear en cadena: 2 499 999 al millon es 2 000 000, no 3 000 000.
+fuentes:
+  - NCETM 1.30, Composition and calculation: numbers up to 10,000,000 (Year 6), sus seis teaching points
+    (leidos por el buscador; la web de NCETM esta bloqueada desde la nube).
+  - NCETM, Year 6 unit "Numbers up to 10,000,000" (leer siete cifras, comparar, redondear al millon).
+  - National Curriculum, Year 6: read, write, order and compare numbers up to 10 000 000.
+
+techo: 10000000
+techo_nombre: diez millones

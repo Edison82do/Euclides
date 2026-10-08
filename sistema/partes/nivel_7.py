@@ -885,8 +885,10 @@ def _detalle_error(escena, r):
 # No es un metodo nuevo: es el de la 7.3 y la 7.5 con las columnas que hagan falta (hasta mil).
 # Cada columna se hace con SU MECANISMO (dedos 7.1 / 7.4): ninguna cuenta sale de "Python suma".
 
-_NOMBRE_COLUMNA = ("unidades", "decenas", "centenas", "unidades de mil", "decenas de mil", "centenas de mil", "millones")
-_UNA_DE_LA_COLUMNA = ("unidad", "decena", "centena", "unidad de mil", "decena de mil", "centena de mil", "millon")
+_NOMBRE_COLUMNA = ("unidades", "decenas", "centenas", "unidades de mil", "decenas de mil", "centenas de mil", "unidades de millon",
+                   "decenas de millon")
+_UNA_DE_LA_COLUMNA = ("unidad", "decena", "centena", "unidad de mil", "decena de mil", "centena de mil", "unidad de millon",
+                      "decena de millon")
 
 
 def _dos_valores(texto_a, texto_b, saber):

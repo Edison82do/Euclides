@@ -170,9 +170,9 @@ try:
     comprobar("F3 multiplos de 37 hasta 20 -> ninguno", S("multiplos de 37 hasta 20"), "ninguno")
     comprobar("F4 multiplos de 1 hasta 500 -> todavia no (mas de cien, no uno a uno)", S("multiplos de 1 hasta 500"), "todavia_no")
     t1 = time.time()
-    r = S("multiplos de 250000")
-    comprobar("F5 multiplos de 250000: hasta el millon, y rapido (%.2f s)" % (time.time() - t1),
-              (r, time.time() - t1 < 2), ("250000, 500000, 750000, 1000000", True))
+    r = S("multiplos de 2500000")              # antes (techo en un millon): multiplos de 250000 -> hasta 1000000
+    comprobar("F5 multiplos de 2500000: hasta diez millones, y rapido (%.2f s)" % (time.time() - t1),
+              (r, time.time() - t1 < 2), ("2500000, 5000000, 7500000, 10000000", True))
     comprobar("F6 multiplos de 13: un salto grande es una SUMA", S("multiplos de 13"), L([13 * k for k in range(1, 13)]))
 
     print("\nG - ES MULTIPLO / ES FACTOR (1 al 100 y numeros de una cifra), y del reves")

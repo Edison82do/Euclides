@@ -176,7 +176,7 @@ def _mas(u, f, g):
     try:
         r = u.usar("sumar", a=_n(u, a), b=_n(u, b))
     except Exception:
-        raise ValueError("se pasa del millon: %s + %s no tiene nombre en mi lista" % (f, g))
+        raise ValueError("se pasa del techo: %s + %s no tiene nombre en mi lista" % (f, g))
     return _con_punto(r["valor"], k), r["resultado"]["metodo"]
 
 
@@ -185,7 +185,7 @@ def _menos(u, f, g):
     na, nb = _n(u, a), _n(u, b)
     pa, pb = u.decir(na), u.decir(nb)
     if pa is None or pb is None:
-        raise ValueError("se pasa del millon: %s o %s no tiene nombre en mi lista" % (f, g))
+        raise ValueError("se pasa del techo: %s o %s no tiene nombre en mi lista" % (f, g))
     if u.viene_despues(pb, pa):
         raise ValueError("por debajo del cero: a %s no le puedo quitar %s (por el camino me bajo de cero; los "
                          "negativos, N.5, solo los se en la recta)" % (f, g))
@@ -206,7 +206,7 @@ def _por(u, f, g):
     except Exception as e:
         raise ValueError("%s x %s no me sale: %s" % (f, g, e))
     if u.decir(r["valor"]) is None:
-        raise ValueError("se pasa del millon: %s x %s no tiene nombre en mi lista" % (f, g))
+        raise ValueError("se pasa del techo: %s x %s no tiene nombre en mi lista" % (f, g))
     return "%d" % r["valor"], r["resultado"]["metodo"]
 
 

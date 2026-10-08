@@ -18,16 +18,26 @@ PIEZA = {
 }
 
 
-def _miles(u, n):
-    return u.escribir_cifras(u.cifras_de(n)[3:])          # 345000 -> 345 (se tapan las tres cifras de la derecha)
+def _cosas(u, a, b):
+    """Los miles como cosas; y si los dos son millones justos, los MILLONES como cosas (N.6; NCETM 1.30, punto 1:
+    2 millones + 3 millones = 5 millones)."""
+    if all(len(u.cifras_de(x)) >= 7 and u.cifras_de(x)[:6] == [0, 0, 0, 0, 0, 0] for x in (a, b)):
+        return 6, "millones"
+    return 3, "mil"
+
+
+def _n(k, nombre):
+    return "%d %s" % (k, "millon" if nombre == "millones" and k == 1 else nombre)
 
 
 def hacer(s, u):
-    ma, mb = _miles(u, s["a"]), _miles(u, s["b"])
-    m = u.sumar_por_columnas(ma, mb)                       # los miles, como cosas (el mecanismo)
-    total = u.escribir_cifras([0, 0, 0] + u.cifras_de(m))
+    ceros, nombre = _cosas(u, s["a"], s["b"])
+    ma, mb = u.escribir_cifras(u.cifras_de(s["a"])[ceros:]), u.escribir_cifras(u.cifras_de(s["b"])[ceros:])
+    m = u.sumar_por_columnas(ma, mb)                       # las cosas, como cosas (el mecanismo)
+    total = u.escribir_cifras([0 for _ in range(ceros)] + u.cifras_de(m))
     atras = u.sumar_por_columnas(mb, ma)                   # la vuelta: en el otro orden
-    return {"valor": total, "metodo": "contar miles (N.4)",
-            "cuenta": "%d + %d: %d mil + %d mil = %d mil (%d + %d = %d) = %d"
-                      % (s["a"], s["b"], ma, mb, m, ma, mb, m, total),
-            "vuelta": "en el otro orden: %d mil + %d mil = %d mil" % (mb, ma, atras), "vuelta_ok": atras == m}
+    return {"valor": total, "metodo": "contar %s (%s)" % ("millones" if ceros == 6 else "miles", "N.6" if ceros == 6 else "N.4"),
+            "cuenta": "%d + %d: %s + %s = %s (%d + %d = %d) = %d"
+                      % (s["a"], s["b"], _n(ma, nombre), _n(mb, nombre), _n(m, nombre), ma, mb, m, total),
+            "vuelta": "en el otro orden: %s + %s = %s" % (_n(mb, nombre), _n(ma, nombre), _n(atras, nombre)),
+            "vuelta_ok": atras == m}

@@ -116,7 +116,7 @@ def _pt_problema(numeros, saber):
 def _pt_conclusion_de(porque):
     if "PASAN DEL TODO" in porque:
         return "no_se_puede"
-    if "se pasa del millon" in porque or "no tiene nombre" in porque:
+    if "se pasa del techo" in porque or "no tiene nombre" in porque:
         return "no_alcanza"
     return "todavia_no"
 

@@ -571,7 +571,7 @@ def _cifra_a_numero(texto, saber):
     t = texto.strip()
     if t.isdigit():
         n = int(t)
-        if 0 <= n <= numero_maximo(saber):              # N.4: hasta el numero maximo (un millon)
+        if 0 <= n <= numero_maximo(saber):              # N.4, N.6: hasta el numero maximo (diez millones)
             return n
     return None
 
@@ -694,7 +694,7 @@ def p_alguna_pasa_del_techo(escena, cuenta):
     Mira tambien el TEXTO: '1500' es un numero aunque no se pueda leer (no_alcanza, no
     no_es_un_numero)."""
     techo = _techo(cuenta)
-    if cuenta.get("_saber"):                       # N.4: las columnas llegan a lo que se sabe escribir (un millon)
+    if cuenta.get("_saber"):                       # N.4: las columnas llegan a lo que se sabe escribir (diez millones, N.6)
         techo = numero_maximo(cuenta["_saber"])
     for texto in (cuenta.get("texto_a"), cuenta.get("texto_b")):
         if isinstance(texto, str) and texto.strip().isdigit() and int(texto.strip()) > techo:

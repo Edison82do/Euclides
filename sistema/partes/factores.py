@@ -95,7 +95,7 @@ def decidir_factores(n, saber=None):
     r = aplicar("parejas_de_factores", {"n": n}, saber)
     if r["conclusion"] != "hecho":
         return {"conclusion": "todavia_no", "porque": "; ".join(_fm_porques(r)) if r["conclusion"] != "ninguna"
-                else "%d pasa de mi techo (un millon)" % n}
+                else "%d pasa de mi techo (%s)" % (n, techo(saber))}
     res = dict(r["resultado"])
     res["conclusion"] = "hecho"
     res["cuantos"] = _fm_contar(res["factores"], saber)
@@ -161,7 +161,7 @@ def decidir_primo(n, saber=None):
     r = aplicar("primo", {"n": n}, saber)
     if r["conclusion"] != "hecho":
         return {"conclusion": "todavia_no", "porques": _fm_porques(r) if r["conclusion"] != "ninguna"
-                else ["%d pasa de mi techo (un millon)" % n]}
+                else ["%d pasa de mi techo (%s)" % (n, techo(saber))]}
     res = dict(r["resultado"])
     res.update({"conclusion": "hecho", "pieza": r["pieza"]["id"]})
     return res
@@ -292,7 +292,7 @@ def explicar_multiplos(d, hasta, saber):
     for i in range(0, len(filas), 6):
         L.append("     " + ";  ".join(filas[i:i + 6]))
     if r.get("techo"):
-        L.append("  (el siguiente ya pasa de un millon, mi techo)")
+        L.append("  (el siguiente ya pasa de %s, mi techo)" % techo(saber))
     ultimo, veces = r["lista"][-1], _fm_contar(r["lista"], saber)
     c = aplicar("multiplicar", {"a": d, "b": veces}, saber)
     if c["conclusion"] == "hecho":

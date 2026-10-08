@@ -16,10 +16,11 @@ PIEZA = {
     "usa": [],
 }
 
-_SITIOS = {"decena": (1, (0,), 0, "diez", "unidades"), "centena": (2, (0, 1), 1, "cien", "decenas"),
-           "millar": (3, (0, 1, 2), 2, "mil", "centenas"),                     # N.3: tambien al millar
-           "decena de millar": (4, (0, 1, 2, 3), 3, "diez mil", "millares"),              # N.4 (5.o)
-           "centena de millar": (5, (0, 1, 2, 3, 4), 4, "cien mil", "decenas de millar")}
+_SITIOS = {"decena": (1, (0,), 0, "diez", "las unidades"), "centena": (2, (0, 1), 1, "cien", "las decenas"),
+           "millar": (3, (0, 1, 2), 2, "mil", "las centenas"),                     # N.3: tambien al millar
+           "decena de millar": (4, (0, 1, 2, 3), 3, "diez mil", "los millares"),              # N.4 (5.o)
+           "centena de millar": (5, (0, 1, 2, 3, 4), 4, "cien mil", "las decenas de millar"),
+           "millon": (6, (0, 1, 2, 3, 4, 5), 5, "un millon", "las centenas de millar")}        # N.6 (6.o)
 
 
 def hacer(s, u):
@@ -37,8 +38,8 @@ def hacer(s, u):
         valor, por = n, "a la derecha todo son ceros: ya es redondo"
     elif d == 5 or u.viene_despues(u.decir(d), "cinco"):
         valor = u.saltar(abajo, salto)
-        por = "la cifra de las %s es %d (de cinco para arriba): SUBE a %d" % (nombre_junto, d, valor)
+        por = "la cifra de %s es %d (de cinco para arriba): SUBE a %d" % (nombre_junto, d, valor)
     else:
         valor = abajo
-        por = "la cifra de las %s es %d (menos de cinco): se QUEDA en %d" % (nombre_junto, d, valor)
+        por = "la cifra de %s es %d (menos de cinco): se QUEDA en %d" % (nombre_junto, d, valor)
     return {"valor": valor, "metodo": "el atajo de la cifra (N.2)", "cuenta": por, "vuelta": "", "vuelta_ok": True}

@@ -13,11 +13,12 @@ Es lo que hace falta para la estimacion de 3.OA.D.8 ('es razonable la respuesta?
 import re
 
 _ORDEN_REDONDEAR = re.compile(
-    r"^(\d+)(?:\s+(?:a\s+la|al|a)\s+(decena de millar|centena de millar|decena|centena|diez|cien|millar|mil|unidad)"
+    r"^(\d+)(?:\s+(?:a\s+la|al|a)\s+(decena de millar|centena de millar|millon|decena|centena|diez|cien|millar|mil|unidad)"
     r"(?:\s+mas\s+cercana)?)?\s*$")
 _SITIO_DE = {"decena": "decena", "diez": "decena", "centena": "centena", "cien": "centena",
              "millar": "millar", "mil": "millar",                                 # N.3 (4.NBT.A.3)
-             "decena de millar": "decena de millar", "centena de millar": "centena de millar"}   # N.4
+             "decena de millar": "decena de millar", "centena de millar": "centena de millar",   # N.4
+             "millon": "millon"}                                                        # N.6
 
 
 def decidir_redondear(n, a, saber=None):
@@ -27,7 +28,7 @@ def decidir_redondear(n, a, saber=None):
 
 
 def _leer_orden_redondear(texto):
-    t = " ".join(texto.lower().replace("á", "a").strip().rstrip("?").split())
+    t = " ".join(texto.lower().replace("á", "a").replace("ó", "o").strip().rstrip("?").split())
     m = _ORDEN_REDONDEAR.match(t)
     if not m:
         return None
@@ -54,10 +55,12 @@ def explicar_redondear(texto, saber=None):
         sitios.append("decena de millar")                                 # N.4 (NCETM 1.26)
     if not sitio and len(cifras_de(n)) >= 6:
         sitios.append("centena de millar")
+    if not sitio and len(cifras_de(n)) >= 7:
+        sitios.append("millon")                                           # N.6 (NCETM 1.30)
     finales, valores = [], {}
     for a in sitios:
         r = decidir_redondear(n, a, saber)
-        L.append("  %s %s:" % ("AL" if a == "millar" else "A LA", a.upper()))
+        L.append("  %s %s:" % ("AL" if a in ("millar", "millon") else "A LA", a.upper()))
         if r["conclusion"] != "hecho":
             L.append("    NO SALE: %s" % r.get("porque"))
             finales.append("%s %s" % (a, r["conclusion"]))
@@ -79,6 +82,14 @@ def explicar_redondear(texto, saber=None):
                      % (valores["decena"], cadena["valor"]))
             L.append("  pero se redondea el NUMERO, %d, y %d esta mas cerca de %d."
                      % (n, n, valores["centena"]))
+            L.append("")
+    if not sitio and "centena de millar" in valores and "millon" in valores:              # N.6: la cadena, mas arriba
+        cadena = decidir_redondear(valores["centena de millar"], "millon", saber)
+        if cadena["conclusion"] == "hecho" and cadena["valor"] != valores["millon"]:
+            L.append("  OJO, LA TRAMPA DE LA CADENA: si redondeara %d (lo ya redondeado) al millon saldria %d;"
+                     % (valores["centena de millar"], cadena["valor"]))
+            L.append("  pero se redondea el NUMERO, %d, y %d esta mas cerca de %d."
+                     % (n, n, valores["millon"]))
             L.append("")
     L.append("RESULTADO: %s" % ", ".join(finales))
     return "\n".join(L)

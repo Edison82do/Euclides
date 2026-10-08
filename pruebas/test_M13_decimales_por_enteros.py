@@ -151,8 +151,8 @@ try:
         v = S("%s : %d" % (x, d))
         exacto = Decimal(x) / d
         kf = max(k, -exacto.normalize().as_tuple().exponent)
-        if exacto == exacto.quantize(Decimal("0.001")) and Decimal(x).scaleb(kf) > 1000000:
-            esperado = "todavia_no"                             # contado en la unidad pequena pasa del millon:
+        if exacto == exacto.quantize(Decimal("0.001")) and Decimal(x).scaleb(kf) > 10000000:
+            esperado = "todavia_no"                             # contado en la unidad pequena pasa de diez millones (N.6; antes un millon):
             nosale += 1                                         # no se puede comprobar multiplicando
         elif exacto == exacto.quantize(Decimal("0.001")):
             esperado = T(exacto)
@@ -189,12 +189,16 @@ try:
                 malos.append((x, d, v))
     comprobar("F1 ninguna mal (%d)" % total, malos, [])
 
-    print("\nG - CERCA DEL TECHO (un millon) y el TIEMPO")
+    print("\nG - CERCA DEL TECHO (diez millones desde N.6) y el TIEMPO")
+    # antes (techo en un millon): 999.999 x 9, 99999.9 x 9, 999999.9 : 3, 999.999 x 2, 2943.4 : 8 -> todavia_no;
+    # 5 x 999999 -> no_se_puede.  N.6: esos ya caben; los mismos, una cifra mas arriba, se pasan.
     casos = [("111.111 x 9", "999.999"), ("999.999 : 7", "142.857"), ("99999.9 : 9", "11111.1"),
-             ("999.999 x 9", "todavia_no"), ("99999.9 x 9", "todavia_no"), ("999999.9 : 3", "todavia_no"),
+             ("999.999 x 9", "8999.991"), ("99999.9 x 9", "899999.1"), ("999999.9 : 3", "333333.3"),
+             ("9999.999 x 9", "todavia_no"), ("999999.9 x 9", "todavia_no"), ("9999999.9 : 3", "todavia_no"),
              ("0.001 x 9", "0.009"), ("0.001 : 2", "todavia_no"), ("100000 x 0.1", "10000"),
-             ("999999 x 0.01", "9999.99"), ("0.5 x 999999", "todavia_no"), ("999.999 x 2", "todavia_no"),
-             ("5 x 999999", "no_se_puede"), ("2943.4 : 8", "todavia_no"), ("294.34 : 8", "todavia_no"),
+             ("999999 x 0.01", "9999.99"), ("0.5 x 999999", "todavia_no"), ("999.999 x 2", "1999.998"), ("9999.999 x 2", "todavia_no"),
+             ("5 x 999999", "4999995"), ("5 x 9999999", "no_se_puede"), ("2943.4 : 8", "367.925"),
+             ("29434.2 : 8", "todavia_no"), ("294.34 : 8", "todavia_no"),
              ("29.434 : 8", "todavia_no"), ("33.0 x 7", "231"), ("6.0 : 4", "1.5")]
     for q, esperado in casos:
         t1 = time.time()

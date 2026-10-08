@@ -266,7 +266,9 @@ sumar_numeros: 0 + 4                       | 0 + 4 = 4    | el cero vale
 sumar_numeros: 5 + 5                       | 5 + 5 = diez | la cifra del diez no la tengo
 sumar_numeros: 7 + 5                       | 7 + 5 = doce | MEJORA 7.1: pasa de diez y ya no importa
 sumar_numeros: 9 + 9                       | 9 + 9 = dieciocho | MEJORA 7.1: el techo viejo era diez
-sumar_numeros: novecientos mil + novecientos mil  | no_alcanza | MEJORA N.4: las cuentas llegan a UN MILLON
+# antes de N.6 (techo en un millon): sumar_numeros: novecientos mil + novecientos mil  | no_alcanza | MEJORA N.4: las cuentas llegan a UN MILLON
+sumar_numeros: novecientos mil + novecientos mil  | 900000 + 900000 = 1800000 | (N.6) ya cabe: el techo es diez millones
+sumar_numeros: nueve millones + dos millones  | no_alcanza | (N.6) las cuentas llegan a DIEZ MILLONES
 sumar_numeros: noventa + noventa           | 90 + 90 = 180 | (6.7) YA se puede: el techo es mil
 sumar_numeros: manzana + 2                 | no_es_un_numero | TRAMPA: 'manzana' no es un numero
 descomponer_numero: 5                      | 0+5,1+4,2+3 | partir un NUMERO (no una coleccion)
@@ -330,7 +332,9 @@ nombre: 30                                 | treinta      | una DECENA: hay que 
 nombre: 15                                 | quince       | irregular: del 11 al 15 hay que saberselos
 nombre: 100                                | cien         | el final de la secuencia
 nombre: 101   | ciento uno | (6.7) el techo subio a mil: 101 YA se lee
-nombre: 1000001 | fuera_de_mi_secuencia | (N.4) mas alla de un millon no me lo invento
+# antes de N.6 (techo en un millon): nombre: 1000001 | fuera_de_mi_secuencia | (N.4) mas alla de un millon no me lo invento
+nombre: 1000001 | un millon uno | (N.6) ya cabe: el techo es diez millones
+nombre: 10000001 | fuera_de_mi_secuencia | (N.6) mas alla de diez millones no me lo invento
 numero: cuarenta y siete                   | 47           | la vuelta: del nombre al numero
 numero: veintidos                          | 22           |
 numero: cien                               | 100          |
@@ -348,7 +352,9 @@ dedos: 0 + 3                               | cero + tres = tres | se cuenta desd
 dedos: 1 + 1                               | uno + uno = dos | el mas pequeno
 dedos: ocho + diez                         | ocho + diez = dieciocho | diez dedos caben justo
 dedos: ocho + doce                         | no_caben_en_los_dedos | al SEGUNDO no le pueden pasar de 10
-dedos: novecientos noventa y nueve mil novecientos noventa y cinco + nueve  | no_alcanza | (N.4) el techo es UN MILLON
+# antes de N.6 (techo en un millon): dedos: novecientos noventa y nueve mil novecientos noventa y cinco + nueve  | no_alcanza | (N.4) el techo es UN MILLON
+dedos: novecientos noventa y nueve mil novecientos noventa y cinco + nueve  | novecientos noventa y nueve mil novecientos noventa y cinco + nueve = un millon cuatro | (N.6) ya cabe: el techo es diez millones
+dedos: nueve millones novecientos noventa y nueve mil novecientos noventa y cinco + nueve  | no_alcanza | (N.6) el techo es DIEZ MILLONES
 dedos: noventa y cinco + nueve  | noventa y cinco + nueve = ciento cuatro | (6.7) YA se puede
 dedos: ocho + manzana                      | no_es_un_numero | 'manzana' no es un numero
 dedos: cuarenta y siete + tres             | cuarenta y siete + tres = cincuenta | el PRIMERO puede ser grande
@@ -372,9 +378,13 @@ columnas: 5 + 3                            | 5 + 3 = 8 | SIN llevarse: 5+3=8 no 
 columnas: 60 + 40                          | 60 + 40 = 100 | justo el cien
 columnas: 100 + 0                          | 100 + 0 = 100 |
 columnas: 0 + 0                            | 0 + 0 = 0 |
-columnas: 600000 + 500000  | no_alcanza | (N.4) pasa de un millon
+# antes de N.6 (techo en un millon): columnas: 600000 + 500000  | no_alcanza | (N.4) pasa de un millon
+columnas: 600000 + 500000  | 600000 + 500000 = 1100000 | (N.6) ya cabe: el techo es diez millones
+columnas: 6000000 + 5000000  | no_alcanza | (N.6) pasa de diez millones
 columnas: 60 + 50    | 60 + 50 = 110 | (6.7) YA se puede: el techo es mil
-columnas: 900000 + 200000  | no_alcanza | (N.4) pasa de un millon
+# antes de N.6 (techo en un millon): columnas: 900000 + 200000  | no_alcanza | (N.4) pasa de un millon
+columnas: 900000 + 200000  | 900000 + 200000 = 1100000 | (N.6) ya cabe: el techo es diez millones
+columnas: 9000000 + 2000000  | no_alcanza | (N.6) pasa de diez millones
 columnas: 9 + 99    | 9 + 99 = 108 | (6.7) YA se puede: el techo es mil
 columnas: manzana + 3                      | no_es_un_numero |
 sumar_numeros: 32 + 15                     | 32 + 15 = 47 | AHORA usa las COLUMNAS (antes decia necesito_las_columnas)
@@ -533,7 +543,9 @@ columnas: 99 + 99                          | 99 + 99 = 198 | el total pasa de ci
 columnas: 500 - 247                        | 500 - 247 = 253 | A TRAVES DE UN CERO (y NO 347, dar la vuelta)
 columnas: 1000 - 1                         | 1000 - 1 = 999 | tres cambios seguidos
 columnas: 300 - 301                        | no_hay_bastantes | no hay resta negativa
-columnas: 1000001 - 40                     | no_alcanza | es un numero, pero pasa de un millon
+# antes de N.6 (techo en un millon): columnas: 1000001 - 40                     | no_alcanza | es un numero, pero pasa de un millon
+columnas: 1000001 - 40                     | 1000001 - 40 = 999961 | (N.6) ya cabe: el techo es diez millones
+columnas: 10000001 - 40                    | no_alcanza | (N.6) es un numero, pero pasa de diez millones
 sumar_numeros: 247 + 385                   | 247 + 385 = 632 | sumar numeros usa las columnas (7.6)
 restar_numeros: 50 - 27                    | 50 - 27 = 23 | ANTES salia 'None - None = veintitres' (fallo arreglado el 5 oct)
 restar_numeros: 500 - 247                  | 500 - 247 = 253 | con dos o tres cifras, por columnas
@@ -628,7 +640,9 @@ ecuacion: 8 + 4 = ? + 13                   | imposible | el otro plato pesa mas
 # ---------------------------------------------------------------------------
 de 2 en 2 hasta 10                         | 2, 4, 6, 8, 10 | de dos en dos
 de 10 en 10 desde 47 hasta 97              | 57, 67, 77, 87, 97 | se escribe la cifra
-de 100 en 100 desde 999750                 | 999850, 999950 | se para antes de un millon y uno (N.4)
+# antes de N.6 (techo en un millon): de 100 en 100 desde 999750                 | 999850, 999950 | se para antes de un millon y uno (N.4)
+de 100 en 100 desde 999750                 | 999850, 999950, 1000050, 1000150, 1000250, 1000350, 1000450, 1000550, 1000650, 1000750 | (N.6) ya cabe: el techo es diez millones
+de 100 en 100 desde 9999750                | 9999850, 9999950 | (N.6) se para antes de diez millones y uno
 de 3 en 3 hasta 30                         | no_entiendo | no esta en el estandar
 par: 0                                     | par | cero parejas
 par: 7                                     | impar | sobra uno
@@ -655,7 +669,9 @@ ecuacion: 47 + ? = 77                      | 30 | saltando de diez
 5 x 2                                      | 10 | saltando de 2
 3 grupos de 4                              | 12 | con palabras
 grupos de 2, 3 y 4                         | 9 | desiguales: suma
-4000 x 300                                 | no_se_puede | pasa de un millon (N.4)
+# antes de N.6 (techo en un millon): 4000 x 300                                 | no_se_puede | pasa de un millon (N.4)
+4000 x 300                                 | 1200000 | (N.6) ya cabe: el techo es diez millones
+40000 x 300                                | no_se_puede | (N.6) pasa de diez millones
 ecuacion: 3 x ? = 12                       | 4 | desde E.4: repartir 12 entre 3
 # ---------------------------------------------------------------------------
 # PASO M.2 - LAS TABLAS DEL 2, 5 Y 10; CONMUTATIVA; DOBLES Y MITADES (NCETM 2.3-2.5)
@@ -844,13 +860,17 @@ problema: Reparte 17 caramelos entre 5 ninos. Cuantos sobran? | 2 | el resto
 23 x 100                                   | 2300 | dos veces
 47 : 10                                    | 4 resto 7 | las unidades sobran
 2345 : 100                                 | 23 resto 45 | dos sitios
-99999 x 100                                | no_se_puede | pasa de un millon (N.4)
+# antes de N.6 (techo en un millon): 99999 x 100                                | no_se_puede | pasa de un millon (N.4)
+99999 x 100                                | 9999900 | (N.6) ya cabe: el techo es diez millones
+999999 x 100                               | no_se_puede | (N.6) pasa de diez millones
 # ---------------------------------------------------------------------------
 # PASO M.10 - LA MULTIPLICACION CORTA (NCETM 2.14)
 # ---------------------------------------------------------------------------
 47 x 6                                     | 282 | corta, o sumando si no se saben las tablas
 347 x 6                                    | 2082 | llevar a traves del cero
-123456 x 9                                 | no_se_puede | pasa de un millon (N.4)
+# antes de N.6 (techo en un millon): 123456 x 9                                 | no_se_puede | pasa de un millon (N.4)
+123456 x 9                                 | 1111104 | (N.6) ya cabe: el techo es diez millones
+1234567 x 9                                | no_se_puede | (N.6) pasa de diez millones
 # ---------------------------------------------------------------------------
 # PASO M.11 - LA DIVISION CORTA (NCETM 2.15)
 # ---------------------------------------------------------------------------
@@ -921,7 +941,9 @@ comparar: 99999 y 100000                   | 99999 < 100000 | (N.4) mas cifras g
 calcular: 345000 + 278000                  | 623000 | (N.4) 345 mil + 278 mil
 columnas: 500000 - 1                       | 500000 - 1 = 499999 | (N.4) cambiar a traves de los ceros
 18 x 38                                    | 684 | (N.4) la rejilla
-de 100000 en 100000 desde 700000           | 800000, 900000, 1000000 | (N.4) y se para en el millon
+# antes de N.6 (techo en un millon): de 100000 en 100000 desde 700000           | 800000, 900000, 1000000 | (N.4) y se para en el millon
+de 100000 en 100000 desde 700000           | 800000, 900000, 1000000, 1100000, 1200000, 1300000, 1400000, 1500000, 1600000, 1700000 | (N.6) ya cabe: el techo es diez millones
+de 100000 en 100000 desde 9700000          | 9800000, 9900000, 10000000 | (N.6) cruza el millon y se para en diez millones
 # --- paso N.5: los negativos (NCETM 1.27)
 comparar: -3 y -7                          | -3 > -7 | (N.5) el de cifra mayor es el menor
 recta: 3 - 8                               | -5 | (N.5) cruzar el cero
@@ -1004,7 +1026,9 @@ verdad: 3 + 4 x 5 = 35                     | FALSO | (M.16) 35 es de izquierda a
 0.5 x 4 + 1.25                             | 3.25 | (M.16) con decimales
 2 x 3 - 4 x 5                              | todavia_no | (M.16) por el camino se baja de cero
 12 : 3 + 1                                 | todavia_no | (M.16) dividir combinado: 2.28 (6.o)
-999 x 1000 + 1001                          | no_alcanza | (M.16) se pasa del millon
+# antes de N.6 (techo en un millon): 999 x 1000 + 1001                          | no_alcanza | (M.16) se pasa del millon
+999 x 1000 + 1001                          | 1000001 | (N.6) ya cabe: el techo es diez millones
+9999 x 1000 + 1001                         | no_alcanza | (N.6) se pasa de diez millones
 
 # --- paso S.2: parte-parte-todo con tres partes o mas; la misma estructura en contextos distintos (NCETM 1.28)
 partes: 37, 25, 63; todo: ?                | 125 | (S.2) falta el todo; 37 y 63 son amigas
@@ -1021,7 +1045,9 @@ todo: 50; partes: 20, ?, ?                 | no_se_puede | (S.2) faltan dos part
 todo: 10; partes: 4, 6, ?                  | 0 | (S.2) la parte que falta puede ser cero
 todo: 30; partes: 10, 10, 11               | no_cuadra | (S.2) no falta nada, y no juntan el todo
 todo: 1000000; partes: 250000, ?, 250000, 250000 | 250000 | (S.2) cerca del techo
-partes: 999999, 2; todo: ?                 | no_alcanza | (S.2) se pasa del millon
+# antes de N.6 (techo en un millon): partes: 999999, 2; todo: ?                 | no_alcanza | (S.2) se pasa del millon
+partes: 999999, 2; todo: ?                 | 1000001 | (N.6) ya cabe: el techo es diez millones
+partes: 9999999, 2; todo: ?                | no_alcanza | (N.6) se pasa de diez millones
 calcular: 4997 + 2456                      | 7453 | (P.7) la misma suma: 5000 + 2453
 calcular: 1000 - 397                       | 603 | (P.7) la misma diferencia: 1003 - 400
 calcular: 1000 - 403                       | 597 | (P.7) los dos bajan 3: 997 - 400
@@ -1072,3 +1098,19 @@ comparar: 5/8 y 7/12                       | 5/8 > 7/12 | (F.7) no relacionadas
 3 1/3 - 1 1/2                              | 1 5/6 | (F.7) mixtos: 20/6 - 9/6
 1/7 + 1/1000                               | 1007/7000 | (F.7) el de abajo comun puede ser grande
 1/2 + 1/13                                 | todavia_no | (F.7) los de abajo de partida: los que tienen nombre
+nombre: 2345678                            | dos millones trescientos cuarenta y cinco mil seiscientos setenta y ocho | (N.6) por grupos de tres: millones, mil y el resto
+nombre: 1021000                            | un millon veintiun mil | (N.6) un millon (singular); veintiun mil
+nombre: 2000000                            | dos millones | (N.6) plural
+nombre: 10000000                           | diez millones | (N.6) el techo de 6.o
+numero: dos millones cinco                 | 2000005 | (N.6) no 25 ni 2005
+millar: 1030405                            | 1000000 + 30000 + 400 + 5 | (N.6) 1 millon, 30 mil y 405
+comparar: 999999 y 1000000                 | 999999 < 1000000 | (N.6) mas cifras gana
+calcular: 997000 + 5000                             | 1002000 | (N.6) pasando por el millon: no 1000200
+calcular: 1002000 - 997000                          | 5000 | (N.6) contando hacia arriba por el millon
+calcular: 2000000 + 3000000                         | 5000000 | (N.6) 2 millones + 3 millones
+calcular: 9999999 + 1                               | 10000000 | (N.6) al techo justo
+calcular: 9999999 + 2                               | ninguna | (N.6) se pasa de diez millones
+redondear: 2499999 al millon               | 2000000 | (N.6) no la cadena (2500000 -> 3000000)
+redondear: 2549999 al millon               | 3000000 | (N.6) la cifra de las centenas de millar es 5
+de 1000000 en 1000000 desde 7000000        | 8000000, 9000000, 10000000 | (N.6) y se para en el techo
+1234567 x 8                                | 9876536 | (N.6) la multiplicacion corta con siete cifras

@@ -128,8 +128,8 @@ def explicar_equivalente_suma_resta(texto, saber=None):
         return "\n".join(L)
     a, b = _dec_en_pequenas(x, k), _dec_en_pequenas(y, k)
     if decir(a, saber) is None or decir(b, saber) is None:
-        L += ["  NO ALCANZA: %s pasa de mi lista (un millon de %s)." % (
-            "contado en %s" % _DEC_NOMBRE[k][1] if k else "el numero", _DEC_NOMBRE[k][1] if k else "unidades"),
+        L += ["  NO ALCANZA: %s pasa de mi lista (%s de %s)." % (
+            "contado en %s" % _DEC_NOMBRE[k][1] if k else "el numero", techo(saber), _DEC_NOMBRE[k][1] if k else "unidades"),
             "", "RESULTADO: no_alcanza"]
         return "\n".join(L)
     if k:

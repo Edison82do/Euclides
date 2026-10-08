@@ -12,6 +12,7 @@ PIEZA = {
     "condiciones": [
         ("los_dos_son_centenas_justas", "no son los dos centenas justas (300, 800, 2500...)"),
         ("el_de_abajo_no_es_mayor", "se quitaria mas de lo que hay (no hay restas negativas, 5.4)"),
+        ("pocas_centenas_para_contarlas", "son mas de 999 centenas: contarlas una a una serian miles de pasos (N.6)"),
     ],
     "usa": [],
 }

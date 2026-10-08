@@ -30,7 +30,7 @@ def hacer(s, u):
         w = u.contar_adelante(u.decir(s["a"]), d).get("resultado")
         frase = "le sumo %s a los dos" % d
         if w is None:
-            raise ValueError("%d + %s se sale de mi lista (pasaria del millon)" % (s["a"], d))
+            raise ValueError("%d + %s se sale de mi lista (pasaria del techo)" % (s["a"], d))
     else:                  # el sustraendo se pasa d: se los quito a LOS DOS
         w = u.contar_atras(u.decir(s["a"]), d).get("resultado")
         frase = "le quito %s a los dos" % d

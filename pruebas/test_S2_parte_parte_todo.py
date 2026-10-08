@@ -241,11 +241,11 @@ try:
 
     print("\nI - CERCA DEL TECHO, y el TIEMPO (cada pregunta, con su explicacion, en menos de 2 s)")
     for texto, esperado in (("partes: 999999, 1; todo: ?", "1000000"),
-                            ("partes: 999999, 2; todo: ?", "no_alcanza"),
+                            ("partes: 999999, 2; todo: ?", "1000001"), ("partes: 9999999, 2; todo: ?", "no_alcanza"),   # N.6
                             ("todo: 1000000; partes: 250000, ?, 250000, 250000", "250000"),
                             ("todo: 1000000; 4 partes iguales", "cada parte: 250000"),
                             ("partes: 250000, 250000, 250000, 250000; todo: ?", "1000000"),
-                            ("todo: 1000001; partes: 1, ?", "no_alcanza"),
+                            ("todo: 1000001; partes: 1, ?", "1000000"), ("todo: 10000001; partes: 1, ?", "no_alcanza"),   # N.6
                             ("todo: 999999.999; partes: 0.001, ?", "no_alcanza"),   # contadas en milesimas, el techo de M.13
                             ("partes: 123456, 654321, 98765, 1234; todo: ?", "877776"),
                             ("todo: 877776; partes: 123456, 654321, ?, 1234", "98765"),

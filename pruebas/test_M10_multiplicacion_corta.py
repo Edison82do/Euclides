@@ -65,7 +65,7 @@ try:
     comprobar("B3 ... y partiendo por sitios da lo mismo", ("1800 + 240 + 42 = 2082" in t, "lo mismo: SI" in t), (True, True))
     comprobar("B4 6 x 47 -> 282 (el de una cifra delante)", S("6 x 47"), "282")
     comprobar("B5 25 x 4 -> 100", S("25 x 4"), "100")
-    comprobar("B6 123456 x 9 -> se pasa de un millon (N.4)", S("123456 x 9"), "no_se_puede")
+    comprobar("B6 1234567 x 9 -> se pasa de diez millones (N.6; N.4 era 123456 x 9)", S("1234567 x 9"), "no_se_puede")
 
     print("\nC - TODAS LAS DE DOS CIFRAS x UNA CIFRA, Y UNA MUESTRA DE TRES Y CUATRO CIFRAS")
     malos = []

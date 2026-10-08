@@ -172,7 +172,7 @@ def _co_problema(arbol, saber):
 
 
 def _co_conclusion_de(porque):
-    if "se pasa del millon" in porque:
+    if "se pasa del techo" in porque:
         return "no_alcanza"
     return "todavia_no"
 
