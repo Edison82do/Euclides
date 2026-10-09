@@ -503,6 +503,59 @@ def _di_una_sola(s, tipos):
     return len(e) == 1 and e[0].get("tipo") in tipos
 
 
+
+# ---- estrategias para multiplicar numeros grandes y la multiplicacion larga (paso M.17; NCETM 2.23)
+def _m17_sin_ceros(n, u):
+    """(lo que queda quitando los ceros del final, los ceros quitados).  3400 -> (34, [0, 0])."""
+    cif, ceros = u.cifras_de(n), []
+    while len(cif) > 1 and cif[0] == 0:
+        cif = cif[1:]
+        ceros.append(0)
+    return u.escribir_cifras(cif), ceros
+
+
+def _m17_quitando_ceros(s, u):
+    """Un factor acaba en cero y, quitados los ceros de los dos, queda una cuenta de VARIAS cifras (si queda un hecho
+    de la tabla, o un 1, es lo de M.9, que va antes)."""
+    a, b = s.get("a"), s.get("b")
+    if not isinstance(a, int) or not isinstance(b, int) or 0 in (a, b):
+        return False
+    pa, ca = _m17_sin_ceros(a, u)
+    pb, cb = _m17_sin_ceros(b, u)
+    if not ca and not cb:
+        return False
+    if 1 in (pa, pb):
+        return False
+    return len(u.cifras_de(pa)) >= 2 or len(u.cifras_de(pb)) >= 2
+
+
+def _m17_dos_por_dos(s, u):
+    """Dos cifras por dos, o tres por dos (NCETM 2.23, punto 3)."""
+    la, lb = len(u.cifras_de(s.get("a") or 0)), len(u.cifras_de(s.get("b") or 0))
+    return (la == 2 and lb in (2, 3)) or (lb == 2 and la in (2, 3))
+
+
+def _m17_pareja_de_la_tabla(f, u):
+    """(p, q) de una cifra (2..9) con p x q = f, mirando lo que se sabe de memoria (las tablas); la pareja de en medio
+    (24 -> 4 x 6, no 3 x 8).  None si no hay."""
+    if len(u.cifras_de(f)) != 2 or u.cifras_de(f)[0] == 0:
+        return None
+    mejor = None
+    for p in range(2, 10):
+        for q in range(p, 10):
+            h = u.recuerdo("%d x %d" % (p, q)) or u.recuerdo("%d x %d" % (q, p))
+            if h and h["valor"] == f:
+                mejor = (p, q)
+    return mejor
+
+
+def _m17_compuesto(s, u):
+    """Un factor de dos cifras es una pareja de la tabla y el otro es de varias cifras (NCETM 2.23, punto 5)."""
+    a, b = s.get("a"), s.get("b")
+    if not isinstance(a, int) or not isinstance(b, int):
+        return False
+    return any(_m17_pareja_de_la_tabla(f, u) and len(u.cifras_de(g)) >= 2 for f, g in ((a, b), (b, a)))
+
 CONDICIONES = {
     "pocas_centenas_para_contarlas": lambda s, u: _n6_pocas_cosas(s, u, 2),
     "pocos_miles_para_contarlos": lambda s, u: _n6_pocas_cosas(s, u, 3),
@@ -707,6 +760,10 @@ CONDICIONES = {
     "no_es_una_suma_sola": lambda s, u: not (_di_una_sola(s, ("lineal",)) and _di_es_suma(_di_ecuaciones(s)[0])),
     "es_una_suma_sola": lambda s, u: _di_una_sola(s, ("lineal",)) and _di_es_suma(_di_ecuaciones(s)[0]),
     "es_una_relacion_sola": lambda s, u: _di_una_sola(s, ("diferencia", "multiplo")),
+    # ---- estrategias para numeros grandes y la multiplicacion larga (paso M.17; NCETM 2.23)
+    "quitando_los_ceros_queda_una_cuenta_de_varias_cifras": lambda s, u: _m17_quitando_ceros(s, u),
+    "dos_cifras_por_dos_o_tres_por_dos": lambda s, u: _m17_dos_por_dos(s, u),
+    "un_factor_de_dos_cifras_es_una_pareja_de_la_tabla": lambda s, u: _m17_compuesto(s, u),
 }
 
 DE_APLICACION = {"el_divisor_no_es_cero", "hay_bastantes", "hay_bastantes_al_deshacer", "la_parte_cabe_en_el_todo",

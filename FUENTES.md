@@ -387,6 +387,21 @@
 - Common Core 3.OA: https://www.thecorestandards.org/Math/Content/3/OA/
 - NCETM 2.6: https://www.ncetm.org.uk/classroom-resources/primm-206-structures-quotitive-and-partitive-division/
 - NCETM 2.3: https://www.ncetm.org.uk/classroom-resources/primm-203-times-tables-groups-of-2-and-commutativity-part-1/
+- **NCETM 2.23** (*Multiplication strategies for larger numbers and long multiplication*, Year 6; la web está bloqueada
+  desde la nube, leída por el buscador el 9 oct). Cinco puntos: (1) con múltiplos de 10, 100 o 1000 se multiplican las
+  decenas, centenas o millares y se ajusta con el valor de posición; (2) si un factor es múltiplo de 10, 100 o 1000, la
+  multiplicación corta y luego el ajuste; (3) dos de dos cifras: se parte UNO de los factores, se hallan los productos
+  parciales y se suman (también tres por dos); (4) la multiplicación larga: multiplicar y SUMAR LOS PRODUCTOS PARCIALES;
+  (5) si un factor es compuesto, por uno de sus factores y luego por el otro. **NCETM, PSKA multiplicación Q7** (PDF):
+  qué mirar — aplicar la corta en contextos variados, explicar la estructura de la larga, usar lo mental cuando conviene;
+  errores: el 0 que guarda el sitio y lo que se lleva. **Oak National** (Year 6, «multiplying and dividing by 2-digit
+  numbers»): el producto parcial; el error de olvidar lo que se lleva. **Common Core 5.NBT.B.5** y **Achieve the Core**
+  (mini-evaluación de fluidez): el algoritmo estándar reduce la cuenta a cuentas de una cifra; si la respuesta se va por
+  un factor de 10 o 100, es un error de valor de posición (multiplicar por 4 en vez de por 40). → M.17.
+- NCETM 2.23 (bloqueada desde la nube; leída por el buscador): https://www.ncetm.org.uk/classroom-resources/primm-223-multiplication-strategies-for-larger-numbers-and-long-multiplication
+- NCETM PSKA multiplicación Q7: https://www.ncetm.org.uk/media/2mmcduqq/pska-mult-q7.pdf
+- Oak National, larga de dos cifras por dos: https://thenational.academy/teachers/programmes/maths-primary-ks2/units/multiplying-and-dividing-by-2-digit-numbers/lessons/explain-how-to-use-long-multiplication-to-multiply-two-2-digit-numbers-with-regrouping
+- Achieve the Core, 5.NBT.B.5: https://achievethecore.org/file/2423
 - NCETM 2.4: https://www.ncetm.org.uk/classroom-resources/primm-204-times-tables-groups-of-10-and-of-5-and-factors-of-0-and-1/
 - NCETM 2.5: https://www.ncetm.org.uk/classroom-resources/primm-205-commutativity-part-2-doubling-and-halving/
 - NCETM 2.2: https://www.ncetm.org.uk/classroom-resources/primm-202-structures-multiplication-representing-equal-groups/

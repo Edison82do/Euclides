@@ -434,7 +434,8 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         comparar: 99999 y 100000  -> 99999 < 100000   (mas cifras gana)
         345000 + 278000        -> 623000   345 mil + 278 mil = 623 mil (el mil como una cosa)
         columnas: 500000 - 1   -> 499999   (cambiar a traves de cinco ceros)
-        18 x 38                -> 684      LA REJILLA: 10 x 30 + 10 x 8 + 8 x 30 + 8 x 8 (los dos por sitios)
+        18 x 38                -> 684      LA REJILLA: 10 x 30 + 10 x 8 + 8 x 30 + 8 x 8 (los dos por sitios;
+                                           desde M.17, quien sabe las tablas parte uno solo: 18 x 30 + 18 x 8)
         redondear: 345678      -> ... decena de millar 350000, centena de millar 300000
         de 10000 en 10000 desde 970000  -> 980000, 990000, 1000000
         Contar OBJETOS sigue hasta diez mil; los NUMEROS llegan a un millon.  Mas alla: N.6 (6.o).
@@ -536,6 +537,19 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         dato no se entiende, 'no entiendo' diciendo que numero o que frase (nunca una respuesta falsa):
         Un camion lleva 12 cajas. Cada caja pesa 96 kilos. Cuanto pesan las cajas?  -> no entiendo (el 12)
         Tengo 50 pesos. Gaste la mitad. Cuanto me queda?                           -> no entiendo ('gaste la mitad')
+
+  NUMEROS GRANDES Y LA MULTIPLICACION LARGA  ->  piezas nuevas de multiplicar (paso M.17, 6.o; NCETM 2.23)
+        (sin puerta nueva: entran por el modelo comun; la tabla de puertas y el resolvedor las usan solas)
+        234 x 30               -> 7020     QUITO LOS CEROS: 234 x 3 = 702 (la corta) y vuelvo a poner el 0
+        2300 x 450             -> 1035000  23 x 45 y vuelvo a poner los tres ceros
+        326 x 47               -> 15322    PARTO UNO: 326 x 40 + 326 x 7 = 13040 + 2282
+        1234 x 24              -> 29616    UN FACTOR COMPUESTO: 24 = 4 x 6; 1234 x 4 = 4936; 4936 x 6
+        3456 x 247             -> 853632   LA LARGA: una fila por cifra (3456 x 7, x 40, x 200), con los 0 que
+                                           guardan el sitio, y se suman; se comprueba con la operacion contraria
+        300 x 40               -> 12000    lo mental primero: el hecho pequeno (M.9), no la larga
+        n : 24 = 356           -> n = 8544 (356 x 24; se comprueba DESHACIENDO: 8544 : 24 = 356 porque 356 x 24 = 8544)
+        24 x n = 8544          -> no_sale  (dividir entre dos cifras es la division larga: el paso siguiente, 2.24)
+        4567 x 3000            -> no_se_puede (se pasa de diez millones)
 
   MAS DE UN ENTERO  ->  numeros mixtos y fracciones impropias (paso F.4; NCETM 3.5; 4.NF.B.3)
         fraccion: 7/4          -> siete cuartos = 1 3/4   (agrupo 7 cuartos de 4 en 4: 1 entero y sobran 3)

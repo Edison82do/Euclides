@@ -163,7 +163,10 @@ try:
               (S("100000 : 4"), motor.aplicar("dividir", {"total": 100000, "divisor": 4}, SABER)["pieza"]["id"]),
               ("25000", "division_corta"))
     comprobar("F2 18 x 38 = 684 (la rejilla: los dos por sitios)", S("18 x 38"), "684")
-    r = motor.aplicar("multiplicar", {"a": 18, "b": 38}, SABER)
+    # M.17 (NCETM 2.23, 6.o): con las tablas, dos cifras por dos se hace partiendo UNO de los factores (18 x 30 + 18 x 8).
+    # El caso viejo: motor.aplicar("multiplicar", {"a": 18, "b": 38}) elegia la rejilla.  La rejilla sigue sabiendo
+    # hacerlo (y la usa quien no sabe las tablas): se le pide por su nombre.
+    r = motor.aplicar("multiplicar_en_rejilla", {"a": 18, "b": 38}, SABER)
     comprobar("F3 ... y la rejilla dice sus casillas: 300 + 80 + 240 + 64",
               (r["pieza"]["id"], "300 + 80 + 240 + 64 = 684" in r["resultado"]["cuenta"]),
               ("multiplicar_en_rejilla", True))

@@ -388,3 +388,8 @@ a + b = 9; a : b = 2              | a = 6, b = 3 | U.4: antes la puerta de los o
 2 x (n + 3) = 2 x n + 6           | cualquiera | U.4: identidad
 5 x (a - 1) = 5 x a - 3           | ninguna | U.4: contradiccion
 Un camion lleva 12 cajas. Cada caja pesa 96 kilos. Cuanto pesan las cajas? | no_entiendo | U.4: prudencia (el 12)
+3456 x 247                        | 853632 | M.17: la multiplicacion larga
+326 x 47                          | 15322 | M.17: partir uno de los factores
+1234 x 24                         | 29616 | M.17: un factor compuesto (24 = 4 x 6)
+234 x 30                          | 7020 | M.17: quitar los ceros y volver a ponerlos
+n : 24 = 356                      | n = 8544 | M.17: se comprueba deshaciendo (antes no_cuadra)

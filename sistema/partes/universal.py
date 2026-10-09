@@ -661,11 +661,64 @@ def _u_comprobar(modelo, valores, saber, r):
             lineas.append("%s  ->  %s = %s  ->  %s = %s ... %s" % (_u_rel_texto(rel), _u_texto(izq), _u_texto(der),
                                                                   _nu_texto(vi), _nu_texto(vd), "SI" if bien else "NO"))
         except _UNoSale as ex:
-            bien = False
-            lineas.append("%s  ->  no lo puedo calcular (%s)" % (_u_rel_texto(rel), ex.porque))
+            bien = _u_comprobar_deshaciendo(rel, valores, saber, lineas, ex)
         ok = ok and bien
     r["comprobacion"] = lineas
     r["comprobacion_ok"] = ok
+
+
+def _u_comprobar_deshaciendo(rel, valores, saber, lineas, ex):
+    """M.17: un lado no se puede calcular todavia (8544 : 24 es la division larga, 2.24).  Un humano lo comprueba
+    DESHACIENDO desde el otro lado (lo que se suma se resta, lo que se divide se multiplica: 8544 : 24 = 356 porque
+    356 x 24 = 8544; dividir es lo contrario de multiplicar, NCETM 2.6, 3.OA.B.6) hasta el trozo que no se podia."""
+    izq, der = _u_poner_todas(rel[0], valores), _u_poner_todas(rel[1], valores)
+    for lado, otro in ((izq, der), (der, izq)):
+        pasos = []
+        try:
+            v = _u_valor(otro, saber, [])
+            bien = _u_cuadra_deshaciendo(lado, v, saber, pasos)
+        except _UNoSale:
+            continue
+        lineas.append("%s  ->  %s = %s  ->  %s no lo puedo calcular (%s); lo compruebo DESHACIENDO desde %s: %s ... %s"
+                      % (_u_rel_texto(rel), _u_texto(izq), _u_texto(der), _u_texto(lado), ex.porque, _nu_texto(v),
+                         "; ".join(pasos), "SI" if bien else "NO"))
+        return bien
+    lineas.append("%s  ->  no lo puedo calcular (%s)" % (_u_rel_texto(rel), ex.porque))
+    return False
+
+
+def _u_cuadra_deshaciendo(e, v, saber, pasos):
+    """El arbol e (sin letras) vale v?  Si se puede calcular, se calcula; si no, se deshace su ultima cuenta desde v."""
+    try:
+        return _nu_iguales(_u_valor(e, saber, []), v, saber)
+    except _UNoSale:
+        if e[0] == "par":
+            return _u_cuadra_deshaciendo(e[1], v, saber, pasos)
+        if e[0] != "op":
+            raise
+    op, izq, der = e[1], e[2], e[3]
+    if op == ":":                                # izq : der = v  <->  izq = v x der
+        d = _u_valor(der, saber, [])
+        if _nu_es_cero(d):
+            raise _UNoSale("no_se_puede", "entre cero no se reparte")
+        w = _u_cuenta("x", v, d, saber, [])
+        pasos.append("%s : %s = %s porque %s x %s = %s" % (_u_texto(izq), _nu_texto(d), _nu_texto(v), _nu_texto(v),
+                                                           _nu_texto(d), _nu_texto(w)))
+        return _u_cuadra_deshaciendo(izq, w, saber, pasos)
+    try:
+        k, falta, a_la_derecha = _u_valor(der, saber, []), izq, True
+    except _UNoSale:
+        k, falta, a_la_derecha = _u_valor(izq, saber, []), der, False
+    if op == "+":
+        w = _u_cuenta("-", v, k, saber, [])
+    elif op == "x":
+        w = _u_cuenta(":", v, k, saber, [])
+    elif a_la_derecha:                           # falta - k = v  ->  falta = v + k
+        w = _u_cuenta("+", v, k, saber, [])
+    else:                                        # k - falta = v  ->  falta = k - v
+        w = _u_cuenta("-", k, v, saber, [])
+    pasos.append("deshago '%s %s': %s tiene que ser %s" % (op, _nu_texto(k), _u_texto(falta), _nu_texto(w)))
+    return _u_cuadra_deshaciendo(falta, w, saber, pasos)
 
 
 # ------------------------------------------------------------- explicar

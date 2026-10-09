@@ -126,6 +126,9 @@ def explicar_multiplicar(texto, saber=None):
         L.extend("        %s" % p for p in pasos[-2:])
     else:
         L.append("        %s" % ap["resultado"]["cuenta"].replace("; ", "\n        "))
+    if ap["resultado"].get("vuelta_explicada"):              # M.17: la pieza se comprueba a si misma
+        L.append("     LO COMPRUEBO %s:" % ap["resultado"]["vuelta_explicada"])
+        L.append("        %s" % ap["resultado"]["vuelta"].replace("; ", "\n        "))
     if ap["pieza"]["id"] == "multiplicacion_corta":          # M.10: el algoritmo, comprobado partiendo
         otra = aplicar("multiplicar_partiendo_por_sitios", {"a": a, "b": b}, saber)
         if otra["conclusion"] == "hecho":

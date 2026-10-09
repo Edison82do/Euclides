@@ -1182,3 +1182,14 @@ ecuacion: 0.5 + ? = 12                      | el hueco = 11.5 | (U.4) TRAMPA: la
 x + y + z = 12; x - y = 1; y - z = 1        | x = 5, y = 4, z = 3 | (U.4) tres incognitas, sin la orden
 problema: Un camion lleva 12 cajas. Cada caja pesa 96 kilos. Cuanto pesan las cajas? | no_entiendo | (U.4) PRUDENCIA: el 12 se quedaba sin usar (decia 96 kilos)
 problema: Tengo 50 pesos. Gaste la mitad. Cuanto me queda? | no_entiendo | (U.4) PRUDENCIA: 'gaste la mitad' se ignoraba (decia 50 pesos)
+# --- paso M.17 (NCETM 2.23): estrategias para numeros grandes y la multiplicacion larga (piezas; sin puerta nueva)
+234 x 30                                    | 7020 | (M.17) quitar los ceros: 234 x 3 y un 0
+2300 x 450                                  | 1035000 | (M.17) 23 x 45 y tres ceros
+326 x 47                                    | 15322 | (M.17) partir uno de los factores
+1234 x 24                                   | 29616 | (M.17) un factor compuesto: x 4 y x 6
+3456 x 247                                  | 853632 | (M.17) la multiplicacion larga
+3456 x 205                                  | 708480 | (M.17) un 0 en medio del de abajo: no hay fila de las decenas
+n : 24 = 356                                | n = 8544 | (M.17) antes no_cuadra: se comprueba deshaciendo
+x - y = 100; y = 1234 x 24                  | x = 29716, y = 29616 | (M.17) por el resolvedor
+24 x n = 8544                               | no_sale | (M.17) dividir entre dos cifras es 2.24
+4567 x 3000                                 | no_se_puede | (M.17) se pasa de diez millones

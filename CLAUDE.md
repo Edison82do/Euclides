@@ -78,8 +78,13 @@
   barata entre las aprendidas; una regla general («nadie repite algo cientos de veces si sabe otra manera»)
   en lugar de los topes. Carlos (7 oct): «en el futuro vemos si es necesario; si no, no».
 
-## ⏸️ AHORA: EL PLAN U (8 oct) — leerlo ENTERO antes de nada
-El avance por años está en PAUSA. Se trabaja el **plan U** (`diario/2026-10-08-PLAN-U-volverlo-universal.md`),
+## ✅ EL PLAN U ESTÁ CUMPLIDO (9 oct): se ha vuelto al orden de NCETM (6.º)
+**REGLA desde el plan U (Carlos, 9 oct): lo nuevo entra por el MODELO COMÚN.** Las técnicas nuevas son PIEZAS (operadores)
+que el resolvedor universal puede usar en cualquier problema; **no se abre ninguna puerta ni formato nuevo** para un tema.
+Cualquier expresión o ecuación que permita el tema tiene que salir por la tabla de puertas (`puertas.py`) y el resolvedor.
+
+## (HECHO) EL PLAN U (8 oct)
+El avance por años estuvo en PAUSA. Se trabajó el **plan U** (`diario/2026-10-08-PLAN-U-volverlo-universal.md`),
 una fase por sesión, en orden. Regla de oro del plan: **prohibido memorizar problemas o familias de problemas**;
 solo relaciones generales (datos), operadores generales (piezas) y búsqueda con control. Nada viejo cambia de
 respuesta; lo nuevo, con pocas pruebas representativas. Si la batería tarda demasiado, `--parte 1/3`, `2/3`, `3/3`.
@@ -88,7 +93,17 @@ con NÚMEROS Y SÍMBOLOS; la parte hablada (U.3, U.3b) NO se sigue ampliando (se
 PRUDENCIA: nunca una respuesta falsa (un número que se queda sin usar y no se sabe si sobra, una frase con un cambio que no
 se entendió, una respuesta que mezcla cosas → «no entiendo», diciendo qué frase o qué número). La fase U.3c, descartada.
 
-## Dónde se quedó (8 oct 2026, tras U.4)
+## Dónde se quedó (9 oct 2026, tras M.17)
+Hecho **M.17 estrategias para multiplicar números grandes y la multiplicación larga** (NCETM 2.23; diario
+`2026-10-09-paso-M17-multiplicacion-larga.md`): cuatro PIEZAS de `multiplicar` (`multiplicar_quitando_los_ceros` 7.5,
+`multiplicar_partiendo_un_factor` 9.1 —detrás de M.6, 9—, `multiplicar_por_un_factor_compuesto` 9.2, `multiplicacion_larga` 9.5; la rejilla, 10,
+queda para quien no sabe las tablas), cada una con su vuelta por la operación contraria (la división entre una cifra se hace
+dentro de la pieza, `_repartir`: usar la pieza `division_corta` haría una vuelta en el mapa, porque ella usa `multiplicar`).
+Sin puerta nueva: el resolvedor dice con qué multiplicó (`numero.py`) y comprueba DESHACIENDO lo que todavía no sabe
+calcular (`_u_comprobar_deshaciendo`: `n : 24 = 356` → 8544 porque 356 x 24 = 8544). Las piezas que explican su vuelta
+llevan `vuelta_explicada` (el explicador de M.1 la enseña). **Siguiente: NCETM 2.24, la división larga.**
+
+## Dónde se quedó antes (8 oct 2026, tras U.4)
 Hecho **U.1 el modelo y el lector simbólico** (partes `numero.py`, prefijo `_nu_`, y `universal.py`, prefijo `_u_`; puerta
 `resolver:`) y **U.2 buscar con control** (parte `buscar.py`, prefijo `_bu_`: juntar relaciones, reescribir —bloque que ya se
 sabe, factor común—, probar en orden con tope y sabiendo cuándo parar, el control por medios y fines con costes en

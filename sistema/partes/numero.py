@@ -109,14 +109,17 @@ def _nu_resta(a, b, saber):
     return _nu_pieza("restar", {"a": a, "b": b}, saber)["valor"]
 
 
-def _nu_por(a, b, saber):
+def _nu_por(a, b, saber, pasos=None):
     if a == 1:
         return b
     if b == 1:
         return a
     if a == 0 or b == 0:
         return 0
-    return _nu_pieza("multiplicar", {"a": a, "b": b}, saber)["valor"]
+    r = _nu_pieza("multiplicar", {"a": a, "b": b}, saber)
+    if pasos is not None and len(cifras_de(a)) >= 2 and len(cifras_de(b)) >= 2:     # M.17: con que se multiplico
+        pasos.append("con %s" % r["resultado"]["metodo"])
+    return r["valor"]
 
 
 def _nu_entre(a, b, saber):
@@ -255,7 +258,7 @@ def _nu_multiplicar(x, y, saber, pasos):
     if _nu_es_cero(x) or _nu_es_cero(y):
         return _NU_CERO
     signo = "+" if x[0] == y[0] else "-"
-    arriba = _nu_por(x[1], y[1], saber)
+    arriba = _nu_por(x[1], y[1], saber, pasos)
     abajo = _nu_por(x[2], y[2], saber)
     if x[2] != 1 or y[2] != 1:
         pasos.append("arriba por arriba y abajo por abajo: %d x %d = %d;  %d x %d = %d"
