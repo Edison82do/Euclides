@@ -413,3 +413,8 @@ resolver: 3 : 12 = 7 : r          | r = 28 | M.21: dentro de la fila (x 4)
 resolver: 6 : 9 = 10 : r          | r = 15 | M.21: pasando por la fila 2 | 3
 resolver: 12 : 30 = r : 5         | r = 2 | M.21: el factor de escala hacia abajo (: 6)
 resolver: 1 : 50000 = 7 : r       | r = 350000 | M.21: el mapa (1 cm son 50000 cm)
+resolver: 0 : r = 0 : 5           | todavia_no | A.1: cualquier r menos el 0 (antes decia 'ninguna', falso)
+resolver: 0 : (r - 2) = 0         | todavia_no | A.1: cualquier r menos el 2
+resolver: (r - 2) x (r - 2) = 1   | r = 1; r = 3 | A.1: probar en orden sin parar antes de tiempo
+0 x r = 0 x 5                     | cualquiera | A.1: con el 0 la equivalencia no vale
+0 : r = 3                         | ninguna | A.1: 0 : algo nunca da 3

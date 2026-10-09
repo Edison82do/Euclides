@@ -466,11 +466,13 @@ def _u_deshacer(e, objetivo, saber, pasos):
                                                          _nu_parentesis(objetivo), inv, _nu_parentesis(otro)))
         nuevo = _u_cuenta(inv, objetivo, otro, saber, pasos)
     else:                                                # otro - der = objetivo  ->  der = otro - objetivo
+        if op == ":" and _nu_es_cero(otro):           # A.1: 0 : algo es 0 (o no se puede): no se pasa al otro lado
+            _u_cero_entre(objetivo, der, saber)
         pasos.append("%s %s %s = %s, asi que %s = %s %s %s" % (
             _nu_parentesis(otro), op, _u_texto(der), _nu_parentesis(objetivo), _u_texto(der),
             _nu_parentesis(otro), op, _nu_parentesis(objetivo)))
         if op == ":" and _nu_es_cero(objetivo):
-            raise _UNoSale("ninguna", "%s : algo nunca da 0 (salvo que el de delante sea 0)" % _nu_texto(otro))
+            raise _UNoSale("ninguna", "%s : algo nunca da 0 (el de delante no es 0)" % _nu_texto(otro))
         nuevo = _u_cuenta(op, otro, objetivo, saber, pasos)
     return _u_deshacer(der, nuevo, saber, pasos)
 
@@ -478,9 +480,31 @@ def _u_deshacer(e, objetivo, saber, pasos):
 def _u_por_cero(objetivo, e):
     """0 x algo es siempre 0 (M.2): si tiene que dar 0, vale cualquiera; si no, ninguno."""
     if _nu_es_cero(objetivo):
-        raise _UNoSale("todavia_no", "0 x %s es 0 siempre: %s puede valer CUALQUIER numero (infinitas; U.2)"
-                       % (_u_texto(e), _u_texto(e)))
+        ex = _UNoSale("todavia_no", "0 x %s es 0 siempre: %s puede valer CUALQUIER numero (infinitas; U.2)"
+                      % (_u_texto(e), _u_texto(e)))
+        ex.siempre = True                                # A.1: cumple con cualquier numero
+        raise ex
     raise _UNoSale("ninguna", "0 x %s es 0 siempre, nunca %s: ningun numero cumple" % (_u_texto(e), _nu_texto(objetivo)))
+
+
+def _u_cero_entre(objetivo, e, saber):
+    """A.1: 0 : algo da 0 con CUALQUIER algo que no sea 0, y entre 0 no se reparte (M.3).  Si tiene que dar 0, vale
+    cualquier numero menos el que hace 0 a lo de detras (se busca deshaciendo); si tiene que dar otro, ninguno."""
+    if not _nu_es_cero(objetivo):
+        raise _UNoSale("ninguna", "0 : %s es 0 (o no se puede, si %s es 0), nunca %s: ningun numero cumple"
+                       % (_u_texto(e), _u_texto(e), _nu_texto(objetivo)))
+    letra = _u_nombre(_u_letras(e)[0])
+    try:
+        menos = "menos el %s" % _nu_texto(_u_deshacer(e, _NU_CERO, saber, []))
+        if e[0] != "letra":
+            menos = "%s (que hace 0 a %s)" % (menos, _u_texto(e))
+    except _UNoSale as ex:
+        if getattr(ex, "siempre", False):            # lo de detras es 0 siempre: 0 : 0 no se puede, nunca
+            raise _UNoSale("ninguna", "0 : %s no se puede: %s es 0 siempre (entre 0 no se reparte)"
+                           % (_u_texto(e), _u_texto(e)))
+        menos = "que no haga 0 (ni imposible) a %s" % _u_texto(e)
+    raise _UNoSale("todavia_no", "0 : %s es 0 siempre que %s no sea 0: %s puede valer CUALQUIER numero %s "
+                   "(infinitas; todavia no se dar esa respuesta)" % (_u_texto(e), _u_texto(e), letra, menos))
 
 
 class _UNoLineal(Exception):
@@ -578,12 +602,24 @@ def _u_aislar(e, objetivo, letra):
             continue
         op, izq, der = e[1], e[2], e[3]
         if letra in _u_letras(izq):
+            if op == "x" and _u_puede_ser_cero(der) and _u_puede_ser_cero(objetivo):
+                return None                              # A.1: (0 : 0) no se aisla; 0 x algo = 0 vale con cualquiera
             e, objetivo = izq, ("op", _U_CONTRARIA[op], par(objetivo), par(der))
+        elif op in ("x", ":") and _u_puede_ser_cero(izq) and _u_puede_ser_cero(objetivo):
+            return None                                  # A.1: lo mismo con la letra detras (0 : algo = 0)
         elif op in ("+", "x"):
             e, objetivo = der, ("op", _U_CONTRARIA[op], par(objetivo), par(izq))
         else:
             e, objetivo = der, ("op", op, par(izq), par(objetivo))
     return objetivo
+
+
+def _u_puede_ser_cero(e):
+    """A.1: un arbol que podria valer 0 (todo lo que no es un numero escrito distinto de 0).  Aislar pasando a DIVIDIR
+    entre algo asi, cuando lo de delante tambien podria ser 0, haria 0 : 0 y perderia soluciones."""
+    while e[0] in ("par", "neg"):
+        e = e[1]
+    return e[0] != "num" or _nu_es_cero(e[1])
 
 
 def _u_elegir_para_sustituir(rels):
@@ -600,7 +636,9 @@ def _u_elegir_para_sustituir(rels):
             if todas.count(letra) == 1:
                 izq, der = rels[i]
                 con, sin = (izq, der) if letra in _u_letras(izq) else (der, izq)
-                return i, letra, _u_aislar(con, sin, letra), "aislada"
+                arbol = _u_aislar(con, sin, letra)
+                if arbol is not None:
+                    return i, letra, arbol, "aislada"
     return None
 
 

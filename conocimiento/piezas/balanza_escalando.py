@@ -44,6 +44,8 @@ def hacer(s, u):
     else:   # en la division el dividendo va con el dividendo y el divisor con el divisor
         parejas = ((c["a"], c["b"]),) if hueco_en_b else ((c["b"], c["a"]),)
     for p, otro in parejas:
+        if n == p and n == 0:    # A.1: 0 x algo es 0 con cualquier algo (y 0 : algo tambien): el otro no tiene que ser igual
+            continue
         if n == p:
             v, frase = otro, "%d es el mismo que %d, asi que el hueco es el mismo que el otro: %d" % (n, p, otro)
             break

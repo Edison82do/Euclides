@@ -592,6 +592,13 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         resolver: 1 : 50000 = 7 : r       -> r = 350000  el mapa: 1 cm son 50000 cm
         Se comprueba deshaciendo con la contraria (15 : 3 = 5).  Si no sale justo (2 : 5 = 7 : r), como antes: 35/2.
 
+  EL CERO AL DESPEJAR  ->  arreglo A.1 (prudencia: nunca una respuesta falsa), en el RESOLVEDOR
+        resolver: 0 : r = 0               -> todavia no: CUALQUIER numero menos el 0 (0 : algo es 0; entre 0 no)
+        resolver: 0 : (r - 2) = 0         -> todavia no: CUALQUIER numero menos el 2
+        resolver: 0 : r = 3               -> ninguna   (0 : algo es 0, o no se puede; nunca 3)
+        0 x r = 0 x 5                     -> cualquiera  (con el 0, 'el mismo numero a los dos lados' no vale)
+        resolver: (r - 2) x (r - 2) = 1   -> r = 1; r = 3  (el tope no para mientras r - 2 es menos que 0)
+
   MAS DE UN ENTERO  ->  numeros mixtos y fracciones impropias (paso F.4; NCETM 3.5; 4.NF.B.3)
         fraccion: 7/4          -> siete cuartos = 1 3/4   (agrupo 7 cuartos de 4 en 4: 1 entero y sobran 3)
         mixto: 2 3/4           -> 11/4   (2 enteros son 8 cuartos, y 3 mas)

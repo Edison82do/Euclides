@@ -207,9 +207,9 @@ def main():
                         ("resolver: 4 : 6 = 9 : r", "r = 27/2"),
                         ("resolver: a : b = 2 : 3; a + b = 40", "a = 16, b = 24"),
                         ("resolver: 2 x r = 5 x 6", "r = 15"),
-                        ("resolver: 0 : 5 = 0 : r", "ninguna"),
+                        ("resolver: 0 : 5 = 0 : r", "todavia_no"),   # A.1: era 'ninguna' (FALSA: vale r no 0)
                         ("resolver: 5 : 0 = 3 : r", "no_se_puede"),
-                        ("resolver: 2 : 5 = 0 : r", "no_cuadra"),
+                        ("resolver: 2 : 5 = 0 : r", "ninguna"),      # A.1: era no_cuadra (0 : r no da 2/5)
                         ("resolver: 8 : 4 = 6 : r", "r = 3"),
                         ("resolver: 25 : 40 = 1000 : r", "r = 1600"),
                         ("6 : 2 x 5", S("6 : 2 x 5"))):

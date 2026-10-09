@@ -1226,3 +1226,11 @@ resolver: 3 : 12 = 7 : r                    | r = 28 | (M.21) dentro de la fila:
 resolver: 6 : 9 = 10 : r                    | r = 15 | (M.21) pasando por la fila 2 | 3
 resolver: 3 : 2000000 = 6 : r               | r = 4000000 | (M.21) cerca del techo (antes todavia_no)
 resolver: 2 : 5 = 7 : r                     | r = 35/2 | (M.21) no sale justo: como antes
+# --- arreglo A.1 (prudencia): el cero al despejar; nunca una respuesta falsa
+resolver: 0 : r = 0 : 5                     | todavia_no | (A.1) era 'ninguna' (falso): vale cualquier r menos el 0
+resolver: 0 : (r - 2) = 0                   | todavia_no | (A.1) cualquiera menos el 2; era 'ninguna'
+resolver: 0 : r = 3                         | ninguna | (A.1) 0 : algo es 0 (o no se puede), nunca 3
+resolver: (r - 2) x (r - 2) = 1             | r = 1; r = 3 | (A.1) el tope no para mientras r - 2 es negativo; era 'ninguna'
+0 x r = 0 x 5                               | cualquiera | (A.1) la equivalencia no vale con el 0; era 'r = 5'
+resolver: 0 : (a - b) = 0; a + b = 3        | a = 3, b = 0; a = 2, b = 1; a = 1, b = 2; a = 0, b = 3 | (A.1) no se aisla con 0 : 0; era 'ninguna'
+resolver: 5 : r = 0                         | ninguna | (A.1) sigue igual

@@ -646,7 +646,41 @@ def _bu_ya_me_paso(tope, letra, v, saber):
     dice = "%s%s ya da %s, y se pasa de %s" % (
         "aunque %s fuera %s, " % (" y ".join(otras), _nu_texto(minimo)) if otras else "",
         _u_texto(lado), _nu_texto(valor), _nu_texto(n))
+    if not _bu_por_sin_negativos(e, saber):            # A.1: (r - 2) x (r - 2) BAJA hasta r = 2: aun no se para
+        return False, dice
     return _bu_pasa(valor, n, saber), dice
+
+
+def _bu_resta_en_un_por(e, en_un_por=False):
+    """A.1: hay una resta con letras dentro de algo que se multiplica (puede ser menos que 0)."""
+    if e[0] in ("par", "neg"):
+        return _bu_resta_en_un_por(e[1], en_un_por)
+    if e[0] != "op":
+        return False
+    if e[1] == "-" and en_un_por and _u_letras(e):
+        return True
+    dentro = en_un_por or e[1] == "x"
+    return _bu_resta_en_un_por(e[2], dentro) or _bu_resta_en_un_por(e[3], dentro)
+
+
+def _bu_por_sin_negativos(e, saber):
+    """A.1: lo que se MULTIPLICA (ya con numeros) no es menor que 0.  Solo entonces, con la letra mas grande, el
+    producto no baja: (r - 2) x (r - 2) da 4, 1, 0, 1, 4... (baja mientras r - 2 es negativo)."""
+    if e[0] in ("par", "neg"):
+        return _bu_por_sin_negativos(e[1], saber)
+    if e[0] != "op":
+        return True
+    for t in (e[2], e[3]):
+        if e[1] == "x":
+            try:
+                v = _u_valor(t, saber, [])
+            except (_UNoSale, KeyError):
+                continue
+            if v[0] == "-" and not _nu_es_cero(v):
+                return False
+        if not _bu_por_sin_negativos(t, saber):
+            return False
+    return True
 
 
 def _bu_probar(rels, conocidas, aisladas, saber, etapas, originales):
@@ -671,8 +705,9 @@ def _bu_probar(rels, conocidas, aisladas, saber, etapas, originales):
     mios = [t for t in topes if letra in _u_letras(t[0])]
     lineas = ["ninguna otra cosa baja las letras: PRUEBO EN ORDEN %s = 0, 1, 2 ... (numeros para contar)"
               % _u_nombre(letra),
-              "EL TOPE lo pone %s: con %s mas grande nunca sale mas pequeno; cuando ya me pase, PARO"
-              % (_u_rel_texto(de_quien[3]), _u_nombre(letra))]
+              "EL TOPE lo pone %s: con %s mas grande nunca sale mas pequeno%s; cuando ya me pase, PARO"
+              % (_u_rel_texto(de_quien[3]), _u_nombre(letra),
+                 " (desde que lo que se multiplica ya no es menos que 0)" if _bu_resta_en_un_por(de_quien[0]) else "")]
     soluciones, hechas, v = [], 0, _NU_CERO
     while True:
         pasado = None

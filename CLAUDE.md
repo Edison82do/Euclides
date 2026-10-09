@@ -92,7 +92,16 @@ con NÚMEROS Y SÍMBOLOS; la parte hablada (U.3, U.3b) NO se sigue ampliando (se
 PRUDENCIA: nunca una respuesta falsa (un número que se queda sin usar y no se sabe si sobra, una frase con un cambio que no
 se entendió, una respuesta que mezcla cosas → «no entiendo», diciendo qué frase o qué número). La fase U.3c, descartada.
 
-## Dónde se quedó (9 oct 2026, tras M.21)
+## Dónde se quedó (9 oct 2026, tras el arreglo A.1)
+Hecho **A.1 el cero al despejar** (ARREGLO de prudencia, no NCETM; diario `2026-10-09-arreglo-A1-el-cero-al-despejar.md`):
+el resolvedor y la puerta vieja E.5 daban respuestas FALSAS con el 0 (`resolver: 0 : r = 0 : 5` → «ninguna»; `0 x r = 0 x 5`
+→ «r = 5»; `(r - 2) x (r - 2) = 1` → «ninguna»). Arreglado en la capa general: al deshacer y al aislar se MIRA el 0 delante
+de una división; «el mismo número a los dos lados» no vale con el 0; el tope de probar en orden no para mientras lo que se
+multiplica es negativo. «Cualquier número menos el 0» se dice como «todavía no» con el porqué (no hay forma de respuesta para
+eso: pregunta para Carlos). **Lección:** antes de dar «ninguna» o un número, mirar si algo que divide o multiplica puede ser 0.
+**Siguiente: NCETM 2.28** (combinar la división con la suma y la resta; el orden de las operaciones).
+
+## Dónde se quedó antes (9 oct 2026, tras M.21)
 Hecho **M.21 el factor de escala y la tabla de razón** (NCETM 2.27, *Scale factors, ratio and proportional reasoning*; diario
 `2026-10-09-paso-M21-escala-y-razon.md`): la pregunta de piezas `proporcion` con tres PIEZAS (entre las filas = el factor de
 escala 5; dentro de la fila 5.5; pasando por una fila más pequeña 7, con `simplificar_fraccion`), cada una con su vuelta. El

@@ -485,3 +485,10 @@
 - NCETM 2.27 (bloqueada desde la nube; leída por el buscador): https://www.ncetm.org.uk/classroom-resources/primm-227-scale-factors-ratio-and-proportional-reasoning/
 - NCETM 2.27, la guía en PDF (bloqueada): https://www.ncetm.org.uk/media/bspfn3zj/ncetm_spine2_segment27_y6.pdf
 - NCETM, Year 6 unit 9 «Ratio and proportion» (Curriculum Prioritisation): https://www.ncetm.org.uk/classroom-resources/cp-year-6-unit-9-ratio-and-proportion/
+
+- **El cero en la multiplicación y la división** (para el arreglo A.1; ya usadas en M.2 y M.3): 0 x algo = 0 siempre
+  (la propiedad del cero, Common Core 3.OA.B.5 y la *Progression* de Operations and Algebraic Thinking); 0 : algo = 0 si
+  algo no es 0, y **entre 0 no se reparte** (la división entre 0 no tiene respuesta: no hay número que por 0 dé el
+  dividendo; si el dividendo es 0, valdría cualquiera, por eso tampoco se define). De ahí: al despejar no se puede pasar
+  a dividir entre algo que puede ser 0, y «el mismo número a los dos lados» (NCETM 2.18) solo vale si no es 0.
+  Usadas en A.1.

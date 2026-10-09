@@ -128,7 +128,27 @@ def _tiene_letra(e):
 
 
 class _NoSale(Exception):
-    pass
+    def __init__(self, porque, conclusion="no_sale"):
+        Exception.__init__(self, porque)
+        self.conclusion = conclusion
+
+
+def _le_cero(op, otro, objetivo, e, delante):
+    """A.1: con un 0 no se deshace (no se divide entre 0).  0 x algo es 0 siempre (M.2); 0 : algo es 0 si algo no es
+    0, y entre 0 no se reparte (M.3).  Si cumple cualquier numero: 'todavia no'; si ninguno: 'no sale'."""
+    if otro != 0 or op not in ("x", ":"):
+        return
+    if op == ":" and not delante:
+        raise _NoSale("%s : 0 no se puede (entre 0 no se reparte): ningun numero cumple" % _texto(e))
+    if op == "x":
+        dicho = "0 x %s es 0 siempre" % _texto(e)
+        cualquiera = "puede valer CUALQUIER numero"
+    else:
+        dicho = "0 : %s es 0 (o no se puede, si %s es 0)" % (_texto(e), _texto(e))
+        cualquiera = "puede valer CUALQUIER numero que no haga 0 a %s" % _texto(e)
+    if objetivo == 0:
+        raise _NoSale("%s: la letra %s (infinitas; todavia no)" % (dicho, cualquiera), "todavia_no")
+    raise _NoSale("%s, nunca %d: ningun numero cumple" % (dicho, objetivo))
 
 
 def _cuenta(op, a, b, saber, pasos, porque=""):
@@ -174,11 +194,13 @@ def _deshacer(e, objetivo, saber, pasos):
     op, izq, der = e[1], e[2], e[3]
     if _tiene_letra(izq):
         otro = _valor(der, saber, pasos)
+        _le_cero(op, otro, objetivo, izq, False)
         inversa = {"+": "-", "-": "+", "x": ":", ":": "x"}[op]
         nuevo = _cuenta(inversa, objetivo, otro, saber, pasos,
                         "   <- deshago '%s %d': %s = %d %s %d" % (op, otro, _texto(izq), objetivo, inversa, otro))
         return _deshacer(izq, nuevo, saber, pasos)
     otro = _valor(izq, saber, pasos)
+    _le_cero(op, otro, objetivo, der, True)
     if op in ("+", "x"):                                 # conmutativas: igual que si estuviera a la izquierda
         inversa = {"+": "-", "x": ":"}[op]
         nuevo = _cuenta(inversa, objetivo, otro, saber, pasos,
@@ -230,7 +252,7 @@ def decidir_ecuacion_letra(texto, saber=None):
                 r["como"] = "DESHACER de fuera hacia dentro (trabajar hacia atras)"
                 v = _deshacer(con, objetivo, saber, pasos)
         except _NoSale as ex:
-            r.update(conclusion="no_sale", porque=str(ex), pasos=pasos)
+            r.update(conclusion=ex.conclusion, porque=str(ex), pasos=pasos)
             return r
     r.update(valor=v, pasos=pasos)
     # LA COMPROBACION: se pone el numero en la letra y se calcula todo
@@ -277,5 +299,11 @@ def explicar_ecuacion_letra(texto, saber=None):
     L.append("  3. COMPRUEBO poniendo el %d en la letra: %s ... %s"
              % (r["valor"], r.get("comprobacion", ""), "SI" if r["comprobacion_ok"] else "NO"))
     L.append("")
+    if not r["comprobacion_ok"]:                     # A.1: si no cuadra, el numero no es la respuesta
+        L.append("  NO CUADRA: con el %d la igualdad no se cumple (o no se puede calcular): no es la respuesta"
+                 % r["valor"])
+        L.append("")
+        L.append("RESULTADO: no_cuadra")
+        return "\n".join(L)
     L.append("RESULTADO: %s = %d" % (r["letra"] if r["letra"] != "?" else "el hueco", r["valor"]))
     return "\n".join(L)
