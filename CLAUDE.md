@@ -92,7 +92,15 @@ con NÚMEROS Y SÍMBOLOS; la parte hablada (U.3, U.3b) NO se sigue ampliando (se
 PRUDENCIA: nunca una respuesta falsa (un número que se queda sin usar y no se sabe si sobra, una frase con un cambio que no
 se entendió, una respuesta que mezcla cosas → «no entiendo», diciendo qué frase o qué número). La fase U.3c, descartada.
 
-## Dónde se quedó (9 oct 2026, tras M.20)
+## Dónde se quedó (9 oct 2026, tras M.21)
+Hecho **M.21 el factor de escala y la tabla de razón** (NCETM 2.27, *Scale factors, ratio and proportional reasoning*; diario
+`2026-10-09-paso-M21-escala-y-razon.md`): la pregunta de piezas `proporcion` con tres PIEZAS (entre las filas = el factor de
+escala 5; dentro de la fila 5.5; pasando por una fila más pequeña 7, con `simplificar_fraccion`), cada una con su vuelta. El
+resolvedor las pide (`_u_proporcion` en `_u_despejar`, `universal.py`) al ver `a : b = c : ?` (o `a/b = c/?`) con la letra sola;
+si no sale justo, deshace como antes. Se pregunta con `resolver: 2 : 5 = 6 : r` (sin puerta nueva). **Siguiente: NCETM 2.28**
+(combinar la división con la suma y la resta; el orden de las operaciones): ahí se decide `(3 + 5 + 7) : 3` sin letras.
+
+## Dónde se quedó antes (9 oct 2026, tras M.20)
 Hecho **M.20 la media** (NCETM 2.26; diario `2026-10-09-paso-M20-la-media.md`): la pregunta de piezas `media` con dos PIEZAS,
 `media_juntando_y_repartiendo` 9 (sumar y repartir) y `media_nivelando` 5 (la base es el más bajo y lo de encima se reparte
 entre todos; solo si están cerca: el costo; vuelta por el EQUILIBRIO). El resolvedor las pide (`_u_media`, `universal.py`)

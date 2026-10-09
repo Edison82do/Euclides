@@ -377,6 +377,52 @@ def _u_media(e, saber, pasos):
     return v
 
 
+# ------------------------------------------------------------- M.21: la TABLA DE RAZON (NCETM 2.27), con las piezas de 'proporcion'
+
+def _u_fila(e):
+    """Un lado de la proporcion: 'a : b' (enteros sin signo, o la letra sola) o una fraccion escrita 'a/b'.
+    La fila (a, b), con None donde esta la letra; o None si ese lado no es una fila de la tabla."""
+    while e[0] == "par":
+        e = e[1]
+    if e[0] == "num":
+        x = e[1]
+        return (x[1], x[2]) if x[0] == "+" and x[3] == "fraccion" else None
+    if e[0] != "op" or e[1] != ":":
+        return None
+    fila = []
+    for t in (e[2], e[3]):
+        while t[0] == "par":
+            t = t[1]
+        if t[0] == "letra":
+            fila.append(None)
+        elif t[0] == "num" and t[1][0] == "+" and t[1][2] == 1 and t[1][3] == "entero":
+            fila.append(t[1][1])
+        else:
+            return None
+    return tuple(fila)
+
+
+def _u_proporcion(rel, saber, pasos):
+    """a : b = c : d con UNA letra sola en uno de los cuatro sitios: 'a es a b como c es a d', la TABLA DE RAZON.
+    Se pide a las piezas de 'proporcion' (se elige por el costo: entre las filas, dentro de la fila, o pasando por una
+    fila mas pequena).  Lo que sale es un entero.  None si no es una proporcion o no sale justa: como antes."""
+    f1, f2 = _u_fila(rel[0]), _u_fila(rel[1])
+    if f1 is None or f2 is None or (None in f1) == (None in f2):
+        return None
+    conocida, con_hueco = (f2, f1) if None in f1 else (f1, f2)
+    r = aplicar("proporcion", {"conocida": conocida, "con_hueco": con_hueco}, saber)
+    if r["conclusion"] != "hecho":
+        return None
+    res = r["resultado"]
+    dichos = ["?" if x is None else "%d" % x for x in f1]
+    dichos.extend("?" if x is None else "%d" % x for x in f2)
+    dichos.append(r["pieza"]["nombre"])
+    pasos.append("LA TABLA DE RAZON (NCETM 2.27): %s es a %s como %s es a %s;  %s" % tuple(dichos))
+    pasos.extend("     %s" % p for p in res["pasos"])
+    pasos.append("     compruebo: %s" % res["vuelta"])
+    return ("+", res["valor"], 1, "entero")
+
+
 def _u_cuenta(op, a, b, saber, pasos):
     try:
         return _nu_cuenta(op, a, b, saber, pasos)
@@ -474,6 +520,9 @@ def _u_despejar(rel, letra, saber, pasos):
     izq, der = rel
     veces = len(_u_letras_rel(rel))
     if veces == 1:
+        p = _u_proporcion(rel, saber, pasos)            # M.21: a : b = c : ?, la tabla de razon (NCETM 2.27)
+        if p is not None:
+            return p
         con, sin = (izq, der) if _u_letras(izq) else (der, izq)
         objetivo = _u_valor(sin, saber, pasos)
         if con[0] == "letra":
@@ -618,7 +667,11 @@ def decidir_resolver(texto, saber=None):
     if sub:
         r["etapas"].append(("ESCRIBO la respuesta en su forma mas simple (F.6)", sub))
     r["valores"] = valores
-    _u_comprobar(modelo, valores, saber, r)
+    try:
+        _u_comprobar(modelo, valores, saber, r)
+    except _NuNoSale as ex:                      # M.21 (arreglo): no se puede comprobar (falta una tabla): no es 'no entiendo'
+        r.update(conclusion="todavia_no", porque="no lo puedo comprobar todavia: %s" % ex)
+        return r
     raro = _pa_razonable(valores, modelo, saber) if modelo.get("palabras") and r["comprobacion_ok"] else None
     if raro:                                     # capa 4: cuadra, pero no es razonable (E.6)
         r.update(conclusion="no_razonable", porque=raro)

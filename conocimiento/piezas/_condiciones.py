@@ -655,6 +655,61 @@ def _m20_cerca(s, u):
         tope = None                       # cerca del techo: ninguno puede pasar del techo
     return all(tope is None or not u.viene_despues(u.decir(v), u.decir(tope)) for v in vs)
 
+
+# ---- el factor de escala y la proporcion (paso M.21; NCETM 2.27): {"conocida": (a, b), "con_hueco": (c, None)}
+def _m21_tabla(s, u):
+    """La TABLA DE RAZON con dos filas: la conocida entera y la otra con UN hueco (None); enteros sin ceros (con un
+    cero no hay razon que escalar).  Devuelve (conocida, con_hueco, columna del hueco) o None."""
+    c, h = s.get("conocida"), s.get("con_hueco")
+    if not (isinstance(c, tuple) and isinstance(h, tuple) and len(c) == 2 and len(h) == 2):
+        return None
+    if None in c or [v is None for v in h].count(True) != 1:
+        return None
+    for v in (c[0], c[1], h[0] if h[0] is not None else h[1]):
+        if not isinstance(v, int) or isinstance(v, bool) or v == 0 or u.decir(v) is None:
+            return None
+    return c, h, (0 if h[0] is None else 1)
+
+
+def _m21_cabe_justo(u, x, y):
+    """Uno de los dos cabe un numero JUSTO de veces en el otro?  Se mira DIVIDIENDO el grande entre el pequeno (M.3,
+    M.8, M.18); si esa division no se sabe hacer, no."""
+    if x == y:
+        return True
+    chico, grande = (y, x) if u.viene_despues(u.decir(x), u.decir(y)) else (x, y)
+    try:
+        r = u.usar("dividir", total=grande, divisor=chico)
+    except Exception:
+        return False
+    return not r["resultado"].get("resto", 0)
+
+
+def _m21_entre_las_filas(s, u):
+    """ENTRE las filas: en la columna que se sabe en las dos, una cabe justo en la otra (el factor de escala)."""
+    t = _m21_tabla(s, u)
+    if t is None:
+        return False
+    c, h, j = t
+    return _m21_cabe_justo(u, c[1 - j], h[1 - j])
+
+
+def _m21_dentro_de_la_fila(s, u):
+    """DENTRO de la fila conocida: una columna cabe justo en la otra (el mismo numero de veces en todas las filas)."""
+    t = _m21_tabla(s, u)
+    return t is not None and _m21_cabe_justo(u, t[0][0], t[0][1])
+
+
+def _m21_mas_pequena(s, u):
+    """La fila conocida se puede hacer MAS PEQUENA dividiendo las dos columnas por lo mismo (la forma mas simple, F.6)."""
+    t = _m21_tabla(s, u)
+    if t is None:
+        return False
+    try:
+        r = u.usar("simplificar_fraccion", a=t[0][0], b=t[0][1])["resultado"]
+    except Exception:
+        return False
+    return (r["arriba"], r["abajo"]) != t[0]
+
 CONDICIONES = {
     "pocas_centenas_para_contarlas": lambda s, u: _n6_pocas_cosas(s, u, 2),
     "pocos_miles_para_contarlos": lambda s, u: _n6_pocas_cosas(s, u, 3),
@@ -872,6 +927,11 @@ CONDICIONES = {
     # ---- M.20 la media (NCETM 2.26)
     "son_valores_enteros_y_tantas_partes_como_valores": lambda s, u: _m20_valores(s, u) is not None,
     "los_valores_estan_cerca_unos_de_otros": _m20_cerca,
+    # ---- M.21 el factor de escala y la proporcion (NCETM 2.27)
+    "es_una_tabla_de_razon_con_un_hueco": lambda s, u: _m21_tabla(s, u) is not None,
+    "entre_las_filas_hay_un_factor_justo": _m21_entre_las_filas,
+    "dentro_de_la_fila_hay_un_factor_justo": _m21_dentro_de_la_fila,
+    "la_fila_conocida_se_puede_hacer_mas_pequena": _m21_mas_pequena,
 }
 
 DE_APLICACION = {"el_divisor_no_es_cero", "hay_bastantes", "hay_bastantes_al_deshacer", "la_parte_cabe_en_el_todo",

@@ -472,3 +472,16 @@
   reparto justo y como punto de equilibrio. Usada en M.20.
 - NCETM 2.26 (bloqueada desde la nube; leída por el buscador): https://www.ncetm.org.uk/classroom-resources/primm-226-mean-average-and-equal-shares/
 - NCETM, Year 6 unit 13 «Mean average» (Curriculum Prioritisation): https://ncetm.org.uk/classroom-resources/cp-year-6-unit-13-mean-average/
+
+- **NCETM 2.27** (*Scale factors, ratio and proportional reasoning*, Year 6; la web y el PDF están bloqueados desde la
+  nube, leídos por el buscador, guía piloto de 2019): con el dibujo de barras y la **tabla de razón** (*ratio grid*) se
+  razona sobre la relación multiplicativa entre cantidades que se corresponden. Cuatro puntos: 1) problemas de
+  correspondencia (multiplicar y dividir para hallar lo que falta: «por cada 2 azules, 5 rojas»); 2) combinaciones
+  (abrigos x gorros); 3) mapas (la palabra **factor de escala**); 4) figuras semejantes (con el factor y una figura se
+  calcula la otra; con las dos, el factor). Vuelve a la escala de 2.17 (S.1). **Common Core 6.RP.A.1, 6.RP.A.3a** (las
+  tablas de razones equivalentes) y **7.G.A.1** (dibujos a escala); la *Progression* «Ratios and Proportional
+  Relationships» 6-7: en la tabla se va ENTRE las filas (las dos columnas por el mismo número) o DENTRO de la fila (el
+  mismo número de veces en todas las filas: el valor de uno); multiplicar en cruz no es de primaria. Usada en M.21.
+- NCETM 2.27 (bloqueada desde la nube; leída por el buscador): https://www.ncetm.org.uk/classroom-resources/primm-227-scale-factors-ratio-and-proportional-reasoning/
+- NCETM 2.27, la guía en PDF (bloqueada): https://www.ncetm.org.uk/media/bspfn3zj/ncetm_spine2_segment27_y6.pdf
+- NCETM, Year 6 unit 9 «Ratio and proportion» (Curriculum Prioritisation): https://www.ncetm.org.uk/classroom-resources/cp-year-6-unit-9-ratio-and-proportion/

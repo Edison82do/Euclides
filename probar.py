@@ -583,6 +583,15 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         Se comprueba: media x cuantos (+ lo que sobro) = el total; o por el EQUILIBRIO (lo que sobra por
         encima de la media = lo que falta por debajo).  (3 + 5 + 7) : 3 sin letras: todavia no (2.28).
 
+  LA TABLA DE RAZON  ->  piezas nuevas de 'proporcion' (paso M.21, 6.o; NCETM 2.27), por el RESOLVEDOR
+        'a es a b como c es a ?' se escribe con el signo de dividir (sin puerta nueva):
+        resolver: 2 : 5 = 6 : r           -> r = 15    ENTRE LAS FILAS: de 2 a 6 es x 3 (el factor de escala); 5 x 3
+        resolver: 12 : 30 = r : 5         -> r = 2     de 30 a 5 es : 6; 12 : 6 = 2
+        resolver: 3 : 12 = 7 : r          -> r = 28    DENTRO DE LA FILA: 12 es 4 veces 3; 7 x 4
+        resolver: 6 : 9 = 10 : r          -> r = 15    PASANDO POR UNA FILA MAS PEQUENA: 6 | 9 = 2 | 3; x 5
+        resolver: 1 : 50000 = 7 : r       -> r = 350000  el mapa: 1 cm son 50000 cm
+        Se comprueba deshaciendo con la contraria (15 : 3 = 5).  Si no sale justo (2 : 5 = 7 : r), como antes: 35/2.
+
   MAS DE UN ENTERO  ->  numeros mixtos y fracciones impropias (paso F.4; NCETM 3.5; 4.NF.B.3)
         fraccion: 7/4          -> siete cuartos = 1 3/4   (agrupo 7 cuartos de 4 en 4: 1 entero y sobran 3)
         mixto: 2 3/4           -> 11/4   (2 enteros son 8 cuartos, y 3 mas)

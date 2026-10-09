@@ -1219,3 +1219,10 @@ resolver: m = (0 + 4 + 8) : 3               | m = 4 | (M.20) el cero cuenta
 resolver: (4 + 7 + n) : 3 = 6               | n = 7 | (M.20) el valor que falta
 resolver: m = (9999998 + 9999999 + 10000000) : 3 | m = 9999999 | (M.20) cerca del techo: nivelar sin el total (antes todavia_no)
 (3 + 5 + 7) : 3                             | todavia_no | (M.20) sin letras sigue siendo 2.28
+# --- paso M.21 (NCETM 2.27): el factor de escala y la tabla de razon (piezas de 'proporcion', por el resolvedor; sin puerta nueva)
+resolver: 2 : 5 = 6 : r                     | r = 15 | (M.21) entre las filas: de 2 a 6 es x 3
+resolver: 12 : 30 = r : 5                   | r = 2 | (M.21) entre las filas hacia abajo: : 6
+resolver: 3 : 12 = 7 : r                    | r = 28 | (M.21) dentro de la fila: x 4
+resolver: 6 : 9 = 10 : r                    | r = 15 | (M.21) pasando por la fila 2 | 3
+resolver: 3 : 2000000 = 6 : r               | r = 4000000 | (M.21) cerca del techo (antes todavia_no)
+resolver: 2 : 5 = 7 : r                     | r = 35/2 | (M.21) no sale justo: como antes
