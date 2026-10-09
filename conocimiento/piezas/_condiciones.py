@@ -572,6 +572,50 @@ def _m18_por_factores(s, u):
     """Ademas, el divisor es una pareja de la tabla que se sabe (24 = 4 x 6)."""
     return _m18_cociente_de_dos_cifras(s, u) and _m17_pareja_de_la_tabla(s["divisor"], u) is not None
 
+
+# ---- calcular compensando (paso M.19; NCETM 2.25)
+def _m19_redondo_de_una_cifra(u, f):
+    """f (de mas de doce) esta a 1, 2 o 3 POR DEBAJO de un redondo con UNA sola cifra que no es cero (49 -> 50,
+    399 -> 400, 4997 -> 5000): lo que mira buscar_el_redondo_cercano (P.7).  El redondo, o None."""
+    if not u.viene_despues(u.decir(f), "doce"):
+        return None
+    r = _p7_redondo(u, f, 1)
+    if r is None or not r["sube"]:
+        return None
+    if len(u.cifras_de(_m17_sin_ceros(r["valor"], u)[0])) != 1:
+        return None
+    return r
+
+
+def _m19_cerca_de_un_redondo(s, u):
+    """(el factor que se redondea, el otro, el redondo) o None.  El otro no es 0 ni 1 ni acaba en cero (entonces
+    quitar los ceros es mas corto).  Si los dos estan cerca, el que esta mas cerca.  EL COSTO: los grupos de mas
+    tienen que ser faciles: uno o dos (el doble).  Con tres (47 x 6 = 50 x 6 - 18) ya no compensa: la corta."""
+    a, b = s.get("a"), s.get("b")
+    if not isinstance(a, int) or not isinstance(b, int) or isinstance(a, bool) or isinstance(b, bool):
+        return None
+    mejor = None
+    for f, g in ((a, b), (b, a)):
+        if g in (0, 1) or u.cifras_de(g)[0] == 0:
+            continue
+        r = _m19_redondo_de_una_cifra(u, f)
+        if r and u.decir(r["pasos"]) == "tres":
+            r = None                    # tres grupos de mas ya es otra cuenta de la tabla y una resta mas grande
+        if r and (mejor is None or u.viene_despues(u.decir(mejor[2]["pasos"]), u.decir(r["pasos"]))):
+            mejor = (f, g, r)
+    return mejor
+
+
+def _m19_por_5_o_25(s, u):
+    """(5 o 25, el otro) si un factor es 5 o 25 y el otro pasa de doce y no acaba en cero; o None."""
+    a, b = s.get("a"), s.get("b")
+    if not isinstance(a, int) or not isinstance(b, int) or isinstance(a, bool) or isinstance(b, bool):
+        return None
+    for f, g in ((a, b), (b, a)):
+        if f in (5, 25) and u.cifras_de(g)[0] != 0 and u.viene_despues(u.decir(g), "doce"):
+            return f, g
+    return None
+
 CONDICIONES = {
     "pocas_centenas_para_contarlas": lambda s, u: _n6_pocas_cosas(s, u, 2),
     "pocos_miles_para_contarlos": lambda s, u: _n6_pocas_cosas(s, u, 3),
@@ -783,6 +827,9 @@ CONDICIONES = {
     # ---- dividir entre dos cifras: la division larga (paso M.18; NCETM 2.24)
     "el_divisor_es_de_dos_cifras_y_el_cociente_pasa_de_nueve": lambda s, u: _m18_cociente_de_dos_cifras(s, u),
     "el_divisor_de_dos_cifras_es_una_pareja_de_la_tabla": lambda s, u: _m18_por_factores(s, u),
+    # ---- calcular compensando (paso M.19; NCETM 2.25)
+    "un_factor_esta_justo_debajo_de_un_redondo": lambda s, u: _m19_cerca_de_un_redondo(s, u) is not None,
+    "un_factor_es_5_o_25_y_el_otro_grande": lambda s, u: _m19_por_5_o_25(s, u) is not None,
 }
 
 DE_APLICACION = {"el_divisor_no_es_cero", "hay_bastantes", "hay_bastantes_al_deshacer", "la_parte_cabe_en_el_todo",

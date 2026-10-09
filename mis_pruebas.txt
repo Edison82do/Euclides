@@ -398,3 +398,8 @@ n : 24 = 356                      | 8544 | M.17: n = 8544 (deshaciendo); M.18: l
 5678 : 23                         | 246 resto 20 | M.18: la division larga con resto
 24 x n = 8544                     | 356 | M.18: antes no_sale (dividir entre dos cifras)
 primo: 997                        | primo | M.18: antes todavia_no (pedia la division larga)
+399 x 6                           | 2394 | M.19: redondear un factor y quitar el grupo de mas (400 x 6 - 6)
+98 x 37                           | 3626 | M.19: 3700 - 74
+25 x 37                           | 925 | M.19: x 100 y la mitad de la mitad
+5 x 4683                          | 23415 | M.19: x 10 y la mitad
+n : 7 = 1999                      | 13993 | M.19: el resolvedor multiplica compensando

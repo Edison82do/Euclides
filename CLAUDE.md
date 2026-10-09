@@ -92,7 +92,14 @@ con NÚMEROS Y SÍMBOLOS; la parte hablada (U.3, U.3b) NO se sigue ampliando (se
 PRUDENCIA: nunca una respuesta falsa (un número que se queda sin usar y no se sabe si sobra, una frase con un cambio que no
 se entendió, una respuesta que mezcla cosas → «no entiendo», diciendo qué frase o qué número). La fase U.3c, descartada.
 
-## Dónde se quedó (9 oct 2026, tras M.18)
+## Dónde se quedó (9 oct 2026, tras M.19)
+Hecho **M.19 calcular compensando** (NCETM 2.25; diario `2026-10-09-paso-M19-compensar.md`): dos PIEZAS de `multiplicar`,
+`multiplicar_redondeando_un_factor` 6.5 (399 x 6 = 400 x 6 − 6; solo a 1 o 2 por debajo de un redondo de una cifra: el
+costo) y `multiplicar_por_5_o_25_compensando` 6.6 (x 10 y la mitad; x 100 y la mitad de la mitad), cada una con su vuelta.
+Sumar y restar compensando ya era de P.7. Pregunta abierta: derivar de un hecho con x y : (`si 3 x 8 = 24: 30 x 8 = ?`).
+**Siguiente: NCETM 2.26** (la media y el reparto igual; mirar en el buscador).
+
+## Dónde se quedó antes (9 oct 2026, tras M.18)
 Hecho **M.18 dividir entre dos cifras: la división larga** (NCETM 2.24; diario `2026-10-09-paso-M18-division-larga.md`): dos
 PIEZAS de `dividir`, `division_larga` 9.5 (la lista de múltiplos del divisor SUMANDO, restar debajo y bajar la cifra, el 0 del
 cociente; vuelta: cociente x divisor + resto) y `dividir_por_un_divisor_compuesto` 9.2 (: 24 = : 4 : 6, solo justas). El

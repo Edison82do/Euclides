@@ -1204,3 +1204,11 @@ n x 47 = 9776                               | 208 | (M.18) deshacer con la divis
 resolver: 8544 : n = 24                     | n = 356 | (M.18) por el resolvedor
 factores: 9991                              | 1, 97, 103, 9991 | (M.18) probando hasta el 99
 primo: 10403                                | todavia_no | (M.18) el medio pide dividir entre tres cifras
+# --- paso M.19 (NCETM 2.25): calcular compensando (piezas de multiplicar; sin puerta nueva)
+399 x 6                                     | 2394 | (M.19) redondear un factor: 400 x 6 - 6
+98 x 37                                     | 3626 | (M.19) 100 x 37 - 2 x 37
+25 x 37                                     | 925 | (M.19) x 100 y la mitad de la mitad
+5 x 4683                                    | 23415 | (M.19) x 10 y la mitad
+47 x 6                                      | 282 | (M.19) a 3 de 50: no compensa, la corta (como antes)
+1999999 x 5                                 | 9999995 | (M.19) cerca del techo: 2000000 x 5 - 5
+n : 7 = 1999                                | 13993 | (M.19) por el resolvedor

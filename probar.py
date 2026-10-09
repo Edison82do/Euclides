@@ -563,6 +563,16 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         98765 : 123            -> no_se_puede (entre TRES cifras: todavia no)
         Cada division se comprueba multiplicando: 246 x 23 + 20 = 5678.
 
+  CALCULAR COMPENSANDO  ->  piezas nuevas de multiplicar (paso M.19, 6.o; NCETM 2.25)
+        (sin puerta nueva: entran por el modelo comun; se eligen por su costo, solo cuando salen mas cortas)
+        399 x 6                -> 2394     REDONDEO: 400 x 6 = 2400, pero es UN GRUPO de 6 de mas: 2400 - 6
+        98 x 37                -> 3626     100 x 37 = 3700, dos grupos de 37 de mas: 3700 - 74
+        25 x 37                -> 925      x 100 y la mitad de la mitad: 3700, 1850, 925
+        5 x 4683               -> 23415    x 10 y la mitad: 46830 : 2
+        47 x 6                 -> 282      (a 3 de 50: tres grupos de mas ya no compensan: la corta)
+        n : 7 = 1999           -> 13993    el resolvedor multiplica compensando (2000 x 7 - 7)
+        (4997 + 2345 = 5000 + 2342 ya era de P.7: la misma suma)
+
   MAS DE UN ENTERO  ->  numeros mixtos y fracciones impropias (paso F.4; NCETM 3.5; 4.NF.B.3)
         fraccion: 7/4          -> siete cuartos = 1 3/4   (agrupo 7 cuartos de 4 en 4: 1 entero y sobran 3)
         mixto: 2 3/4           -> 11/4   (2 enteros son 8 cuartos, y 3 mas)

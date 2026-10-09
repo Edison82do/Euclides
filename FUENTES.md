@@ -416,6 +416,13 @@
 - Oak National, corta y larga entre dos cifras: https://www.thenational.academy/teachers/lessons/using-short-and-long-division-to-divide-by-a-2-digit-divisor
 - Common Core 6.NS.B.2: https://thecorestandards.org/Math/Content/6/NS/B/2/
 - Fishtank, 6.º (de los cocientes parciales al algoritmo): https://fishtanklearning.org/curriculum/math/6th-grade/multi-digit-and-fraction-computation/lesson-10
+- **NCETM 2.25** (*Using compensation to calculate*, Year 6; la web está bloqueada desde la nube, leída por el buscador
+  el 9 oct). La introducción: cómo cambian los resultados de multiplicar y dividir cuando UNO de los números se escala
+  por un factor. Tres puntos: (1) si un factor se escala, el producto se escala igual; (2) si el dividendo se escala y
+  el divisor no, el cociente se escala igual; (3) si el divisor se hace k veces mayor, el cociente k veces menor (y al
+  revés). En el orden de Year 6 va entre 2.24 (la división larga) y 2.26 (la media). La compensación ADITIVA (4997 + 2345
+  = 5000 + 2342) es la de 1.29 (P.7). → M.19.
+- NCETM 2.25 (bloqueada desde la nube; leída por el buscador): https://www.ncetm.org.uk/classroom-resources/primm-225-using-compensation-to-calculate/
 - NCETM 2.4: https://www.ncetm.org.uk/classroom-resources/primm-204-times-tables-groups-of-10-and-of-5-and-factors-of-0-and-1/
 - NCETM 2.5: https://www.ncetm.org.uk/classroom-resources/primm-205-commutativity-part-2-doubling-and-halving/
 - NCETM 2.2: https://www.ncetm.org.uk/classroom-resources/primm-202-structures-multiplication-representing-equal-groups/
