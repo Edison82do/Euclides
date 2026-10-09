@@ -463,3 +463,12 @@
 - NCETM 1.31 (bloqueada desde la nube; leída por el buscador): https://www.ncetm.org.uk/classroom-resources/primm-131-problems-with-two-unknowns/
 - NCETM, Year 6 unit 11 «Solving problems with two unknowns» (Curriculum Prioritisation): https://www.ncetm.org.uk/classroom-resources/cp-year-6-unit-11-solving-problems-with-two-unknowns/
 - Oak National, unidad «Solving problems with two unknowns» (bloqueada desde la nube; leída por el buscador): https://www.thenational.academy/teachers/programmes/maths-primary-ks2/units/solving-problems-with-two-unknowns/lessons/compare-the-structure-of-problems-with-one-or-two-unknowns
+
+- **NCETM 2.26** (*Mean average and equal shares*, Year 6; la web está bloqueada desde la nube, leída por el buscador):
+  cuatro puntos: la media es el tamaño de cada parte si se reparte por igual (nivelar); es la suma entre cuántos valores
+  hay (y al revés: media x cuántos = el total; cambia si cambian el total o cuántos son); sirve para comparar; no siempre
+  es buena para resumir. La unidad 13 de Year 6 (*Curriculum Prioritisation*, «Mean average»): seis resultados, entre
+  ellos el cero o el valor que falta. **Common Core 6.SP.A.3** y la *Progression* de estadística 6-8: la media como
+  reparto justo y como punto de equilibrio. Usada en M.20.
+- NCETM 2.26 (bloqueada desde la nube; leída por el buscador): https://www.ncetm.org.uk/classroom-resources/primm-226-mean-average-and-equal-shares/
+- NCETM, Year 6 unit 13 «Mean average» (Curriculum Prioritisation): https://ncetm.org.uk/classroom-resources/cp-year-6-unit-13-mean-average/

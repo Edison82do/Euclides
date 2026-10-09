@@ -573,6 +573,16 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         n : 7 = 1999           -> 13993    el resolvedor multiplica compensando (2000 x 7 - 7)
         (4997 + 2345 = 5000 + 2342 ya era de P.7: la misma suma)
 
+  LA MEDIA  ->  piezas nuevas de 'media' (paso M.20, 6.o; NCETM 2.26), por el RESOLVEDOR (sin puerta nueva)
+        resolver: m = (98 + 102 + 100 + 104) : 4  -> m = 101   NIVELAR: la base es 98; encima 4 + 2 + 6 = 12;
+                                           12 : 4 = 3; 98 + 3 = 101 (solo si estan cerca: el costo)
+        resolver: m = (3 + 4 + 6) : 3     -> m = 13/3  JUNTAR Y REPARTIR: 13 : 3 = 4 y sobra 1 -> 4 y 1/3
+        resolver: m = (0 + 4 + 8) : 3     -> m = 4     (el 0 CUENTA como valor)
+        resolver: 3 x m = 3 + 5 + 7       -> m = 5     el reparto igual: 3 partes iguales hacen 15
+        resolver: (4 + 7 + n) : 3 = 6     -> n = 7     el valor que falta: el total es 6 x 3 = 18
+        Se comprueba: media x cuantos (+ lo que sobro) = el total; o por el EQUILIBRIO (lo que sobra por
+        encima de la media = lo que falta por debajo).  (3 + 5 + 7) : 3 sin letras: todavia no (2.28).
+
   MAS DE UN ENTERO  ->  numeros mixtos y fracciones impropias (paso F.4; NCETM 3.5; 4.NF.B.3)
         fraccion: 7/4          -> siete cuartos = 1 3/4   (agrupo 7 cuartos de 4 en 4: 1 entero y sobran 3)
         mixto: 2 3/4           -> 11/4   (2 enteros son 8 cuartos, y 3 mas)

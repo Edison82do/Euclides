@@ -92,7 +92,14 @@ con NÚMEROS Y SÍMBOLOS; la parte hablada (U.3, U.3b) NO se sigue ampliando (se
 PRUDENCIA: nunca una respuesta falsa (un número que se queda sin usar y no se sabe si sobra, una frase con un cambio que no
 se entendió, una respuesta que mezcla cosas → «no entiendo», diciendo qué frase o qué número). La fase U.3c, descartada.
 
-## Dónde se quedó (9 oct 2026, tras M.19)
+## Dónde se quedó (9 oct 2026, tras M.20)
+Hecho **M.20 la media** (NCETM 2.26; diario `2026-10-09-paso-M20-la-media.md`): la pregunta de piezas `media` con dos PIEZAS,
+`media_juntando_y_repartiendo` 9 (sumar y repartir) y `media_nivelando` 5 (la base es el más bajo y lo de encima se reparte
+entre todos; solo si están cerca: el costo; vuelta por el EQUILIBRIO). El resolvedor las pide (`_u_media`, `universal.py`)
+al ver `(v1 + … + vk) : k` con k = cuántos valores. Se pregunta con `resolver:` (sin puerta nueva); `(3 + 5 + 7) : 3` sin
+letras sigue «todavía no» (2.28): pregunta abierta para Carlos. **Siguiente: NCETM 2.27** (mirar en el buscador qué es).
+
+## Dónde se quedó antes (9 oct 2026, tras M.19)
 Hecho **M.19 calcular compensando** (NCETM 2.25; diario `2026-10-09-paso-M19-compensar.md`): dos PIEZAS de `multiplicar`,
 `multiplicar_redondeando_un_factor` 6.5 (399 x 6 = 400 x 6 − 6; solo a 1 o 2 por debajo de un redondo de una cifra: el
 costo) y `multiplicar_por_5_o_25_compensando` 6.6 (x 10 y la mitad; x 100 y la mitad de la mitad), cada una con su vuelta.

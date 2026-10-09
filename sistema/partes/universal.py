@@ -313,9 +313,68 @@ def _u_valor(e, saber, pasos):
         return _nu_opuesto(_u_valor(e[1], saber, pasos))
     if e[0] == "letra":
         raise _UNoSale("todavia_no", "falta saber cuanto vale %s" % _u_nombre(e[1]))
+    if e[1] == ":":
+        m = _u_media(e, saber, pasos)
+        if m is not None:
+            return m
     a = _u_valor(e[2], saber, pasos)
     b = _u_valor(e[3], saber, pasos)
     return _u_cuenta(e[1], a, b, saber, pasos)
+
+
+# ------------------------------------------------------------- M.20: la MEDIA (NCETM 2.26), con las piezas de 'media'
+
+def _u_sumandos(e):
+    """Los valores de una suma de enteros sin signo (v1 + v2 + ... + vk), en el orden en que vienen; o None."""
+    if e[0] == "num":
+        x = e[1]
+        if x[0] == "+" and x[2] == 1 and x[3] == "entero":
+            return [x[1]]
+        return None
+    if e[0] == "op" and e[1] == "+":
+        a, b = _u_sumandos(e[2]), _u_sumandos(e[3])
+        if a is None or b is None:
+            return None
+        a.extend(b)
+        return a
+    return None
+
+
+def _u_media(e, saber, pasos):
+    """(v1 + ... + vk) : k, con el divisor igual a CUANTOS valores hay (contados): es la MEDIA.  Se pide a las
+    piezas de 'media' (se elige por el costo: nivelar si estan cerca, juntar y repartir si no).  Lo que sale se pasa al
+    numero comun (lo que toca a cada uno y lo que sobro repartido).  None si no es una media o no sale: como antes."""
+    if e[2][0] != "par" or e[3][0] != "num":
+        return None
+    k = e[3][1]
+    if k[0] != "+" or k[2] != 1 or k[3] != "entero":
+        return None
+    valores = _u_sumandos(e[2][1])
+    if valores is None or decir(len(valores), saber) != decir(k[1], saber):
+        return None
+    r = aplicar("media", {"valores": valores, "partes": k[1]}, saber)
+    if r["conclusion"] != "hecho":
+        return None
+    res = r["resultado"]
+    q, resto, sub = res["valor"], res["resto"], []
+    try:
+        if not resto:
+            v = _NU_CERO if q == 0 else ("+", q, 1, "entero")
+        elif q == 0:
+            v = _nu_simple(("+", resto, k[1], "fraccion"), saber, sub)
+        else:
+            v = _nu_sumar(("+", q, 1, "entero"), ("+", resto, k[1], "fraccion"), saber, sub)
+    except (_NuNoSale, KeyError):
+        return None
+    nombres = ["%d" % x for x in valores]
+    pasos.append("LA MEDIA de %s y %s: repartir por igual entre los %d (NCETM 2.26); %s"
+                 % (", ".join(nombres[:-1]), nombres[-1], k[1], r["pieza"]["nombre"]))
+    pasos.extend("     %s" % p for p in res["pasos"])
+    if resto:
+        pasos.append("     %d y %d/%d%s" % (q, resto, k[1], "" if q == 0 else " = %s" % _nu_texto(v)))
+    pasos.append("     compruebo: %s" % res["vuelta"])
+    pasos.append("%s : %d = %s" % (_u_texto(e[2]), k[1], _nu_texto(v)))
+    return v
 
 
 def _u_cuenta(op, a, b, saber, pasos):

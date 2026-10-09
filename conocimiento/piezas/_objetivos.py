@@ -43,6 +43,8 @@ OBJETIVOS = {
                             "que_es": "todas las parejas de factores de un numero (NCETM 2.21; 4.OA.B.4): 36 = 4 x 9 ..."},
     "primo": {"elige": "la_mas_rapida",
               "que_es": "primo (exactamente dos factores) o compuesto (mas de dos)? (NCETM 2.21)"},
+    "media": {"elige": "la_mas_rapida",
+              "que_es": "la media (NCETM 2.26): lo que le toca a cada uno si el total de los valores se reparte por igual"},
     "combinar": {"elige": "la_mas_rapida",
                  "que_es": "una cuenta con x, + y - (NCETM 2.22; 5.OA.A.1): primero el parentesis, luego las x"},
     "todo_de_las_partes": {"elige": "la_mas_rapida",

@@ -616,6 +616,45 @@ def _m19_por_5_o_25(s, u):
             return f, g
     return None
 
+
+def _m20_valores(s, u):
+    """Los valores de una MEDIA (M.20; NCETM 2.26): enteros (el cero tambien), dos o mas, y tantas partes como valores
+    (contados: se mira que el numero de valores y las partes se LLAMEN igual).  La lista, o None."""
+    vs, k = s.get("valores"), s.get("partes")
+    if not isinstance(vs, (list, tuple)) or not isinstance(k, int) or isinstance(k, bool):
+        return None
+    if not all(isinstance(v, int) and not isinstance(v, bool) for v in vs):
+        return None
+    if u.decir(len(vs)) != u.decir(k) or u.decir(len(vs)) in ("cero", "uno"):
+        return None
+    if any(u.decir(v) is None for v in vs):
+        return None
+    return list(vs)
+
+
+def _m20_el_mas_bajo(u, vs):
+    """El mas bajo, comparando con el mecanismo (el que no viene despues de ninguno)."""
+    bajo = vs[0]
+    for v in vs[1:]:
+        if u.viene_despues(u.decir(bajo), u.decir(v)):
+            bajo = v
+    return bajo
+
+
+def _m20_cerca(s, u):
+    """EL COSTO de nivelar: el mas bajo tiene dos cifras o mas (con valores pequenos juntar es igual de corto) y
+    ninguno le pasa en mas de 20 (lo de encima son restas pequenas; si no, nivelar no ahorra nada)."""
+    vs = _m20_valores(s, u)
+    if vs is None:
+        return False
+    bajo = _m20_el_mas_bajo(u, vs)
+    if not u.viene_despues(u.decir(bajo), "nueve"):
+        return False
+    tope = u.sumar_por_columnas(bajo, 20)
+    if u.decir(tope) is None:
+        tope = None                       # cerca del techo: ninguno puede pasar del techo
+    return all(tope is None or not u.viene_despues(u.decir(v), u.decir(tope)) for v in vs)
+
 CONDICIONES = {
     "pocas_centenas_para_contarlas": lambda s, u: _n6_pocas_cosas(s, u, 2),
     "pocos_miles_para_contarlos": lambda s, u: _n6_pocas_cosas(s, u, 3),
@@ -830,6 +869,9 @@ CONDICIONES = {
     # ---- calcular compensando (paso M.19; NCETM 2.25)
     "un_factor_esta_justo_debajo_de_un_redondo": lambda s, u: _m19_cerca_de_un_redondo(s, u) is not None,
     "un_factor_es_5_o_25_y_el_otro_grande": lambda s, u: _m19_por_5_o_25(s, u) is not None,
+    # ---- M.20 la media (NCETM 2.26)
+    "son_valores_enteros_y_tantas_partes_como_valores": lambda s, u: _m20_valores(s, u) is not None,
+    "los_valores_estan_cerca_unos_de_otros": _m20_cerca,
 }
 
 DE_APLICACION = {"el_divisor_no_es_cero", "hay_bastantes", "hay_bastantes_al_deshacer", "la_parte_cabe_en_el_todo",
