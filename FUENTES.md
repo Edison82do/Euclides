@@ -402,6 +402,20 @@
 - NCETM PSKA multiplicación Q7: https://www.ncetm.org.uk/media/2mmcduqq/pska-mult-q7.pdf
 - Oak National, larga de dos cifras por dos: https://thenational.academy/teachers/programmes/maths-primary-ks2/units/multiplying-and-dividing-by-2-digit-numbers/lessons/explain-how-to-use-long-multiplication-to-multiply-two-2-digit-numbers-with-regrouping
 - Achieve the Core, 5.NBT.B.5: https://achievethecore.org/file/2423
+- **NCETM 2.24** (*Division: dividing by two-digit divisors*, Year 6; la web está bloqueada desde la nube, leída por el
+  buscador el 9 oct). Tres puntos: (1) dividendos de dos y tres cifras con el cociente menor que 10: contando en
+  múltiplos del divisor; (2) dividendos de tres y cuatro cifras con el cociente de 10 o más: la corta o la larga;
+  (3) el resto: entero, como fracción o el cociente en decimales. **Oak National** (Year 6, «dividing by a 2-digit
+  divisor including using long division», «… with a remainder», «using short and long division …»): hacer la LISTA DE
+  MÚLTIPLOS del divisor; estimar antes; la larga escribe la resta debajo y baja la cifra; errores: no unitizar
+  (7 centenas : 12), no usar 10 o 100 veces el divisor, errores de cuenta (NFER). Un mapa de currículo de Year 6 enlaza a
+  2.24 «la división usando factores». **Common Core 5.NBT.B.6 / 6.NS.B.2**: cocientes con dividendos de hasta cuatro
+  cifras entre dos cifras; en 6.º, el algoritmo estándar con fluidez (los cocientes parciales son el puente). → M.18.
+- NCETM 2.24 (bloqueada desde la nube; leída por el buscador): https://ncetm.org.uk/classroom-resources/primm-224-division-dividing-by-two-digit-divisors/
+- Oak National, la larga entre dos cifras: https://thenational.academy/teachers/programmes/maths-primary-ks2/units/multiplying-and-dividing-by-2-digit-numbers/lessons/dividing-by-a-2-digit-divisor-including-using-long-division
+- Oak National, corta y larga entre dos cifras: https://www.thenational.academy/teachers/lessons/using-short-and-long-division-to-divide-by-a-2-digit-divisor
+- Common Core 6.NS.B.2: https://thecorestandards.org/Math/Content/6/NS/B/2/
+- Fishtank, 6.º (de los cocientes parciales al algoritmo): https://fishtanklearning.org/curriculum/math/6th-grade/multi-digit-and-fraction-computation/lesson-10
 - NCETM 2.4: https://www.ncetm.org.uk/classroom-resources/primm-204-times-tables-groups-of-10-and-of-5-and-factors-of-0-and-1/
 - NCETM 2.5: https://www.ncetm.org.uk/classroom-resources/primm-205-commutativity-part-2-doubling-and-halving/
 - NCETM 2.2: https://www.ncetm.org.uk/classroom-resources/primm-202-structures-multiplication-representing-equal-groups/

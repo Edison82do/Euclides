@@ -18,11 +18,11 @@ PIEZA = {
          "el divisor no acaba en 5 y no acaban los dos en cero (o es una division de las tablas)"),
     ],
     "usa": ["sumar", "dividir_por_10_o_100", "dividir_a_la_mitad", "dividir_con_la_tabla",
-            "dividir_decenas_justas", "division_corta", "dividir_saltando"],
+            "dividir_decenas_justas", "division_corta", "division_larga", "dividir_saltando"],
 }
 
 _FINAL = ("dividir_por_10_o_100", "dividir_a_la_mitad", "dividir_con_la_tabla", "dividir_decenas_justas",
-          "division_corta", "dividir_saltando")
+          "division_corta", "division_larga", "dividir_saltando")      # M.18: la larga antes que cien saltos
 
 
 def _sin_ceros(u, n):

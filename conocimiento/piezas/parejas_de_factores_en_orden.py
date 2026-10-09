@@ -7,6 +7,8 @@ companero se hace mas pequeno que el que pruebo (ya me los encontraria al reves)
 Respetar el ano: se divide con las tablas, hasta el 12.  Si para llegar al medio hubiera que dividir entre
 13 o mas, se mira antes si ese numero por si mismo ya se pasa (13 x 13 = 169: la multiplicacion de dos
 cifras por dos cifras SI es de 4.o/5.o); si no se pasa, haria falta la division larga (6.o): todavia no.
+PASO M.18 (NCETM 2.24): con la division larga se divide entre DOS cifras: se sigue probando hasta el 99.  Solo si
+el medio pide dividir entre TRES cifras (100 x 100 = 10000 no se pasa del numero), todavia no.
 Se COMPRUEBA cada division con la contraria: el cociente por el divisor, mas lo que sobro, da el numero."""
 
 PIEZA = {
@@ -32,8 +34,12 @@ def hacer(s, u):
             if u.viene_despues(u.decir(dd), u.decir(n)):      # se pasa (mirado con el mecanismo)
                 por_si_mismo = "%d x %d = %d ya se pasa de %d: no hace falta seguir" % (d, d, dd, n)
                 break
-            raise ValueError("para llegar al medio de %d habria que dividir entre %d: eso es la division larga "
-                             "(6.o); con las tablas llego hasta el 12" % (n, d))
+            if d == 13:                    # M.18: la division larga es entre DOS cifras; se mira antes de empezar
+                cc = u.usar("multiplicar", a=100, b=100)["valor"]
+                if not u.viene_despues(u.decir(cc), u.decir(n)):
+                    raise ValueError("para llegar al medio de %d habria que dividir entre numeros de tres cifras "
+                                     "(100 x 100 = %d no se pasa de %d): eso todavia no (la division larga de 6.o es "
+                                     "entre dos cifras; llego hasta el 99)" % (n, cc, n))
         r = u.usar("dividir", total=n, divisor=d)
         q, resto = r["valor"], r["resultado"].get("resto", 0)
         if u.viene_despues(u.decir(d), u.decir(q)):       # el companero ya es mas pequeno: me cruzo

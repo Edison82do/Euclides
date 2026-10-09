@@ -547,9 +547,21 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         3456 x 247             -> 853632   LA LARGA: una fila por cifra (3456 x 7, x 40, x 200), con los 0 que
                                            guardan el sitio, y se suman; se comprueba con la operacion contraria
         300 x 40               -> 12000    lo mental primero: el hecho pequeno (M.9), no la larga
-        n : 24 = 356           -> n = 8544 (356 x 24; se comprueba DESHACIENDO: 8544 : 24 = 356 porque 356 x 24 = 8544)
-        24 x n = 8544          -> no_sale  (dividir entre dos cifras es la division larga: el paso siguiente, 2.24)
+        n : 24 = 356           -> 8544     (356 x 24; y se comprueba: 8544 : 24 = 356, la division larga de M.18)
+        24 x n = 8544          -> 356      (antes no_sale; ahora con la division larga, M.18)
         4567 x 3000            -> no_se_puede (se pasa de diez millones)
+
+  DIVIDIR ENTRE DOS CIFRAS: LA DIVISION LARGA  ->  piezas nuevas de dividir (paso M.18, 6.o; NCETM 2.24)
+        (sin puerta nueva: entran por el modelo comun; el resolvedor, factores, primos... las usan solas)
+        8544 : 24              -> 356      USANDO LOS FACTORES: 24 = 4 x 6; 8544 : 4 = 2136; 2136 : 6 = 356
+        5678 : 23              -> 246 resto 20   LA LARGA: la lista de multiplos de 23 (sumando), en cada sitio
+                                           el que cabe, la resta debajo y BAJO la cifra siguiente
+        2448 : 24              -> 102      (no 12: cuando no cabe, un 0 en el cociente)
+        96 : 24                -> 4        el cociente menor que 10: contando de 24 en 24 (como antes)
+        24 x n = 8544          -> 356      el resolvedor deshace con la division
+        primo: 997             -> primo    (probando hasta el 31; antes todavia_no)
+        98765 : 123            -> no_se_puede (entre TRES cifras: todavia no)
+        Cada division se comprueba multiplicando: 246 x 23 + 20 = 5678.
 
   MAS DE UN ENTERO  ->  numeros mixtos y fracciones impropias (paso F.4; NCETM 3.5; 4.NF.B.3)
         fraccion: 7/4          -> siete cuartos = 1 3/4   (agrupo 7 cuartos de 4 en 4: 1 entero y sobran 3)
@@ -647,7 +659,7 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         1.3 : 4                -> 0.325  sobra: se CAMBIA a centesimas y a milesimas
         0.12 : 4               -> 0.03   (no 0.3: son 12 centesimas)
         3.5 : 10               -> 0.35   las cifras bajan un sitio
-        0.3 x 0.4, 7.2 : 12, 7.2 : 0.3 -> todavia_no (decimal por decimal y division larga: 6.o)
+        0.3 x 0.4, 7.2 : 12, 7.2 : 0.3 -> todavia_no (decimal por decimal, y un decimal entre dos cifras: 6.o)
         Cada cuenta se comprueba con la contraria: 1.2 : 4 = 0.3;  24 decimas x 3 = 72 decimas.
 
   TRES FACTORES Y VOLUMEN  ->  multiplicar tres numeros en el orden mas facil; el volumen (paso M.14; NCETM 2.20; 5.MD.C.3-5)
@@ -675,7 +687,8 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         factores comunes: 24 y 36  -> 1, 2, 3, 4, 6, 12      multiplos comunes: 4 y 6 -> 12, 24 ...
         factores primos: 60    -> 2, 3, 5
         con 100: 25 x 36       -> 900   (las parejas de 100: 36 = 9 x 4 y 25 x 4 = 100)
-        factores: 169, primo: 997 -> todavia_no (habria que dividir entre 13: la division larga, 6.o)
+        factores: 169, primo: 997 -> 1, 13, 169 y primo (dividiendo entre dos cifras con la larga, M.18)
+        primo: 10403           -> todavia_no (el medio pide dividir entre tres cifras)
         Cada division se comprueba multiplicando: 5 x 7 + 1 = 36.
 
   COMBINAR LA x CON LA + Y LA -  ->  el orden de siempre y el factor comun (paso M.16; NCETM 2.22; 5.OA.A.1)

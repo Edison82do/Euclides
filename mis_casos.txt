@@ -992,14 +992,14 @@ volumen: caja 2 m x 30 cm x 4 cm           | todavia_no | (M.14) la misma unidad
 factores: 36                               | 1, 2, 3, 4, 6, 9, 12, 18, 36 | (M.15) nueve: el 6 va consigo mismo (cuadrado)
 factores: 12                               | 1, 2, 3, 4, 6, 12 | (M.15) con el 1 y el 12
 factores: 168                              | 1, 2, 3, 4, 6, 7, 8, 12, 14, 21, 24, 28, 42, 56, 84, 168 | (M.15) 13 x 13 ya se pasa
-factores: 169                              | todavia_no | (M.15) dividir entre 13: la division larga
+factores: 169                              | 1, 13, 169 | (M.15) antes todavia_no (dividir entre 13: la division larga); M.18 la hace
 primo: 1                                   | ni_primo_ni_compuesto | (M.15) un solo factor
 primo: 2                                   | primo | (M.15) par y primo
 primo: 91                                  | compuesto | (M.15) 7 x 13: impar y compuesto
 primo: 51                                  | compuesto | (M.15) 5 + 1 = 6: 3 x 17
 primo: 97                                  | primo | (M.15) solo 1 x 97
 primo: 1000                                | compuesto | (M.15) par: 2 x 500
-primo: 997                                 | todavia_no | (M.15) sin regla corta, pide la division larga
+primo: 997                                 | primo | (M.15) antes todavia_no (sin regla corta, pedia la division larga); M.18 la hace
 es 37 primo?                               | primo | (M.15) escrito directamente
 primos hasta 30                            | 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 | (M.15) la criba
 multiplos de 7                             | 7, 14, 21, 28, 35, 42, 49, 56, 63, 70, 77, 84 | (M.15) contando de 7 en 7
@@ -1189,7 +1189,18 @@ problema: Tengo 50 pesos. Gaste la mitad. Cuanto me queda? | no_entiendo | (U.4)
 1234 x 24                                   | 29616 | (M.17) un factor compuesto: x 4 y x 6
 3456 x 247                                  | 853632 | (M.17) la multiplicacion larga
 3456 x 205                                  | 708480 | (M.17) un 0 en medio del de abajo: no hay fila de las decenas
-n : 24 = 356                                | n = 8544 | (M.17) antes no_cuadra: se comprueba deshaciendo
+n : 24 = 356                                | 8544 | (M.17) n = 8544 por el resolvedor; M.18: la puerta de E.5 ya comprueba 8544 : 24
 x - y = 100; y = 1234 x 24                  | x = 29716, y = 29616 | (M.17) por el resolvedor
-24 x n = 8544                               | no_sale | (M.17) dividir entre dos cifras es 2.24
+24 x n = 8544                               | 356 | (M.17) antes no_sale: dividir entre dos cifras es 2.24; M.18 la hace
 4567 x 3000                                 | no_se_puede | (M.17) se pasa de diez millones
+# --- paso M.18 (NCETM 2.24): dividir entre dos cifras, la division larga (piezas de dividir; sin puerta nueva)
+8544 : 24                                   | 356 | (M.18) usando los factores del divisor: : 4 y : 6
+2448 : 24                                   | 102 | (M.18) un 0 en el cociente (no 12)
+5678 : 23                                   | 246 resto 20 | (M.18) la division larga con resto
+9999999 : 99                                | 101010 resto 9 | (M.18) cerca del techo
+96 : 24                                     | 4 | (M.18) el cociente menor que 10: contando de 24 en 24 (como antes)
+98765 : 123                                 | no_se_puede | (M.18) entre tres cifras: todavia no
+n x 47 = 9776                               | 208 | (M.18) deshacer con la division larga
+resolver: 8544 : n = 24                     | n = 356 | (M.18) por el resolvedor
+factores: 9991                              | 1, 97, 103, 9991 | (M.18) probando hasta el 99
+primo: 10403                                | todavia_no | (M.18) el medio pide dividir entre tres cifras

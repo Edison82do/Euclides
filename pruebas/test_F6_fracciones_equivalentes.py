@@ -115,8 +115,8 @@ try:
         if v not in (testigo(a, b), "no_salio"):
             malos.append((a, b, v))
     comprobar("B 80 al azar hasta 1000: bien o 'todavia no' (%d), NUNCA mal" % todavia, (malos, todavia < 8), ([], True))
-    comprobar("B 836/722 (comparten 38 = 2 x 19): todavia no (el 19 pide la division larga)", simplificar(836, 722),
-              "no_salio")
+    comprobar("B 836/722 (comparten 38 = 2 x 19) -> 22/19 (antes todavia no: el 19 pedia la division larga; M.18)",
+              simplificar(836, 722), "22/19")
     malos = []
     for _ in range(40):
         b = AZAR.choice([1000, 10000, 100000, 1000000, 360000, 720720, 500000])
@@ -127,8 +127,8 @@ try:
     for a, b in ((500000, 1000000), (999999, 1000000), (250000, 1000000), (125, 1000), (375, 1000), (1000000, 1000000),
                  (1000000, 250000), (13, 26), (17, 51), (91, 143)):
         comprobar("B simplificar: %d/%d -> %s" % (a, b, testigo(a, b)), simplificar(a, b), testigo(a, b))
-    comprobar("B 221/247 (13 x 17 y 13 x 19): todavia no (los trozos grandes pasan de 168)", simplificar(221, 247),
-              "no_salio")
+    comprobar("B 221/247 (13 x 17 y 13 x 19) -> 17/19 (antes todavia no: los trozos grandes pasaban de 168; M.18)",
+              simplificar(221, 247), "17/19")
 
     print("\nC - CADA METODO DE SIMPLIFICAR, CONTRA EL TESTIGO (donde encaja)")
     for pid in ("simplificar_por_el_de_arriba", "simplificar_paso_a_paso", "simplificar_con_el_mayor_factor_comun"):
@@ -152,8 +152,8 @@ try:
     comprobar("C 5/20: el pequeno cabe justo -> 1/4 de una vez", (r["pieza"]["id"], r["valor"]),
               ("simplificar_por_el_de_arriba", "1/4"))
     r = motor.aplicar("simplificar_con_el_mayor_factor_comun", {"a": 200, "b": 300}, SABER)
-    comprobar("C el mayor factor comun con 200 no sale (las tablas llegan a 168): todavia no",
-              r["conclusion"], "no_salio")
+    comprobar("C el mayor factor comun con 200 -> 2/3 (antes todavia no: las tablas llegaban a 168; M.18 divide entre "
+              "dos cifras)", (r["conclusion"], r.get("valor")), ("hecho", "2/3"))
 
     print("\nD - EL HUECO, CONTRA EL TESTIGO (en las cuatro posiciones; con y sin entero)")
     malos, con, sin = [], 0, 0

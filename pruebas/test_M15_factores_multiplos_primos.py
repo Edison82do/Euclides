@@ -80,10 +80,12 @@ try:
     salida = motor.explicar_pregunta("7 es multiplo de 21", SABER)
     comprobar("A12 ... y dice que es al reves: 7 es FACTOR de 21", "es AL REVES: 7 es FACTOR de 21" in salida, True)
     comprobar("A13 multiplos de 7 empieza en 7 (7 x 1), no en 0", S("multiplos de 7"), "7, 14, 21, 28, 35, 42, 49, 56, 63, 70, 77, 84")
-    comprobar("A14 factores: 169 -> todavia no (dividir entre 13: la division larga)", S("factores: 169"), "todavia_no")
+    comprobar("A14 factores: 169 -> 1, 13, 169 (antes todavia no: dividir entre 13 es la division larga, hecha en M.18)",
+              S("factores: 169"), "1, 13, 169")
     comprobar("A15 factores: 168 -> si (13 x 13 = 169 ya se pasa)", S("factores: 168"), L(T_factores(168)))
     comprobar("A16 primo: 1000 -> compuesto (2 x 500)", S("primo: 1000"), "compuesto")
-    comprobar("A17 primo: 997 -> todavia no (sin regla corta y pide la division larga)", S("primo: 997"), "todavia_no")
+    comprobar("A17 primo: 997 -> primo (antes todavia no: sin regla corta pedia la division larga, hecha en M.18)",
+              S("primo: 997"), "primo")
     comprobar("A18 factores comunes: 7 y 13 -> solo el 1", S("factores comunes: 7 y 13"), "1")
     comprobar("A19 con 100: 25 x 36 -> 900 (36 = 9 x 4; 25 x 4 = 100)", S("con 100: 25 x 36"), "900")
     comprobar("A20 es 37 primo? escrito directamente (con su ?) -> primo", S("es 37 primo?"), "primo")
@@ -129,8 +131,12 @@ try:
     comprobar("C1 168 numeros: los factores, cuantos, impar <=> cuadrado, y la vuelta (%.1f s; el mas lento %.2f s)"
               % (time.time() - t0, lento), malos, [])
     comprobar("C2 cada uno en menos de 2 s", lento < 2, True)
-    malos = [n for n in (169, 170, 200, 500, 1000) if motor.decidir_factores(n, SABER)["conclusion"] != "todavia_no"]
-    comprobar("C3 desde 169: todavia no (169, 170, 200, 500, 1000)", malos, [])
+    # M.18: desde 169 hacia falta la division larga (antes: todavia no con 169, 170, 200, 500, 1000); ahora salen, y
+    # todavia no queda para cuando el medio pide dividir entre TRES cifras (desde 100 x 100 = 10000)
+    malos = [n for n in (169, 170, 200, 500, 1000) if S("factores: %d" % n) != L(T_factores(n))]
+    comprobar("C3 desde 169 (169, 170, 200, 500, 1000): ahora salen con la division larga (antes todavia no)", malos, [])
+    malos = [n for n in (10000, 10001, 500000) if motor.decidir_factores(n, SABER)["conclusion"] != "todavia_no"]
+    comprobar("C3b desde 10000 (dividir entre tres cifras): todavia no", malos, [])
     salida = motor.explicar_pregunta("factores: 100", SABER)
     comprobar("C4 factores: 100 dice las parejas de 100 (punto 6)", "LAS PAREJAS DE 100" in salida, True)
 
@@ -233,7 +239,7 @@ try:
     for texto, esperado in (("primo: 1000000", "compuesto"), ("primo: 999999", "compuesto"),
                             ("primo: 999995", "compuesto"), ("primo: 999998", "compuesto"),
                             ("primo: 1000001", "todavia_no"), ("primo: 999997", "todavia_no"),
-                            ("primo: 1001", "todavia_no"), ("primo: 155", "compuesto"),
+                            ("primo: 1001", "compuesto"),     # antes todavia_no (M.18: 1001 = 7 x 143) ("primo: 155", "compuesto"),
                             ("factores: 144", L(T_factores(144))), ("factores: 167", "1, 167"),
                             ("7 es factor de 1000000", "no"), ("1000000 es multiplo de 8", "si"),
                             ("multiplos de 83333", L([83333 * k for k in range(1, 13)]))):

@@ -556,6 +556,22 @@ def _m17_compuesto(s, u):
         return False
     return any(_m17_pareja_de_la_tabla(f, u) and len(u.cifras_de(g)) >= 2 for f, g in ((a, b), (b, a)))
 
+def _m18_cociente_de_dos_cifras(s, u):
+    """Divisor de DOS cifras y el cociente de 10 o mas: el dividendo llega a diez veces el divisor (NCETM 2.24, punto 2).
+    Diez veces el divisor es el divisor con un 0 detras (M.9); se compara con el mecanismo."""
+    t, d = s.get("total"), s.get("divisor")
+    if not isinstance(t, int) or not isinstance(d, int) or len(u.cifras_de(d)) != 2:
+        return False
+    cs = [0]
+    cs.extend(u.cifras_de(d))
+    diez_veces = u.escribir_cifras(cs)
+    return t == diez_veces or u.viene_despues(u.decir(t), u.decir(diez_veces))
+
+
+def _m18_por_factores(s, u):
+    """Ademas, el divisor es una pareja de la tabla que se sabe (24 = 4 x 6)."""
+    return _m18_cociente_de_dos_cifras(s, u) and _m17_pareja_de_la_tabla(s["divisor"], u) is not None
+
 CONDICIONES = {
     "pocas_centenas_para_contarlas": lambda s, u: _n6_pocas_cosas(s, u, 2),
     "pocos_miles_para_contarlos": lambda s, u: _n6_pocas_cosas(s, u, 3),
@@ -764,6 +780,9 @@ CONDICIONES = {
     "quitando_los_ceros_queda_una_cuenta_de_varias_cifras": lambda s, u: _m17_quitando_ceros(s, u),
     "dos_cifras_por_dos_o_tres_por_dos": lambda s, u: _m17_dos_por_dos(s, u),
     "un_factor_de_dos_cifras_es_una_pareja_de_la_tabla": lambda s, u: _m17_compuesto(s, u),
+    # ---- dividir entre dos cifras: la division larga (paso M.18; NCETM 2.24)
+    "el_divisor_es_de_dos_cifras_y_el_cociente_pasa_de_nueve": lambda s, u: _m18_cociente_de_dos_cifras(s, u),
+    "el_divisor_de_dos_cifras_es_una_pareja_de_la_tabla": lambda s, u: _m18_por_factores(s, u),
 }
 
 DE_APLICACION = {"el_divisor_no_es_cero", "hay_bastantes", "hay_bastantes_al_deshacer", "la_parte_cabe_en_el_todo",

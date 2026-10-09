@@ -20,7 +20,8 @@ PIEZA = {
 # PASO N.4 (arreglo, 7 oct): con divisores de VARIAS cifras ya no se cuenta de uno en uno (un humano no
 # cuenta 243225 pasos para dar un salto): cada salto es una SUMA (+ el divisor) y el resto una RESTA.
 # Con un divisor que pasa de las tablas (mas de doce), mas de cien saltos ya es la division larga
-# (6.o, NCETM 2.24): todavia no.
+# (6.o, NCETM 2.24): todavia no.  PASO M.18: entre DOS cifras ya se hace la division larga (pieza division_larga);
+# aqui solo llegan con muchos saltos los divisores de TRES cifras o mas, y esos siguen todavia no.
 _MAX_SALTOS_GRANDES = "cien"
 _MAX_SALTOS = "mil"
 
@@ -50,6 +51,9 @@ def hacer(s, u):
         if nuevo is None or u.viene_despues(u.decir(nuevo), u.decir(t)):
             break
         if _grande(d, u) and saltos == _MAX_SALTOS_GRANDES:
+            if len(u.cifras_de(d)) > 2:
+                raise ValueError("son mas de cien saltos de %d: dividir entre tres cifras todavia no (la division "
+                                 "larga de 6.o, NCETM 2.24, es entre dos cifras)" % d)
             raise ValueError("son mas de cien saltos de %d: eso es la division larga (6.o), todavia no" % d)
         if saltos == _MAX_SALTOS:
             # PASO M.14 (arreglo): 1000000 : 8 eran 125 000 saltos (15 s).  Un humano no salta mil veces:

@@ -252,7 +252,7 @@ try:
                             ("999 x 1000 x 1", "999000"), ("999 x 999 x 1", "todavia_no"),
                             ("2 x 500000 x 1", "1000000"), ("2 x 500001 x 1", "1000002"), ("2 x 5000001 x 1", "todavia_no"),   # N.6
                             ("1.125 x 8 x 111", "999"), ("6 x 8 x 0.37", "17.76"), ("0.5 x 7 x 20", "todavia_no"), ("0.001 x 7 x 4", "0.028"), ("0.375 x 8 x 9", "27"),
-                            ("2 x 3 x 4 x 5", "120"), ("13 x 17 x 19", "todavia_no"),
+                            ("2 x 3 x 4 x 5", "120"), ("13 x 17 x 19", "4199"),   # antes todavia_no (no se comprobaba dividiendo entre 19); M.18: la division larga
                             ("volumen: cubo de 100 cm", "1000000 cm cubicos"),
                             ("volumen: cubo de 101 cm", "todavia_no")):
         t1 = time.time()

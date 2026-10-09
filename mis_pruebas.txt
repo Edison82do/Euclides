@@ -392,4 +392,9 @@ Un camion lleva 12 cajas. Cada caja pesa 96 kilos. Cuanto pesan las cajas? | no_
 326 x 47                          | 15322 | M.17: partir uno de los factores
 1234 x 24                         | 29616 | M.17: un factor compuesto (24 = 4 x 6)
 234 x 30                          | 7020 | M.17: quitar los ceros y volver a ponerlos
-n : 24 = 356                      | n = 8544 | M.17: se comprueba deshaciendo (antes no_cuadra)
+n : 24 = 356                      | 8544 | M.17: n = 8544 (deshaciendo); M.18: la puerta de E.5 ya comprueba 8544 : 24
+8544 : 24                         | 356 | M.18: dividir usando los factores del divisor (: 4 y : 6)
+2448 : 24                         | 102 | M.18: la division larga, con un 0 en el cociente
+5678 : 23                         | 246 resto 20 | M.18: la division larga con resto
+24 x n = 8544                     | 356 | M.18: antes no_sale (dividir entre dos cifras)
+primo: 997                        | primo | M.18: antes todavia_no (pedia la division larga)

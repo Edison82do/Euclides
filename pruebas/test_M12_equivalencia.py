@@ -121,7 +121,9 @@ try:
     comprobar("C1 ninguna division mal (%d)" % total, malos, [])
     # Arreglo del 7 oct (revision): con divisor de mas de doce, mas de cien saltos es la division
     # LARGA (6.o, NCETM 2.24): todavia no.  Antes se contaba de uno en uno y tardaba minutos.
-    comprobar("C1b 1814 : 15 (120 saltos y resto) -> todavia no (division larga, 6.o)", S("1814 : 15"), "no_se_puede")
+    # M.18 (NCETM 2.24): ya se hace la division larga (antes: no_se_puede)
+    comprobar("C1b 1814 : 15 (120 saltos y resto) -> 120 resto 14 con la division larga (antes todavia no)",
+              S("1814 : 15"), "120 resto 14")
     comprobar("C2 por la equivalencia solo salen las justas, y casi todas", salen > total // 3, True)
 
     print("\nD - DOMINIO: igualdades equivalentes (verdaderas sin calcular) y sus trampas")

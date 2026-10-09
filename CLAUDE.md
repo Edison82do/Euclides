@@ -68,9 +68,8 @@
   comparaciones con Python (muchas son legítimas: índices, sangrías, leer archivos; otras miran el tamaño
   de números, p. ej. `primitivas.py`, `nivel_5.py`, `nivel_6.py`). La auditoría aún no las vigila.
   Pasarlas al mecanismo y ampliar `test_sin_calculadora.py` con su lista blanca será un paso aparte.
-- **Pendientes de la revisión de M.14:** `99 x 99 x 99` dice «todavía no» aunque calcula 970299 (porque
-  no puede comprobarlo dividiendo): podría comprobarlo multiplicando en otro orden. `101 x 100 x 100`
-  dice «todavía no» cuando debería decir que se pasa del millón.
+- **Pendientes de la revisión de M.14:** (RESUELTOS) `99 x 99 x 99` → 970299 desde M.18 (se comprueba dividiendo con
+  la división larga); `101 x 100 x 100` → 1010000 desde N.6 (el techo es diez millones).
 - **IDEA PARA EL FUTURO (no hacer sin que Carlos lo pida; 7 oct):** elegir la técnica según lo que CUESTA
   en este caso, como un humano de un vistazo. Hoy cada pieza tiene una `rapidez` fija y, para que no haga
   cosas inhumanas con números grandes, se han ido poniendo topes sueltos (grupos iguales ≤ 12, saltos ≤ 100
@@ -93,7 +92,15 @@ con NÚMEROS Y SÍMBOLOS; la parte hablada (U.3, U.3b) NO se sigue ampliando (se
 PRUDENCIA: nunca una respuesta falsa (un número que se queda sin usar y no se sabe si sobra, una frase con un cambio que no
 se entendió, una respuesta que mezcla cosas → «no entiendo», diciendo qué frase o qué número). La fase U.3c, descartada.
 
-## Dónde se quedó (9 oct 2026, tras M.17)
+## Dónde se quedó (9 oct 2026, tras M.18)
+Hecho **M.18 dividir entre dos cifras: la división larga** (NCETM 2.24; diario `2026-10-09-paso-M18-division-larga.md`): dos
+PIEZAS de `dividir`, `division_larga` 9.5 (la lista de múltiplos del divisor SUMANDO, restar debajo y bajar la cifra, el 0 del
+cociente; vuelta: cociente x divisor + resto) y `dividir_por_un_divisor_compuesto` 9.2 (: 24 = : 4 : 6, solo justas). El
+cociente menor que 10 sigue con los saltos (punto 1). Sin puerta nueva: los «todavía no» que pedían la larga salen solos por
+el modelo común (`24 x n = 8544`, factores y primos hasta 99 x 99, comprobar tres factores dividiendo, simplificar). Entre
+TRES cifras, todavía no. **Siguiente: NCETM 2.25** (mirar en el buscador qué es; la web de NCETM sigue bloqueada).
+
+## Dónde se quedó antes (9 oct 2026, tras M.17)
 Hecho **M.17 estrategias para multiplicar números grandes y la multiplicación larga** (NCETM 2.23; diario
 `2026-10-09-paso-M17-multiplicacion-larga.md`): cuatro PIEZAS de `multiplicar` (`multiplicar_quitando_los_ceros` 7.5,
 `multiplicar_partiendo_un_factor` 9.1 —detrás de M.6, 9—, `multiplicar_por_un_factor_compuesto` 9.2, `multiplicacion_larga` 9.5; la rejilla, 10,

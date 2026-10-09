@@ -171,8 +171,8 @@ try:
                 mal.append((k, b, r.get("valor")))
     comprobar("C1 suma y multiplo, k de 1 a 12 (60; repartir uno grande entre 10 o mas: bien o todavia no)", mal[:3], [])
     comprobar("C1b a + b = 77; a = 10 x b: 11 trozos, con la tabla del 11", S("a + b = 77; a = 10 x b"), "a = 70, b = 7")
-    comprobar("C1c a + b = 567127; a = 10 x b: 11 trozos de un numero grande -> todavia no (la division larga)",
-              S("a + b = 567127; a = 10 x b"), "todavia_no")
+    comprobar("C1c a + b = 567127; a = 10 x b: 11 trozos de un numero grande -> a = 515570, b = 51557 (antes todavia no: "
+              "la division larga, hecha en M.18)", S("a + b = 567127; a = 10 x b"), "a = 515570, b = 51557")
     mal = []
     for k in range(2, 13):
         for b in (0, 1, 7, 25, azar.randint(0, 99999)):

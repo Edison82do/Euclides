@@ -184,24 +184,26 @@ def main():
                         ("(25 x 48) x 12", "14400"),
                         ("n = 3456 x 247", "853632"),
                         ("n - 1000 = 234 x 56", "14104"),
-                        ("n : 24 = 356", "n = 8544"),                     # antes: no_cuadra
-                        ("n : 24 - 10 = 346", "n = 8544"),
+                        ("n : 24 = 356", "8544"),        # M.17: n = 8544 (por el resolvedor); M.18: la puerta de E.5 ya
+                        ("n : 24 - 10 = 346", "8544"),   # sabe comprobar 8544 : 24 (la division larga) y contesta ella
                         ("resolver: 2 x (n : 24) = 712", "n = 8544"),
                         ("a = 125 x 64; b = a - 7999", "a = 8000, b = 1"),
                         ("x - y = 100; y = 1234 x 24", "x = 29716, y = 29616")):
         comprobar("E %s -> %s" % (q, esperado), S(q), esperado)
     t = motor.explicar_pregunta("resolver: 3456 x 247", SABER)
     comprobar("E el resolvedor dice con que multiplico (la larga)", "con la multiplicacion larga" in t, True)
-    t = motor.explicar_pregunta("n : 24 = 356", SABER)
-    comprobar("E n : 24 = 356 se comprueba DESHACIENDO (8544 : 24 = 356 porque 356 x 24 = 8544)",
-              "8544 : 24 = 356 porque 356 x 24 = 8544 ... SI" in t, True)
-    r = motor.decidir_resolver("n : 24 = 356", SABER)
-    malo = {"n": ("+", 8545, 1, "entero")}
+    # M.18: 8544 : 24 ya se calcula (la division larga); comprobar deshaciendo queda para TRES cifras (antes: n : 24 = 356)
+    t = motor.explicar_pregunta("resolver: n : 123 = 456", SABER)
+    comprobar("E n : 123 = 456 se comprueba DESHACIENDO (56088 : 123 = 456 porque 456 x 123 = 56088)",
+              "56088 : 123 = 456 porque 456 x 123 = 56088 ... SI" in t, True)
+    r = motor.decidir_resolver("n : 123 = 456", SABER)
+    malo = {"n": ("+", 56089, 1, "entero")}
     motor._u_comprobar(r["modelo"], malo, SABER, r)
-    comprobar("E ... y comprobar deshaciendo es de verdad: con n = 8545 NO cuadra", r["comprobacion_ok"], False)
+    comprobar("E ... y comprobar deshaciendo es de verdad: con n = 56089 NO cuadra", r["comprobacion_ok"], False)
 
     print("\nF - LO QUE SIGUE SIENDO DE OTRO PASO (la division larga, 2.24; el techo)")
-    comprobar("F 24 x n = 8544 -> no_sale (dividir entre dos cifras es 2.24)", S("24 x n = 8544"), "no_sale")
+    comprobar("F 24 x n = 8544 -> 356 (antes no_sale: dividir entre dos cifras es 2.24, hecho en M.18)",
+              S("24 x n = 8544"), "356")
     comprobar("F n = 4567 x 3000 -> no se pasa de diez millones sin decirlo", S("n = 4567 x 3000") in
               ("todavia_no", "no_se_puede", "no_sale"), True)
 
