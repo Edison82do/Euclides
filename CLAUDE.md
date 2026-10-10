@@ -77,6 +77,18 @@
   barata entre las aprendidas; una regla general («nadie repite algo cientos de veces si sabe otra manera»)
   en lugar de los topes. Carlos (7 oct): «en el futuro vemos si es necesario; si no, no».
 
+## DEUDAS DE PRUDENCIA (Carlos, 10 oct) — fallas conocidas, fuera de 6.º
+Son respuestas falsas o incompletas que se arreglan **cuando llegue su tema**, no antes. Comprobadas el 10 oct.
+**REGLA: cada paso nuevo que toque estos temas tiene que mirar esta lista y TACHAR (~~así~~, con el paso que lo
+arregló) lo que arregle.**
+- `resolver: (r + 1) x (r + 1) = 0` → «ninguna» (FALSA: r = −1). Igual de mal: `(r - 1) x (r + 3) = 0` → solo 1 (falta −3)
+  y `(r + 5) x r = 0` → solo 0 (falta −5). Causa: «probar en orden» busca solo desde el 0. Se arregla con las
+  **ecuaciones con productos** (si un producto es 0, uno de los factores es 0).
+- `resolver: r x r = 1` → solo 1; `m x m = 144` → solo 12; `k x (k + 1) = 56` → solo 7. Faltan las soluciones negativas
+  (−1, −12, −8). Se arregla con **multiplicar negativos**.
+- `resolver: 0 : r = 0` → «todavía no» (lo exacto: cualquier número menos el 0). Se arregla si algún día hace falta una
+  respuesta «cualquiera menos…».
+
 ## ✅ EL PLAN U ESTÁ CUMPLIDO (9 oct): se ha vuelto al orden de NCETM (6.º)
 **REGLA desde el plan U (Carlos, 9 oct): lo nuevo entra por el MODELO COMÚN.** Las técnicas nuevas son PIEZAS (operadores)
 que el resolvedor universal puede usar en cualquier problema; **no se abre ninguna puerta ni formato nuevo** para un tema.
