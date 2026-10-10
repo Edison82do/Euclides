@@ -423,3 +423,8 @@ resolver: (r - 2) x (r - 2) = 1   | r = 1; r = 3 | A.1: probar en orden sin para
 7 : 4 + 9 : 4                     | 4 | M.22: el mismo divisor: juntar y repartir una vez
 verdad: 12 : 3 + 6 : 3 = 18 : 6   | falso | M.22: los divisores no se juntan
 (3 + 5 + 7) : 3                   | 5 | M.22: la media sin letras (esperaba 2.28)
+4.5 x 1000                        | 4500 | M.23: cada cifra sube tres sitios
+3.5 : 100                         | 0.035 | M.23: cada cifra baja dos sitios
+resolver: 375 : 1000              | 0.375 | M.23: un entero entre 1000
+resolver: Una cuerda mide 3.2 km. ¿Cuántos m mide? | 3200 m | M.23: 1 km = 1000 m
+resolver: Un camino mide 2500 m. ¿Cuántos km mide? | 2.5 km | M.23: al reves, 2500 : 1000

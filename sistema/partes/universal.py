@@ -423,12 +423,15 @@ def _u_divisor_comun(e, saber, pasos):
     res = r["resultado"]
     q, resto, sub = res["valor"], res.get("resto", 0), []
     try:
+        sobra = ("+", resto, d, "fraccion")
+        if resto and d in _NU_POTENCIAS:          # M.23: entre 10, 100 o 1000 lo que sobra baja detras del punto
+            sobra = _nu_dividir(("+", resto, 1, "entero"), ("+", d, 1, "entero"), saber, sub)
         if not resto:
             v = _NU_CERO if q == 0 else ("+", q, 1, "entero")
         elif q == 0:
-            v = _nu_simple(("+", resto, d, "fraccion"), saber, sub)
+            v = _nu_simple(sobra, saber, sub)
         else:
-            v = _nu_sumar(("+", q, 1, "entero"), ("+", resto, d, "fraccion"), saber, sub)
+            v = _nu_sumar(("+", q, 1, "entero"), sobra, saber, sub)
     except (_NuNoSale, KeyError):
         return None
     pasos.append("EL MISMO DIVISOR, %d (NCETM 2.28): %s" % (d, r["pieza"]["nombre"]))

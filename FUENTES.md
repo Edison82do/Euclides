@@ -496,6 +496,16 @@
 - NCETM 2.28 (bloqueada desde la nube; leída por el buscador): https://ncetm.org.uk/classroom-resources/primm-228-combining-division-with-addition-and-subtraction
 - Oak National Academy (bloqueada): https://thenational.academy/pupils/programmes/maths-primary-year-6/units/order-of-operations/lessons/combine-division-with-addition-and-subtraction
 
+- **NCETM 2.29** (*Decimal place-value knowledge, multiplication and division*, Year 6; la web está bloqueada desde la nube,
+  leída por el buscador y por la lista «In the Classroom» de NCETM): unir multiplicar y dividir por 10, 100 y 1000 con el
+  valor de posición (también con decimales) y usarlo para cambiar de unidad de medida. Dos puntos: 1) multiplicar por 10,
+  100 o 1000 mueve las cifras uno, dos o tres sitios a la izquierda; dividir, a la derecha; 2) las medidas se pasan de una
+  unidad a otra multiplicando o dividiendo por 10, 100 o 1000. **Common Core 5.NBT.A.1–2** (cada sitio vale diez veces el
+  de su derecha; los patrones de los ceros y del punto con las potencias de diez) y **5.MD.A.1** (pasar de una unidad a
+  otra del mismo sistema). Usada en M.23.
+- NCETM 2.29 (bloqueada desde la nube; leída por el buscador): https://www.ncetm.org.uk/classroom-resources/primm-229-decimal-place-value-knowledge-multiplication-and-division/
+- NCETM «In the Classroom» (lista de segmentos): https://www.ncetm.org.uk/in-the-classroom/
+
 - **El cero en la multiplicación y la división** (para el arreglo A.1; ya usadas en M.2 y M.3): 0 x algo = 0 siempre
   (la propiedad del cero, Common Core 3.OA.B.5 y la *Progression* de Operations and Algebraic Thinking); 0 : algo = 0 si
   algo no es 0, y **entre 0 no se reparte** (la división entre 0 no tiene respuesta: no hay número que por 0 dé el

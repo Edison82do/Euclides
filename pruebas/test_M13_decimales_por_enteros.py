@@ -78,8 +78,8 @@ try:
     comprobar("A9 1.3 : 4 -> 0.325 (sobra: se cambia a centesimas y a milesimas)", S("1.3 : 4"), "0.325")
     comprobar("A10 35 x 0.1 -> 3.5 (por 0.1 es entre 10)", P("multiplicar_decimal", x="35", y="0.1"),
               ("3.5", "multiplicar_por_una_decima"))
-    comprobar("A11 3.5 : 10 -> 0.35 (las cifras bajan un sitio)", P("dividir_decimal", x="3.5", d="10"),
-              ("0.35", "dividir_decimal_por_10_o_100"))
+    comprobar("A11 3.5 : 10 -> 0.35 (las cifras bajan un sitio; desde M.23 lo hace la pieza de 10, 100 y 1000)",
+              P("dividir_decimal", x="3.5", d="10"), ("0.35", "entre_10_100_1000_moviendo_las_cifras"))
     comprobar("A12 0.3 x 0.4 -> todavia no (decimal por decimal, 6.o)", S("0.3 x 0.4"), "todavia_no")
     comprobar("A13 7.2 : 12 -> todavia no (NCETM 2.19: entre una cifra)", S("7.2 : 12"), "todavia_no")
     comprobar("A14 1.5 x 24 -> todavia no (por dos cifras: la multiplicacion larga)", S("1.5 x 24"), "todavia_no")

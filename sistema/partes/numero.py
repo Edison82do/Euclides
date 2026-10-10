@@ -252,11 +252,33 @@ def _nu_restar(x, y, saber, pasos):
     return _nu_sumar(x, _nu_opuesto(y), saber, pasos)
 
 
+def _nu_moviendo_las_cifras(pregunta, situacion, signo, saber, pasos):
+    """M.23 (NCETM 2.29): por o entre 10, 100 o 1000, las PIEZAS que mueven las cifras.  Si no sale (mas de tres
+    cifras detras del punto), None: se hace lo de siempre."""
+    r = aplicar(pregunta, situacion, saber)
+    if r["conclusion"] != "hecho":
+        return None
+    pasos.append("%s  (%s)" % (r["resultado"]["cuenta"], r["resultado"]["metodo"]))
+    n = _nu_leer(r["valor"])
+    return n if signo == "+" else _nu_opuesto(n)
+
+
+def _nu_es_potencia(x):
+    """10, 100 o 1000 (un entero sin signo): es MIRAR, no calcular."""
+    return x[0] == "+" and x[2] == 1 and x[1] in _NU_POTENCIAS[1:]
+
+
 def _nu_multiplicar(x, y, saber, pasos):
     x, y = _nu_preparar(x, y, saber, pasos)
     tipo = _nu_tipo(x, y)
     if _nu_es_cero(x) or _nu_es_cero(y):
         return _NU_CERO
+    for d, p in ((x, y), (y, x)):                    # M.23: un decimal por 10, 100 o 1000: las cifras suben
+        if d[3] == "decimal" and d[2] != 1 and _nu_es_potencia(p):
+            r = _nu_moviendo_las_cifras("multiplicar_decimal", {"x": _nu_texto(("+", d[1], d[2], d[3])),
+                                                                "y": "%d" % p[1]}, d[0], saber, pasos)
+            if r is not None:
+                return r
     signo = "+" if x[0] == y[0] else "-"
     arriba = _nu_por(x[1], y[1], saber, pasos)
     abajo = _nu_por(x[2], y[2], saber)
@@ -274,6 +296,12 @@ def _nu_dividir(x, y, saber, pasos):
     if _nu_es_cero(x):
         return _NU_CERO
     signo = "+" if x[0] == y[0] else "-"
+    if _nu_es_potencia(_nu_opuesto(y) if y[0] == "-" else y) and (x[2] == 1 or x[3] == "decimal"):
+        # M.23: un entero o un decimal entre 10, 100 o 1000: las cifras bajan (375 : 1000 = 0.375)
+        r = _nu_moviendo_las_cifras("dividir_decimal", {"x": _nu_texto(("+", x[1], x[2], x[3])),
+                                                        "d": "%d" % y[1]}, signo, saber, pasos)
+        if r is not None:
+            return r
     if y[2] != 1:                    # entre una fraccion o un decimal: con el MISMO DE ABAJO, cuantas veces cabe
         xa, ya, d = _nu_mismo_de_abajo(x, y, saber, pasos)
         pasos.append("con el mismo de abajo, dividir es ver cuantas veces cabe: %d/%d : %d/%d = %d : %d"

@@ -20,6 +20,9 @@ definicion: |
   REGLA FIJADA 3 - LAS UNIDADES.  Lo que es 'cuadrada' (el area) se dice en unidades cuadradas; lo 'cubica' (el
   volumen), en cubicas (G.1, M.14).
 
+  REGLA FIJADA 5 (M.23) - CAMBIAR DE UNIDAD.  Las equivalencias de las medidas ('medidas', abajo) son lo que se sabe:
+  si la misma cosa sale en km y en m, los m son 1000 veces los km.  La unidad mas pequena da el numero MAS GRANDE.
+
   REGLA FIJADA 4 (U.3b) - 'UN LADO / EL OTRO' Y 'A POR B POR C'.  Los 'pares' de una figura son las dos medidas
   distintas que se nombran igual ('un lado' del rectangulo es el largo; 'el otro', el ancho).  'Mide A por B por C'
   da sus 'dimensiones' en ese orden (Vergnaud: el producto de medidas).
@@ -67,6 +70,30 @@ figuras:
     otros_nombres: lado=arista
     formulas: volumen = arista x arista x arista
     cubicas: volumen
+
+# M.23 (NCETM 2.29, punto 2; 5.MD.A.1): LAS EQUIVALENCIAS DE LAS MEDIDAS.  Conocimiento del mundo, como las formulas
+# de las figuras: 1 de la unidad grande son 'veces' de la pequena (pequena = veces x grande).  Los nombres, como los
+# lee el lector (en singular; 'kg' ya es 'kilo' y 'g' ya es 'gramo' por frases.kn).  Solo se usan cuando la MISMA cosa
+# sale en dos unidades de la misma magnitud ('la cuerda mide 3.2 km; cuantos m mide?').
+medidas:
+  - grande: km, kilometro
+    pequena: m, metro
+    veces: 1000
+  - grande: m, metro
+    pequena: cm, centimetro
+    veces: 100
+  - grande: m, metro
+    pequena: mm, milimetro
+    veces: 1000
+  - grande: cm, centimetro
+    pequena: mm, milimetro
+    veces: 10
+  - grande: kilo
+    pequena: gramo
+    veces: 1000
+  - grande: l, litro
+    pequena: ml, mililitro
+    veces: 1000
 
 palabras:
   - nombre: consecutivos

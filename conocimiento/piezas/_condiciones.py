@@ -107,6 +107,14 @@ def _m13_el_entero_es_corto(s):
     return ent in ("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "100")
 
 
+def _m23_en_cifras(x):
+    """M.23: '375', '3.5' (cifras y como mucho un punto entre ellas).  Es MIRAR los simbolos, no calcular."""
+    if not isinstance(x, str):
+        return False
+    e, _, d = x.partition(".")
+    return bool(e) and e.isdigit() and (d == "" and "." not in x or d.isdigit())
+
+
 # ---- tres factores (paso M.14; NCETM 2.20): situacion {"factores": ["25", "7", "4"]} (en texto: puede haber UN decimal)
 def _m14_factores(s):
     f = s.get("factores")
@@ -951,6 +959,10 @@ CONDICIONES = {
     "la_fila_conocida_se_puede_hacer_mas_pequena": _m21_mas_pequena,
     # ---- M.22 combinar la division con la suma y la resta (NCETM 2.28)
     "son_divisiones_con_el_mismo_divisor": _m22_mismo_divisor,
+    # ---- M.23 el valor de posicion de los decimales: x y : por 10, 100 y 1000 (NCETM 2.29)
+    "el_entero_es_10_100_o_1000": lambda s, u: (s["y"] if _m13_es_decimal(s["x"]) else s["x"]) in ("10", "100", "1000"),
+    "el_divisor_es_10_100_o_1000": lambda s, u: s.get("d") in ("10", "100", "1000"),
+    "lo_que_se_divide_esta_escrito_en_cifras": lambda s, u: _m23_en_cifras(s.get("x")),
 }
 
 DE_APLICACION = {"el_divisor_no_es_cero", "hay_bastantes", "hay_bastantes_al_deshacer", "la_parte_cabe_en_el_todo",

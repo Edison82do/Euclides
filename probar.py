@@ -602,6 +602,18 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         (3 + 5 + 7) : 3                   -> 5     la media sin letras (M.20)
         Se comprueba con las contrarias: 6 x 3 = 18; 18 - 6 = 12.
 
+  x Y : POR 10, 100 Y 1000 MOVIENDO LAS CIFRAS; CAMBIAR DE UNIDAD  ->  paso M.23 (6.o; NCETM 2.29)
+        4.5 x 1000                        -> 4500   cada cifra sube TRES sitios (uno por cada cero); el punto se queda
+        3.5 : 100                         -> 0.035  cada cifra baja DOS sitios; los sitios vacios, un cero
+        resolver: 375 : 1000              -> 0.375  tambien un entero (antes 3/8: el mismo numero)
+        resolver: n x 100 = 37            -> n = 0.37
+        3.5 : 1000                        -> todavia no  (quedarian 4 cifras detras del punto: llego a las milesimas)
+        resolver: Una cuerda mide 3.2 km. ¿Cuántos m mide?   -> 3200 m   (lo que se sabe: 1 km = 1000 m)
+        resolver: Un camino mide 2500 m. ¿Cuántos km mide?   -> 2.5 km
+        Las equivalencias (km-m, m-cm, m-mm, cm-mm, kilo-gramo, litro-ml) estan en conocimiento/relaciones.kn.
+        Se comprueba moviendo las cifras al reves (4500 : 1000 = 4.5).  '3 m y 25 cm' (una medida compuesta):
+        todavia no las junta (no entiendo, mejor que una respuesta falsa).
+
   EL CERO AL DESPEJAR  ->  arreglo A.1 (prudencia: nunca una respuesta falsa), en el RESOLVEDOR
         resolver: 0 : r = 0               -> todavia no: CUALQUIER numero menos el 0 (0 : algo es 0; entre 0 no)
         resolver: 0 : (r - 2) = 0         -> todavia no: CUALQUIER numero menos el 2

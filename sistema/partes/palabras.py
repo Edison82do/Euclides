@@ -127,7 +127,10 @@ def _pa_relaciones(saber):
                         "cuadradas": _pa_lista(fg.get("cuadradas")), "cubicas": _pa_lista(fg.get("cubicas"))})
     palabras = [{"nombre": p["nombre"], "palabras": _pa_lista(p.get("palabras")), "formula": p.get("formula", "")}
                 for p in r.get("palabras") or []]
-    out = {"estructuras": dict(r.get("estructuras") or {}), "figuras": figuras, "palabras": palabras}
+    medidas = [{"grande": set(_pa_lista(m.get("grande"))), "pequena": set(_pa_lista(m.get("pequena"))),
+                "veces": escribir_cifras(cifras_de(str(m.get("veces"))))} for m in r.get("medidas") or []]
+    out = {"estructuras": dict(r.get("estructuras") or {}), "figuras": figuras, "palabras": palabras,
+           "medidas": medidas}
     saber["_pa_relaciones"] = out
     return out
 
@@ -612,6 +615,8 @@ def _pa_comprobar_cosas(ctx, rels):
     no se junta; algo se leyo mal: mejor no entender que dar una respuesta falsa."""
     cosas = _pa_cosas_de_letras(ctx)
     for r in rels:
+        if r.get("sabido") and r["porque"] == "medida":    # M.23: 1 km = 1000 m cambia de unidad a proposito
+            continue
         izq, der = r["rel"]
         a, ch = _pa_cosa_de_arbol(izq, cosas, ctx)
         if ch is None:
@@ -621,6 +626,32 @@ def _pa_comprobar_cosas(ctx, rels):
         if ch:
             raise ValueError("'%s' junta cosas distintas (%s con %s): eso no se suma ni se iguala"
                              % (_u_rel_texto(r["rel"]), " ".join(ch[0]), " ".join(ch[1])))
+
+
+def _pa_medida_compuesta(ctx, rels):
+    """M.23 (prudencia): si la misma cosa se da con NUMERO en dos unidades ('la cuerda mide 3 m y 25 cm'), no son dos
+    medidas que tengan que cuadrar (1 m = 100 cm): es UNA medida compuesta (3 m + 25 cm) o algo mal leido.  Todavia no
+    se juntan: mejor no entender que dar una respuesta falsa ('25 cm' o 'ninguna')."""
+    dadas = set()
+    for r in ctx["rels"]:
+        if r.get("sabido"):
+            continue
+        izq, der = r["rel"]
+        for a, b in ((izq, der), (der, izq)):
+            if a[0] == "letra" and not _pa_hay_letra(b):
+                dadas.add(a[1])
+    for r in rels:
+        if r.get("sabido") and r["porque"] == "medida" and set(_u_letras_rel(r["rel"])) <= dadas:
+            raise ValueError("'%s': la misma cosa se da en dos unidades, con un numero en cada una (una medida "
+                             "compuesta, como 3 m y 25 cm?): todavia no las junto" % r["frase"])
+
+
+def _pa_hay_letra(e):
+    if e[0] == "letra":
+        return True
+    if e[0] in ("par", "neg"):
+        return _pa_hay_letra(e[1])
+    return e[0] == "op" and (_pa_hay_letra(e[2]) or _pa_hay_letra(e[3]))
 
 
 def _pa_incognita(ctx, base):
@@ -1796,6 +1827,18 @@ def _pa_lo_que_se_sabe(ctx):
                                        "grupos iguales: %s de %s = %s x lo de cada %s" % (
                                            " ".join(q2["cosa"]), raiz["nombre"], " ".join(q1["cosa"]),
                                            " ".join(cada["clave"])), "grupos_iguales")
+    for raiz in [e for e in ctx["entes"] if e.get("hijos")]:     # M.23: la misma cosa en dos unidades (km y m)
+        familia = [raiz]
+        familia.extend(raiz["hijos"])
+        for grande in familia:
+            for pequena in familia:
+                eq = _pa_equivalencia(ctx, grande.get("cosa"), pequena.get("cosa"))
+                if grande is pequena or eq is None or grande["versiones"][1:] or pequena["versiones"][1:]:
+                    continue                       # si una cambia, no se sabe en que momento valen lo mismo: no se usa
+                _pa_apuntar_sabido(ctx, ("letra", pequena["versiones"][0]),
+                                   ("op", "x", ("num", ("+", eq["veces"], 1, "entero")), ("letra", grande["versiones"][0])),
+                                   "lo que se sabe de las medidas: 1 %s = %d %s" % (
+                                       grande["cosa"][0], eq["veces"], pequena["cosa"][0]), "medida")
     for todo in ctx["entes"]:                              # las partes de un todo ('13 son ninas'): parte + parte = todo
         partes = ctx["partes"].get(todo["nombre"]) or []
         if len(partes) > 1:
@@ -1813,6 +1856,15 @@ def _pa_lo_que_se_sabe(ctx):
         roles = {n: ("letra", _pa_ente(ctx, [n])["nombre"]) for n in ("vuelta", "pago", "lo_que_paga")}
         _pa_apuntar_sabido(ctx, _pa_rellenar(izq, roles), _pa_rellenar(der, roles),
                            "la vuelta: %s" % ctx["rel"]["estructuras"]["vuelta"], "vuelta")
+
+
+def _pa_equivalencia(ctx, grande, pequena):
+    """M.23 (NCETM 2.29): 'km' y 'm' (o 'm de cuerda' y 'cm de cuerda'): la fila de medidas de relaciones.kn que pasa de
+    la unidad grande a la pequena; None si no son la misma cosa en dos unidades de la misma magnitud."""
+    if not grande or not pequena or grande[1:] != pequena[1:]:
+        return None
+    return next((m for m in ctx["rel"].get("medidas") or [] if grande[0] in m["grande"] and pequena[0] in m["pequena"]),
+                None)
 
 
 def _pa_apuntar_sabido(ctx, izq, der, frase, porque):
@@ -1866,6 +1918,7 @@ def _pa_modelo(texto, ctx, lecturas):
     _pa_prudencia(ctx, conectadas, pide)                  # U.4: un numero que sobra sin saber por que
     _pa_sin_callejones(conectadas, pide)
     _pa_comprobar_cosas(ctx, conectadas)                  # U.3b: nada junta cosas distintas
+    _pa_medida_compuesta(ctx, conectadas)                 # M.23: '3 m y 25 cm' no son dos medidas de lo mismo
     for r in list(conectadas):
         for l in _u_letras_rel(r["rel"]):
             letras.add(l)

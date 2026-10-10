@@ -88,6 +88,9 @@ arregló) lo que arregle.**
   (−1, −12, −8). Se arregla con **multiplicar negativos**.
 - `resolver: 0 : r = 0` → «todavía no» (lo exacto: cualquier número menos el 0). Se arregla si algún día hace falta una
   respuesta «cualquiera menos…».
+- **Pendiente menor (Carlos, 10 oct; NO es de 2.29, sin arreglar):** `5 : 5 - 15 : 5` → −2, pero `2 x 3 - 4 x 5` → «todavía no».
+  Las dos se bajan de cero y deberían responder igual. (La primera la coge el resolvedor desde M.22, que ya sabe la recta;
+  la segunda la coge la puerta vieja de M.16, que respeta «números para contar».) Decidir cuál de las dos es la del año.
 
 ## ✅ EL PLAN U ESTÁ CUMPLIDO (9 oct): se ha vuelto al orden de NCETM (6.º)
 **REGLA desde el plan U (Carlos, 9 oct): lo nuevo entra por el MODELO COMÚN.** Las técnicas nuevas son PIEZAS (operadores)
@@ -104,7 +107,19 @@ con NÚMEROS Y SÍMBOLOS; la parte hablada (U.3, U.3b) NO se sigue ampliando (se
 PRUDENCIA: nunca una respuesta falsa (un número que se queda sin usar y no se sabe si sobra, una frase con un cambio que no
 se entendió, una respuesta que mezcla cosas → «no entiendo», diciendo qué frase o qué número). La fase U.3c, descartada.
 
-## Dónde se quedó (10 oct 2026, tras M.22)
+## Dónde se quedó (10 oct 2026, tras M.23)
+Hecho **M.23 el valor de posición de los decimales: x y : por 10, 100 y 1000; cambiar de unidad** (NCETM 2.29, *Decimal
+place-value knowledge, multiplication and division*; diario `2026-10-10-paso-M23-decimales-por-10-100-1000.md`): LAS CIFRAS SE
+MUEVEN con dos PIEZAS de las preguntas que ya había (`decimal_por_10_100_1000_moviendo_las_cifras`,
+`entre_10_100_1000_moviendo_las_cifras`, rapidez 1.5; listas de cifras con su sitio, vuelta al revés); las coge sola la puerta
+de M.13 y las pide el número común (`_nu_moviendo_las_cifras` en `numero.py`): `375 : 1000` → 0.375 (antes 3/8, el mismo número).
+CAMBIAR DE UNIDAD: las equivalencias en DATOS (`medidas` en `relaciones.kn`), una relación sabida en `palabras.py`
+(`_pa_equivalencia`) cuando la misma cosa sale en dos unidades y ninguna cambia. Prudencia: `3 m y 25 cm` (medida compuesta) decía
+25 cm (FALSO) → no entiendo. Preguntas abiertas: ¿«0.375» o «3/8» al dividir un entero entre 1000 en 6.º? (se eligió el decimal,
+como enseña 2.29); ¿juntar medidas compuestas (3 m 25 cm = 325 cm)?; km → cm sin pasar por m: todavía no.
+**Siguiente: NCETM 2.30** (el último segmento de Spine 2; mirar en el buscador qué es; la web de NCETM sigue bloqueada).
+
+## Dónde se quedó antes (10 oct 2026, tras M.22)
 Hecho **M.22 combinar la división con la suma y la resta** (NCETM 2.28; diario `2026-10-10-paso-M22-dividir-combinado.md`):
 EL ORDEN lo hace el resolvedor (ya ponía la x y la : antes que la + y la −): la puerta `combinar` de M.16 lleva
 `no_sabe=_co_lleva_division` en la tabla y le pasa las cuentas con `:` (sin puerta nueva); la explicación enseña el error de
