@@ -744,6 +744,34 @@ def _m24_producto_entre_dos(s, u):
     return True
 
 
+def _f8_dos_fracciones(s, u):
+    """F.8: dos fracciones (arriba, abajo) con enteros que tienen nombre en la lista, y ningun cero."""
+    for f in (s.get("a"), s.get("b")):
+        if not isinstance(f, tuple) or len(f) != 2:
+            return False
+        for x in f:
+            if not isinstance(x, int) or isinstance(x, bool) or u.decir(x) in (None, "cero"):
+                return False
+    return True
+
+
+def _f8_fraccion_entre_entero(s, u):
+    """F.8: a/b : n con a, b y n enteros que tienen nombre en la lista, y ningun cero."""
+    for x in (s.get("a"), s.get("b"), s.get("n")):
+        if not isinstance(x, int) or isinstance(x, bool) or u.decir(x) in (None, "cero"):
+            return False
+    return True
+
+
+def _f8_cabe_en_el_de_arriba(s, u):
+    """El entero cabe JUSTO en el de arriba?  Se mira DIVIDIENDO (M.3, M.8, M.18); si no se sabe, no."""
+    try:
+        r = u.usar("dividir", total=s["a"], divisor=s["n"])
+    except Exception:
+        return False
+    return not r["resultado"].get("resto", 0)
+
+
 CONDICIONES = {
     "pocas_centenas_para_contarlas": lambda s, u: _n6_pocas_cosas(s, u, 2),
     "pocos_miles_para_contarlos": lambda s, u: _n6_pocas_cosas(s, u, 3),
@@ -975,6 +1003,10 @@ CONDICIONES = {
     # ---- M.24 area y perimetro 2: la mitad de un producto (NCETM 2.30, punto 2: el area del triangulo)
     "es_un_producto_de_dos_enteros_entre_dos": _m24_producto_entre_dos,
     "uno_de_los_factores_es_par": lambda s, u: _eq_es_par(s["a"], u) or _eq_es_par(s["b"], u),
+    # F.8 (NCETM 3.9): fraccion por fraccion; una fraccion entre un entero
+    "son_dos_fracciones": _f8_dos_fracciones,
+    "es_una_fraccion_entre_un_entero": _f8_fraccion_entre_entero,
+    "el_entero_cabe_justo_en_el_de_arriba": _f8_cabe_en_el_de_arriba,
 }
 
 DE_APLICACION = {"el_divisor_no_es_cero", "hay_bastantes", "hay_bastantes_al_deshacer", "la_parte_cabe_en_el_todo",

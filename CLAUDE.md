@@ -107,7 +107,19 @@ con NÚMEROS Y SÍMBOLOS; la parte hablada (U.3, U.3b) NO se sigue ampliando (se
 PRUDENCIA: nunca una respuesta falsa (un número que se queda sin usar y no se sabe si sobra, una frase con un cambio que no
 se entendió, una respuesta que mezcla cosas → «no entiendo», diciendo qué frase o qué número). La fase U.3c, descartada.
 
-## Dónde se quedó (10 oct 2026, tras M.24)
+## Dónde se quedó (10 oct 2026, tras F.8)
+Hecho **F.8 multiplicar fracciones y dividir una fracción entre un entero** (NCETM 3.9, *Multiplying fractions and dividing
+fractions by a whole number*, el primero de Spine 3 en 6.º; diario `2026-10-10-paso-F8-multiplicar-y-dividir-fracciones.md`):
+el número común ya hacía las cuentas por dentro; ahora son PIEZAS con su vuelta, que pide `_nu_con_pieza` (`numero.py`):
+`fraccion_por_fraccion` (`fraccion_por_fraccion_arriba_por_arriba` 6; la vuelta mira también el punto 1, «por menos de un entero,
+más pequeño») y `fraccion_entre_entero` (`..._repartiendo_los_de_arriba` 3 si el entero cabe en el de arriba; `..._por_la_inversa`
+6, 2/3 : 4 = 2/3 x 1/4). La puerta F.5 pasa la fracción por fracción al resolvedor (`no_sabe=_fr_es_fraccion_por_fraccion`):
+`2/3 x 3/4` → 1/2 (antes «todavía no»). Un mixto por una fracción (`2 1/2 x 1/3`): sigue «todavía no».
+Preguntas abiertas: ¿simplificar ANTES de multiplicar (2/3 x 3/4: los 3 se van)? (no está en los puntos de 3.9); dividir una
+fracción entre una fracción ya salía (KS3) y no se tocó; `-2/3 x -3/4` → no entiendo (el lector, ya antes; con paréntesis sí).
+**Siguiente: NCETM 3.10** (mirar en el buscador qué es; la web de NCETM sigue bloqueada).
+
+## Dónde se quedó antes (10 oct 2026, tras M.24)
 Hecho **M.24 contextos multiplicativos: área y perímetro 2** (NCETM 2.30, *Multiplicative contexts: area and perimeter 2*, el
 ÚLTIMO segmento de Spine 2; diario `2026-10-10-paso-M24-area-perimetro-2.md`): LAS FÓRMULAS del paralelogramo (`area = base x
 altura`, el lado inclinado solo en el perímetro) y del triángulo (`area = base x altura : 2`) son DATOS en `relaciones.kn` (con

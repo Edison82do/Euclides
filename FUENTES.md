@@ -516,6 +516,16 @@
 - NCETM 2.30 (bloqueada desde la nube; leída por el buscador): https://www.ncetm.org.uk/classroom-resources/primm-230-multiplicative-contexts-area-and-perimeter-2/
 - NCETM, índice de Spine 2: https://ncetm.org.uk/teaching-for-mastery/mastery-materials/primary-mastery-professional-development/multiplication-and-division/
 
+- **NCETM 3.9** (*Multiplying fractions and dividing fractions by a whole number*, Year 6; la web está bloqueada desde la
+  nube, leída por el buscador). Tres puntos: 1) multiplicar una fracción por una fracción propia la hace más pequeña; para
+  multiplicar dos fracciones, arriba por arriba y abajo por abajo; 2) dividir una fracción entre un entero también la hace
+  más pequeña; se convierte en una multiplicación equivalente; 3) cuando el entero es factor del de arriba, hay un método
+  más eficiente (repartir los de arriba). El error típico (NCETM, *Subject Knowledge Audit*, fracciones): multiplicar
+  arriba y abajo por el entero. **Common Core 5.NF.B.4** (fracción por fracción), **5.NF.B.5** (multiplicar es escalar) y
+  **5.NF.B.7a** (una fracción unitaria entre un entero). Usada en F.8.
+- NCETM 3.9 (bloqueada desde la nube; leída por el buscador): https://ncetm.org.uk/classroom-resources/primm-309-multiplying-fractions-and-dividing-fractions-by-a-whole-number/
+- NCETM, *Subject Knowledge Audit* (fracciones): https://www.ncetm.org.uk/media/k1bbjgsk/pska-frac-q10.pdf
+
 - **El cero en la multiplicación y la división** (para el arreglo A.1; ya usadas en M.2 y M.3): 0 x algo = 0 siempre
   (la propiedad del cero, Common Core 3.OA.B.5 y la *Progression* de Operations and Algebraic Thinking); 0 : algo = 0 si
   algo no es 0, y **entre 0 no se reparte** (la división entre 0 no tiene respuesta: no hay número que por 0 dé el

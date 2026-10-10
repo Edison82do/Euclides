@@ -60,7 +60,10 @@ try:
     comprobar("A3 12 x 1/4 y 1/4 x 12 -> 3", (S("12 x 1/4"), S("1/4 x 12")), ("3", "3"))
     comprobar("A4 12 x 3/4 -> 9", S("12 x 3/4"), "9")
     comprobar("A5 5 x 1/5 -> 1;  0 x 3/4 -> 0;  4 x 3/4 -> 3", (S("5 x 1/5"), S("0 x 3/4"), S("4 x 3/4")), ("1", "0", "3"))
-    comprobar("A6 2/3 x 3/4 -> todavia no (6.o)", S("2/3 x 3/4"), "todavia_no")
+    # caso viejo (hasta F.8): 2/3 x 3/4 -> todavia_no (fraccion por fraccion era de 6.o).  Desde F.8 (NCETM 3.9) es del ano:
+    # lo hace el resolvedor; un mixto por una fraccion sigue 'todavia no'
+    comprobar("A6 2/3 x 3/4 -> 1/2 desde F.8 (6.o, NCETM 3.9); 2 1/2 x 1/3 -> todavia no",
+              (S("2/3 x 3/4"), S("2 1/2 x 1/3")), ("1/2", "todavia_no"))
     comprobar("A7 3 x 4 sigue siendo de enteros", S("3 x 4"), "12")
 
     print("\nB - n x a/b Y n x (mixto), CONTRA EL TESTIGO (muestra)")

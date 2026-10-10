@@ -280,6 +280,11 @@ def _nu_multiplicar(x, y, saber, pasos):
             if r is not None:
                 return r
     signo = "+" if x[0] == y[0] else "-"
+    if x[3] == "fraccion" and y[3] == "fraccion" and x[2] != 1 and y[2] != 1:
+        # F.8 (NCETM 3.9, punto 1): fraccion por fraccion, con su PIEZA (y su vuelta)
+        r = _nu_con_pieza("fraccion_por_fraccion", {"a": (x[1], x[2]), "b": (y[1], y[2])}, saber, pasos)
+        if r is not None:
+            return _nu_simple((signo, r[0], r[1], tipo), saber, pasos)
     arriba = _nu_por(x[1], y[1], saber, pasos)
     abajo = _nu_por(x[2], y[2], saber)
     if x[2] != 1 or y[2] != 1:
@@ -302,6 +307,11 @@ def _nu_dividir(x, y, saber, pasos):
                                                         "d": "%d" % y[1]}, signo, saber, pasos)
         if r is not None:
             return r
+    if y[2] == 1 and x[2] != 1 and x[3] == "fraccion":
+        # F.8 (NCETM 3.9, puntos 2 y 3): una fraccion entre un entero, con sus PIEZAS (elegidas por el costo)
+        r = _nu_con_pieza("fraccion_entre_entero", {"a": x[1], "b": x[2], "n": y[1]}, saber, pasos)
+        if r is not None:
+            return _nu_simple((signo, r[0], r[1], tipo), saber, pasos)
     if y[2] != 1:                    # entre una fraccion o un decimal: con el MISMO DE ABAJO, cuantas veces cabe
         xa, ya, d = _nu_mismo_de_abajo(x, y, saber, pasos)
         pasos.append("con el mismo de abajo, dividir es ver cuantas veces cabe: %d/%d : %d/%d = %d : %d"
@@ -316,6 +326,19 @@ def _nu_dividir(x, y, saber, pasos):
     pasos.append("%s : %d no se reparte justo: cada trozo se parte en %d -> %d/%d"
                  % (_nu_texto(("+", x[1], x[2], x[3])), y[1], y[1], x[1], abajo))
     return _nu_simple((signo, x[1], abajo, "fraccion" if tipo == "entero" else tipo), saber, pasos)
+
+
+def _nu_con_pieza(pregunta, situacion, saber, pasos):
+    """F.8: una cuenta de fracciones que hace una PIEZA (con su vuelta).  Deja sus lineas y devuelve (arriba, abajo);
+    None si ninguna pieza sale (se hace lo de antes: el mismo numero)."""
+    r = aplicar(pregunta, situacion, saber)
+    if r["conclusion"] != "hecho":
+        return None
+    res = r["resultado"]
+    pasos.append(res["metodo"])
+    pasos.extend(res["pasos"])
+    pasos.append("compruebo: %s" % res["vuelta"])
+    return r["valor"]
 
 
 _NU_CUENTAS = {"+": _nu_sumar, "-": _nu_restar, "x": _nu_multiplicar, ":": _nu_dividir}

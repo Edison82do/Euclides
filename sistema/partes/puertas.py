@@ -563,7 +563,8 @@ def _pu_tabla():
           mira_no_entiendo=False),
         P("millar", E("millar"), explicar_millar),
         P("comparar_numeros", lambda t, tl, s: es_comparar_numeros(t), explicar_comparar_numeros),
-        P("fraccion", lambda t, tl, s: es_orden_fraccion(t), explicar_orden_fraccion),
+        P("fraccion", lambda t, tl, s: es_orden_fraccion(t), explicar_orden_fraccion,
+          no_sabe=_fr_es_fraccion_por_fraccion),          # F.8: fraccion por fraccion (NCETM 3.9) es del ano
         P("dividir", lambda t, tl, s: es_division(t), explicar_dividir, _pu_r_dividir),
         P("multiplicar", lambda t, tl, s: es_multiplicacion(t), explicar_multiplicar,
           lambda t, s: _pu_valor_o(decidir_multiplicar(t, s), ("hecho", "desiguales"))),

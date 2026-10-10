@@ -625,6 +625,16 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         FALSO).  Area y perimetro no van juntos: comparar: rectangulo 6 x 4 y rectangulo 8 x 3 (G.1).
         La escala del perimetro, con la tabla de razon: resolver: 4 : 14 = 12 : p  -> 42 (M.21).
 
+  MULTIPLICAR FRACCIONES Y DIVIDIR UNA FRACCION ENTRE UN ENTERO  ->  paso F.8 (6.o; NCETM 3.9)
+        2/3 x 3/4                         -> 1/2    arriba por arriba y abajo por abajo: 6/12 (y se simplifica)
+                                          (3/4 es menos que un entero: el resultado es mas pequeno que 2/3)
+        2/3 de 3/4                        -> 1/2    (lo mismo: 'de' es por)
+        2/3 : 4                           -> 1/6    convertirlo en una multiplicacion: 2/3 x 1/4 = 2/12
+        6/7 : 3                           -> 2/7    el 3 cabe justo en el 6: se reparten los de arriba (el corto)
+        resolver: r : 4 = 2/3             -> r = 8/3
+        Son PIEZAS (fraccion_por_fraccion, fraccion_entre_entero), elegidas por su costo; cada una se comprueba
+        con la contraria (deshacer dividiendo; el resultado por el entero vuelve a la de partida).
+
   EL CERO AL DESPEJAR  ->  arreglo A.1 (prudencia: nunca una respuesta falsa), en el RESOLVEDOR
         resolver: 0 : r = 0               -> todavia no: CUALQUIER numero menos el 0 (0 : algo es 0; entre 0 no)
         resolver: 0 : (r - 2) = 0         -> todavia no: CUALQUIER numero menos el 2
@@ -665,7 +675,7 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         3 x 2/5                -> 1 1/5   2/5 + 2/5 + 2/5 = 6 quintos (el de abajo no se multiplica)
         3 x 1 2/5              -> 4 1/5   partiendo: 3 enteros y 6/5;  por impropias: 3 x 7/5 = 21/5
         12 x 3/4               -> 9       y la otra lectura: 3/4 de 12 (repartir en 4, tomar 3)
-        2/3 x 3/4              -> todavia_no (fraccion por fraccion: 6.o)
+        2/3 x 3/4              -> 1/2     desde F.8 (6.o): ver MULTIPLICAR FRACCIONES (2 1/2 x 1/3: todavia no)
 
   FRACCIONES EQUIVALENTES  ->  valen lo mismo; SIMPLIFICAR (paso F.6; NCETM 3.7; 4.NF.A.1)
         simplificar: 12/18     -> 2/3     paso a paso: 6/9 (entre 2), 2/3 (entre 3); no se queda en 6/9

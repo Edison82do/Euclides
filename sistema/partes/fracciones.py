@@ -686,7 +686,8 @@ def decidir_por_fraccion(x, y, saber=None):
     if saber is None:
         saber = cargar_conocimiento()
     if x[2] is not None and y[2] is not None:
-        return {"conclusion": "todavia_no", "porque": "fraccion por fraccion es de 6.o (NCETM 3.9)"}
+        return {"conclusion": "todavia_no", "porque": "un numero mixto por una fraccion: todavia no (en 6.o, NCETM 3.9, "
+                                                      "fraccion por fraccion se hace con fracciones sin enteros delante)"}
     n, f = (x[0], y) if x[2] is None else (y[0], x)
     e, a, b = f
     p = _fr_problema(a, b, saber)
@@ -744,6 +745,20 @@ def explicar_por_fraccion(x, y, saber):
 
 
 # ---------------------------------------------------------------- la puerta
+
+def _fr_es_fraccion_por_fraccion(texto):
+    """F.8 (NCETM 3.9): dos fracciones (sin enteros delante) multiplicadas.  Este lector no lo sabe y ya es del ano: lo
+    coge el resolvedor (la tabla de puertas, sin puerta nueva).  Un mixto por una fraccion, no (sigue aqui)."""
+    t = _fr_limpio(texto)
+    if any(p.match(t) for p in (_ORDEN_FRACCION, _ORDEN_DE, _ORDEN_COMPARAR_FR, _ORDEN_ENTERO, _ORDEN_MIXTO,
+                                _ORDEN_COMPARAR_MIXTO, _ORDEN_CUENTA_FR)):
+        return False
+    m = _ORDEN_POR_FR.match(t)
+    if not m:
+        return False
+    x, y = _fr_termino(m.group("x")), _fr_termino(m.group("y"))
+    return bool(x and y and x[2] is not None and y[2] is not None and x[0] == 0 and y[0] == 0)
+
 
 
 
