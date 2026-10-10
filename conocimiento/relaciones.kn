@@ -23,6 +23,10 @@ definicion: |
   REGLA FIJADA 5 (M.23) - CAMBIAR DE UNIDAD.  Las equivalencias de las medidas ('medidas', abajo) son lo que se sabe:
   si la misma cosa sale en km y en m, los m son 1000 veces los km.  La unidad mas pequena da el numero MAS GRANDE.
 
+  REGLA FIJADA 6 (M.24) - LA PALABRA MAS LARGA MANDA.  Una palabra de figura que solo sale DENTRO de otra palabra de
+  figura mas larga ('rectangulo' en 'triangulo rectangulo', 'triangulo' en 'triangulo equilatero') no trae su figura:
+  el triangulo rectangulo es un triangulo.
+
   REGLA FIJADA 4 (U.3b) - 'UN LADO / EL OTRO' Y 'A POR B POR C'.  Los 'pares' de una figura son las dos medidas
   distintas que se nombran igual ('un lado' del rectangulo es el largo; 'el otro', el ancho).  'Mide A por B por C'
   da sus 'dimensiones' en ese orden (Vergnaud: el producto de medidas).
@@ -57,6 +61,23 @@ figuras:
     otros_nombres: []
     formulas: perimetro = 3 x lado
     cuadradas: []
+  # M.24 (NCETM 2.30, puntos 1 y 2; 6.G.A.1): el PARALELOGRAMO (cortar un triangulo y ponerlo al otro lado: un rectangulo
+  # de base x altura; el lado inclinado solo sirve para el perimetro) y el TRIANGULO (la mitad del paralelogramo de la
+  # misma base y la misma altura).  La altura es la PERPENDICULAR.
+  - nombre: paralelogramo
+    palabras: paralelogramo, paralelogramos, romboide, romboides
+    medidas: base, altura, lado, perimetro, area
+    otros_nombres: []
+    formulas: area = base x altura; perimetro = 2 x base + 2 x lado
+    cuadradas: area
+    por_que: se corta un triangulo de un lado y se pone al otro - un rectangulo de base x altura; la altura es la perpendicular, el lado inclinado solo va en el perimetro
+  - nombre: triangulo
+    palabras: triangulo, triangulos, triangular, triangulo rectangulo, triangulo isosceles, triangulo escaleno
+    medidas: base, altura, area
+    otros_nombres: []
+    formulas: area = base x altura : 2
+    cuadradas: area
+    por_que: dos triangulos iguales hacen un paralelogramo de base x altura - el triangulo es la mitad
   - nombre: caja
     palabras: caja, cajas, cuboide, prisma, ortoedro, piscina, acuario
     medidas: largo, ancho, alto, volumen
@@ -105,9 +126,10 @@ palabras:
 
 errores_tipicos:
   - Tomar el perimetro por largo x ancho (o el area por la suma de los lados): son relaciones distintas.
+  - Tomar el lado inclinado del paralelogramo por su altura; olvidar la mitad en el triangulo (M.24).
   - Leer 'el doble' como 'dos mas' (comparacion multiplicativa no es aditiva; NCETM 2.17).
   - Elegir la operacion por la palabra ('mas' -> sumar) en vez de por la relacion.
 fuentes:
   - Riley, Greeno y Heller (1983): cambio, combinacion, comparacion.  NCETM 1.28, 2.17, 1.31.
   - Bakman (2007): el conocimiento del mundo (las relaciones que no dice el texto) en el modelo.
-  - Common Core 3.MD.D.8 (perimetro), 3.MD.C.7 (area), 5.MD.C.5 (volumen); NCETM 2.16, 2.20.
+  - Common Core 3.MD.D.8 (perimetro), 3.MD.C.7 (area), 5.MD.C.5 (volumen), 6.G.A.1 (paralelogramo y triangulo); NCETM 2.16, 2.20, 2.30.

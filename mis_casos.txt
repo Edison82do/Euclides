@@ -1254,3 +1254,11 @@ resolver: Una cuerda mide 3.2 km. ¿Cuántos m mide? | 3200 m | (M.23) lo que se
 resolver: Un paquete pesa 750 g. ¿Cuántos kg pesa? | 0.75 kg | (M.23) al reves: 750 : 1000
 resolver: Una cuerda mide 3 m y 25 cm. ¿Cuántos cm mide? | no_entiendo | (M.23) medida compuesta: antes '25 cm' (FALSO)
 375 : 1000                                  | 0 resto 375 | (M.23) sin resolver: sigue la division con resto (M.9)
+# --- paso M.24 (NCETM 2.30): area y perimetro 2 - paralelogramo y triangulo (formulas en datos; piezas de la mitad de un producto)
+resolver: Un paralelogramo tiene 8 cm de base, 5 cm de lado y 4 cm de altura. ¿Cuál es su area? | 32 cm cuadrados | (M.24) la altura, no el lado inclinado
+resolver: Un paralelogramo tiene 8 cm de base, 5 cm de lado y 4 cm de altura. ¿Cuál es su perimetro? | 26 cm | (M.24) el lado inclinado va en el perimetro
+resolver: Un triangulo tiene 6 cm de base y 4 cm de altura. ¿Cuál es su area? | 12 cm cuadrados | (M.24) base x altura : 2 (antes todavia_no)
+resolver: Un triangulo tiene 20 cm2 de area y 5 cm de base. ¿Cuánto mide su altura? | 8 cm | (M.24) deshaciendo: 20 x 2 = 40; 40 : 5
+resolver: Un triangulo rectangulo tiene 6 cm de base y 4 cm de altura. ¿Cuál es su area? | 12 cm cuadrados | (M.24) antes '24' (FALSO): lo leia como rectangulo
+resolver: Un triangulo tiene 6 cm de base y 4 cm de altura. ¿Cuál es su perimetro? | todavia_no | (M.24) sin los lados no hay perimetro
+resolver: 7 x 3 : 2                         | 21/2 | (M.24) los dos impares: multiplicar y partir

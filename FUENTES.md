@@ -506,6 +506,16 @@
 - NCETM 2.29 (bloqueada desde la nube; leída por el buscador): https://www.ncetm.org.uk/classroom-resources/primm-229-decimal-place-value-knowledge-multiplication-and-division/
 - NCETM «In the Classroom» (lista de segmentos): https://www.ncetm.org.uk/in-the-classroom/
 
+- **NCETM 2.30** (*Multiplicative contexts: area and perimeter 2*, Year 6, el último segmento de Spine 2; la web está
+  bloqueada desde la nube, leída por el buscador): hallar el área de paralelogramos y triángulos con la altura
+  perpendicular; comparar áreas y perímetros; aplicar factores de escala. Cuatro puntos: 1) el área del paralelogramo es
+  la base por la altura perpendicular (misma base y altura, misma área); 2) la del triángulo, base por altura y entre dos;
+  3) la misma área puede tener distinto perímetro, y al revés; 4) con un factor de escala, el perímetro se transforma
+  por el mismo factor. **Common Core 6.G.A.1** (el área de triángulos y cuadriláteros especiales componiendo y
+  descomponiendo) y **7.G.A.1** (dibujos a escala). Usada en M.24.
+- NCETM 2.30 (bloqueada desde la nube; leída por el buscador): https://www.ncetm.org.uk/classroom-resources/primm-230-multiplicative-contexts-area-and-perimeter-2/
+- NCETM, índice de Spine 2: https://ncetm.org.uk/teaching-for-mastery/mastery-materials/primary-mastery-professional-development/multiplication-and-division/
+
 - **El cero en la multiplicación y la división** (para el arreglo A.1; ya usadas en M.2 y M.3): 0 x algo = 0 siempre
   (la propiedad del cero, Common Core 3.OA.B.5 y la *Progression* de Operations and Algebraic Thinking); 0 : algo = 0 si
   algo no es 0, y **entre 0 no se reparte** (la división entre 0 no tiene respuesta: no hay número que por 0 dé el

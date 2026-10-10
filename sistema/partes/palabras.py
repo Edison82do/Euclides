@@ -124,7 +124,8 @@ def _pa_relaciones(saber):
                         "dimensiones": _pa_lista(fg.get("dimensiones")),
                         "medidas": _pa_lista(fg.get("medidas")), "otros": otros,
                         "formulas": [x.strip() for x in fg.get("formulas", "").split(";") if x.strip()],
-                        "cuadradas": _pa_lista(fg.get("cuadradas")), "cubicas": _pa_lista(fg.get("cubicas"))})
+                        "cuadradas": _pa_lista(fg.get("cuadradas")), "cubicas": _pa_lista(fg.get("cubicas")),
+                        "por_que": fg.get("por_que") or ""})
     palabras = [{"nombre": p["nombre"], "palabras": _pa_lista(p.get("palabras")), "formula": p.get("formula", "")}
                 for p in r.get("palabras") or []]
     medidas = [{"grande": set(_pa_lista(m.get("grande"))), "pequena": set(_pa_lista(m.get("pequena"))),
@@ -1680,6 +1681,20 @@ def _pa_contexto(texto, saber):
             "de_cada": False, "quien_cambia": None, "par_ultimo": None}
 
 
+def _pa_palabra_de_figura(w, texto, ctx):
+    """M.24 (REGLA FIJADA 6 de relaciones.kn): la palabra de figura sale en el texto y NO solo dentro de otra palabra de
+    figura mas larga que tambien sale ('rectangulo' en 'triangulo rectangulo' no trae el rectangulo; 'triangulo' en
+    'triangulo equilatero' no trae el triangulo cualquiera).  Se tapan las mas largas y se mira si queda."""
+    if " %s " % w not in texto:
+        return False
+    tapado = texto
+    for fg in ctx["rel"]["figuras"]:
+        for otra in fg["palabras"]:
+            if otra != w and " %s " % w in " %s " % otra and " %s " % otra in tapado:
+                tapado = tapado.replace(" %s " % otra, " # ")
+    return " %s " % w in tapado
+
+
 def _pa_preparar_figuras_y_grupos(toks, ctx):
     """Las palabras que traen relaciones que se SABEN: una figura con sus medidas; 'dos numeros consecutivos'."""
     palabras = [t[2] for t in toks]
@@ -1690,7 +1705,7 @@ def _pa_preparar_figuras_y_grupos(toks, ctx):
         medidas = list(fg["medidas"])
         medidas.extend(fg["otros"])
         medidas.extend(fg["pares"])
-        if any(" %s " % w in texto for w in fg["palabras"]) and \
+        if any(_pa_palabra_de_figura(w, texto, ctx) for w in fg["palabras"]) and \
                 any(" %s " % m in ctx["todo_el_texto"] for m in medidas):
             ctx["figuras"].append(fg)
     for k, t in enumerate(toks):                          # 'dos numeros (pares) consecutivos': un GRUPO
@@ -1788,7 +1803,7 @@ def _pa_leer_frase(frase, toks, ctx, pregunta):
 def _pa_lo_que_se_sabe(ctx):
     """Las relaciones que no dice el texto: las formulas de las figuras, los grupos iguales, lo que se paga y la vuelta."""
     for fg in ctx["figuras_usadas"]:
-        for f in fg["formulas"]:
+        for k_f, f in enumerate(fg["formulas"]):
             izq, der = _pa_formula(f)
             roles = {}
             for m in fg["medidas"]:
@@ -1796,7 +1811,8 @@ def _pa_lo_que_se_sabe(ctx):
                 e["figura"] = fg
                 roles[m] = ("letra", e["nombre"])
             _pa_apuntar_sabido(ctx, _pa_rellenar(izq, roles), _pa_rellenar(der, roles),
-                               "lo que se sabe del %s: %s" % (fg["nombre"], f), fg["nombre"])
+                               "lo que se sabe del %s: %s%s" % (fg["nombre"], f, (" (%s)" % fg["por_que"])
+                                                                 if fg["por_que"] and not k_f else ""), fg["nombre"])
     for cada in ctx["tasas"]:                              # grupos iguales: todo = grupos x cada grupo
         u = cada.get("unidad_tasa")
         grupos = _pa_buscar_ente(ctx, list(cada["clave"]), "cuenta")

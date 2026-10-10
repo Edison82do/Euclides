@@ -735,6 +735,15 @@ def _m21_mas_pequena(s, u):
         return False
     return (r["arriba"], r["abajo"]) != t[0]
 
+def _m24_producto_entre_dos(s, u):
+    """M.24: a x b : 2 con a y b enteros (el cero no: ahi no hay nada que partir) que tienen nombre en la lista."""
+    a, b = s.get("a"), s.get("b")
+    for x in (a, b):
+        if not isinstance(x, int) or isinstance(x, bool) or u.decir(x) in (None, "cero"):
+            return False
+    return True
+
+
 CONDICIONES = {
     "pocas_centenas_para_contarlas": lambda s, u: _n6_pocas_cosas(s, u, 2),
     "pocos_miles_para_contarlos": lambda s, u: _n6_pocas_cosas(s, u, 3),
@@ -963,6 +972,9 @@ CONDICIONES = {
     "el_entero_es_10_100_o_1000": lambda s, u: (s["y"] if _m13_es_decimal(s["x"]) else s["x"]) in ("10", "100", "1000"),
     "el_divisor_es_10_100_o_1000": lambda s, u: s.get("d") in ("10", "100", "1000"),
     "lo_que_se_divide_esta_escrito_en_cifras": lambda s, u: _m23_en_cifras(s.get("x")),
+    # ---- M.24 area y perimetro 2: la mitad de un producto (NCETM 2.30, punto 2: el area del triangulo)
+    "es_un_producto_de_dos_enteros_entre_dos": _m24_producto_entre_dos,
+    "uno_de_los_factores_es_par": lambda s, u: _eq_es_par(s["a"], u) or _eq_es_par(s["b"], u),
 }
 
 DE_APLICACION = {"el_divisor_no_es_cero", "hay_bastantes", "hay_bastantes_al_deshacer", "la_parte_cabe_en_el_todo",

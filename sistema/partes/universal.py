@@ -315,6 +315,8 @@ def _u_valor(e, saber, pasos):
         raise _UNoSale("todavia_no", "falta saber cuanto vale %s" % _u_nombre(e[1]))
     if e[1] == ":":
         m = _u_media(e, saber, pasos)
+        if m is None:
+            m = _u_mitad_de_un_producto(e, saber, pasos)
         if m is not None:
             return m
     if e[1] in ("+", "-"):
@@ -378,6 +380,45 @@ def _u_media(e, saber, pasos):
         pasos.append("     %d y %d/%d%s" % (q, resto, k[1], "" if q == 0 else " = %s" % _nu_texto(v)))
     pasos.append("     compruebo: %s" % res["vuelta"])
     pasos.append("%s : %d = %s" % (_u_texto(e[2]), k[1], _nu_texto(v)))
+    return v
+
+
+# ------------------------------------------------------------- M.24: la MITAD DE UN PRODUCTO (NCETM 2.30), con las piezas de 'mitad_de_un_producto'
+
+def _u_mitad_de_un_producto(e, saber, pasos):
+    """a x b : 2 con dos enteros (el area del triangulo, base x altura : 2): se pide a las piezas de
+    'mitad_de_un_producto' (se elige por el costo: partir antes el factor par; o multiplicar y partir).  Lo que sale (y
+    el medio que sobra) se pasa al numero comun.  None si no es eso o no sale: como antes (el mismo numero)."""
+    if _u_entero_sin_signo(e[3]) != 2 or decir(_u_entero_sin_signo(e[3]), saber) != "dos":
+        return None
+    izq = e[2]
+    while izq[0] == "par":
+        izq = izq[1]
+    if izq[0] != "op" or izq[1] != "x":
+        return None
+    a, b = _u_entero_sin_signo(izq[2]), _u_entero_sin_signo(izq[3])
+    if a is None or b is None:
+        return None
+    r = aplicar("mitad_de_un_producto", {"a": a, "b": b}, saber)
+    if r["conclusion"] != "hecho":
+        return None
+    res = r["resultado"]
+    q, resto, sub = res["valor"], res["resto"], []
+    try:
+        if not resto:
+            v = ("+", q, 1, "entero")
+        elif q == 0:
+            v = _nu_simple(("+", 1, 2, "fraccion"), saber, sub)
+        else:
+            v = _nu_sumar(("+", q, 1, "entero"), ("+", 1, 2, "fraccion"), saber, sub)
+    except (_NuNoSale, KeyError):
+        return None
+    pasos.append("LA MITAD DE UN PRODUCTO, %d x %d : 2 (NCETM 2.30): %s" % (a, b, r["pieza"]["nombre"]))
+    pasos.extend("     %s" % p for p in res["pasos"])
+    if resto:
+        pasos.append("     %d y 1/2%s" % (q, "" if q == 0 else " = %s" % _nu_texto(v)))
+    pasos.append("     compruebo: %s" % res["vuelta"])
+    pasos.append("%s : 2 = %s" % (_u_texto(e[2]), _nu_texto(v)))
     return v
 
 

@@ -49,6 +49,8 @@ OBJETIVOS = {
                    "que_es": "la tabla de razon (NCETM 2.27; 6.RP.A.3a): 2 es a 5 como 6 es a ? (entre las filas, dentro de la fila)"},
     "divisor_comun": {"elige": "la_mas_rapida",
                       "que_es": "divisiones con el mismo divisor, sumadas o restadas (NCETM 2.28): 12 : 3 + 6 : 3 = (12 + 6) : 3"},
+    "mitad_de_un_producto": {"elige": "la_mas_rapida",
+                             "que_es": "a x b : 2, la mitad de un producto (NCETM 2.30: el area del triangulo, base x altura : 2)"},
     "combinar": {"elige": "la_mas_rapida",
                  "que_es": "una cuenta con x, + y - (NCETM 2.22; 5.OA.A.1): primero el parentesis, luego las x"},
     "todo_de_las_partes": {"elige": "la_mas_rapida",

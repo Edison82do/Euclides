@@ -107,7 +107,18 @@ con NÚMEROS Y SÍMBOLOS; la parte hablada (U.3, U.3b) NO se sigue ampliando (se
 PRUDENCIA: nunca una respuesta falsa (un número que se queda sin usar y no se sabe si sobra, una frase con un cambio que no
 se entendió, una respuesta que mezcla cosas → «no entiendo», diciendo qué frase o qué número). La fase U.3c, descartada.
 
-## Dónde se quedó (10 oct 2026, tras M.23)
+## Dónde se quedó (10 oct 2026, tras M.24)
+Hecho **M.24 contextos multiplicativos: área y perímetro 2** (NCETM 2.30, *Multiplicative contexts: area and perimeter 2*, el
+ÚLTIMO segmento de Spine 2; diario `2026-10-10-paso-M24-area-perimetro-2.md`): LAS FÓRMULAS del paralelogramo (`area = base x
+altura`, el lado inclinado solo en el perímetro) y del triángulo (`area = base x altura : 2`) son DATOS en `relaciones.kn` (con
+`por_que`); LA MITAD DE UN PRODUCTO, la pregunta de piezas `mitad_de_un_producto` (`partir_por_la_mitad_un_factor_par` 4,
+`multiplicar_y_partir_por_la_mitad` 6), pedida por `_u_mitad_de_un_producto` en `_u_valor`. Prudencia: «triángulo rectángulo»
+decía 24 (FALSO, entraba el rectángulo) → la palabra de figura más larga manda (`_pa_palabra_de_figura`, REGLA FIJADA 6).
+Los puntos 3 (área y perímetro no van juntos) y 4 (la escala del perímetro) ya salían por G.1 y M.21.
+Preguntas abiertas: `7 x 3 : 2` → 21/2 (¿10.5 en 6.º?, como 7 : 2 de M.22); dos figuras en un problema («otro rectángulo»): no.
+**Siguiente: Spine 2 está TERMINADO.** Toca Spine 3 (fracciones) tras 3.8: mirar en el buscador qué segmento sigue (decide Carlos).
+
+## Dónde se quedó antes (10 oct 2026, tras M.23)
 Hecho **M.23 el valor de posición de los decimales: x y : por 10, 100 y 1000; cambiar de unidad** (NCETM 2.29, *Decimal
 place-value knowledge, multiplication and division*; diario `2026-10-10-paso-M23-decimales-por-10-100-1000.md`): LAS CIFRAS SE
 MUEVEN con dos PIEZAS de las preguntas que ya había (`decimal_por_10_100_1000_moviendo_las_cifras`,

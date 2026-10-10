@@ -614,6 +614,17 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         Se comprueba moviendo las cifras al reves (4500 : 1000 = 4.5).  '3 m y 25 cm' (una medida compuesta):
         todavia no las junta (no entiendo, mejor que una respuesta falsa).
 
+  AREA Y PERIMETRO 2: PARALELOGRAMO Y TRIANGULO  ->  paso M.24 (6.o; NCETM 2.30)
+        resolver: Un paralelogramo tiene 8 cm de base, 5 cm de lado y 4 cm de altura. ¿Cuál es su area?
+                                          -> 32 cm cuadrados  (base x altura PERPENDICULAR; el lado solo va en el perimetro)
+        resolver: Un triangulo tiene 6 cm de base y 4 cm de altura. ¿Cuál es su area?   -> 12 cm cuadrados
+                                          (la mitad del paralelogramo: el 6 es par, 3 x 4 = 12; se comprueba doblando)
+        resolver: Un triangulo tiene 20 cm2 de area y 5 cm de base. ¿Cuánto mide su altura?   -> 8 cm  (20 x 2 : 5)
+        resolver: 7 x 3 : 2               -> 21/2   (los dos impares: multiplicar y partir, 10 y medio)
+        Las formulas estan en conocimiento/relaciones.kn.  El triangulo RECTANGULO es un triangulo (antes decia 24,
+        FALSO).  Area y perimetro no van juntos: comparar: rectangulo 6 x 4 y rectangulo 8 x 3 (G.1).
+        La escala del perimetro, con la tabla de razon: resolver: 4 : 14 = 12 : p  -> 42 (M.21).
+
   EL CERO AL DESPEJAR  ->  arreglo A.1 (prudencia: nunca una respuesta falsa), en el RESOLVEDOR
         resolver: 0 : r = 0               -> todavia no: CUALQUIER numero menos el 0 (0 : algo es 0; entre 0 no)
         resolver: 0 : (r - 2) = 0         -> todavia no: CUALQUIER numero menos el 2
