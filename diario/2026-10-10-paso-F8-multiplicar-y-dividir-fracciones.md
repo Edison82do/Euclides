@@ -110,3 +110,37 @@ respuesta. Todo lo demás, igual (se mide antes y después con la lista: `mis_pr
 de todas las pruebas y 37 de este tema, 1360 preguntas).
 
 **Para Carlos:** `2/3 x 3/4`, `2/3 : 4`, `6/7 : 3`, `5/4 x 2/3`, `resolver: r : 4 = 2/3`.
+
+## RESULTADO (10 oct 2026)
+
+**Hecho. `test_F8` 58/58; proyecto en cuartos 3847/3847 afirmaciones + 939/939 casos (100 archivos, VERDE); mis_pruebas
+307/307 con las 5 nuevas (con la memoria de las tablas, como en el PC de Carlos); `test_sin_calculadora` 2/2;
+`comparar_puertas` 0 diferencias sin explicar.** Falta la prueba de Carlos.
+
+**Lo que se construyó** (ninguna puerta ni formato nuevo):
+- **Fracción por fracción (punto 1), PIEZA** de la pregunta nueva `fraccion_por_fraccion`:
+  `fraccion_por_fraccion_arriba_por_arriba` (6). Vuelta: deshacer cada multiplicación dividiendo (sin resto) y, si la
+  segunda es menor que un entero, que el resultado sea más pequeño que la primera (al mismo de abajo, con `viene_despues`).
+- **Una fracción entre un entero (puntos 2 y 3), dos PIEZAS** de `fraccion_entre_entero`, por el costo:
+  `fraccion_entre_entero_repartiendo_los_de_arriba` (3; solo si el entero cabe justo arriba, se mira dividiendo; vuelta:
+  por el entero vuelve) y `fraccion_entre_entero_por_la_inversa` (6; 2/3 : 4 = 2/3 x 1/4; vuelta: por el entero y dividir
+  arriba y abajo entre él vuelve a la de partida).
+- Las pide el número común (`_nu_con_pieza` en `_nu_multiplicar` y `_nu_dividir`, `numero.py`). **Cambia el camino, no el
+  número.** Los decimales siguen con lo suyo (M.13, M.23).
+- La puerta vieja F.5 lleva `no_sabe=_fr_es_fraccion_por_fraccion` (como M.22): fracción por fracción, al resolvedor.
+
+**Lo que cambió a propósito** (1360 preguntas antes y después): **cambian 4, todas a propósito**: `2/3 x 3/4`, `1/2 x 1/3`,
+`3/4 x 2/5`, `2/5 x 3/4` (de «todavía no» a su respuesta). En las pruebas viejas, solo `test_F5` A6 (el caso viejo, escrito al
+lado).
+
+**Las deudas de prudencia:** este paso no toca sus temas; no se tacha nada.
+
+**Lo que queda (honesto) y preguntas para Carlos:**
+- ¿Simplificar ANTES de multiplicar (2/3 x 3/4: el 3 de arriba y el de abajo se van)? No está en los puntos de 3.9; sería una
+  tercera pieza más barata.
+- Un mixto por una fracción (`2 1/2 x 1/3`): todavía no (3.9 es con fracciones propias; el resolvedor no lee mixtos).
+- Dividir entre una fracción (`1/2 : 1/4` → 2) ya salía antes (es de KS3): no se tocó.
+- `resolver: -2/3 x -3/4` → no entiendo (el lector, ya antes); con paréntesis, `-2/3 x (-3/4)` → 1/2.
+- Con la memoria vacía (sin las tablas) a veces no simplifica del todo (`6/81 x 5/49` → 30/3969, el mismo número); con las
+  tablas, 10/1323.
+- La web de NCETM sigue bloqueada desde la nube: falta leer el segmento 3.9 entero (diapositivas).
