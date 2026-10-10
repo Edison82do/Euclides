@@ -182,7 +182,7 @@ def main():
               S("resolver: m = (5000000 + 6000000) : 2"), "todavia_no")
 
     print("\nG - LO QUE NO CAMBIA")
-    comprobar("G (3 + 5 + 7) : 3 sin letras sigue respetando el ano (2.28)", S("(3 + 5 + 7) : 3"), "todavia_no")
+    comprobar("G (3 + 5 + 7) : 3 sin letras: desde M.22 (2.28) sale, por el resolvedor", S("(3 + 5 + 7) : 3"), "5")
     t = motor.explicar_pregunta("resolver: m = (3 + 5 + 7) : 5", SABER)
     comprobar("G (3 + 5 + 7) : 5 no es una media (5 no es cuantos son): como antes",
               ("LA MEDIA" not in t, S("resolver: m = (3 + 5 + 7) : 5")), (True, "m = 3"))

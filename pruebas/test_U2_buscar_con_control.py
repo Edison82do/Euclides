@@ -155,7 +155,8 @@ def main():
     comprobar("C1b ... y lo dice", "la puerta vieja decia: TODAVIA NO" in X("a + b = 500; 2 x a + 5 x b = 1600"), True)
     comprobar("C2 tres letras y una no lineal, sin la orden", P("x + y + z = 12; x - y = 2; x x y = 15"),
               "x = 5, y = 3, z = 4")
-    comprobar("C3 una cuenta sin letras sigue respetando el ano: 12 : 3 + 1", P("12 : 3 + 1"), "todavia_no")
+    comprobar("C3 una cuenta sin letras sigue respetando el ano: 2 x 3 - 4 x 5 (se baja de cero)", P("2 x 3 - 4 x 5"), "todavia_no")
+    comprobar("C3b 12 : 3 + 1 ya es del ano desde M.22 (NCETM 2.28)", P("12 : 3 + 1"), "5")
     comprobar("C4 probando solo sale 'ninguna con enteros': se queda lo de la puerta vieja",
               P("a x b + a = 10; a - b = 1"), "todavia_no")
     comprobar("C5 'de' es POR: 3/4 de 20", P("3/4 de 20"), "15")

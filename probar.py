@@ -581,7 +581,7 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         resolver: 3 x m = 3 + 5 + 7       -> m = 5     el reparto igual: 3 partes iguales hacen 15
         resolver: (4 + 7 + n) : 3 = 6     -> n = 7     el valor que falta: el total es 6 x 3 = 18
         Se comprueba: media x cuantos (+ lo que sobro) = el total; o por el EQUILIBRIO (lo que sobra por
-        encima de la media = lo que falta por debajo).  (3 + 5 + 7) : 3 sin letras: todavia no (2.28).
+        encima de la media = lo que falta por debajo).  (3 + 5 + 7) : 3 sin letras: desde M.22 (2.28), 5.
 
   LA TABLA DE RAZON  ->  piezas nuevas de 'proporcion' (paso M.21, 6.o; NCETM 2.27), por el RESOLVEDOR
         'a es a b como c es a ?' se escribe con el signo de dividir (sin puerta nueva):
@@ -591,6 +591,16 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         resolver: 6 : 9 = 10 : r          -> r = 15    PASANDO POR UNA FILA MAS PEQUENA: 6 | 9 = 2 | 3; x 5
         resolver: 1 : 50000 = 7 : r       -> r = 350000  el mapa: 1 cm son 50000 cm
         Se comprueba deshaciendo con la contraria (15 : 3 = 5).  Si no sale justo (2 : 5 = 7 : r), como antes: 35/2.
+
+  COMBINAR LA DIVISION CON LA + Y LA -  ->  paso M.22 (6.o; NCETM 2.28), por el RESOLVEDOR (sin puerta nueva)
+        20 - 12 : 4                       -> 17    la : antes que la + y la -: 12 : 4 = 3; 20 - 3
+                                                   (OJO: de izquierda a derecha, (20 - 12) : 4 = 2, esta MAL)
+        (20 - 12) : 4                     -> 2     el parentesis primero
+        12 : 3 + 6 : 3                    -> 6     EL MISMO DIVISOR (la distributiva): (12 + 6) : 3, una division
+        7 : 4 + 9 : 4                     -> 4     ninguna sale justa, pero juntas: 16 : 4
+        verdad: 12 : 3 + 6 : 3 = 18 : 6   -> falso   los divisores NO se juntan
+        (3 + 5 + 7) : 3                   -> 5     la media sin letras (M.20)
+        Se comprueba con las contrarias: 6 x 3 = 18; 18 - 6 = 12.
 
   EL CERO AL DESPEJAR  ->  arreglo A.1 (prudencia: nunca una respuesta falsa), en el RESOLVEDOR
         resolver: 0 : r = 0               -> todavia no: CUALQUIER numero menos el 0 (0 : algo es 0; entre 0 no)
@@ -736,7 +746,7 @@ QUE SE PUEDE ESCRIBIR (todo en la misma ventana):
         0.5 x 4 + 1.25         -> 3.25   con decimales (M.13 y las columnas con el punto)
         verdad: 3 + 4 x 5 = 35 -> FALSO  (y se puede escribir directamente: 3 + 4 x 5 = 23 -> verdadero)
         calcular: 3 + 4 x 5    -> 23     (antes leia solo 3 + 4 y decia 7)
-        2 x 3 - 4 x 5 -> todavia_no (se baja de cero);  12 : 3 + 1 -> todavia_no (dividir: 2.28, 6.o)
+        2 x 3 - 4 x 5 -> todavia_no (se baja de cero);  con division (12 : 3 + 1): M.22, abajo
         Cada cuenta se comprueba con la contraria, de la ultima a la primera: 23 - 20 = 3, 20 : 4 = 5.
 
   PARTE-PARTE-TODO  ->  tres partes o mas; la misma estructura en contextos distintos (paso S.2; NCETM 1.28)

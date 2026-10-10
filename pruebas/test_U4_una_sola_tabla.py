@@ -84,7 +84,8 @@ def main():
               X("1/2 x n = 3").startswith("(la puerta vieja decia") or "resolvedor" in X("1/2 x n = 3"), True)
 
     print("\nC - LA REGLA DE LA RED: nada viejo cambia; el ano se respeta")
-    comprobar("C1 12 : 3 + 1 sigue todavia_no (el ano)", P("12 : 3 + 1"), "todavia_no")
+    comprobar("C1 2 x 3 - 4 x 5 sigue todavia_no (el ano: se baja de cero)", P("2 x 3 - 4 x 5"), "todavia_no")
+    comprobar("C1b 12 : 3 + 1: desde M.22 (2.28) es del ano: lo coge el resolvedor", P("12 : 3 + 1"), "5")
     comprobar("C2 ecuacion: 3 x ? = 13 sigue no_entero", P("ecuacion: 3 x ? = 13"), "no_entero")
     comprobar("C3 3 x n = 13 sigue no_sale (no hay entero)...", P("3 x n = 13"), "no_sale")
     comprobar("C4 ... y la explicacion ensena tambien lo del resolvedor (13/3)", "n = 13/3" in X("3 x n = 13"), True)

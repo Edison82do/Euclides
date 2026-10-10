@@ -317,6 +317,10 @@ def _u_valor(e, saber, pasos):
         m = _u_media(e, saber, pasos)
         if m is not None:
             return m
+    if e[1] in ("+", "-"):
+        m = _u_divisor_comun(e, saber, pasos)
+        if m is not None:
+            return m
     a = _u_valor(e[2], saber, pasos)
     b = _u_valor(e[3], saber, pasos)
     return _u_cuenta(e[1], a, b, saber, pasos)
@@ -375,6 +379,105 @@ def _u_media(e, saber, pasos):
     pasos.append("     compruebo: %s" % res["vuelta"])
     pasos.append("%s : %d = %s" % (_u_texto(e[2]), k[1], _nu_texto(v)))
     return v
+
+
+# ------------------------------------------------------------- M.22: el DIVISOR COMUN (NCETM 2.28), con las piezas de 'divisor_comun'
+
+def _u_entero_sin_signo(e):
+    """El entero (sin signo) de una hoja del arbol, o None."""
+    while e[0] == "par":
+        e = e[1]
+    if e[0] == "num" and e[1][0] == "+" and e[1][2] == 1 and e[1][3] == "entero":
+        return e[1][1]
+    return None
+
+
+def _u_cadena(e):
+    """Una cadena de + y - sin parentesis (a + b - c ...): los terminos con su signo, en el orden en que vienen."""
+    if e[0] == "op" and e[1] in ("+", "-"):
+        c = _u_cadena(e[2])
+        c.append([e[1], e[3]])
+        return c
+    return [["+", e]]
+
+
+def _u_divisor_comun(e, saber, pasos):
+    """a : d + b : d - ... con TODOS los terminos divisiones de enteros entre el MISMO d: se pide a las piezas de
+    'divisor_comun' (se elige por el costo: juntar lo de arriba y repartir UNA vez; o dividir cada una y juntar).  Lo que
+    sale (lo que toca y lo que sobra) se pasa al numero comun.  None si no es eso o no sale: como antes."""
+    terminos, d = [], None
+    for signo, t in _u_cadena(e):
+        if t[0] != "op" or t[1] != ":":
+            return None
+        a, b = _u_entero_sin_signo(t[2]), _u_entero_sin_signo(t[3])
+        if a is None or b is None:
+            return None
+        if d is None:
+            d = b
+        elif decir(b, saber) != decir(d, saber):
+            return None
+        terminos.append([signo, a])
+    r = aplicar("divisor_comun", {"terminos": terminos, "divisor": d}, saber)
+    if r["conclusion"] != "hecho":
+        return None
+    res = r["resultado"]
+    q, resto, sub = res["valor"], res.get("resto", 0), []
+    try:
+        if not resto:
+            v = _NU_CERO if q == 0 else ("+", q, 1, "entero")
+        elif q == 0:
+            v = _nu_simple(("+", resto, d, "fraccion"), saber, sub)
+        else:
+            v = _nu_sumar(("+", q, 1, "entero"), ("+", resto, d, "fraccion"), saber, sub)
+    except (_NuNoSale, KeyError):
+        return None
+    pasos.append("EL MISMO DIVISOR, %d (NCETM 2.28): %s" % (d, r["pieza"]["nombre"]))
+    if r["pieza"]["id"] == "juntar_sobre_el_divisor_comun":
+        arriba = ["%d" % terminos[0][1]]
+        arriba.extend("%s %d" % (sg, x) for sg, x in terminos[1:])
+        pasos.append("     %s = (%s) : %d" % (_u_texto(e), " ".join(arriba), d))
+    pasos.extend("     %s" % p for p in res["pasos"])
+    if resto:
+        pasos.append("     %d y %d/%d%s" % (q, resto, d, "" if q == 0 else " = %s" % _nu_texto(v)))
+    pasos.append("     compruebo: %s" % res["vuelta"])
+    if r["pieza"]["id"] == "juntar_sobre_el_divisor_comun":
+        pasos.append("     OJO: los divisores NO se juntan: se reparte entre %d todas las veces" % d)
+    pasos.append("%s = %s" % (_u_texto(e), _nu_texto(v)))
+    return v
+
+
+def _u_en_fila(e, fila):
+    """Las hojas y los signos en el orden en que se escriben (un parentesis es una hoja).  False si hay letras o '-'
+    de delante (ahi no se ensena el error)."""
+    if e[0] == "op":
+        return _u_en_fila(e[2], fila) and fila.append(e[1]) is None and _u_en_fila(e[3], fila)
+    if e[0] in ("letra", "neg"):
+        return False
+    fila.append(e)
+    return True
+
+
+def _u_ojo_izquierda(e, v, saber):
+    """M.22 (NCETM 2.28): el ERROR TIPICO, ir de izquierda a derecha sin mirar (20 - 12 : 4 como (20 - 12) : 4).  Solo
+    si hay una division detras de una + o una - sin parentesis.  Las lineas que lo ensenan (calculado con el mecanismo)."""
+    fila = []
+    if not _u_en_fila(e, fila) or ":" not in fila:
+        return []
+    signos = [x for x in fila if isinstance(x, str)]
+    if not any(signos[i] in "+-" and signos[i + 1] in _U_FUERTES for i in range(len(signos) - 1)):
+        return []
+    mal = fila[0]
+    for k in range(1, len(fila), 2):
+        junto = mal[0] == "op" and mal[1] in "+-" and fila[k] in _U_FUERTES
+        mal = ("op", fila[k], ("par", mal) if junto else mal, fila[k + 1])
+    try:
+        w = _u_simple(_u_valor(mal, saber, []), saber, [])
+        if _nu_iguales(w, v, saber):
+            return []
+    except (_UNoSale, _NuNoSale, KeyError):             # no se puede calcular o comparar (el techo): no se ensena
+        return []
+    return ["OJO: de izquierda a derecha sin mirar, %s, saldria %s: esta MAL (la x y la : van antes que la + y la -; "
+            "NCETM 2.28)" % (_u_texto(mal), _nu_texto(w))]
 
 
 # ------------------------------------------------------------- M.21: la TABLA DE RAZON (NCETM 2.27), con las piezas de 'proporcion'
@@ -685,6 +788,7 @@ def decidir_resolver(texto, saber=None):
         if modelo["expresion"] is not None:
             pasos = []
             v = _u_simple(_u_valor(modelo["expresion"], saber, pasos), saber, pasos)
+            pasos.extend(_u_ojo_izquierda(modelo["expresion"], v, saber))
             r["etapas"].append(("CALCULO en el orden de siempre (primero x y :, luego + y -)", pasos))
             r.update(conclusion="hecho", valor=v, respuesta=_nu_texto(v))
             _u_tambien_decimal(r, v, modelo, saber)

@@ -313,7 +313,7 @@ con 100: 25 x 36                  | 900             | M.15: las parejas de 100
 4 x 6 + 4 x 2                     | 32              | M.16: factor comun 4 x 8, no 64
 5 x 4 + 5                         | 25              | M.16: 5 x 5
 verdad: 3 + 4 x 5 = 35            | FALSO           | M.16
-12 : 3 + 1                        | todavia_no      | M.16: la division combinada es de 6.o
+12 : 3 + 1                        | 5               | M.16: la division combinada, desde M.22 (2.28)
 # --- numeros ---
 centena: 204                      | 2 centenas, 0 decenas y 4 unidades
 nombre: 777                       | setecientos setenta y siete
@@ -418,3 +418,8 @@ resolver: 0 : (r - 2) = 0         | todavia_no | A.1: cualquier r menos el 2
 resolver: (r - 2) x (r - 2) = 1   | r = 1; r = 3 | A.1: probar en orden sin parar antes de tiempo
 0 x r = 0 x 5                     | cualquiera | A.1: con el 0 la equivalencia no vale
 0 : r = 3                         | ninguna | A.1: 0 : algo nunca da 3
+20 - 12 : 4                       | 17 | M.22: la division antes que la resta (no 2)
+(20 - 12) : 4                     | 2 | M.22: el parentesis primero
+7 : 4 + 9 : 4                     | 4 | M.22: el mismo divisor: juntar y repartir una vez
+verdad: 12 : 3 + 6 : 3 = 18 : 6   | falso | M.22: los divisores no se juntan
+(3 + 5 + 7) : 3                   | 5 | M.22: la media sin letras (esperaba 2.28)

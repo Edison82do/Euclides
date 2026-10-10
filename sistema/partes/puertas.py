@@ -51,13 +51,16 @@ _PU_VF = {"VERDADERO": "verdadero", "FALSO": "falso"}
 
 
 def _pu_puerta(nombre, si, explicar, responder=None, objetos=False, mapa=None, minus=False, mira_no_entiendo=True,
-               para_contar=False):
+               para_contar=False, no_sabe=None):
     """Una puerta: cuando encaja (si), como se explica y como se responde.  Sin 'responder', la respuesta es la ultima
     linea de la explicacion (UNA SOLA VERDAD: lo que se ensena y lo que se responde salen de lo mismo).
     'para_contar': su lector solo sabe numeros para contar (enteros sin signo); si lo escrito trae fracciones, decimales o
-    negativos no es de su forma (U.4: leia '0.5' como '0' y daba respuestas falsas) y lo coge el resolvedor."""
+    negativos no es de su forma (U.4: leia '0.5' como '0' y daba respuestas falsas) y lo coge el resolvedor.
+    'no_sabe': lo que su lector no sabe y ya es del ano (M.22: la division dentro de una cuenta combinada, NCETM 2.28);
+    lo coge el resolvedor (el MODELO COMUN), sin puerta nueva."""
     return {"nombre": nombre, "si": si, "explicar": explicar, "responder": responder, "objetos": objetos,
-            "mapa": mapa, "minus": minus, "mira_no_entiendo": mira_no_entiendo, "para_contar": para_contar}
+            "mapa": mapa, "minus": minus, "mira_no_entiendo": mira_no_entiendo, "para_contar": para_contar,
+            "no_sabe": no_sabe}
 
 
 def _pu_empieza(*palabras):
@@ -537,7 +540,8 @@ def _pu_tabla():
         # fracciones equivalentes y simplificar (F.6; NCETM 3.7)
         P("equivalentes", lambda t, tl, s: es_orden_equivalentes(t), explicar_orden_equivalentes, mapa=_PU_VF),
         # x con + y - (M.16): antes que calcular: y verdad:
-        P("combinar", lambda t, tl, s: es_orden_combinar(t), explicar_orden_combinar, mapa=_PU_VF),
+        P("combinar", lambda t, tl, s: es_orden_combinar(t), explicar_orden_combinar, mapa=_PU_VF,
+          no_sabe=_co_lleva_division),
         # parte-parte-todo con tres partes o mas (S.2)
         P("parte_todo", lambda t, tl, s: es_orden_parte_todo(t, s), explicar_orden_parte_todo),
         P("divisible", E("divisible"), lambda t, s: explicar_divisible(_pu_tras(t, "divisible"), s)),
@@ -686,8 +690,18 @@ def _pu_tabla():
 _PU_TABLA = []
 
 # lo que trae una orden ('ecuacion:', 'calcular:') cuyo lector solo sabe numeros para contar, con otros numeros
-_PU_AL_RESOLVEDOR = _pu_puerta("simbolica", None, lambda t, s: explicar_orden_resolver(_pu_cuerpo(t), s),
-                               lambda t, s: _pu_r_resolver(_pu_cuerpo(t), s))
+_PU_AL_RESOLVEDOR = _pu_puerta("simbolica", None, lambda t, s: explicar_orden_resolver(_pu_cuerpo(_co_sin_orden(t)), s),
+                               lambda t, s: _pu_r_resolver(_pu_cuerpo(_co_sin_orden(t)), s))
+
+
+def _pu_al_resolvedor_como(p):
+    """Al resolvedor (lo que el lector de p no sabe), con la respuesta corta escrita como la de p (verdadero/falso)."""
+    mapa = p["mapa"] or {}
+
+    def responder(t, s):
+        resp, res = _PU_AL_RESOLVEDOR["responder"](t, s)
+        return mapa.get(resp, resp), res
+    return dict(_PU_AL_RESOLVEDOR, responder=responder)
 
 
 def puertas():
@@ -706,6 +720,8 @@ def _pu_elegir_puerta(t, saber, simbolica):
             if p["si"](t, tl, saber):
                 if p["para_contar"] and not _pu_solo_para_contar(_pu_cuerpo(t)):
                     return _PU_AL_RESOLVEDOR
+                if p["no_sabe"] and p["no_sabe"](t):
+                    return _pu_al_resolvedor_como(p)
                 return p
         except Exception as ex:                      # mirar si encaja tampoco puede reventar: se dice al explicar
             return _pu_rota(p["nombre"], ex)

@@ -10,7 +10,8 @@ NCETM 2.22 (Combining multiplication with addition and subtraction); Common Core
   punto 2: al sumar o restar productos con un FACTOR COMUN se puede usar la distributiva (4 x 6 + 4 x 2 = 4 x 8).
 Las cuentas las hacen las piezas de la pregunta 'combinar' (combinar_en_el_orden_de_siempre y
 combinar_sacando_el_factor_comun).  Aqui solo se LEE la expresion, se pregunta a las piezas y se explica.
-La division combinada es 2.28 (6.o): todavia no.
+La division combinada (NCETM 2.28, paso M.22) no la lee este lector: la tabla de puertas se la pasa al resolvedor
+(el modelo comun, que ya pone la x y la : antes que la + y la -; ver _co_lleva_division).
 """
 
 import re
@@ -122,6 +123,19 @@ def _co_partir_igualdad(t):
         return None
     a, b = t.split("=")
     return a.strip(), b.strip()
+
+
+def _co_sin_orden(texto):
+    """'combinar: 12 : 3 + 1' -> '12 : 3 + 1' (lo que lee el resolvedor); lo demas, tal cual."""
+    return re.sub(r"^\s*combinar\s*:?\s*", "", texto, flags=re.I)
+
+
+def _co_lleva_division(texto):
+    """M.22 (NCETM 2.28): la cuenta combinada lleva una division.  Este lector no la sabe; es del ano: la coge el
+    resolvedor (la tabla de puertas, sin puerta nueva)."""
+    t = _co_limpio(texto)
+    m = re.match(r"^(combinar|calcular|verdad)\s*:?\s*(.*)$", t)
+    return ":" in (m.group(2) if m else t)
 
 
 def es_orden_combinar(texto):

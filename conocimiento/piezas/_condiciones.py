@@ -656,6 +656,23 @@ def _m20_cerca(s, u):
     return all(tope is None or not u.viene_despues(u.decir(v), u.decir(tope)) for v in vs)
 
 
+# ---- combinar la division con la suma y la resta (paso M.22; NCETM 2.28): {"terminos": [["+", 12], ["+", 6]], "divisor": 3}
+def _m22_mismo_divisor(s, u):
+    """Dos divisiones de enteros o mas (el cero tambien arriba), sumadas o restadas, entre el MISMO divisor, que no es
+    0; todos con nombre en la lista."""
+    ts, d = s.get("terminos"), s.get("divisor")
+    if not isinstance(ts, (list, tuple)) or not isinstance(d, int) or isinstance(d, bool):
+        return False
+    if u.decir(len(ts)) in ("cero", "uno") or u.decir(d) in (None, "cero"):
+        return False
+    for t in ts:
+        if not isinstance(t, (list, tuple)) or len(t) != 2 or t[0] not in ("+", "-"):
+            return False
+        if not isinstance(t[1], int) or isinstance(t[1], bool) or u.decir(t[1]) is None:
+            return False
+    return ts[0][0] == "+"
+
+
 # ---- el factor de escala y la proporcion (paso M.21; NCETM 2.27): {"conocida": (a, b), "con_hueco": (c, None)}
 def _m21_tabla(s, u):
     """La TABLA DE RAZON con dos filas: la conocida entera y la otra con UN hueco (None); enteros sin ceros (con un
@@ -932,6 +949,8 @@ CONDICIONES = {
     "entre_las_filas_hay_un_factor_justo": _m21_entre_las_filas,
     "dentro_de_la_fila_hay_un_factor_justo": _m21_dentro_de_la_fila,
     "la_fila_conocida_se_puede_hacer_mas_pequena": _m21_mas_pequena,
+    # ---- M.22 combinar la division con la suma y la resta (NCETM 2.28)
+    "son_divisiones_con_el_mismo_divisor": _m22_mismo_divisor,
 }
 
 DE_APLICACION = {"el_divisor_no_es_cero", "hay_bastantes", "hay_bastantes_al_deshacer", "la_parte_cabe_en_el_todo",

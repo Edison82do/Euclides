@@ -486,6 +486,16 @@
 - NCETM 2.27, la guía en PDF (bloqueada): https://www.ncetm.org.uk/media/bspfn3zj/ncetm_spine2_segment27_y6.pdf
 - NCETM, Year 6 unit 9 «Ratio and proportion» (Curriculum Prioritisation): https://www.ncetm.org.uk/classroom-resources/cp-year-6-unit-9-ratio-and-proportion/
 
+- **NCETM 2.28** (*Combining division with addition and subtraction*, Year 6; la web está bloqueada desde la nube,
+  leída por el buscador): combinar la división con la suma o la resta; volver a los paréntesis para cambiar el orden;
+  apoyarse en la distributiva. Dos puntos: 1) sin paréntesis, la división se hace ANTES que la suma o la resta; con
+  paréntesis, primero lo de dentro; 2) al sumar o restar expresiones de dividir con un DIVISOR COMÚN se puede aplicar
+  la distributiva (12 : 3 + 6 : 3 = (12 + 6) : 3). Gemelo de 2.22 (M.16). **Common Core 5.OA.A.1, 6.EE.A.2c** (el orden
+  de las operaciones) y **6.EE.A.3** (la distributiva). Oak National Academy, Year 6, «Combine division with addition
+  and subtraction» (bloqueada). Usada en M.22.
+- NCETM 2.28 (bloqueada desde la nube; leída por el buscador): https://ncetm.org.uk/classroom-resources/primm-228-combining-division-with-addition-and-subtraction
+- Oak National Academy (bloqueada): https://thenational.academy/pupils/programmes/maths-primary-year-6/units/order-of-operations/lessons/combine-division-with-addition-and-subtraction
+
 - **El cero en la multiplicación y la división** (para el arreglo A.1; ya usadas en M.2 y M.3): 0 x algo = 0 siempre
   (la propiedad del cero, Common Core 3.OA.B.5 y la *Progression* de Operations and Algebraic Thinking); 0 : algo = 0 si
   algo no es 0, y **entre 0 no se reparte** (la división entre 0 no tiene respuesta: no hay número que por 0 dé el

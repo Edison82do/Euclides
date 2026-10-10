@@ -104,7 +104,16 @@ con NÚMEROS Y SÍMBOLOS; la parte hablada (U.3, U.3b) NO se sigue ampliando (se
 PRUDENCIA: nunca una respuesta falsa (un número que se queda sin usar y no se sabe si sobra, una frase con un cambio que no
 se entendió, una respuesta que mezcla cosas → «no entiendo», diciendo qué frase o qué número). La fase U.3c, descartada.
 
-## Dónde se quedó (9 oct 2026, tras el arreglo A.1)
+## Dónde se quedó (10 oct 2026, tras M.22)
+Hecho **M.22 combinar la división con la suma y la resta** (NCETM 2.28; diario `2026-10-10-paso-M22-dividir-combinado.md`):
+EL ORDEN lo hace el resolvedor (ya ponía la x y la : antes que la + y la −): la puerta `combinar` de M.16 lleva
+`no_sabe=_co_lleva_division` en la tabla y le pasa las cuentas con `:` (sin puerta nueva); la explicación enseña el error de
+izquierda a derecha (`_u_ojo_izquierda`). LA DISTRIBUTIVA con el divisor común: la pregunta de piezas `divisor_comun`
+(`juntar_sobre_el_divisor_comun` 5, `dividir_cada_una_y_juntar` 20), pedida por `_u_divisor_comun` en `_u_valor`.
+`12 : 3 + 1` y `(3 + 5 + 7) : 3` ya salen (5). Pregunta abierta: `7 : 2 + 1` → 9/2 (¿fracción en 6.º?).
+**Siguiente: NCETM 2.29** (mirar en el buscador qué es; la web de NCETM sigue bloqueada).
+
+## Dónde se quedó antes (9 oct 2026, tras el arreglo A.1)
 Hecho **A.1 el cero al despejar** (ARREGLO de prudencia, no NCETM; diario `2026-10-09-arreglo-A1-el-cero-al-despejar.md`):
 el resolvedor y la puerta vieja E.5 daban respuestas FALSAS con el 0 (`resolver: 0 : r = 0 : 5` → «ninguna»; `0 x r = 0 x 5`
 → «r = 5»; `(r - 2) x (r - 2) = 1` → «ninguna»). Arreglado en la capa general: al deshacer y al aislar se MIRA el 0 delante
